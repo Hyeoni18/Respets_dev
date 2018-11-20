@@ -1,4 +1,3 @@
-<!-- 서진 : 기업 회원 가입 폼 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,37 +5,37 @@
 <head>
 <meta charset="utf-8" />
 <title>Respets :: 기업회원가입</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-<meta content="Coderthemes" name="author" />
-<!-- App favicon -->
-<link rel="shortcut icon" href="resources/dist/assets/images/logo-sm.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="resources/dist/assets/images/logo-sm.png">
 
-<!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        <!-- App css -->
+        <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 </head>
+ <body class="authentication-bg">
+ 
+         <div class="account-pages mt-5 mb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card">
+                            <!-- Logo-->
+                            <div class="card-header pt-4 pb-4 text-center bg-success">
+                                <a href="./">
+                                    <span><img src="resources/dist/assets/images/logo-white.png" alt="리스펫츠 로고" height="30"></span>
+                                </a>
+                            </div>
 
-<body class="authentication-bg">
-
-	<div class="account-pages mt-5 mb-5">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-5">
-					<div class="card">
-						<!-- Logo-->
-						<div class="card-header pt-4 pb-4 text-center bg-success">
-							<a href="./"> 
-								<span><img src="resources/dist/assets/images/logo-white.png" alt="리스펫츠 로고" height="30"></span>
-							</a>
-						</div>
-						
-						<div class="card-body p-4">
-
-							<div class="text-center w-75 m-auto">
-								<h4 class="text-dark-50 text-center mt-0 font-weight-bold">Join us!</h4>
-								<p class="text-muted mb-4">Respets에 계정을 등록하고 편리한 서비스를 이용해보세요.</p>
-							</div>
+                            <div class="card-body p-4">
+                                
+                                <div class="text-center w-75 m-auto">
+                                    <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Join us!</h4>
+                                    <p class="text-muted mb-4">Respets에 계정을 등록하고 편리한 서비스를 이용해보세요. </p>
+                                </div>
+ 
 							<form name="joinForm" action="businessJoin" method="post" enctype="multipart/form-data"
 								onsubmit="return formCheck();">
 
@@ -47,53 +46,59 @@
 									<label for="bus_email">이메일 주소</label> <br/>
 									<input type="text" name="bus_email" class="bus_email" id="이메일"
 										onchange="emailChk();" placeholder="ex)respets@respets.com"
-										required />
+										required >
 									<div id="emailChkMsg"></div>
 								</div>
 								<!-- 비밀번호 유효성 검사, 확인 폼 추가할 것 -->
 								<div class="form-group">
 									<label for="bus_pw">비밀번호</label> <br/>
-									<input type="password" name="bus_pw" id="비밀번호" placeholder="비밀번호를 입력해주세요." required />
+									<input type="password" name="bus_pw" id="비밀번호" placeholder="비밀번호를 입력해주세요." required >
 								</div>
+									
 								<div class="form-group">
 									<label for="bus_name">업체명</label> <br/>
-									<input type="text" name="bus_name" id="업체명" placeholder="업체명을 입력해주세요." required/>
+									<input type="text" name="bus_name" id="업체명" placeholder="업체명을 입력해주세요." required>
 								</div>
-
+							
 								<div class="form-group">
 									<label for="bus_ceo">대표자명</label> <br/>
-									<input type="text" name="bus_ceo" id="대표자명" placeholder="대표자명을 입력해주세요." required/>
+									<input type="text" name="bus_ceo" id="대표자명" placeholder="대표자명을 입력해주세요." required>
 								</div>
-
+								
 								<div class="form-group">
 									<label for="bus_lcno">사업자등록번호</label> <br/>
 									<input type="text" name="bus_lcno" class="bus_lcno" id="사업자 등록 번호" placeholder="ex)000-00-00000" onchange="taxIdChk();" required/>
 									<div id="taxIdChkMsg"></div>
 								</div>
-
+								
 								<div class="form-group">
-									<label for="busLicense">사업자등록증사진</label> <br/>
+									<label>사업자등록증사진</label> <br/>
 									<input type="file" name="busLicense" id="busLicense" />
 								</div>
-
+								
 								<div class="form-group">
 									<label for="bus_phone">업체 연락처</label> <br/>
 									<input type="text" name="bus_phone" id="업체 연락처" />
 								</div>
-
+								
 								<div class="form-group">
 									<label for="bus_address">업체 주소</label> <br/>
-									<input type="text" name="bus_post" id="우편번호" placeholder="우편번호" />
-									<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-success"/> <br/>
+									<input type="text" name="bus_post" id="우편번호" placeholder="우편번호" /><br/>
+									<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-success"/>
+								</div>
+								<div class="form-group">
 									<input type="text" name="bus_addr" id="주소" placeholder="주소" /> 
+								</div>
+								<div class="form-group">
 									<input type="text" name="bus_addr2" id="상세주소" placeholder="상세주소" />
 								</div>
-
+				
+								
 								<div class="form-group">
 									<label for="service">주력 서비스</label> <br/>
 									${input}
 								</div>
-
+								
 								<div class="form-group">
 									<label for="mainPhoto">대표 사진</label> <br/>
 									<input type="file" name="mainPhoto" onchange="fileChk(this)" /> 
@@ -101,38 +106,41 @@
 								</div>
 
 								<div class="form-group mb-0 text-center">
-									<input class="btn btn-success" type="submit" id="submit"
-										value="가입하기" />
-								</div>
+                                    <button class="btn btn-success" id="submit" type="submit"> 가입하기 </button>
+                                </div>
 							</form>
-						</div>
-						<!-- end card-body -->
-					</div>
-					<!-- end card -->
+                       	 		<div class="row mt-3">
+                           			<div class="col-12 text-center">
+                               			 <p class="text-muted">계정이 이미 있으신가요? <a href="./loginForm" class="text-dark ml-1"><b>로그인 하기</b></a></p>
+                            		</div> <!-- end col-->
+                        		</div>
+                        
+                        <!-- end row -->
+                            </div> <!-- end card-body -->
+                        </div>
+                        <!-- end card -->
 
-					<div class="row mt-3">
-						<div class="col-12 text-center">
-							<p class="text-muted">
-								계정이 이미 있으신가요? <a href="./loginForm" class="text=dark ml-1"><b>로그인 하기</b></a>
-							</p>
-						</div>
-						<!-- end col -->
-					</div>
-					<!-- end row -->
-				</div>
-				<!-- end col -->
-			</div>
-			<!-- end row -->
-		</div>
-		<!-- end container -->
-	</div>
-	<!-- end page -->
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
 
 	<footer class="footer footer-alt"> 2018 © Hyper -
 		Coderthemes.com </footer>
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>
+	        <!-- third party js -->
+        <script src="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
+        <!-- third party js ends -->
+
+        <!-- demo app -->
+        <script src="/resources/dist/assets/js/pages/demo.dashboard.js"></script>
+        <!-- end demo js-->
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

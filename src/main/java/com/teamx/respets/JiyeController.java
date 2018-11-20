@@ -148,28 +148,28 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping (value="/noticeDetailPage", method=RequestMethod.GET)
+	@RequestMapping (value="/noticeDetailPage")
 	public ModelAndView noticeDetailPage(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.noticeDetailPage(request);
 		return mav;
 	}
 	
-	@RequestMapping (value="/searchBusinessNotice", method=RequestMethod.GET)
+	@RequestMapping (value="/searchBusinessNotice")
 	public ModelAndView searchBusinessNotice(HttpSession session, String select, String search, Integer pageNum) {
 		mav = new ModelAndView();
 		mav = js.searchBusinessNotice(session, select, search, pageNum);
 		return mav;
 	}
 	
-	@RequestMapping (value="/writeBusinessNoticePage", method=RequestMethod.GET)
+	@RequestMapping (value="/writeBusinessNoticePage")
 	public ModelAndView writeBusinessNoticePage() {
 		mav = new ModelAndView();
 		mav.setViewName("writeBusinessNoticePage");
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessNoticeInsert", method=RequestMethod.POST)
+	@RequestMapping (value="/businessNoticeInsert")
 	public ModelAndView businessNoticeInsert
 	(HttpSession session, String bct_code, int bbc_no, String bbo_title, String bbo_ctt) {
 		mav = new ModelAndView();
@@ -177,7 +177,7 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessNoticeUpdate", method=RequestMethod.POST)
+	@RequestMapping (value="/businessNoticeUpdate")
 	public ModelAndView businessNoticeUpdate(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessNoticeUpdate(request);
@@ -211,5 +211,33 @@ public class JiyeController {
 		mav = js.businessGallery(request);
 		return mav;
 	}
+	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
+	public ModelAndView adminPage() {
+		mav = new ModelAndView();
+		mav.setViewName("adminPage");
+		return mav;
+	}
+	
+	@RequestMapping (value="/unconfirmBusiness", method=RequestMethod.GET)
+	public ModelAndView businessConfirm(HttpSession session) {
+		mav = new ModelAndView();
+		mav = js.unconfirmBusiness(session);
+		return mav;
+	}
+	
+	@RequestMapping (value="/chkLicense", method=RequestMethod.GET)
+	public ModelAndView chkLicense(HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav = js.chkLicense(request);
+		return mav;
+	}
+	
+	@RequestMapping (value="/confirmLicense", method=RequestMethod.GET)
+	public ModelAndView confirmLicense(HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav = js.confirmLicense(request);
+		return mav;
+	}
+	
 
 }

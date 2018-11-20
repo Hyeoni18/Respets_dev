@@ -252,14 +252,14 @@
 								<div class="page-title-right">
 									<form class="form-inline"></form>
 								</div>
-								<h4 class="page-title">Calendar</h4>
+								<h4 class="page-title">내 반려동물 달력</h4>
 							</div>
 						</div>
 					</div>
 					<!-- end page title -->
 
 					<div class="row">
-						<div class="col-xl-8">
+						<div class="col-12">
 							<div class="card">
 								<div class="card-body">
 
@@ -824,7 +824,7 @@
 											<div class="modal-header pr-4 pl-4 border-bottom-0 d-block">
 												<button type="button" class="close" data-dismiss="modal"
 													aria-hidden="true">×</button>
-												<h4 class="modal-title">Add New Event</h4>
+												<h4 class="modal-title">일정 확인</h4>
 											</div>
 											<div class="modal-body pt-3 pr-4 pl-4">
 												<form>
@@ -842,10 +842,7 @@
 											<div class="text-right pb-4 pr-4">
 												<button type="button" class="btn btn-light "
 													data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-success save-event  "
-													style="display: none;">Create event</button>
-												<button type="button" class="btn btn-danger delete-event  "
-													data-dismiss="modal" style="">Delete</button>
+												
 											</div>
 										</div>
 										<!-- end modal-content-->
@@ -856,91 +853,6 @@
 							<!-- end card-->
 						</div>
 						<!-- end col-->
-
-
-
-						<div class="col-xl-4">
-							<div class="card">
-								<div class="card-body">
-
-									<h4 class="header-title">1년 전 오늘</h4>
-
-									<div class="form-control"
-										style="position: relative; overflow: hidden; width: auto; height: 350px;">
-										<div class="slimscroll"
-											style="max-height: 330px; overflow: hidden; width: auto; height: 330px;">
-											<div class="timeline-alt pb-0">
-												<div class="timeline-item">
-													<i
-														class="mdi mdi-upload bg-info-lighten text-info timeline-icon"></i>
-													<div class="timeline-item-info">
-														<a href="#"
-															class="text-info font-weight-bold mb-1 d-block">You
-															sold an item</a> <small>Paul Burgess just purchased
-															“Hyper - Admin Dashboard”!</small>
-														<p>
-															<small class="text-muted">5 minutes ago</small>
-														</p>
-													</div>
-												</div>
-
-												<div class="timeline-item">
-													<i
-														class="mdi mdi-airplane bg-primary-lighten text-primary timeline-icon"></i>
-													<div class="timeline-item-info">
-														<a href="#"
-															class="text-primary font-weight-bold mb-1 d-block">Product
-															on the Bootstrap Market</a> <small>Dave Gamache added
-															<span class="font-weight-bold">Admin Dashboard</span>
-														</small>
-														<p>
-															<small class="text-muted">30 minutes ago</small>
-														</p>
-													</div>
-												</div>
-
-												<div class="timeline-item">
-													<i
-														class="mdi mdi-microphone bg-info-lighten text-info timeline-icon"></i>
-													<div class="timeline-item-info">
-														<a href="#"
-															class="text-info font-weight-bold mb-1 d-block">Robert
-															Delaney</a> <small>Send you message <span
-															class="font-weight-bold">"Are you there?"</span>
-														</small>
-														<p>
-															<small class="text-muted">2 hours ago</small>
-														</p>
-													</div>
-												</div>
-
-												<div class="timeline-item">
-													<i
-														class="mdi mdi-upload bg-primary-lighten text-primary timeline-icon"></i>
-													<div class="timeline-item-info">
-														<a href="#"
-															class="text-primary font-weight-bold mb-1 d-block">Audrey
-															Tobey</a> <small>Uploaded a photo <span
-															class="font-weight-bold">"Error.jpg"</span>
-														</small>
-														<p>
-															<small class="text-muted">14 hours ago</small>
-														</p>
-													</div>
-												</div>
-											</div>
-											<!-- end timeline -->
-										</div>
-										<div class="slimScrollBar"
-											style="background: rgb(158, 165, 171); width: 8px; position: absolute; top: 70px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 259.286px;"></div>
-										<div class="slimScrollRail"
-											style="width: 8px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-									</div>
-								</div>
-								<!-- end card-body-->
-							</div>
-							<!-- end card-->
-						</div>
 						<!-- end col-->
 					</div>
 					<!-- end row -->
@@ -989,7 +901,138 @@
 	<!-- third party js ends -->
 
 	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.calendar-per.js"></script>
+	<!-- <script src="/resources/dist/assets/js/pages/demo.calendar-per.js"></script> -->
+	
+<script>
+! function (e) {
+    "use strict";
+    var t = function () {
+        this.$body = e("body"), this.$modal = e("#event-modal"),
+            this.$event = "#external-events div.external-event",
+            this.$calendar = e("#calendar"), this.$saveCategoryBtn = e(".save-category"),
+            this.$categoryForm = e("#add-category form"), this.$extEvents = e("#external-events"),
+            this.$calendarObj = null
+    };
+    t.prototype.onDrop = function (t, n) {
+            var a = t.data("eventObject"),
+                l = t.attr("data-class"),
+                i = e.extend({}, a);
+            i.start = n, l && (i.className = [l]),
+                this.$calendar.fullCalendar("renderEvent", i, !0),
+                e("#drop-remove").is(":checked") && t.remove()
+        }, t.prototype.onEventClick = function (t, n, a) {
+        	var jsonData = ${e};
+        	console.log(jsonData);
+        	for(var i=0; i<jsonData.length; i++) {
+        		console.log(jsonData[i].bk_no);
+        	}
+            var l = this,
+                i = e("<form></form>");
+            i.append("<label>정보 확인</label>"),
+                i.append("<div class='input-group m-b-15'><input class='form-control' type=text value='" + t.title + "' />" +
+                    "<span class='input-group-append'>" +
+                    "</div>"),
+                l.$modal.modal({
+                    backdrop: "static"
+                }), l.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().
+            find(".delete-event").unbind("click").click(function () {
+                l.$calendarObj.fullCalendar("removeEvents", function (e) {
+                        return e._id == t._id
+                    }),
+                    l.$modal.modal("hide")
+            }), l.$modal.find("form").on("submit", function () {
+                return t.title = i.find("input[type=text]").val(),
+                    l.$calendarObj.fullCalendar("updateEvent", t), l.$modal.modal("hide"), !1
+            })
+        },
+        t.prototype.onSelect = function (t, n, a) {
+            var l = this;
+            l.$modal.modal({
+                backdrop: "static"
+            });
+            var i = e("<form></form>");
+        
+                l.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body")
+                .empty().prepend(i).end().find(".save-event").unbind("click").click(function () {
+                    i.submit()
+                }), l.$modal.find("form").on("submit", function () {
+                    var e = i.find("input[name='title']")
+                        .val(),
+                        a = (i.find("input[name='beginning']")
+                            .val(), i.find("input[name='ending']")
+                            .val(), i.find("select[name='category'] option:checked").val());
+                    return null !== e && 0 != e.length ? (l.$calendarObj.fullCalendar("renderEvent", {
+                            title: e,
+                            start: t,
+                            end: n,
+                            allDay: !1,
+                            className: a
+                        }, !0),
+                        l.$modal.modal("hide")) : alert("You have to give a title to your event"), !1
+                }),
+                l.$calendarObj.fullCalendar("unselect")
+        }, t.prototype.enableDrag = function () {
+            e(this.$event).each(function () {
+                var t = {
+                    title: e.trim(e(this).text())
+                };
+                e(this).data("eventObject", t),
+                    e(this).draggable({
+                        zIndex: 999,
+                        revert: !0,
+                        revertDuration: 0
+                    })
+            })
+        }, t.prototype.init = function () {
+            this.enableDrag();
+            var data = ${e};
+            var t = new Date,
+                n = (
+                    t.getDate(), t.getMonth(), t.getFullYear(),
+                    new Date(e.now())),
+                a = data,
+                l = this;
+            l.$calendarObj = l.$calendar.fullCalendar({
+                    slotDuration: "00:15:00",
+                    minTime: "08:00:00",
+                    maxTime: "19:00:00",
+                    defaultView: "month",
+                    handleWindowResize: !0,
+                    height: e(window).height() - 200,
+                    header: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "month,agendaWeek,agendaDay"
+                    },
+                    events: a,
+                    editable: !0,
+                    droppable: !0,
+                    eventLimit: !0,
+                    selectable: !0,
+                    drop: function (t) {
+                        l.onDrop(e(this), t)
+                    },
+                    select: function (e, t, n) {
+                        l.onSelect(e, t, n)
+                    },
+                    eventClick: function (e, t, n) {
+                        l.onEventClick(e, t, n)
+                    }
+                }),
+                this.$saveCategoryBtn.on("click", function () {
+                    var e = l.$categoryForm.find("input[name='category-name']").val(),
+                        t = l.$categoryForm.find("select[name='category-color']").val();
+                    null !== e && 0 != e.length && (l.$extEvents.append('<div class="external-event bg-' + t + '" data-class="bg-' + t + '" style="position: relative;"><i class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"></i>' + e + "</div>"),
+                        l.enableDrag())
+                })
+        }, e.CalendarApp = new t, e.CalendarApp.Constructor = t
+}(window.jQuery),
+function (e) {
+    "use strict";
+    e.CalendarApp.init()
+}(window.jQuery);
+</script>
+
 	<script src="resources/dist/assets/js/pages/demo.widgets.js"></script>
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
@@ -998,7 +1041,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
-var jsonData = ${e};
+/* var jsonData = ${e};
+console.log(jsonData.length);
 console.log(jsonData);
+for(var i=0; i<jsonData.length; i++) {
+} */
+/* console.log(jsonData.bookingList.length);
+for(var i=0; i<jsonData.bookingList.length; i++) {
+	console.log(jsonData.bookingList[i]);
+		var title = jsonData.bookingList[i].PET_NAME;
+		var start = jsonData.bookingList[i].VS_START;
+		var end = jsonData.bookingList[i].VS_END;
+		console.log("title="+title);
+		console.log('start='+ start);
+		console.log('end='+ end);
+		$('#calendar').fullCalendar
+	$.each(jsonData.bookingList[i], function(key, value) {
+		console.log("key: " + key + " / " + "value" + value);
+	});
+}; */
+
 </script>
 </html>

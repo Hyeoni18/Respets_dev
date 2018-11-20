@@ -214,6 +214,31 @@
 		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</select>
 	
+	<select id="getBusinessList" resultType="HashMap">
+		SELECT BUS.BUS_NO, BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL, 
+		BUS.BUS_NAME, BUS.BUS_CEO, BUS.BUS_LCNO, BUS.BUS_PHONE, 
+		BUS.BUS_ADDR, BUS.BUS_ADDR2, BUS.BUS_TIME, SVC.SVC_PRI
+        FROM BUS INNER JOIN SVC
+        ON SVC.BUS_NO = BUS.BUS_NO
+        INNER JOIN BCT
+        ON SVC.BCT_CODE = BCT.BCT_CODE WHERE BUS.BUS_CHK = 'X' AND SVC.SVC_PRI=1
+        ORDER BY BUS_TIME ASC
+	</select>
+	
+	<select id="getBusinessInfo" parameterType="HashMap" resultType="HashMap">
+		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE, GLR.GLR_LOC
+        FROM BUS INNER JOIN SVC
+        ON SVC.BUS_NO = BUS.BUS_NO
+        INNER JOIN BCT
+        ON SVC.BCT_CODE = BCT.BCT_CODE 
+        INNER JOIN GLR
+        ON GLR.BUS_NO = BUS.BUS_NO
+        WHERE BUS.BUS_NO=#{bus_no} AND SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
+	</select>
+	
+	<update id="confirmLicense" parameterType="String">
+		UPDATE BUS SET BUS_CHK='O' WHERE BUS_NO=#{bus_no}
+	</update>
 <!-- 	<select id="getPerCalendar" resultType="HashMap" parameterType="String">
 		SELECT PER_NAME,BK_NO,PET_NAME,BUS_NAME,BCT_NAME,
 		TO_CHAR(VS_START, 'yyyy-mm-dd hh24:mi') VS_START,
