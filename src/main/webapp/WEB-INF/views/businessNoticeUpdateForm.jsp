@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<form id="writeBusinessNoticePage" action="businessNoticeUpdate" method="post">
+<form id="writeBusinessNoticePage" action="businessNoticeUpdate">
 <input type="hidden" name="bbo_no" id="BBO_NO" value="0"/>
 <select name="bct_code" >
 	<option id="m" value="M">병원</option>

@@ -148,28 +148,28 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping (value="/noticeDetailPage", method=RequestMethod.GET)
+	@RequestMapping (value="/noticeDetailPage")
 	public ModelAndView noticeDetailPage(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.noticeDetailPage(request);
 		return mav;
 	}
 	
-	@RequestMapping (value="/searchBusinessNotice", method=RequestMethod.GET)
+	@RequestMapping (value="/searchBusinessNotice")
 	public ModelAndView searchBusinessNotice(HttpSession session, String select, String search, Integer pageNum) {
 		mav = new ModelAndView();
 		mav = js.searchBusinessNotice(session, select, search, pageNum);
 		return mav;
 	}
 	
-	@RequestMapping (value="/writeBusinessNoticePage", method=RequestMethod.GET)
+	@RequestMapping (value="/writeBusinessNoticePage")
 	public ModelAndView writeBusinessNoticePage() {
 		mav = new ModelAndView();
 		mav.setViewName("writeBusinessNoticePage");
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessNoticeInsert", method=RequestMethod.POST)
+	@RequestMapping (value="/businessNoticeInsert")
 	public ModelAndView businessNoticeInsert
 	(HttpSession session, String bct_code, int bbc_no, String bbo_title, String bbo_ctt) {
 		mav = new ModelAndView();
@@ -178,7 +178,7 @@ public class JiyeController {
 	}
 
 	
-	@RequestMapping (value="/businessNoticeUpdate", method=RequestMethod.POST)
+	@RequestMapping (value="/businessNoticeUpdate")
 	public ModelAndView businessNoticeUpdate(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessNoticeUpdate(request);

@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Respets 회원가입</title>
+        <title>Respets :: 개인회원가입</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -42,15 +42,7 @@
 
                                     <div class="form-group">
                                         <label for="email">이메일 주소</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                        <input class="form-control" type="text" id="per_email" name="per_email" onchange="emailChk()" placeholder="ex)respets@respets.com" required>
-=======
                                         <input class="form-control" type="text" id="per_email" name="per_email" onchange="emailChk()" placeholder="ex)respets@respets.com" required/>
->>>>>>> Jin
-=======
-                                        <input class="form-control" type="text" id="per_email" name="per_email" onchange="emailChk()" placeholder="ex)respets@respets.com" required/>
->>>>>>> c5c6877e04d852283792c8633f5829fca1774e28
                                     	<div id="chkMsg"></div>
                                     </div>
 
@@ -78,39 +70,25 @@
                                     
                                     <div class="form-group">
                                         <label for="file">프로필 사진(선택사항)</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         <input class="form-control" type="file" id="photo" name="photo" onchange="fileChk(this);">
-=======
-                                        <input class="form-control" type="file" id="photo" name="photo" onchange="fileChk(this);"/>
->>>>>>> Jin
-=======
-                                        <input class="form-control" type="file" id="photo" name="photo" onchange="fileChk(this);"/>
->>>>>>> c5c6877e04d852283792c8633f5829fca1774e28
                                         <input type="hidden" name="fileCheck" id="fileCheck" value="0" />
                                     </div>
 
                                     <div class="form-group mb-0 text-center">
                                         <button class="btn btn-success" id="submit" type="submit"> 가입하기 </button>
                                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> Jin
-=======
->>>>>>> c5c6877e04d852283792c8633f5829fca1774e28
                                 </form>
-                            </div> <!-- end card-body -->
-                        </div>
-                        <!-- end card -->
 
-                        <div class="row mt-3">
+                       	 <div class="row mt-3">
                             <div class="col-12 text-center">
                                 <p class="text-muted">계정이 이미 있으신가요? <a href="./loginForm" class="text-dark ml-1"><b>로그인 하기</b></a></p>
                             </div> <!-- end col-->
                         </div>
+                        
                         <!-- end row -->
+                            </div> <!-- end card-body -->
+                        </div>
+                        <!-- end card -->
 
                     </div> <!-- end col -->
                 </div>
@@ -127,8 +105,6 @@
         <!-- App js -->
         <script src="/resources/dist/assets/js/app.min.js"></script>
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
 <!-- 	<form action="personalJoin" name="personalJoin" id="personalJoin" onsubmit="return formChk();" method="post" 
 	enctype="multipart/form-data">
 		이메일<br/>
@@ -155,10 +131,6 @@
 		
 		<input type="submit" value="가입하기" id="submit" disabled/>
 	</form> -->
-=======
->>>>>>> Jin
-=======
->>>>>>> c5c6877e04d852283792c8633f5829fca1774e28
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

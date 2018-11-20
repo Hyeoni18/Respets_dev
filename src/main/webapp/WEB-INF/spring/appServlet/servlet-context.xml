@@ -162,8 +162,6 @@
 			<exclude-mapping path="/noticeUpdateForm" />
 			<exclude-mapping path="/noticeUpdate" />
 			<exclude-mapping path="/noticeDelete" />
-			<exclude-mapping path="/noticeListBusiness" />
-			<exclude-mapping path="/noticeListPersonal" />
 			<!-- business Detail -->
 			<exclude-mapping path="/businessDetailPage" />
 			<exclude-mapping path="/favoriteChange" />

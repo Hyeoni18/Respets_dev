@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <title>Insert title here</title>
 </head>
 <body>
-<form id="writeBusinessNoticePage" action="businessNoticeInsert" method="post">
+<form id="writeBusinessNoticePage" action="businessNoticeInsert">
 <select name="bct_code">
 	<option value="M" selected="selected">병원</option>
 	<option value="B">미용</option>
