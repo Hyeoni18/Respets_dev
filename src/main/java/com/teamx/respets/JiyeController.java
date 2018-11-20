@@ -133,7 +133,7 @@ public class JiyeController {
 	}
 
 	// 개인예약디테일
-	@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
+	@RequestMapping(value = "/myBookingDetaill", method = RequestMethod.GET)
 	public ModelAndView recentMyBookingList(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.myBookingDetail(request);

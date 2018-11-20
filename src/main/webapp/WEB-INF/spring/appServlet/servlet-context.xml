@@ -165,6 +165,8 @@
 			<exclude-mapping path="/myBookingCancelPage" />
 			<exclude-mapping path="/businessList" />
 			<exclude-mapping path="/businessInfoDetail" />
+			<exclude-mapping path="/businessInfoUpdateForm"/>
+			<exclude-mapping path="/businessBookingListPage"/>
 			<exclude-mapping path="/weekCal" />
 			<exclude-mapping path="/searchList" /> <!-- 서진 : index에서 검색 버튼 눌렀을 때 -->
 			<exclude-mapping path="/bookingForm" /> <!-- 서진 : 예약 페이지 -->
@@ -172,7 +174,9 @@
 			<exclude-mapping path="/findMyId" />		
 			<exclude-mapping path="/findMyPw" />		
 			<exclude-mapping path="/resetMyPwForm" />		
-			<exclude-mapping path="/updateMyPw" />		
+			<exclude-mapping path="/updateMyPw" />
+			<!-- 혜연 -->
+			
 			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
 			<beans:bean class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>
 		</interceptor>

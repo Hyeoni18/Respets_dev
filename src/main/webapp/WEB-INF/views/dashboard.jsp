@@ -25,7 +25,7 @@
     </head>
 
     <body>
-
+	${no}
         <!-- Begin page -->
         <div class="wrapper">
 
@@ -60,7 +60,7 @@
 						<li class="side-nav-item">
 			                <a href="#" class="side-nav-link">
 			                    <i class="dripicons-list"></i>
-			                    <span> 전체 예약 목록 </span>
+			                    <span> <a href='allBookingList'>전체 예약 목록</a> </span>
 			                </a>
 			            </li>
 			
@@ -81,7 +81,7 @@
 						<li class="side-nav-item">
 			                <a href="#" class="side-nav-link">
 			                    <i class="dripicons-document"></i>
-			                    <span> 나의 회원 정보 </span>
+			                    <span><a href="myInfo"> 나의 회원 정보 </a></span>
 			                </a>
 			            </li>
 			
