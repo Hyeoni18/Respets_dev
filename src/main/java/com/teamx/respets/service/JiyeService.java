@@ -696,7 +696,6 @@ public class JiyeService {
 			String bus_email = bMap.get("BUS_EMAIL").toString();
 			String glr_loc = bMap.get("GLR_LOC").toString();
 			String glr_file = bMap.get("GLR_FILE").toString();
-
 			mav.addObject("bus_no", bus_no);
 			mav.addObject("bct_name", bct_name);
 			mav.addObject("bus_name", bus_name);

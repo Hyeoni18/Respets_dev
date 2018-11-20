@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>기업 마이페이지</h1>
+	${no}
 	<form name="myPage">
 		<div>
 			<input type="button" name="todayScheduleList" value="오늘 일정 목록" onclick="forward(this)" /><br /> 

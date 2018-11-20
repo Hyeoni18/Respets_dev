@@ -12,6 +12,7 @@
 <body>
 	<h1>오늘 일정 목록</h1>
 	${no}
+	<br>
 	<div class="No" style="border: 2px solid red">
 		<h3>미확인 예약 (*예약을 확인해주세요*)</h3>
 		<hr>${toSdList}</div>
@@ -19,25 +20,45 @@
 	${none}
 </body>
 <script>
-	function forward(button) {
-		var com = $("input[name='com']").val();
-		console.log(com);
-		var but = $("span[name='but']");
-		var no = '${no}'
-		console.log(no);
-		
-		if (com == '방문') {
+	$('.unNoshow').hide();
+	function com(button, bk_no) {
+		console.log(bk_no);
+		$.ajax({
+			url : 'todayScheduleListCheck?bk_no',
+			type : 'post',
+			success : function(data) {
+				console.log(data);
+				if (data != 0) {
+					console.log("성공");
+					$('.but').html("방문 완료");
+					$('.ton').hide();
+				} else {
+					console.log("실패");
+				}
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+
+	}
+	function noshow(button, bk_no, pno) {
+		var det;
+		det = confirm("노쇼를 선택하시겠습니까?");
+		if (det) {
 			$.ajax({
-				url : 'todayScheduleListCheck',
-				type : 'get',
+				url : 'todayScheduleListNoShow',
+				type : 'post',
 				data : {
-					'no' : no
+					'no' : no,
+					'pno' : pno
 				},
 				success : function(data) {
+					console.log(data);
 					if (data != 0) {
 						console.log("성공");
-						$('#list').insertAfter(".Ok");//$("#list").appendTo(".ok");
-						but.innerHTML = "방문완료";
+						$('.unNoshow').show();
+						$('.noshow').hide();
 					} else {
 						console.log("실패");
 					}
@@ -47,58 +68,30 @@
 				}
 			});
 		}
-		if (com == '예약취소') {
-			$.ajax({
-				url : 'todayScheduleCancell',
-				type : 'get',
-				data : {
-					'no' : no
-				},
-				success : function(data) {
-					if (data == 0) {
-						console.log("성공");
-					} else {
-						console.log("실패");
-					}
-				},
-				error : function(error) {
-					console.log(error);
+	}
+	function unNoshow(button, bk_no, pno) {
+		$.ajax({
+			url : 'todayScheduleListUnNoShow',
+			type : 'post',
+			data : {
+				'no' : no,
+				'pno' : pno
+			},
+			success : function(data) {
+				console.log(data);
+				if (data != 0) {
+					console.log("성공");
+					$('.noshow').show();
+					$('.unNoshow').hide();
+				} else {
+					console.log("실패");
 				}
-			});
-		}
-		if (com == '노쇼취소'){
-			$.ajax({
-				url : "notNoshow",
-				type : 'get'
-			})
-		}
-		if (com == '노쇼') {
-			var det;
-			det = confirm("노쇼를 선택하시겠습니까?");
-			if (det) {
-				console.log("들?");
-				console.log('${bkno}');
-				$.ajax({
-					url : 'todayScheduleListNoShow',
-					type : 'get',
-					data : {
-						'bkno' : '${bkno}'
-					},
-					success : function(data) {
-						if (data != 0) {
-							console.log("성공");
-						} else {
-							console.log("실패");
-						}
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-			} else {
-				frm.action = "todayScheduleList";
+			},
+			error : function(error) {
+				console.log(error);
 			}
-		}
+		});
+
 	}
 </script>
 </html>

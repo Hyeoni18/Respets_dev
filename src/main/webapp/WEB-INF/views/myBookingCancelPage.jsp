@@ -15,9 +15,8 @@
 		발생할 수 있습니다.
 	</h3>
 	<div>
-		<form action="myBookingCancel">
-			<button>예약 취소 완료</button>
-		</form>
+		<input type="button" id="cenc" value="예약 취소"
+			onclick="location.href='myBookingCancel?bk_no=${bk_no}'" />
 	</div>
 </body>
 </html>
