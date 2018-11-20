@@ -1,0 +1,9 @@
+// 
+// Lighten badge (soft)
+//
+
+@each $color, $value in $theme-colors {
+  .badge-#{$color}-lighten {
+      @include badge-variant-light($value);
+  }
+}

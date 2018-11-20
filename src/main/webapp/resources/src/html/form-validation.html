@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Hyper - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- App css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div class="wrapper">
+
+            @@include('./partials/left-sidebar.html')
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    @@include('./partials/topbar.html')
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                                            <li class="breadcrumb-item active">Form Validation</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Form Validation</h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-3">Custom styles</h4>
+
+                                        <form class="needs-validation" novalidate>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustom01">First name</label>
+                                                <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required>
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustom02">Last name</label>
+                                                <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustomUsername">Username</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Please choose a username.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustom03">City</label>
+                                                <input type="text" class="form-control" id="validationCustom03" placeholder="City" required>
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid city.
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustom04">State</label>
+                                                <input type="text" class="form-control" id="validationCustom04" placeholder="State" required>
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid state.
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="validationCustom05">Zip</label>
+                                                <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required>
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid zip.
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <div class="custom-control custom-checkbox form-check">
+                                                    <input type="checkbox" class="custom-control-input" id="invalidCheck" required>
+                                                    <label class="custom-control-label" for="invalidCheck">Agree to terms and conditions</label>
+                                                    <div class="invalid-feedback">
+                                                        You must agree before submitting.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Submit form</button>
+                                        </form>
+
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-3">Tooltips</h4>
+
+                                        <form class="needs-validation" novalidate>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltip01">First name</label>
+                                                <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="Mark" required>
+                                                <div class="valid-tooltip">
+                                                    Looks good!
+                                                </div>
+                                                <div class="invalid-tooltip">
+                                                    Please enter first name.
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltip02">Last name</label>
+                                                <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="Otto" required>
+                                                <div class="valid-tooltip">
+                                                    Looks good!
+                                                </div>
+                                                <div class="invalid-tooltip">
+                                                    Please enter last name.
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltipUsername">Username</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="validationTooltipUsername" placeholder="Username" aria-describedby="validationTooltipUsernamePrepend"
+                                                        required>
+                                                    <div class="invalid-tooltip">
+                                                        Please choose a unique and valid username.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltip03">City</label>
+                                                <input type="text" class="form-control" id="validationTooltip03" placeholder="City" required>
+                                                <div class="invalid-tooltip">
+                                                    Please provide a valid city.
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltip04">State</label>
+                                                <input type="text" class="form-control" id="validationTooltip04" placeholder="State" required>
+                                                <div class="invalid-tooltip">
+                                                    Please provide a valid state.
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative mb-3">
+                                                <label for="validationTooltip05">Zip</label>
+                                                <input type="text" class="form-control" id="validationTooltip05" placeholder="Zip" required>
+                                                <div class="invalid-tooltip">
+                                                    Please provide a valid zip.
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Submit form</button>
+                                        </form>
+                                        
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                @@include('./partials/footer.html')
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        @@include('./partials/right-sidebar.html')
+
+
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>
+
+    </body>
+</html>

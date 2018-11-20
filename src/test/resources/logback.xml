@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	<logger name="com.board.cha" level="off" />
+	<!-- 테이블의 결과를 출력하기 위해서 info 대신 trace 로 설정 -->
+	<logger name="jdbc.resultsettable" level="trace" />
+	<logger name="jdbc.audit" level="off" />
+	<logger name="jdbc.resultset" level="off" />	<!-- 간단한 결과 -->
+	<logger name="jdbc.sqlonly" level="info" />		<!-- 값이 들어간 쿼리문을 보여줌 -->
+	<logger name="jdbc.sqltiming" level="off" />
+	<logger name="jdbc.connection" level="info" />   <!-- 커넥션 1개가 살고, 죽는 과정을 보여줌 -->
+	<root level="info">
+		<appender-ref ref="console" />
+	</root>
+</configuration>
