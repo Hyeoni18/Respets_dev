@@ -1,5 +1,6 @@
 package com.teamx.respets.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,14 @@ public interface IJiyeDao {
 	public List<HashMap<String, Object>> businessGallery(HashMap<String, Object> hmap);
 
 	public List<HashMap<String, Object>> getPerCalendar(String no);
+
+	public int adminChk(String adm_no);
+
+	public ArrayList<HashMap<String, Object>> getBusinessList();
+
+	public HashMap<String, Object> getBusinessInfo(HashMap<String, Object> bMap);
+
+	public int confirmLicense(String bus_no);
 
 
 }

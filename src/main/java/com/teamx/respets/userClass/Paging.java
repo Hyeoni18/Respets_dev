@@ -1,6 +1,7 @@
 package com.teamx.respets.userClass;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.teamx.respets.bean.AdminBoard;
 
@@ -148,4 +149,171 @@ public class Paging {
 		return sb.toString();
 	}
 
+	@SuppressWarnings("unused")
+	public String businessListPaging(Map<String, Object> map) {
+		// 전체 페이지 갯수
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		// 전체 페이지 그룹 갯수
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		// 현재 페이지가 속해 있는 그룹 번호
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return businessList(currentGroup, totalPage, boardName, map);
+	} // method End
+
+	private String businessList(int currentGroup, int totalPage, String boardName, Map<String, Object> map) {
+		String bus_addr = (String) map.get("bus_addr");
+		String bsd_date = (String) map.get("bsd_date");
+		String bct_code = (String) map.get("bct_code");
+		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+		
+		if (start != 1) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+			sb.append("이전</a></li>");
+		} // method End
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+				sb.append("  "+ i +"</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<font style='color: red;'> "  + i + "  </font>");
+			} // else End
+		} // for End
+		
+		if (end != totalPage) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+			sb.append("다음</a></li>");
+		} // if End
+		return sb.toString();
+	} // method End
+
+	@SuppressWarnings("unused")
+	public String businessListButPaging(String bct_code) {
+		// 전체 페이지 갯수
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		// 전체 페이지 그룹 갯수
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		// 현재 페이지가 속해 있는 그룹 번호
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return businessListBut(currentGroup, totalPage, boardName, bct_code);
+	} // method End
+
+	
+	public String businessListBut(int currentGroup, int totalPage, String boardName, String bct_code) {
+		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+		
+		if (start != 1) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code="+bct_code+"'>");
+			sb.append("이전</a></li>");
+		} // method End
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bct_code="+bct_code+"'>");
+				sb.append("  "+ i +"</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<font style='color: red;'> "  + i + "  </font>");
+			} // else End
+		} // for End
+		
+		if (end != totalPage) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code="+bct_code+"'>");
+			sb.append("다음</a></li>");
+		} // if End
+		return sb.toString();
+	}
+
+	@SuppressWarnings("unused")
+	public String businessListTagPaging(Map<String, Object> map) {
+		// 전체 페이지 갯수
+				int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+				// 전체 페이지 그룹 갯수
+				int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+				// 현재 페이지가 속해 있는 그룹 번호
+				int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+				return businessListTag(currentGroup, totalPage, boardName, map);
+	}
+
+	private String businessListTag(int currentGroup, int totalPage, String boardName2, Map<String, Object> map) {
+		String bus_addr = (String) map.get("bus_addr");
+		String bsd_date = (String) map.get("bsd_date");
+		String bct_code = (String) map.get("bct_code");
+		String tag_no = (String) map.get("tag_no");
+		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+		
+		if (start != 1) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("이전</a></li>");
+		} // method End
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+				sb.append("  "+ i +"</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<font style='color: red;'> "  + i + "  </font>");
+			} // else End
+		} // for End
+		
+		if (end != totalPage) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("다음</a></li>");
+		} // if End
+		return sb.toString();
+	}
+
+	@SuppressWarnings("unused")
+	public String butTagSelectListPaging(Map<String, Object> map) {
+		// 전체 페이지 갯수
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		// 전체 페이지 그룹 갯수
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		// 현재 페이지가 속해 있는 그룹 번호
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return butTagSelectList(currentGroup, totalPage, boardName, map);
+	} // method End
+
+	private String butTagSelectList(int currentGroup, int totalPage, String boardName, Map<String, Object> map) {
+		String bct_code = (String) map.get("bct_code");
+		String tag_no = (String) map.get("tag_no");
+		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+		
+		if (start != 1) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("이전</a></li>");
+		} // method End
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+				sb.append("  "+ i +"</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<font style='color: red;'> "  + i + "  </font>");
+			} // else End
+		} // for End
+		
+		if (end != totalPage) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("다음</a></li>");
+		} // if End
+		return sb.toString();
+	}
+	
+	
 } // class End

@@ -1,11 +1,14 @@
 package com.teamx.respets.service;
 
+import java.lang.reflect.Member;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.dao.HyeonDao;
+import com.teamx.respets.dao.IJiyeDao;
+import com.teamx.respets.userClass.Paging;
 
 @Service
 public class HyeonService {
@@ -119,6 +126,7 @@ public class HyeonService {
 			// 담은 정보로 update
 			boolean update = hyDao.myInfoUpdate(mb);
 			if (update) {
+				System.out.println(mb.getPer_email());
 				mav.addObject("mb", mb);
 				mav.addObject("infoSuccess", makeInfoSuccessHtml(mb));
 				view = "myInfo";
@@ -131,8 +139,24 @@ public class HyeonService {
 		return mav;
 	}
 
+	public ModelAndView businessInfoUpdate(Business bi, HttpSession session) {
+		this.session = session;
+		String no = session.getAttribute("no").toString();
+		if (bi != null) {
+			bi.setBus_no(no);
+			bi.setBus_name(bi.getBus_name());
+			bi.setBus_ceo(bi.getBus_ceo());
+			bi.setBus_phone(bi.getBus_phone());
+			bi.setBus_post(bi.getBus_addr());
+			bi.setBus_addr2(bi.getBus_addr2());
+			boolean update = hyDao.businessInfoUpdate(bi);
+		}
+		return null;
+	}
+
 	/* 혜연 개인 회원탈퇴 이메일,예약내역, 동물종류남기고 지우기 */
 	public ModelAndView personalPartDelete(HttpSession session) {
+		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
 		String no = session.getAttribute("no").toString();
@@ -163,43 +187,44 @@ public class HyeonService {
 	}
 
 	/* 혜연 예약취소 */
-	public ModelAndView myBookingCancel(HttpSession session) {
+	public ModelAndView myBookingCancel(HttpSession session, HttpServletRequest request) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
-		String no = session.getAttribute("no").toString();
-		System.out.println("예약번호=" + no);
+		String bk_no = request.getParameter("bk_no");
+		System.out.println("예약번호=" + bk_no);
 		// 방문날짜 가져오기
-		String start = hyDao.getBkStart(no);
+		String start = hyDao.getBkStart(bk_no);
 		System.out.println("방문날=" + start);
 		// 현재날짜(취소날짜)
-		String timeS = new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-		System.out.println("취소날=" + timeS);
-		// date 형식의 객체를 원하는 방식으로 출력하게 해준다
-		SimpleDateFormat day = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-		Date startDay = null;
-		Date nowDay = null;
-		try {
-			startDay = day.parse(start); // day.format(start);
-			System.out.println(startDay);
-			nowDay = day.parse(timeS); // day.format(timeS);
-			System.out.println(nowDay);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		// 날짜간 차이 구하기
-		long cancel = startDay.getTime() - nowDay.getTime();
-		int cancDay = (int) cancel / (24 * 60 * 60 * 1000);
-		System.out.println(cancDay);
-		/*
-		 * if (cancDay >= 1 || cancDay <= 3) { // 취소테이블에 insert 하기 int cancelDay =
-		 * hyDao.cancelInsert(no, timeS, cancDay); if (cancelDay != 0) {
-		 * mav.addObject("cancInsertSucess", makeCancInsertSucess()); view =
-		 * "recentMyBookingList"; } else { mav.addObject("flas", makeFlasHtml()); view =
-		 * "myBookingCancelPage"; } }
-		 */
-		mav.setViewName(view);
-		return mav;
+//		String timeS = new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+//		System.out.println("취소날=" + timeS);
+//		// date 형식의 객체를 원하는 방식으로 출력하게 해준다
+//		SimpleDateFormat day = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+//		Date startDay = null;
+//		Date nowDay = null;
+//		try {
+//			startDay = day.parse(start); // day.format(start);
+//			System.out.println(startDay);
+//			nowDay = day.parse(timeS); // day.format(timeS);
+//			System.out.println(nowDay);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		// 날짜간 차이 구하기
+//		long cancel = startDay.getTime() - nowDay.getTime();
+//		int cancDay = (int) cancel / (24 * 60 * 60 * 1000);
+//		System.out.println(cancDay);
+//		/*
+//		 * if (cancDay >= 1 || cancDay <= 3) { // 취소테이블에 insert 하기 int cancelDay =
+//		 * hyDao.cancelInsert(no, timeS, cancDay); if (cancelDay != 0) {
+//		 * mav.addObject("cancInsertSucess", makeCancInsertSucess()); view =
+//		 * "recentMyBookingList"; } else { mav.addObject("flas", makeFlasHtml()); view =
+//		 * "myBookingCancelPage"; } }
+//		 */
+//		mav.setViewName(view);
+//		return mav;
+		return null;
 	}
 
 	private Object makeCancInsertSucess() {
@@ -213,6 +238,7 @@ public class HyeonService {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
+		StringBuilder sb = new StringBuilder();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String no = session.getAttribute("no").toString();
 		System.out.println("개인번호=" + no);
@@ -221,7 +247,15 @@ public class HyeonService {
 		// 예약 리스트 select
 		allList = hyDao.allBookingList(map);
 		if (allList != null) {
-			mav.addObject("allList", makeAllListHtml(allList));
+			for (int i = 0; i < allList.size(); i++) {
+				String bk_no = (String) allList.get(i).get("BK_NO");
+				System.out.println(bk_no);
+				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
+						+ allList.get(i).get("PTY_NAME") + " | " + allList.get(i).get("PET_NAME") + " | "
+						+ allList.get(i).get("PER_NAME") + " | " + allList.get(i).get("BK_TIME") + " | "
+						+ allList.get(i).get("VS_START") + " | " + allList.get(i).get("BK_CHK") + "</td></tr>");
+			}
+			mav.addObject("allList", sb);
 			view = "allBookingList";
 		} else {
 			mav.addObject("none", makeNoneHtml());
@@ -231,48 +265,40 @@ public class HyeonService {
 		return mav;
 	}
 
-	private Object makeAllListHtml(ArrayList<HashMap<String, Object>> allList) {
-		StringBuilder sb = new StringBuilder();
-		String no = null;
-		for (int i = 0; i < allList.size(); i++) {
-			no = (String) allList.get(i).get("BK_NO");
-			sb.append("<tr><td><a href='myBookingDetail?no=" + no + "'>" + no + "</a> | "
-					+ allList.get(i).get("PTY_NAME") + " | " + allList.get(i).get("PET_NAME") + " | "
-					+ allList.get(i).get("PER_NAME") + " | " + allList.get(i).get("BK_TIME") + " | "
-					+ allList.get(i).get("VS_START") + " | " + allList.get(i).get("BK_CHK") + "</td></tr>");
-		}
-		return sb.toString();
-	}
-
 //////////////////////////////////////////////////////////////////////////////////////
 
 	/* 혜연 기업 */
-	/* 혜연 기업 마이페이지 */
-	/*
-	 * public ModelAndView myPage(HttpServletRequest request) { mav = new
-	 * ModelAndView(); String view = null; String email =
-	 * request.getParameter("email"); String pw = request.getParameter("pw"); String
-	 * no = hyDao.myPage(email, pw); if (no != null) { mav.addObject("no", no); view
-	 * = "topbar"; } else { view = "loginForm"; } mav.setViewName(view); return mav;
-	 * }
-	 */
 
 	/* 혜연 기업 오늘일정 */
 	public ModelAndView todayScheduleList(HttpSession session) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
+		StringBuilder sb = new StringBuilder();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String no = session.getAttribute("no").toString();
 		String timeS = new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
 		map.put("no", no);
 		map.put("timeS", timeS);
+		System.out.println(timeS);
 		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		// 오늘 일정 select
 		bList = hyDao.todayScheduleList(map);
 		if (bList.size() != 0) {
-			mav.addObject("toSdList", makeToSdListHtml(bList));
-			mav.addObject("no", no);
+			for (int i = 0; i < bList.size(); i++) {
+				String bk_no = (String) bList.get(i).get("BK_NO");
+				String pno = (String) bList.get(i).get("PER_NO");
+				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
+						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
+						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
+						+ bList.get(i).get("VS_START")
+						+ "<br/><span class='but'></span><span class='ton'><input type='button' class='com' value='방문' onclick='com(this,\""
+						+ bk_no + ",\"" + pno + "\")' />"
+						+ " <input type='button' class='noshow' value='노쇼' onclick='noshow(this,\"" + bk_no + ",\""
+						+ pno + "\")' />"
+						+ " <input type='button' class='unNoshow' value='노쇼취소' onclick='unNoshow(this,\"" + bk_no
+						+ ",\"" + pno + "\")'/></span></div><br>");
+			}
+			mav.addObject("toSdList", sb);
 			view = "todayScheduleList";
 		} else {
 			mav.addObject("none", makeNoneHtml());
@@ -280,25 +306,6 @@ public class HyeonService {
 		}
 		mav.setViewName(view);
 		return mav;
-
-	}
-
-	/* 목록 띄우기 */
-	private Object makeToSdListHtml(ArrayList<HashMap<String, Object>> bList) {
-		StringBuilder sb = new StringBuilder();
-		String no = null;
-		for (int i = 0; i < bList.size(); i++) {
-			no = (String) bList.get(i).get("BK_NO");
-			sb.append("<div name='list'><a href='myBookingDetail?no=" + no + "'>" + no + "</a> | "
-					+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
-					+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
-					+ bList.get(i).get("VS_START")
-					+ "<br/><span id='but'></span><input type='button' name='com' value='방문' onclick='forward(this)' />"
-					+ " <input type='button' name='com' value='예약취소' onclick='forward(this)' />"
-					+ " <input type='button' name='com' value='노쇼' onclick='forward(this)' />"
-					+ " <input type='button' name='com' value='노쇼취소' onclick='forward(this?no" + no + ")'/></div><br>");
-		}
-		return sb.toString();
 	}
 
 	private Object makeNoneHtml() {
@@ -308,53 +315,70 @@ public class HyeonService {
 	}
 
 	/* 혜연 예약 상세내역 */
-	public ModelAndView myBookingDetail(HttpSession session) {
-		this.session = session;
+	public ModelAndView myBookingDetail(HttpServletRequest request) {
 		mav = new ModelAndView();
+		StringBuilder sb = new StringBuilder();
 		String view = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String no = session.getAttribute("no").toString();
-		System.out.println("예약번호=" + no);
-		map.put("no", no);
-		ArrayList<HashMap<String, Object>> detail = new ArrayList<HashMap<String, Object>>();
-		detail = hyDao.myBookingDetail(map);
-		if (detail != null) {
-			mav.addObject("dt", detail);
-			mav.addObject("no", no);
-			view = "myBookingDetail";
-		} else {
-			mav.addObject("none", makeNoneHtml());
-			view = "myBookingDetail";
+		String bk_no = request.getQueryString();
+		System.out.println("예약번호=" + bk_no);
+		map = hyDao.myBookingDetail(bk_no); // 펫 디테일 리스트로 가져오기
+		System.out.println("확인1: " + map);
+		ArrayList<HashMap<String, Object>> menu = new ArrayList<HashMap<String, Object>>();
+		ArrayList<HashMap<String, Object>> pList = new ArrayList<HashMap<String, Object>>();
+		String pet_no = map.get("PET_NO").toString();
+		menu = hyDao.getMenu(bk_no);
+		System.out.println("확인2: " + menu);
+		pList = hyDao.getPetList(pet_no);
+		System.out.println("pList=" + pList);
+		if (map != null) {
+			for (int i = 0; i < menu.size(); i++) {
+				if (menu.size() - i == 1) {
+					sb.append("<span>" + menu.get(i).get("MENU_NAME") + "</span>");
+				} else {
+					sb.append("<span>" + menu.get(i).get("MENU_NAME") + ", </span>");
+				}
+				mav.addObject("mList", sb);
+			}
+			for (int i = 0; i < pList.size(); i++) {
+				if (pList.size() - i == 1) {
+					sb.append("<tr><td>" + pList.get(i).get("PCL_NAME") + "</td><td>" + pList.get(i).get("PDT_CTT")
+							+ "</td></tr>");
+				}
+				mav.addObject("pList", sb);
+			}
 		}
+		Gson gson = new GsonBuilder().create();
+		String json = gson.toJson(map);
+		System.out.println("json: " + json);
+		mav.addObject("result", json);
+		mav.addObject("bk_no", bk_no);
+		view = "myBookingDetail";
 		mav.setViewName(view);
 		return mav;
 	}
 
 	/* 혜연 방문 클릭시 */
-	public int todayScheduleListCheck(String no) {
-		System.out.println("방문2=" + no);
-		int result = hyDao.todayScheduleListCheck(no);
-		return result;
-	}
-
-	/* 혜연 예약취소 클릭시 */
-	public int todayScheduleCancell(String no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* 혜연 노쇼 클릭시 */
-	public int todayScheduleListNoShow(String bkno) {
-		int result = hyDao.todayScheduleListNoShow(bkno);
-		System.out.println(result);
+	public int todayScheduleListCheck(HashMap<String, String> map) {
+		/*
+		 * String timeS = new
+		 * SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+		 * map.put("time", timeS);
+		 */
+		System.out.println(map.get("no"));
+		System.out.println(map.get("com"));
+		// System.out.println(map.get("time"));
+		System.out.println("방문2=" + map);
+		int result = hyDao.todayScheduleListCheck(map);
 		return result;
 	}
 
 	/* 혜연 전체 예약 */
-	public ModelAndView businessBookingList(HttpSession session) {
+	public ModelAndView businessBookingList(HttpSession session, Integer pageNum) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
+		int page_no = (pageNum == null) ? 1 : pageNum;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String no = session.getAttribute("no").toString();
 		System.out.println(no);
@@ -363,6 +387,7 @@ public class HyeonService {
 		bList = hyDao.businessBookingList(map);
 		if (bList != null) {
 			mav.addObject("toSdList", makedListHtml(bList));
+			mav.addObject("paging", makePaging(page_no, no));
 			mav.addObject("no", no);
 			view = "businessBookingListPage";
 		} else {
@@ -371,6 +396,15 @@ public class HyeonService {
 		}
 		mav.setViewName(view);
 		return mav;
+	}
+
+	private Object makePaging(int page_no, String no) {
+		int maxNum = hyDao.getListCount(no); // 전체 글의 개수
+		int listCount = 10; // 페이지당 글의 수
+		int pageCount = 5; // 그룹당 페이지 수
+		String boardName = "businessBookingList"; // 게시판이 여러개일 때
+		Paging paging = new Paging(maxNum, page_no, listCount, pageCount, boardName);
+		return paging.makeHtmlPaging();
 	}
 
 	private Object makedListHtml(ArrayList<HashMap<String, Object>> bList) {
@@ -381,7 +415,7 @@ public class HyeonService {
 			sb.append("<div name='list'><a href='myBookingDetail?no=" + no + "'>" + no + "</a> | "
 					+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
 					+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
-					+ bList.get(i).get("VS_START") + "</div>");
+					+ bList.get(i).get("VS_START") + "</div><br>");
 		}
 		return sb.toString();
 	}
@@ -408,61 +442,109 @@ public class HyeonService {
 		return mav;
 	}
 
-	private Object makeAddHtml() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("서비스를 등록해주세요");
-		return sb.toString();
-	}
-
 	private Object makeServiceListHtml(ArrayList<HashMap<String, Object>> servList) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < servList.size(); i++) {
 			String no = (String) servList.get(i).get("BUS_NO");
-			System.out.println("2=" + no);
-			if (no.length() <= 3) {
-				System.out.println("3=" + no);
-				sb.append("<div id='servDiv'><div id='servPhoto'><input type='image' value='"
-						+ servList.get(i).get("GLR_FILE") + "' onclick='forward(this)?no=" + no + "'></div><div>"
-						+ servList.get(i).get("BCT_NAME") + "</div></div>");
-			}
+			sb.append(
+					"<div id='servDiv' style='border: 2px solid black'><div id='servPhoto' style='border: 1px solid black'><input type='image' value='"
+							+ servList.get(i).get("GLR_FILE") + "' onclick='forward(this)?no=" + no
+							+ "'></div><div style='border: 1px solid black' algin='center'>"
+							+ servList.get(i).get("BCT_NAME") + "</div></div><br>");
 		}
 		return sb.toString();
 	}
 
-	/* 혜연 */
-	public ModelAndView businessInfoDetail(Business bi, HttpServletRequest request) {
+	public ModelAndView monthSchedule(HttpSession session) {
+		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
-		bi.setBus_no(request.getParameter("no"));
-		System.out.println(bi.getBus_no());
-		// bi = hyDao.serviceManagement(bi);
-		if (bi != null) {
-			mav.addObject("bi", bi);
-			view = "businessInfoDetail";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String no = session.getAttribute("no").toString();
+		System.out.println("번호=" + no);
+		map.put("no", no);
+		ArrayList<HashMap<String, Object>> servList = new ArrayList<HashMap<String, Object>>();
+		servList = hyDao.serviceList(map);
+		System.out.println(servList);
+		if (servList != null) {
+			mav.addObject("servList", makeServiceHtml(servList));
+			view = "monthSchedule";
 		} else {
+			mav.addObject("add", makeAddHtml());
 			view = "servicePage";
 		}
 		mav.setViewName(view);
 		return mav;
 	}
 
-	/* 혜연 */
-	public ModelAndView businessInfoUpdateForm(Business bi, HttpServletRequest request) {
-		mav = new ModelAndView();
-		String view = null;
-		bi.setBus_no(request.getParameter("no"));
-		System.out.println(bi.getBus_no());
-		// bi = hyDao.myPage(bi);
-		if (bi != null) {
-			view = "";
+	private Object makeServiceHtml(ArrayList<HashMap<String, Object>> servList) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < servList.size(); i++) {
+			String code = (String) servList.get(i).get("BCT_CODE");
+			sb.append("<li id='" + code + "'><span id='com'><a href='forward(" + code + ")'>"
+					+ servList.get(i).get("BCT_NAME") + "</a></span></li>");
 		}
-		return null;
+		return sb.toString();
+	}
+
+	private Object makeAddHtml() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("서비스를 등록해주세요");
+		return sb.toString();
+	}
+
+	public ModelAndView businessInfoDetail(HttpSession session) {
+		this.session = session;
+		mav = new ModelAndView();
+		String no = session.getAttribute("no").toString();
+		HashMap<String, Object> bmap = new HashMap<>();
+		bmap = hyDao.businessInfo(no);
+		System.out.println("bmap" + bmap);
+		String view = null;
+		if (bmap != null) {
+			Gson gson = new GsonBuilder().create();
+			String json = gson.toJson(bmap);
+			System.out.println(json);
+			mav.addObject("result", json);
+			view = "businessInfoDetail";
+		}
+		mav.setViewName(view);
+		return mav;
+	}
+
+	public ModelAndView businessInfoUpdateForm(Map<String, Object> jsonData, HttpSession session) {
+		this.session = session;
+		mav = new ModelAndView();
+		String no = session.getAttribute("no").toString();
+		mav.addObject("no", no);
+		Gson gson = new GsonBuilder().create();
+		String json = gson.toJson(jsonData);
+		mav.addObject("jsonData", json);
+		mav.setViewName("businessInfoUpdateForm");
+		return mav;
 	}
 
 	public ModelAndView unconfirmStep(HttpSession session) {
 		this.session = session;
 
 		return null;
+	}
+
+	public int todayScheduleListNoShow(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public ModelAndView businessPartDelete(HttpSession session) {
+		this.session = session;
+		mav = new ModelAndView();
+		String no = session.getAttribute("no").toString();
+		boolean result = hyDao.businessPartDelete(no);
+		if (result) {
+			session.invalidate();
+		}
+		mav.setViewName("redirect:/");
+		return mav;
 	}
 
 }

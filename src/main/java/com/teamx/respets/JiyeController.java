@@ -133,12 +133,12 @@ public class JiyeController {
 	}
 
 	// 개인예약디테일
-	@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
 	public ModelAndView recentMyBookingList(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.myBookingDetail(request);
 		return mav;
-	}
+	}*/
 	
 	//기업 공지사항 리스트
 	@RequestMapping (value="/businessNotice", method=RequestMethod.GET)
@@ -176,6 +176,7 @@ public class JiyeController {
 		mav = js.businessNoticeInsert(session, bct_code, bbc_no, bbo_title, bbo_ctt);
 		return mav;
 	}
+
 	
 	@RequestMapping (value="/businessNoticeUpdate", method=RequestMethod.POST)
 	public ModelAndView businessNoticeUpdate(HttpServletRequest request) {
@@ -211,5 +212,33 @@ public class JiyeController {
 		mav = js.businessGallery(request);
 		return mav;
 	}
+	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
+	public ModelAndView adminPage() {
+		mav = new ModelAndView();
+		mav.setViewName("adminPage");
+		return mav;
+	}
+	
+	@RequestMapping (value="/unconfirmBusiness", method=RequestMethod.GET)
+	public ModelAndView businessConfirm(HttpSession session) {
+		mav = new ModelAndView();
+		mav = js.unconfirmBusiness(session);
+		return mav;
+	}
+	
+	@RequestMapping (value="/chkLicense", method=RequestMethod.GET)
+	public ModelAndView chkLicense(HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav = js.chkLicense(request);
+		return mav;
+	}
+	
+	@RequestMapping (value="/confirmLicense", method=RequestMethod.GET)
+	public ModelAndView confirmLicense(HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav = js.confirmLicense(request);
+		return mav;
+	}
+	
 
 }
