@@ -47,14 +47,16 @@ public interface SunnyDao {
 	
 	
 	/*------------ ABO_TB ------------*/
-	public int getBoardCount();
-	public List<AdminBoard> getNoticeList(int pageNum);
 	public AdminBoard getBoardDetail(String abo_no);
 	public boolean boardInsert(AdminBoard abo);
 	public boolean boardDelete(String abo_no);
 	public boolean boardUpdate(AdminBoard abo);
-	public List<AdminBoard> getNoticeListSearch(AdminBoard abo);
-	public int getBoardCountSearch(AdminBoard abo);
+	public List<AdminBoard> getNoticeList(int pageNum);
+	public List<AdminBoard> getNoticeListAllSearch(AdminBoard abo);
+	public List<AdminBoard> getNoticeListCategoriSearch(AdminBoard abo);
+	public int getBoardCount();
+	public int getBoardCountAllSearch(AdminBoard abo);
+	public int getBoardCountCategoriSearch(AdminBoard abo);
 	
 	/* 기업 상세페이지 */
 	public HashMap<String, Object> getBusinessImage(HashMap<String, Object> hmap);

@@ -197,33 +197,34 @@ public class HyeonService {
 		String start = hyDao.getBkStart(bk_no);
 		System.out.println("방문날=" + start);
 		// 현재날짜(취소날짜)
-		String timeS = new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-		System.out.println("취소날=" + timeS);
-		// date 형식의 객체를 원하는 방식으로 출력하게 해준다
-		SimpleDateFormat day = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-		Date startDay = null;
-		Date nowDay = null;
-		try {
-			startDay = day.parse(start); // day.format(start);
-			System.out.println(startDay);
-			nowDay = day.parse(timeS); // day.format(timeS);
-			System.out.println(nowDay);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		// 날짜간 차이 구하기
-		long cancel = startDay.getTime() - nowDay.getTime();
-		int cancDay = (int) cancel / (24 * 60 * 60 * 1000);
-		System.out.println(cancDay);
-		/*
-		 * if (cancDay >= 1 || cancDay <= 3) { // 취소테이블에 insert 하기 int cancelDay =
-		 * hyDao.cancelInsert(no, timeS, cancDay); if (cancelDay != 0) {
-		 * mav.addObject("cancInsertSucess", makeCancInsertSucess()); view =
-		 * "recentMyBookingList"; } else { mav.addObject("flas", makeFlasHtml()); view =
-		 * "myBookingCancelPage"; } }
-		 */
-		mav.setViewName(view);
-		return mav;
+//		String timeS = new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+//		System.out.println("취소날=" + timeS);
+//		// date 형식의 객체를 원하는 방식으로 출력하게 해준다
+//		SimpleDateFormat day = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+//		Date startDay = null;
+//		Date nowDay = null;
+//		try {
+//			startDay = day.parse(start); // day.format(start);
+//			System.out.println(startDay);
+//			nowDay = day.parse(timeS); // day.format(timeS);
+//			System.out.println(nowDay);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		// 날짜간 차이 구하기
+//		long cancel = startDay.getTime() - nowDay.getTime();
+//		int cancDay = (int) cancel / (24 * 60 * 60 * 1000);
+//		System.out.println(cancDay);
+//		/*
+//		 * if (cancDay >= 1 || cancDay <= 3) { // 취소테이블에 insert 하기 int cancelDay =
+//		 * hyDao.cancelInsert(no, timeS, cancDay); if (cancelDay != 0) {
+//		 * mav.addObject("cancInsertSucess", makeCancInsertSucess()); view =
+//		 * "recentMyBookingList"; } else { mav.addObject("flas", makeFlasHtml()); view =
+//		 * "myBookingCancelPage"; } }
+//		 */
+//		mav.setViewName(view);
+//		return mav;
+		return null;
 	}
 
 	private Object makeCancInsertSucess() {
@@ -296,6 +297,7 @@ public class HyeonService {
 						+ bk_no + "',\'" + pno + "\')\" />"
 						+ " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(this,\'" + bk_no
 						+ "',\'" + pno + "')\"/></span></div><br>");
+
 			}
 			mav.addObject("toSdList", sb);
 			view = "todayScheduleList";

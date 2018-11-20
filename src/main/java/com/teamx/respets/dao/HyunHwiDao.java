@@ -1,6 +1,5 @@
 package com.teamx.respets.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -63,15 +62,15 @@ public interface HyunHwiDao {
 	public List<Map<String, Object>> selectSVC(String bus_no); //기업이 가진 업종 검색
 	
 	public List<Map<String, Object>> bctSelect(Map<String, Object> map);
-	public Map<String, Object> holidaySelected(String no);
+	public Map<String, Object> holidaySelected(Map<String, Object> map);
 	public String selectFileNo();
 	public int stepInsert(Map<String, Object> map);
 	public int empInsertEFX(Map<String, Object> map);
 	public void empInsertESD(Map<String, Object> map);
 	public List<Map<String, Object>> selectStep(Map<String, Object> map);
 	public Map<String, Object> selectGallery(Map<String, Object> map);
-	public Map<String, Object> searchEMP(String empno);
-	public Map<String, Object> searchEFX(String empno);
+	public Map<String, Object> searchEMP(String emp_no);
+	public Map<String, Object> searchEFX(String emp_no);
 	public String searchLunchTime(String no);
 	public Map<String, Object> searchTime(String no);	
 	
@@ -93,4 +92,19 @@ public interface HyunHwiDao {
 	public String searchPTYNO(String ani_name);
 	public String searchPRC(Map<String, Object> map);
 	public String searchSVC(Map<String, Object> map);
+	public List<Map<String, Object>> selectBSD(Map<String, Object> map);
+	public List<Map<String, Object>> selectTAG(String bct_code);
+	public String changeTAG(String tag_no);
+	public List<Map<String, Object>> searchBSDtoBUS(Map<String, Object> map);
+	public String selectBTG(Map<String, Object> map);
+	public List<Map<String, Object>> selectSVCcode(Map<String, Object> map);
+	public List<Map<String, Object>> selectBTGbus(Map<String, Object> map);
+	public List<Map<String, Object>> searchBUSaddr(Map<String, Object> map);
+	public Map<String, Object> busiListPaging(Map<String, Object> map);
+	public int countBusiList(Map<String, Object> map);
+	public int countBusiButList(String bct_code);
+	public List<Map<String, Object>> searchBUSaddrTag(Map<String, Object> map);
+	public int countSearchBUSaddr(Map<String, Object> map);
+	public List<Map<String, Object>> butTagSelectList(Map<String, Object> map);
+	public int countButTagSelectList(Map<String, Object> map);
 }

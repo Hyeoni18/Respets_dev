@@ -573,19 +573,8 @@ public class SunnyService {
 		mav.setViewName("redirect:noticeList");
 		return mav;
 	}
-
-	/* 공지 리스트-기업 */
-	public ModelAndView noticeListBusiness(Integer pageNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* 공지 리스트-개인 */
-	public ModelAndView noticeListPersonal(Integer pageNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	/* 검색한 게시글 리스트 */
 	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {
 		mav = new ModelAndView();
 		String view = null;
@@ -596,7 +585,11 @@ public class SunnyService {
 		abo.setSearch(search);
 		List<AdminBoard> aboList = null;
 		System.out.println("aboList=" + aboList);
-		aboList = sDao.getNoticeListSearch(abo);
+		if(abo.getAbc_name().equals("전체") && abo.getSearch()=="") {
+			noticeList(pageNum);
+		}else if(abo.getAbc_name().equals("전체")) {
+			aboList = sDao.getNoticeListAllSearch(abo);
+		}else aboList = sDao.getNoticeListCategoriSearch(abo);	
 		System.out.println("aboList=" + aboList);
 		if (aboList != null) {
 			mav.addObject("aboList", aboList);
@@ -614,13 +607,17 @@ public class SunnyService {
 	}
 
 	private String getPagingSearch(AdminBoard abo) {
-		int maxNum = sDao.getBoardCountSearch(abo); // 전체 글의 개수
+		int maxNum = 0;
+		if(abo.getAbc_name().equals("전체")) 
+			maxNum = sDao.getBoardCountAllSearch(abo); // 전체 글의 개수
+		else maxNum = sDao.getBoardCountCategoriSearch(abo); // 전체 글의 개수
 		int listCount = 10; // 페이지당 글의 수
 		int pageCount = 5; // 그룹당 페이지 수
 		String boardName = "noticeListSearch"; // 게시판이 여러개일 때
 		Paging paging = new Paging(maxNum, abo.getPage_no(), listCount, pageCount, boardName);
 		return paging.makeHtmlSearchPaging(abo);
 	}
+
 
 	public ModelAndView businessDetailPage(String bus_no, String bct_code) {
 		mav = new ModelAndView();
