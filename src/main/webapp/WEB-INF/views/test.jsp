@@ -14,7 +14,7 @@
 <button>서비스 페이지</button>
 </form>
 <!-- 기업에서 일하고 있는 직원들의 리스트를 보여주는 페이지 -->
-<form name="stepList" action="stepListBut" method="post">
+<form name="stepList" action="stepListBut" method="get">
 <button> 스텝 리스트 </button>
 </form>
 

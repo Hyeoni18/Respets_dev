@@ -33,7 +33,7 @@
 		UPDATE PER SET PER_LEAVE = 'O', PER_LTIME = SYSDATE WHERE PER_NO = #{no}
 	</update>
 
-	<select id="getBkStart" resultType="String"
+	<select id="getBkStart" resultType="date"
 		parameterType="String">
 		SELECT VS_START FROM BK WHERE BK_NO = #{bk_no}
 	</select>
