@@ -11,6 +11,7 @@
 <body>
 	<form name="allBookingList">
 		<h1>전체 예약 목록</h1>
+		${no}
 		<table>${allList}</table>
 	</form>
 	${none}

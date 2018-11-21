@@ -81,5 +81,13 @@ public class JinController {
 		mav.setViewName("bookingForm");
 		return mav;
 	} // method End
+	
+	// 서진 : 예약
+	@RequestMapping(value = "/booking", method = RequestMethod.GET)
+	public ModelAndView booking(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login");
+		return mav;
+	} // method End
 
 } // class End

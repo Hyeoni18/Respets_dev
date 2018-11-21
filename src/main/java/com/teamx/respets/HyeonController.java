@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -194,11 +195,8 @@ public class HyeonController {
 
 	/* 혜연 방문 클릭시 */
 	@RequestMapping(value = "/todayScheduleListCheck", method = RequestMethod.POST)
-	public @ResponseBody int todayScheduleListCheck(HashMap<String, String> map) {
-		System.out.println(map.get("com"));
-		System.out.println(map.get("no"));
-		System.out.println(map.get("pno"));
-		int result = hy.todayScheduleListCheck(map);
+	public @ResponseBody int todayScheduleListCheck(HttpServletRequest request) {
+		int result = hy.todayScheduleListCheck(request);
 		return result;
 	}
 

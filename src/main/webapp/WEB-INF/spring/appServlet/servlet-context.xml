@@ -195,9 +195,12 @@
 			<exclude-mapping path="/myBookingCancelPage" />
 			<exclude-mapping path="/businessList" />
 			<exclude-mapping path="/businessInfoDetail" />
+			<exclude-mapping path="/businessInfoUpdateForm"/>
+			<exclude-mapping path="/businessBookingListPage"/>
 			<exclude-mapping path="/weekCal" />
 			<exclude-mapping path="/searchList" /> <!-- 서진 : index에서 검색 버튼 눌렀을 때 -->
 			<exclude-mapping path="/bookingForm" /> <!-- 서진 : 예약 페이지 -->
+
 			<exclude-mapping path="/findMyIdForm" />
 			<exclude-mapping path="/findMyId" />
 			<exclude-mapping path="/findMyPw" />
