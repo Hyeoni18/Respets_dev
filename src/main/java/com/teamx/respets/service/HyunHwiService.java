@@ -1194,7 +1194,8 @@ public class HyunHwiService {
 				insertPrice(request);
 			} else {
 			String[] price = request.getParameterValues("price");
-			if (price[0] != null) {
+			System.out.print(request.getParameterValues("price"));
+			if (price != null) {
 				hDao.deletePRC(map);
 				insertPrice(request); // 기업이 지정한 서비스 가격 등록
 			}}
