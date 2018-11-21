@@ -5,14 +5,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -34,11 +36,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.bean.RandomTB;
 import com.teamx.respets.dao.HyunHwiDao;
-import com.teamx.respets.dao.SunnyDao;
+import com.teamx.respets.userClass.Paging;
 
 @Service
 public class HyunHwiService {
-
 	@Autowired
 	private HyunHwiDao hDao;
 	private ModelAndView mav;
@@ -595,7 +596,6 @@ public class HyunHwiService {
 		String cat_tag = request.getParameter("cat_tag"); // 고양이 태그(무마취)
 		String[] sort = request.getParameterValues("animal_code"); // 동물종류
 		String cat_sort = request.getParameter("cat_code"); // 고양이종류
-
 		String pet[];
 		int cnt = 0; // 가격의 순서를 가늠하기 위한 카운트 변수
 		// if (code.equals("B")) { //업종코드가 미용일 경우
@@ -727,7 +727,7 @@ public class HyunHwiService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("bus_no", bus_no);
 		map.put("bct_code", code);
-		map.put("cnt", cnt+1);
+		map.put("cnt", cnt + 1);
 		hDao.addBusinessCode(map); // 업종 등록
 	}
 
@@ -1051,21 +1051,27 @@ public class HyunHwiService {
 				}
 			}
 			if (flag) { // 기업이 제공하지 않는 서비스면
-				if(menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'/>" + menu_name); // 그냥 만들어주고
-				} else if(menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'/>" + menu_name); // 그냥 만들어주고
+				if (menu_name.equals("가위컷")) {
+					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'/>" + menu_name); // 그냥
+																												// 만들어주고
+				} else if (menu_name.equals("고양이무마취")) {
+					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'/>" + menu_name); // 그냥
+																												// 만들어주고
 				} else {
-					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'/>" + menu_name); // 그냥 만들어주고
+					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'/>" + menu_name); // 그냥
+																													// 만들어주고
 				}
 			} else { // 기업이 제공하는 서비스면
-				if(menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥 만들어주고
-				} else if(menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥 만들어주고
+				if (menu_name.equals("가위컷")) {
+					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥
+																														// 만들어주고
+				} else if (menu_name.equals("고양이무마취")) {
+					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥
+																														// 만들어주고
 				} else {
-					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'checked/>" + menu_name); // 그냥 만들어주고
-				}																										// 만들어준다.
+					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'checked/>" + menu_name); // 그냥
+																														// 만들어주고
+				} // 만들어준다.
 			}
 			flag = true; // 깃발은 다시 true로 바꿔준다.
 		}
@@ -1183,12 +1189,15 @@ public class HyunHwiService {
 			hDao.updateServiceBSD(map); // 기업의 하루 스케줄 수정
 			map = holidayMap(request); // 기업의 휴일을 수정하기 위해 정보를 map에 담아오는 메소드
 			hDao.updateServiceBFX(map); // 기업의 고정 스케줄 수정
-			hDao.deletePRC(map);
-			insertPrice(request); // 기업이 지정한 서비스 가격 등록
+			String[] price = request.getParameterValues("price");
+			if (price[0] != null) {
+				hDao.deletePRC(map);
+				insertPrice(request); // 기업이 지정한 서비스 가격 등록
+			}
 		}
 		fileWriter(request); // 사진 등록 (사업장사진)
 
-		mav.setViewName("test");
+		mav.setView(new RedirectView("/servicePage"));
 		return mav;
 	}
 
@@ -1197,29 +1206,37 @@ public class HyunHwiService {
 	// 현휘; 기업-업종 삭제, 각종 정보들과 직원들 모두 삭제
 	@Transactional
 	public ModelAndView serviceDelete(HttpServletRequest request) {
+		mav = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
 		String bus_no = (String) session.getAttribute("no");
 		String bct_code = request.getParameter("bct_code");
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
-		//String svc_no = hDao.searchSVC(map);
-		
-		List<Map<String, Object>> list;
-		list = hDao.selectEMP(map);
-		for (int i = 0; i < list.size(); i++) {
-			String emp_no = (String) list.get(i).get("EMP_NO");
-			hDao.deleteBK(emp_no);
-			hDao.deleteESD(emp_no); // 해당 직원의 하루 스케줄 삭제
-			hDao.deleteEFX(emp_no); // 해당 직원의 고정 스케줄 삭제
-			hDao.deleteEMP(emp_no); // 해당 직원의 상세정보 삭제
+		String svc_no = hDao.searchSVC(map);
+		System.out.println(svc_no);
+		String text = null;
+		if (svc_no.equals("1")) {
+			System.out.println("삭제아냐");
+			text = "<script>alert('주 업종은 삭제할 수 없습니다.');</script>";
+			mav.addObject("text", text);
+		} else {
+			System.out.println("삭제");
+			List<Map<String, Object>> list;
+			list = hDao.selectEMP(map);
+			for (int i = 0; i < list.size(); i++) {
+				String emp_no = (String) list.get(i).get("EMP_NO");
+				hDao.deleteBK(emp_no);
+				hDao.deleteESD(emp_no); // 해당 직원의 하루 스케줄 삭제
+				hDao.deleteEFX(emp_no); // 해당 직원의 고정 스케줄 삭제
+				hDao.deleteEMP(emp_no); // 해당 직원의 상세정보 삭제
+			}
+			hDao.deletePRC(map); // 해당 업종의 가격삭제
+			hDao.deleteBSD(map); // 해당 업종의 하루 스케줄 삭제
+			hDao.deleteBFX(map); // 해당 업종의 고정 스케줄 삭제
+			hDao.deleteBTG(map); // 해당 업종의 관련태그 삭제
+			hDao.deleteGLR(map); // 해당 업종의 사진 삭제
+			hDao.deleteSVC(map); // 해당 업종의 정보 삭제
 		}
-		hDao.deletePRC(map); // 해당 업종의 가격삭제
-		hDao.deleteBSD(map); // 해당 업종의 하루 스케줄 삭제
-		hDao.deleteBFX(map); // 해당 업종의 고정 스케줄 삭제
-		hDao.deleteBTG(map); // 해당 업종의 관련태그 삭제
-		hDao.deleteGLR(map); // 해당 업종의 사진 삭제
-		hDao.deleteSVC(map); // 해당 업종의 정보 삭제
-		
 		mav.setView(new RedirectView("/servicePage"));
 		return mav;
 	}
@@ -1237,8 +1254,8 @@ public class HyunHwiService {
 		sb.append(" ");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
-			bct_code = hDao.searchBCTname(bct_code);
-			sb.append("<input type='radio' name='bct_code' value='" + bct_code + "' onclick='chk(this)'/>" + bct_code);
+			String bct_name = hDao.searchBCTname(bct_code);
+			sb.append("<input type='radio' name='bct_code' value='" + bct_code + "' onclick='chk(this)'/>" + bct_name);
 		}
 		mav.addObject("code", sb);
 		mav.setViewName("stepList");
@@ -1250,23 +1267,30 @@ public class HyunHwiService {
 		List<Map<String, Object>> list;
 		Map<String, Object> map = new HashMap<String, Object>();
 		StringBuilder sb = new StringBuilder();
-
 		String bus_no = (String) session.getAttribute("no");
 		String bct_code = request.getParameter("bct_code");
 		System.out.println(bct_code);
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		list = hDao.selectEMP(map);
-
-		for (int i = 0; i < list.size(); i++) {
-			String emp_name = (String) list.get(i).get("EMP_NAME");
-			String emp_pos = (String) list.get(i).get("EMP_POS");
-			String emp_part = (String) list.get(i).get("EMP_PART");
-			String emp_photo = (String) list.get(i).get("EMP_PHOTO");
-			String emp_loc = (String) list.get(i).get("EMP_LOC");
-			sb.append("<div>");
-			sb.append("<img src='" + emp_loc  + emp_photo+"'/>");
-			sb.append("</div>");
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				String emp_no = (String) list.get(i).get("EMP_NO");
+				String emp_name = (String) list.get(i).get("EMP_NAME");
+				String emp_pos = (String) list.get(i).get("EMP_POS");
+				String emp_part = (String) list.get(i).get("EMP_PART");
+				String emp_photo = (String) list.get(i).get("EMP_PHOTO");
+				String emp_loc = (String) list.get(i).get("EMP_LOC");
+				sb.append("<div>");
+				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
+				sb.append("<img src='" + emp_loc + emp_photo + "'/>");
+				sb.append("이름: " + emp_name + "</br>");
+				sb.append("직급: " + emp_pos + "</br>");
+				sb.append("</a>");
+				sb.append("</div>");
+			}
+		} else {
+			sb.append("<script>alert('직원을 등록해주세요');</script>");
 		}
 		return sb.toString();
 	}
@@ -1282,8 +1306,8 @@ public class HyunHwiService {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			System.out.println(bct_code);
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append(
-					"<input type='radio' class='bct_code' name='bct_code' value='" + bct_code + "' onClick='chk(this)'/> " + bct_name);
+			sb.append("<input type='radio' class='bct_code' name='bct_code' value='" + bct_code
+					+ "' onClick='chk(this)'/> " + bct_name);
 		}
 		mav.addObject("type", sb.toString());
 
@@ -1311,17 +1335,20 @@ public class HyunHwiService {
 	}
 
 	// 현휘; 해당 업종에 직원 등록
+	@Transactional
 	public ModelAndView stepInsert(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
 		// String flag = "emp";
 		// fileWriter(request, flag);
 		String code = request.getParameter("bct_code");
 		System.out.println(code);
 		stepInsertEMP(request);
-		mav.setView(new RedirectView("/stepList?bct_code="+code));
+		System.out.println("등록완료");
+		mav.setView(new RedirectView("/stepListBut"));
 		return mav;
 	}
 
-	// 현휘; 직원 insert (수정)
+	// 현휘; 직원 insert
 	@Transactional
 	private void stepInsertEMP(MultipartHttpServletRequest request) {
 		String no = (String) session.getAttribute("no");
@@ -1340,10 +1367,10 @@ public class HyunHwiService {
 		}
 		MultipartFile photo = request.getFile("emp_photo");
 		MultipartFile license = request.getFile("emp_license");
-		
+
 		String photooriFileName = photo.getOriginalFilename(); // a.txt
 		String licesnseoriFileName = photo.getOriginalFilename(); // a.txt
-		
+
 		String photosysFileName = System.currentTimeMillis() + "."
 				+ photooriFileName.substring(photooriFileName.lastIndexOf(".") + 1);
 		String licensesysFileName = System.currentTimeMillis() + "."
@@ -1354,7 +1381,7 @@ public class HyunHwiService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		map.put("bus_no", no);
 		map.put("bct_code", code);
 		map.put("name", name);
@@ -1370,10 +1397,10 @@ public class HyunHwiService {
 		empScheduleInsert(request, empNo);
 	}
 
-	// 현휘; 직원 스케줄 insert (수정)
+	// 현휘; 직원 스케줄 insert
 	private void empScheduleInsert(MultipartHttpServletRequest request, int empNo) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("empno", "S" + empNo);
+		map.put("emp_no", "S" + empNo);
 		System.out.println(empNo);
 		String open = request.getParameter("am_open");
 		String close = request.getParameter("pm_close");
@@ -1451,30 +1478,31 @@ public class HyunHwiService {
 	}
 
 	// 현휘; 직원 상세정보 (수정)
+	@Transactional
 	public ModelAndView stepDetail(HttpServletRequest request) {
-		String empno = request.getParameter("empno");
-		System.out.println(empno);
-		String no = request.getParameter("no");
-		System.out.println(no);
+		String emp_no = request.getParameter("emp_no");
+		System.out.println(emp_no);
+		String bus_no = (String) session.getAttribute("no");
+		System.out.println(bus_no);
 		Map<String, Object> busiMap = new HashMap<String, Object>();
 		Map<String, Object> stepMap = new HashMap<String, Object>();
 		StringBuilder text = new StringBuilder();
-		stepMap = hDao.searchEMP(empno);
+		stepMap = hDao.searchEMP(emp_no);
 		text.append(makeStepDetail(stepMap));
+		String bct_code = (String) stepMap.get("BCT_CODE");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bus_no", bus_no);
+		map.put("bct_code", bct_code);
+		busiMap = hDao.holidaySelected(map);
+		stepMap = hDao.searchEFX(emp_no);
 
-		busiMap = hDao.holidaySelected(no);
-		stepMap = hDao.searchEFX(empno);
-
-		text.append(makeStepWorkTime(empno));
-		text.append(makeStepLunchTime(empno));
+		text.append(makeStepWorkTime(emp_no, bus_no, bct_code));
+		text.append(makeStepLunchTime(emp_no, bus_no, bct_code));
 		text.append(makeStepHoliday(busiMap, stepMap));
 		text.append(button());
 
 		mav.addObject("text", text);
 		mav.setViewName("stepDetail");
-
-		// String workTime;
-		// String lunchTime;
 
 		return mav;
 	}
@@ -1483,18 +1511,18 @@ public class HyunHwiService {
 		StringBuilder sb = new StringBuilder();
 		String bct_code = (String) map.get("BCT_CODE");
 		bct_code = hDao.changeCode(bct_code);
-		String name = (String) map.get("EMP_NAME");
-		String pos = (String) map.get("EMP_POS");
-		String part = (String) map.get("EMP_PART");
+		String emp_name = (String) map.get("EMP_NAME");
+		String emp_pos = (String) map.get("EMP_POS");
+		String emp_part = (String) map.get("EMP_PART");
 		String emp_no = (String) map.get("EMP_NO");
-		String no = (String) map.get("BUS_NO");
+		String bus_no = (String) map.get("BUS_NO");
 		sb.append("<input type='hidden' name='emp_no' value='" + emp_no + "'/>");
-		sb.append("<input type='hidden' name='bus_no' value='" + no + "'/>");
+		sb.append("<input type='hidden' name='bus_no' value='" + bus_no + "'/>");
 		sb.append("업종 : <input type='text' name='bct_code' value='" + bct_code + "' readonly/><br/>");
-		sb.append("프로필사진: <input type='file' name='photo'/><br/>");
-		sb.append("이름 : <input type='text' name='emp_name' value='" + name + "'/><br/>");
-		sb.append("직급 : <input type='text' name='pos' value='" + pos + "'/><br/>");
-		sb.append("담당분야 : <input type='text' name='part' value='" + part + "'/><br/>");
+		sb.append("프로필사진: <input type='file' name='emp_photo'/><br/>");
+		sb.append("이름 : <input type='text' name='emp_name' value='" + emp_name + "'/><br/>");
+		sb.append("직급 : <input type='text' name='emp_pos' value='" + emp_pos + "'/><br/>");
+		sb.append("담당분야 : <input type='text' name='emp_part' value='" + emp_part + "'/><br/>");
 		return sb.toString();
 	}
 
@@ -1757,9 +1785,21 @@ public class HyunHwiService {
 		return sb.toString();
 	}
 
-	private String makeStepLunchTime(String empno) {
+	private String makeStepLunchTime(String emp_no, String bus_no, String bct_code) {
+		Map<String, Object> bmap = new HashMap<String, Object>();
+		bmap.put("bus_no", bus_no);
+		bmap.put("bct_code", bct_code);
+		bmap = hDao.searchBSD(bmap);
+		String am_close_b = (String) bmap.get("AM_CLOSE");
+		String pm_open_b = (String) bmap.get("PM_OPEN");
+
+		int lunch_open_pre_b = Integer.parseInt(am_close_b.substring(0, 2));
+		int lunch_open_las_b = Integer.parseInt(am_close_b.substring(2, 4));
+		int lunch_close_pre_b = Integer.parseInt(pm_open_b.substring(0, 2));
+		int lunch_close_las_b = Integer.parseInt(pm_open_b.substring(2, 4));
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map = hDao.searchESD(empno);
+		map = hDao.searchESD(emp_no);
 
 		String am_close = (String) map.get("AM_CLOSE");
 		String pm_open = (String) map.get("PM_OPEN");
@@ -1770,12 +1810,12 @@ public class HyunHwiService {
 		int lunch_close_pre = Integer.parseInt(pm_open.substring(0, 2));
 		int lunch_close_las = Integer.parseInt(pm_open.substring(2, 4));
 
-		int i = lunch_open_pre * 2;
-		if (lunch_open_las == 30) {
+		int i = lunch_open_pre_b * 2;
+		if (lunch_open_las_b == 30) {
 			i += 1;
 		}
-		int j = lunch_close_pre * 2 + 1;
-		if (lunch_close_las == 30) {
+		int j = lunch_close_pre_b * 2 + 1;
+		if (lunch_close_las_b == 30) {
 			j += 1;
 		}
 		System.out.println(i);
@@ -1784,30 +1824,46 @@ public class HyunHwiService {
 		sb.append("점심시간: ");
 		sb.append("<select name=\"lunch_open\" id=\"lunch_open\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
 				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
+				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
 				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
 				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		 document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>');" + "	}\n"
-				+ "</script>\n" + "</select> ~ ");
+				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + lunch_open_pre + " && min == "
+				+ lunch_open_las
+				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
+				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
+				+ "	}\n" + "</script>\n" + "</select> ~ ");
 		sb.append("<select name=\"lunch_close\" id=\"lunch_close\">\n" + "<script>\n" + "	for (var i = " + i
 				+ "; i < " + j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
+				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
 				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
 				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		 document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>');" + "	}\n"
-				+ "</script>\n" + "</select>");
+				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + lunch_close_pre + " && min == "
+				+ lunch_close_las
+				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
+				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
+				+ "	}\n" + "</script>\n" + "</select>");
 		sb.append("<br/>");
 		return sb.toString();
 	}
 
-	private String makeStepWorkTime(String empno) {
+	private String makeStepWorkTime(String emp_no, String bus_no, String bct_code) {
+		Map<String, Object> bmap = new HashMap<String, Object>();
+		bmap.put("bus_no", bus_no);
+		bmap.put("bct_code", bct_code);
+		bmap = hDao.searchBSD(bmap);
+		String am_open_b = (String) bmap.get("AM_OPEN");
+		String pm_close_b = (String) bmap.get("PM_CLOSE");
+
+		int am_pre_b = Integer.parseInt(am_open_b.substring(0, 2));
+		int am_las_b = Integer.parseInt(am_open_b.substring(2, 4));
+		int pm_pre_b = Integer.parseInt(pm_close_b.substring(0, 2));
+		int pm_las_b = Integer.parseInt(pm_close_b.substring(2, 4));
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(empno);
-		map = hDao.searchESD(empno);
+		System.out.println(emp_no);
+		map = hDao.searchESD(emp_no);
 
 		String am_open = (String) map.get("AM_OPEN");
 		String pm_close = (String) map.get("PM_CLOSE");
@@ -1816,39 +1872,42 @@ public class HyunHwiService {
 		int am_las = Integer.parseInt(am_open.substring(2, 4));
 		int pm_pre = Integer.parseInt(pm_close.substring(0, 2));
 		int pm_las = Integer.parseInt(pm_close.substring(2, 4));
-		int i = am_pre * 2;
-		if (am_las == 30) {
+
+		int i = am_pre_b * 2;
+		if (am_las_b == 30) {
 			i += 1;
 		}
-		int j = pm_pre * 2 + 1;
-		if (pm_las == 30) {
+		int j = pm_pre_b * 2 + 1;
+		if (pm_las_b == 30) {
 			j += 1;
 		}
+
 		System.out.println(i);
 		System.out.println(j);
 		StringBuilder sb = new StringBuilder();
 		sb.append("근무시간: ");
 		sb.append("<select name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < " + j
 				+ "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
+				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
 				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
 				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "	   document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>');" + "	}\n"
-				+ "</script>\n" + "</select> ~ ");
+				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + am_pre + " && min == " + am_las
+				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
+				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
+				+ "	}\n" + "</script>\n" + "</select> ~ ");
 		sb.append("<select name=\"pm_close\" id=\"close_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
 				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
+				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
 				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
 				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		 document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>');" + "	}\n"
-				+ "</script>\n" + "</select>");
+				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + pm_pre + " && min == " + pm_las
+				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
+				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
+				+ "	}\n" + "</script>\n" + "</select>");
 		sb.append("<br/>");
 		return sb.toString();
-
 	}
 
 	private String makeStepHoliday(Map<String, Object> busiMap, Map<String, Object> stepMap) {
@@ -1858,7 +1917,6 @@ public class HyunHwiService {
 		Set<String> stepKey = stepMap.keySet();
 		Iterator<String> siter = stepKey.iterator();
 		boolean flag = true;
-		int i = 1;
 		while (siter.hasNext()) {
 			String key = siter.next();
 			String value = (String) stepMap.get(key);
@@ -2017,122 +2075,125 @@ public class HyunHwiService {
 		return sb.toString();
 	}
 
+	@Transactional
 	public ModelAndView stepUpdate(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			String emp_no = request.getParameter("emp_no");
-			String code = request.getParameter("bct_code");
-			String name = request.getParameter("emp_name");
-			String pos = request.getParameter("pos");
-			String part = request.getParameter("part");
-			String[] holiday = request.getParameterValues("holiday");
-			String am = request.getParameter("am_open");
-			String pm = request.getParameter("pm_close");
-			String lunch_o = request.getParameter("lunch_open");
-			String lunch_c = request.getParameter("lunch_close");
-			MultipartFile file = request.getFile("photo");
-			byte fileData[] = file.getBytes();
-			String ori = file.getOriginalFilename();
-			String uploadPath = request.getSession().getServletContext().getRealPath("resources/upload/");
-			map.put("emp_no", emp_no);
-			map.put("emp_name", name);
-			map.put("emp_pos", pos);
-			map.put("emp_part", part);
+		String emp_no = request.getParameter("emp_no");
+		String bct_code = request.getParameter("bct_code");
+		String emp_name = request.getParameter("emp_name");
+		String emp_pos = request.getParameter("emp_pos");
+		String emp_part = request.getParameter("emp_part");
+		String[] holiday = request.getParameterValues("holiday");
+		String am = request.getParameter("am_open");
+		String pm = request.getParameter("pm_close");
+		String lunch_o = request.getParameter("lunch_open");
+		String lunch_c = request.getParameter("lunch_close");
 
-			if (ori.length() == 0) {
-				System.out.println("사진이 없습니다.");
-				hDao.updateEMP(map);
-			} else {
-				System.out.println(ori);
-				map.put("emp_photo", ori);
-				map.put("emp_loc", uploadPath);
-				hDao.updateEMPPhoto(map);
-			}
+		map = hDao.searchEMP(emp_no);
 
-			System.out.println(code); // 기업코드
-			System.out.println(pm); // work pm
-			System.out.println(lunch_o); // lunch o
-			System.out.println(lunch_c); // lunch c
-			System.out.println(file);
-			map.put("emp_no", emp_no);
-			System.out.println(emp_no);
-			map.put("am_open", am);
-			System.out.println(am);
-			map.put("am_close", lunch_o);
-			System.out.println(lunch_o);
-			map.put("pm_open", lunch_c);
-			System.out.println(lunch_c);
-			map.put("pm_close", pm);
-			System.out.println(pm);
-			hDao.updateESD(map);
-			System.out.println("시간입력 끝");
-			String time = am + pm;
-			String lunch = lunch_o + lunch_c;
-			System.out.println(time + ".." + lunch);
-			map.put("efx_mon", time);
-			map.put("efx_tue", time);
-			map.put("efx_wed", time);
-			map.put("efx_thu", time);
-			map.put("efx_fri", time);
-			map.put("efx_sat", time);
-			map.put("efx_sun", time);
-			map.put("efx_hld", time);
-			int[] num = new int[holiday.length];
-			for (int i = 0; i < holiday.length; i++) {
-				if (holiday[i].equals("월")) {
-					map.put("efx_mon", "XXXXXXXX");
-					num[i] = 2;
-				} else if (holiday[i].equals("화")) {
-					map.put("efx_tue", "XXXXXXXX");
-					num[i] = 3;
-				} else if (holiday[i].equals("수")) {
-					map.put("efx_wed", "XXXXXXXX");
-					num[i] = 4;
-				} else if (holiday[i].equals("목")) {
-					map.put("efx_thu", "XXXXXXXX");
-					num[i] = 5;
-				} else if (holiday[i].equals("금")) {
-					map.put("efx_fri", "XXXXXXXX");
-					num[i] = 6;
-				} else if (holiday[i].equals("토")) {
-					map.put("efx_sat", "XXXXXXXX");
-					num[i] = 7;
-				} else if (holiday[i].equals("일")) {
-					map.put("efx_sun", "XXXXXXXX");
-					num[i] = 1;
-				} else if (holiday[i].equals("공휴일")) {
-					map.put("efx_hld", "XXXXXXXX");
-				}
-			}
-			map.put("efx_lch", lunch);
-			hDao.updateEFX(map);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		map.put("emp_no", emp_no);
+		map.put("emp_name", emp_name);
+		map.put("emp_pos", emp_pos);
+		map.put("emp_part", emp_part);
+
+		String root = request.getSession().getServletContext().getRealPath("/");
+		String location = "resources/upload/";
+		String path = root + location;/* resource는 webapp/resources에 저장 */
+		File dir = new File(path);
+		if (!dir.isDirectory()) { // upload폴더 없다면
+			dir.mkdir(); // upload폴더 생성
 		}
-		String empno = request.getParameter("emp_no");
-		map = hDao.searchEMP(empno);
-		String no = (String) map.get("BUS_NO");
-		// 업데이트 문만 ㅆㅓ주고 직원정보 emp, esd, efx 만 수정해주면 돼.
-		mav.setViewName("stepList");
+		MultipartFile photo = request.getFile("emp_photo");
+		String photooriFileName = photo.getOriginalFilename(); // a.txt
+		System.out.println(photooriFileName);
+		if (photooriFileName.equals("")) {
+			System.out.println("사진이 없습니다.");
+			hDao.updateEMP(map);
+		} else {
+			System.out.println("머야");
+			String photosysFileName = System.currentTimeMillis() + "."
+					+ photooriFileName.substring(photooriFileName.lastIndexOf(".") + 1);
+			try {
+				photo.transferTo(new File(path + photosysFileName));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			map.put("emp_photo", photosysFileName);
+			map.put("emp_loc", location);
+			hDao.updateEMPPhoto(map);
+		}
+
+		System.out.println(bct_code); // 기업코드
+		System.out.println(pm); // work pm
+		System.out.println(lunch_o); // lunch o
+		System.out.println(lunch_c); // lunch c
+		map.put("emp_no", emp_no);
+		System.out.println(emp_no);
+		map.put("am_open", am);
+		System.out.println(am);
+		map.put("am_close", lunch_o);
+		System.out.println(lunch_o);
+		map.put("pm_open", lunch_c);
+		System.out.println(lunch_c);
+		map.put("pm_close", pm);
+		System.out.println(pm);
+		hDao.updateESD(map);
+		System.out.println("시간입력 끝");
+		String time = am + pm;
+		String lunch = lunch_o + lunch_c;
+		System.out.println(time + ".." + lunch);
+		map.put("efx_mon", time);
+		map.put("efx_tue", time);
+		map.put("efx_wed", time);
+		map.put("efx_thu", time);
+		map.put("efx_fri", time);
+		map.put("efx_sat", time);
+		map.put("efx_sun", time);
+		map.put("efx_hld", time);
+		int[] num = new int[holiday.length];
+		for (int i = 0; i < holiday.length; i++) {
+			System.out.println(holiday[i]);
+			if (holiday[i].equals("월요일")) {
+				map.put("efx_mon", "XXXXXXXX");
+				num[i] = 2;
+			} else if (holiday[i].equals("화요일")) {
+				map.put("efx_tue", "XXXXXXXX");
+				num[i] = 3;
+			} else if (holiday[i].equals("수요일")) {
+				map.put("efx_wed", "XXXXXXXX");
+				num[i] = 4;
+			} else if (holiday[i].equals("목요일")) {
+				map.put("efx_thu", "XXXXXXXX");
+				num[i] = 5;
+			} else if (holiday[i].equals("금요일")) {
+				map.put("efx_fri", "XXXXXXXX");
+				num[i] = 6;
+			} else if (holiday[i].equals("토요일")) {
+				map.put("efx_sat", "XXXXXXXX");
+				num[i] = 7;
+			} else if (holiday[i].equals("일요일")) {
+				map.put("efx_sun", "XXXXXXXX");
+				num[i] = 1;
+			} else if (holiday[i].equals("공휴일")) {
+				map.put("efx_hld", "XXXXXXXX");
+			}
+		}
+		map.put("efx_lch", lunch);
+		hDao.updateEFX(map);
+		mav.setView(new RedirectView("/stepListBut"));
 		return mav;
 	}
 
+	@Transactional
 	public ModelAndView stepDelete(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
 		String emp_no = request.getParameter("emp_no");
 		System.out.println(emp_no);
 		hDao.deleteESD(emp_no);
 		hDao.deleteEFX(emp_no);
 		hDao.deleteEMP(emp_no);
-		// 딜리트 문만 써주면 돼. emp, esd, efs 다 삭제해줘야해.
-		// mav.setViewName("stepList");
-		// return mav;
-		ModelAndView mav = new ModelAndView();
-		RedirectView rv = new RedirectView();
-		String url = "/stepList.do";
-		rv.setExposeModelAttributes(false);
-		rv.setUrl(url);
-		mav.setView(rv);
+		mav.setView(new RedirectView("/stepListBut"));
 		return mav;
 	}
 
@@ -2209,34 +2270,6 @@ public class HyunHwiService {
 		return sb.toString();
 	}
 
-	public ModelAndView businessList(HttpServletRequest request) {
-		mav = new ModelAndView();
-		StringBuilder sb = new StringBuilder();
-		String bct_code = request.getParameter("bct_code");
-		// String bus_addr = request.getParameter("bus_addr");
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> list;
-		list = hDao.searchBTG(bct_code);
-		for (int i = 0; i < list.size(); i++) {
-			String bus_no = (String) list.get(i).get("BUS_NO");
-			map.put("bus_no", bus_no);
-			// map.put("bus_addr", bus_addr);
-			// map = hDao.searchBUSmap(map);
-			map = hDao.searchBUS(bus_no);
-			String bus_name = (String) map.get("BUS_NAME");
-			String bus_addr = (String) map.get("BUS_ADDR");
-			sb.append("<div id='busiList'>");
-			sb.append("<a href='businessInfo?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-			sb.append("<br/> 이름: " + bus_name + "<br/> 주소: " + bus_addr);
-			sb.append("</a></div>");
-		}
-		sb.append("");
-		System.out.println(sb.toString());
-		mav.addObject("busiList", sb.toString());
-		mav.setViewName("businessList");
-		return mav;
-	}
-
 	public ModelAndView weekCal() {
 		mav = new ModelAndView();
 		String bus_no = (String) session.getAttribute("no");
@@ -2305,11 +2338,322 @@ public class HyunHwiService {
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		String price = hDao.searchPRC(map);
-		if(price == null) {
+		if (price == null) {
 			price = "0";
 		}
 		System.out.println(price);
 		return price;
 	}
 
+	public ModelAndView searchList(HttpServletRequest request, Integer pageNum) {
+		System.out.println("주소입력후 첫메소드 첫번째,");
+		mav = new ModelAndView();
+		String bct_code = request.getParameter("bct_code");
+		String city = request.getParameter("city");
+		String four = null;
+		if (city.length() == 4) {
+			four = city.substring(0, 1);
+			four += city.substring(2, 3);
+			city = four;
+		}
+		System.out.println(city);
+		String bk_date = request.getParameter("bk_date");
+		String year = bk_date.substring(8, 10);
+		String day = bk_date.substring(3, 5);
+		String month = bk_date.substring(0, 2);
+		String beday = year + month + day;
+		SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
+		DateFormat outputFormat = new SimpleDateFormat("yy/MM/dd", Locale.KOREA);
+		Date inputDate = null;
+		String outputDate = null;
+		try {
+			inputDate = format.parse(beday);
+			outputDate = outputFormat.format(inputDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int pNo = (pageNum == null) ? 1 : pageNum; // 페이지넘버
+		String tagList = tagList(outputDate, bct_code, city, pNo);
+		String busiList = busiList(outputDate, bct_code, city, pNo);
+		String paging = busiListPaging(pNo, outputDate, bct_code, city);
+		mav.addObject("busiList", busiList);
+		mav.addObject("tagList", tagList);
+		mav.addObject("paging", paging);
+		mav.setViewName("businessList");
+		return mav;
+	}
+
+	private String busiList(String outputDate, String bct_code, String city, int pNo) {
+		System.out.println("주소입력기업리스트불러오기 두번째,");
+		System.out.println(bct_code);
+		StringBuilder sb = new StringBuilder();
+		List<Map<String, Object>> list;
+		Map<String, Object> mapo = new HashMap<String, Object>();
+		mapo.put("bct_code", bct_code);
+		mapo.put("bsd_date", outputDate);
+		mapo.put("bus_addr", city);
+		mapo.put("pageNum", pNo);
+		list = hDao.searchBUSaddr(mapo);
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				String bus_no = (String) list.get(i).get("BUS_NO");
+				String bus_name = (String) list.get(i).get("BUS_NAME");
+				String bus_addr = (String) list.get(i).get("BUS_ADDR");
+				System.out.println(bus_no);
+				map.put("bus_no", bus_no);
+				map.put("gct_no", "2");
+				map = hDao.selectGallery(map);
+				if (map != null) {
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					sb.append("<div class='busi'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<div class='busiImage'>");
+					sb.append("<img src='" + glr_loc + glr_file + "'/>");
+					sb.append("</div>");
+					sb.append("<div class='busiInfo'>");
+					sb.append("<h1> " + bus_name + "</h1>");
+					sb.append("<h2> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+				}
+			}
+		}
+		return sb.toString();
+	}
+
+	private String busiListPaging(int pNo, String outputDate, String bct_code, String city) {
+		System.out.println("주소입력기업리스트불러오기, 페이징 부분");
+		System.out.println(bct_code);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bus_addr", city);
+		map.put("bsd_date", outputDate);
+		map.put("bct_code", bct_code);
+		int maxNum = hDao.countBusiList(map);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "searchList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.businessListPaging(map);
+	}
+
+	private String tagList(String outputDate, String bct_code, String city, int pNo) {
+		System.out.println("주소입력태그불러오기 세번째,");
+		StringBuilder sb = new StringBuilder();
+		List<Map<String, Object>> list;
+		list = hDao.selectTAG(bct_code);
+		for (int i = 0; i < list.size(); i++) {
+			String tag_no = (String) list.get(i).get("TAG_NO");
+			String tag_name = hDao.changeTAG(tag_no);
+			sb.append("<a href='javascript:void(0)' onclick=\"businessList('" + bct_code + "','" + tag_no + "','"
+					+ outputDate + "','" + city + "','" + pNo + "')\">" + tag_name + "</a>");
+		}
+		return sb.toString();
+	}
+
+	public String tagSelectList(HttpServletRequest request) {
+		System.out.println("주소입력후태그셀렉, 네번째 ");
+		String bct_code = request.getParameter("bct_code");
+		String tag_no = request.getParameter("tag_no");
+		String bsd_date = request.getParameter("bsd_date");
+		String bus_addr = request.getParameter("bus_addr");
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		StringBuilder sb = new StringBuilder();
+		sb.append("<h1> 주소 존재 태그 셀렉 </h1>");
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> list;
+		map.put("bct_code", bct_code);
+		map.put("bsd_date", bsd_date);
+		map.put("bus_addr", bus_addr);
+		map.put("pageNum", pNo);
+		map.put("tag_no", tag_no);
+		list = hDao.searchBUSaddrTag(map);
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				String bus_no = (String) list.get(i).get("BUS_NO");
+				String bus_name = (String) list.get(i).get("BUS_NAME");
+				bus_addr = (String) list.get(i).get("BUS_ADDR");
+				map = new HashMap<String, Object>();
+				map.put("bus_no", bus_no);
+				map.put("gct_no", "2");
+				map = hDao.selectGallery(map);
+				if (map != null) {
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					if (map != null) {
+						sb.append("<div class='busi'>");
+						sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+						sb.append("<div class='busiImage'>");
+						sb.append("<img src='" + glr_loc + glr_file + "'/>");
+						sb.append("</div>");
+						sb.append("<div class='busiInfo'>");
+						sb.append("<h1> " + bus_name + "</h1>");
+						sb.append("<h2> 주소: " + bus_addr + "</h2>");
+						sb.append("</div>");
+						sb.append("</a>");
+						sb.append("</div>");
+					}
+				}
+			}
+		}
+		return sb.toString();
+	}
+
+	public ModelAndView businessList(HttpServletRequest request, Integer pageNum) {
+		System.out.println("버튼누르면 첫 메소드 첫번째,");
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		mav = new ModelAndView();
+		List<Map<String, Object>> list;
+		Map<String, Object> map = new HashMap<String, Object>();
+		StringBuilder sb = new StringBuilder();
+		String bct_code = request.getParameter("bct_code");
+		map.put("bct_code", bct_code);
+		map.put("pageNum", pNo);
+		list = hDao.selectSVCcode(map);
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				String bus_no = (String) list.get(i).get("BUS_NO");
+				String bus_name = (String) list.get(i).get("BUS_NAME");
+				String bus_addr = (String) list.get(i).get("BUS_ADDR");
+				map = new HashMap<String, Object>();
+				map.put("bus_no", bus_no);
+				map.put("gct_no", "2");
+				map = hDao.selectGallery(map);
+				if (map != null) {
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					sb.append("<div class='busi'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<div class='busiImage'>");
+					sb.append("<img src='" + glr_loc + glr_file + "'/>");
+					sb.append("</div>");
+					sb.append("<div class='busiInfo'>");
+					sb.append("<h1> " + bus_name + "</h1>");
+					sb.append("<h2> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+				}
+			}
+			mav.addObject("busiList", sb.toString());
+		}
+		String tag = butTagList(bct_code, pNo);
+		mav.addObject("tagList", tag);
+		String paging = busiListCodePaging(pNo, bct_code);
+		mav.addObject("paging", paging);
+		mav.setViewName("businessList");
+		return mav;
+	}
+
+	private String busiListCodePaging(int pNo, String bct_code) {
+		System.out.println("버튼클릭기업리스트불러오기, 페이징 부분");
+		System.out.println(bct_code);
+		int maxNum = hDao.countBusiButList(bct_code);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.businessListButPaging(bct_code);
+	}
+
+	private String butTagList(String bct_code, int pNo) {
+		System.out.println("버튼태그리스트,함수로 보내기 두번째,");
+		StringBuilder sb = new StringBuilder();
+		List<Map<String, Object>> list;
+		list = hDao.selectTAG(bct_code);
+		for (int i = 0; i < list.size(); i++) {
+			String tag_no = (String) list.get(i).get("TAG_NO");
+			String tag_name = hDao.changeTAG(tag_no);
+			sb.append("<a href='javascript:void(0)' onclick=\"butTagSelectList('" + bct_code + "','" + tag_no + "','"
+					+ pNo + "')\">" + tag_name + "</a>");
+		}
+		return sb.toString();
+	}
+
+	// 수정, 페이징 추가해야해.
+	public String butTagSelectList(HttpServletRequest request) {
+		System.out.println("버튼태그셀렉리스트, 리스트 띄워주기, 세번째 ");
+		String bct_code = request.getParameter("bct_code");
+		String tag_no = request.getParameter("tag_no");
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		StringBuilder sb = new StringBuilder();
+		sb.append("<h1> 버튼 클릭 태그 셀렉 </h1>");
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> list;
+		map.put("bct_code", bct_code);
+		map.put("pageNum", pNo);
+		map.put("tag_no", tag_no);
+		list = hDao.butTagSelectList(map);
+		if(list.size()!=0) {
+		for (int i = 0; i < list.size(); i++) {
+			String bus_no = (String) list.get(i).get("BUS_NO");
+			System.out.println(bus_no);
+			String bus_name = (String) list.get(i).get("BUS_NAME");
+			String bus_addr = (String) list.get(i).get("BUS_ADDR");
+			map = new HashMap<String, Object>();
+			map.put("bus_no", bus_no);
+			map.put("gct_no", "2");
+			map = hDao.selectGallery(map);
+			if (map != null) {
+				String glr_file = (String) map.get("GLR_FILE");
+				String glr_loc = (String) map.get("GLR_LOC");
+				sb.append("<div class='busi'>");
+				sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+				sb.append("<div class='busiImage'>");
+				sb.append("<img src='" + glr_loc + glr_file + "'/>");
+				sb.append("</div>");
+				sb.append("<div class='busiInfo'>");
+				sb.append("<h1> " + bus_name + "</h1>");
+				sb.append("<h2> 주소: " + bus_addr + "</h2>");
+				sb.append("</div>");
+				sb.append("</a>");
+				sb.append("</div>");
+			}
+		}}
+		return sb.toString();
+	}
+
+	public String tagSelectListAddr(HttpServletRequest request) {
+		System.out.println("주소입력태그선택기업리스트불러오기, 페이징 부분");
+		String bct_code = request.getParameter("bct_code");
+		String tag_no = request.getParameter("tag_no");
+		String bsd_date = request.getParameter("bsd_date");
+		String bus_addr = request.getParameter("bus_addr");
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bct_code", bct_code);
+		map.put("tag_no", tag_no);
+		map.put("bsd_date", bsd_date);
+		map.put("bus_addr", bus_addr);
+		int maxNum = hDao.countSearchBUSaddr(map);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.businessListTagPaging(map);
+	}
+	
+	public String butTagSelectListPaging(HttpServletRequest request) {
+		System.out.println("버튼클릭기업리스트불러오기, 페이징 부분");
+		String bct_code = request.getParameter("bct_code");
+		String tag_no = request.getParameter("tag_no");
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bct_code", bct_code);
+		map.put("tag_no", tag_no);
+		int maxNum = hDao.countButTagSelectList(map);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.butTagSelectListPaging(map);
+	}
+	
 }

@@ -20,18 +20,42 @@ public class zHHHController {
 	ModelAndView mav;
 	
 	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
-	public ModelAndView searchList(HttpServletRequest request) {
+	public ModelAndView searchList(HttpServletRequest request, Integer pageNum) {
 		System.out.println("search check");
-		ModelAndView mav = new ModelAndView();
-		String bct_code = request.getParameter("bct_code");
-		System.out.println(bct_code);
-		String city = request.getParameter("city");
-		System.out.println(city);
-		String bk_date = request.getParameter("bk_date");
-		System.out.println(bk_date);
-		mav.setViewName("loginForm");
+		mav = hhs.searchList(request, pageNum); //업종코드,날짜,지역 
+		System.out.println("end");
 		return mav;
 	} // method End
+
+	@RequestMapping(value = "/businessList", method=RequestMethod.GET)
+	public ModelAndView businessList(HttpServletRequest request, Integer pageNum) {
+		mav = hhs.businessList(request, pageNum); //업종코드 
+		return mav;
+	}
+	
+	@RequestMapping(value = "/tagSelectList", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String tagSelectList(HttpServletRequest request) {
+		String text = hhs.tagSelectList(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/tagSelectListAddr", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String tagSelectListAddr(HttpServletRequest request) {
+		String text = hhs.tagSelectListAddr(request);
+		return text;
+	}
+
+	@RequestMapping(value = "/butTagSelectListPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String butTagSelectListPaging(HttpServletRequest request) {
+		String text = hhs.butTagSelectListPaging(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/butTagSelectList", method = RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String butTagSelectList(HttpServletRequest request) {
+		String text = hhs.butTagSelectList(request);
+		return text;
+	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public ModelAndView test() {
@@ -127,14 +151,14 @@ public class zHHHController {
 	}
 	
 	//현휘; 직원 리스트 불러오기 전 업종 선택 버튼 생성
-	@RequestMapping(value = "/stepListBut", method=RequestMethod.POST)
+	@RequestMapping(value = "/stepListBut", method=RequestMethod.GET)
 	public ModelAndView stepListBut() {
 		mav = hhs.stepListBut();
 		return mav;
 	}
 	
 	//현휘; 해당 업종의 직원 리스트 
-	@RequestMapping(value = "/stepList", method=RequestMethod.GET)
+	@RequestMapping(value = "/stepList", method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String stepList(HttpServletRequest request) {
 		String text = hhs.stepList(request);
 		return text;
@@ -206,12 +230,7 @@ public class zHHHController {
 		mav.setViewName("customerInfoDetail");
 		return mav; 
 	}
-	
-	@RequestMapping(value = "/businessList", method=RequestMethod.GET)
-	public ModelAndView businessList(HttpServletRequest request) {
-		mav = hhs.businessList(request);
-		return mav;
-	}
+
 	@RequestMapping(value = "/businessInfo", method=RequestMethod.GET)
 	public ModelAndView businessInfo(HttpServletRequest request) {
 		System.out.println(request.getParameter("bus_no"));

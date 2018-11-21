@@ -100,8 +100,25 @@
 		SELECT COUNT(*) FROM
 		ABOLIST_PAGING
 	</select>
-	<select id="getNoticeListSearch" parameterType="abo"
-		resultType="abo">
+	<select id="getNoticeListAllSearch" parameterType="abo" resultType="abo">
+		<![CDATA[
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				WHERE ABO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
+		]]>
+	</select>
+	<select id="getBoardCountAllSearch" parameterType="abo"
+		resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE ABO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="getNoticeListCategoriSearch" parameterType="abo" resultType="abo">
 		<![CDATA[
 		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
 		FROM (
@@ -115,7 +132,7 @@
 		WHERE X.RNUM >= #{page_no} * 10-9
 		]]>
 	</select>
-	<select id="getBoardCountSearch" parameterType="abo"
+	<select id="getBoardCountCategoriSearch" parameterType="abo"
 		resultType="int">
 		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE
 		ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'

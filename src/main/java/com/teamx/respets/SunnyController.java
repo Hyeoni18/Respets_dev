@@ -121,22 +121,6 @@ public class SunnyController {
 		mav=ss.noticeListSearch(pageNum,abc_name,search);
 		return mav;
 	}
-
-	/*진선*/
-	@RequestMapping (value="/noticeListBusiness", method=RequestMethod.GET)
-	public ModelAndView noticeListBusiness(Integer pageNum) {
-		mav = new ModelAndView();
-		mav=ss.noticeListBusiness(pageNum);
-		return mav;
-	}
-	
-	/*진선*/
-	@RequestMapping (value="/noticeListPersonal", method=RequestMethod.GET)
-	public ModelAndView noticeListPersonal(Integer pageNum) {
-		mav = new ModelAndView();
-		mav=ss.noticeListPersonal(pageNum);
-		return mav;
-	}
 	
 	/*진선*/
 	@RequestMapping (value="/noticeWriteForm", method=RequestMethod.GET)

@@ -47,6 +47,7 @@
 					<p>코멘트</p>
 					<textarea id="comment" name="comment" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
 				</div>
+				<input type="submit" id="submit" value="예약하기" />
 			</div>
 		</div>
 	</form>
@@ -69,6 +70,7 @@
 	$('#day').hide();
 	$('#time').hide();
 	$('#comment').hide();
+	$('#submit').hide();
 
 	var emp = null;
 
@@ -91,6 +93,7 @@
 				$('#timeTable').html(data);
 				$('#time').show();
 				$('#comment').show();
+				$('#submit').show();
 			},
 			error : function(error) {
 				console.log(error);

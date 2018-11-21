@@ -13,19 +13,48 @@
 <body>
 	<h1>기본 정보 확인</h1>
 	<hr />
-	<form action="businessInfoUpdateForm?no=${bi.bus_no}"
-		name="businessInfoDetail">
-		${bi.bus_no}
+	<form action="businessInfoUpdateForm">
+		${no}
 		<div>
-			- 사업자 번호: ${bi.bus_lcno }<br /> - 업체명: ${bi.bus_name }<br /> -
-			대표자명: ${bi.bus_ceo }<br /> - 업체 연락처: ${bi.bus_phone }<br /> -우편번호:
-			${bi.bus_post}- 사업장 기본주소: ${bi.bus_addr }, 상세주소${bi.bus_addr2 }<br />
-			- 주력 서비스: ${bi.bct_name }
+			<table>
+				<tr>
+					<td>사업자 번호</td>
+					<td id="BUS_LCNO"></td>
+				</tr>
+				<tr>
+					<td>업체명</td>
+					<td id="BUS_NAME"></td>
+				</tr>
+				<tr>
+					<td>대표자명</td>
+					<td id="BUS_CEO"></td>
+				</tr>
+				<tr>
+					<td>업체 연락처</td>
+					<td id="BUS_PHONE"></td>
+				</tr>
+				<tr>
+					<td>사업장 주소</td>
+					<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
+						id="BUS_ADDR2"></span></td>
+				</tr>
+				<tr>
+					<td>주력서비스</td>
+					<td id="BCT_NAME"></td>
+				</tr>
+			</table>
+			사진 <br> <span id="GLR_FILE"></span>
 		</div>
-		<h2>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h2>
+		<h3>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h3>
 		<div>
 			<button>수정</button>
 		</div>
 	</form>
 </body>
+<script>
+	var jsonData = ${result};
+	$.each(jsonData, function(key, value) {
+		$('#' + key).html(value);
+	});
+</script>
 </html>
