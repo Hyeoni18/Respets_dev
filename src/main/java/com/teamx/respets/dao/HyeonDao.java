@@ -1,6 +1,7 @@
 package com.teamx.respets.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ public interface HyeonDao {
 	public boolean personalPartDelete(String no);
 	public int myPwUpdate(Personal mb);
 	public Personal myPwCheck(String no);
-	public String getBkStart(String bk_no);
+	public Date getBkStart(String bk_no);
 	public int cancelInsert(String no, String timeS, long cancDay);
 	public ArrayList<HashMap<String, Object>> allBookingList(HashMap<String, Object> map);
 
