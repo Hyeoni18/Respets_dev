@@ -1,5 +1,6 @@
 package com.teamx.respets;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,9 +95,9 @@ public class HyeonController {
 	}
 
 	/* 혜연 */
-	@RequestMapping(value = "/allBookingList")
-	public ModelAndView allBookingList(HttpSession session) {
-		mav = hy.allBookingList(session);
+	@RequestMapping(value = "/personalAllBookingList")
+	public ModelAndView personalAllBookingList(HttpSession session) {
+		mav = hy.personalAllBookingList(session);
 		return mav;
 	}
 
@@ -195,9 +196,21 @@ public class HyeonController {
 
 	/* 혜연 방문 클릭시 */
 	@RequestMapping(value = "/todayScheduleListCheck", method = RequestMethod.POST)
-	public @ResponseBody int todayScheduleListCheck(HttpServletRequest request) {
-		int result = hy.todayScheduleListCheck(request);
+	public @ResponseBody int todayScheduleListCheck(String bk_no) {
+		int result = hy.todayScheduleListCheck(bk_no);
 		return result;
+	}
+	
+	@RequestMapping(value = "/todayAllScheduleList", produces = "application/text; charset=utf8")
+	public @ResponseBody String todayAllScheduleList(HttpServletRequest request) {
+		String text = hy.todayAllScheduleList(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/bctBookingList", produces = "application/text; charset=utf8")
+	public @ResponseBody String bctBookingList(HttpServletRequest request) {
+		String text = hy.bctBookingList(request);
+		return text;
 	}
 
 	@RequestMapping(value = "/todayScheduleListNoShow", method = RequestMethod.POST)

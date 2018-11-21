@@ -3,6 +3,7 @@ package com.teamx.respets.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -24,13 +25,12 @@ public interface HyeonDao {
 
 	/* 혜연 기업 */
 	public String myPage(String email, String pw);
-	public ArrayList<HashMap<String, Object>> todayScheduleList(HashMap<String, Object> map);
+	public ArrayList<HashMap<String, Object>> todayScheduleList(Map<String, Object> map);
 	public HashMap<String, Object> myBookingDetail(String bk_no);
 	public ArrayList<HashMap<String, Object>> serviceManagement(HashMap<String, Object> map);
 	public ArrayList<HashMap<String, Object>> businessBookingList(HashMap<String, Object> map);
 	public int todayScheduleListNoShow(HashMap<String, String> map);
 	public int todayScheduleListCheck(String bk_no);
-
 	public ArrayList<HashMap<String, Object>> serviceList(HashMap<String, Object> map);
 	public HashMap<String, Object> businessInfo(String no);
 	public ArrayList<HashMap<String, Object>> getMenu(String bk_no);
@@ -39,4 +39,6 @@ public interface HyeonDao {
 	public ArrayList<HashMap<String, Object>> getPetList(String pet_no);
 	public int getListCount(String no);
 	public boolean businessInfoUpdate(Business bi);
+	public ArrayList<HashMap<String, Object>> getSvcPri(String no);
+	public ArrayList<HashMap<String, Object>> bctBookingList(Map<String, Object> map);
 }

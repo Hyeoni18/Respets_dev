@@ -60,7 +60,7 @@
 						<li class="side-nav-item">
 			                <a href="#" class="side-nav-link">
 			                    <i class="dripicons-list"></i>
-			                    <span> <a href='allBookingList'>전체 예약 목록</a> </span>
+			                    <span> <a href='personalAllBookingList'>전체 예약 목록</a> </span>
 			                </a>
 			            </li>
 			
