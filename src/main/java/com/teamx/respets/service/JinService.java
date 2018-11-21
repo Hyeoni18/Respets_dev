@@ -152,7 +152,7 @@ public class JinService {
 			} // for End
 		} // if End
 		hMap.put("bus_no", "B1000063");
-		hMap.put("bct_code", "M");
+		hMap.put("bct_code", "B");
 		// hMap.put("date", "11/28/2018 - 11/16/2018");
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
@@ -162,11 +162,19 @@ public class JinService {
 			petMap = jinDao.firstPet(hMap);
 		} // if End
 		hMap.put("pet_no", petMap.get("PET_NO"));
+		if (hMap.get("date") == null) {
+			hMap.put("date", "noDate");
+		} // if End
 		StringBuilder pet = new StringBuilder();
+		pet.append("<p>예약할 동물</p>");
 		pet.append("<div><img src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
 		pet.append("' style='width: 100%; height: auto;' />");
 		pet.append("<p>" + petMap.get("PET_NAME") + "</p></div>");
+		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
+		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
+		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
 		List<HashMap<String, String>> petList = jinDao.selectPetList(petMap);
+		pet.append("<p>다른 동물 선택</p>");
 		for (int i = 0; i < petList.size(); i++) {
 			pet.append("<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
 			pet.append("&bct_code=" + hMap.get("bct_code"));
@@ -178,12 +186,12 @@ public class JinService {
 		StringBuilder svc = new StringBuilder();
 		svc.append("<p>서비스 선택</p>");
 		for (int i = 0; i < svcList.size(); i++) {
-			svc.append("<input type='checkbox' name='service' value='");
+			svc.append("<input type='checkbox' name='menu_no' value='");
 			svc.append(svcList.get(i).get("MENU_NO") + "' />");
 			svc.append(svcList.get(i).get("MENU_NAME"));
 			if (!svcList.get(i).get("PRICE").equals("0")) {
 				svc.append(" (" + svcList.get(i).get("PRICE") + " 원)");
-			}
+			} // if End
 			svc.append("<br/>");
 		} // for End
 		mav.addObject("svcList", svc);
@@ -191,14 +199,14 @@ public class JinService {
 		StringBuilder emp = new StringBuilder();
 		emp.append("<p>직원 선택</p>");
 		for (int i = 0; i < empList.size(); i++) {
-			emp.append("<input type='radio' name='emp' value='");
+			emp.append("<input type='radio' name='emp_no' value='");
 			emp.append(empList.get(i).get("EMP_NO") + "' /> ");
 			emp.append(empList.get(i).get("EMP_NAME") + " " + empList.get(i).get("EMP_POS"));
 			emp.append(" (" + empList.get(i).get("EMP_PART") + ")<br/>");
 		} // for End
 		mav.addObject("empList", emp);
 		Date date = null;
-		if (hMap.get("date") != null) {
+		if (hMap.get("date") != null && !hMap.get("date").equals("noDate")) {
 			try {
 				date = new SimpleDateFormat("MM/dd/yyyy").parse(hMap.get("date").split(" - ")[0]);
 			} catch (ParseException e) {
@@ -212,7 +220,6 @@ public class JinService {
 		StringBuilder dayList = new StringBuilder();
 		dayList.append("<tr>");
 		for (int i = 0; i < 7; i++) {
-			cal.add(Calendar.DAY_OF_YEAR, 1);
 			int day = cal.get(Calendar.DAY_OF_WEEK);
 			SimpleDateFormat valSdf = new SimpleDateFormat("yyMMdd");
 			SimpleDateFormat sdf = null;
@@ -235,20 +242,57 @@ public class JinService {
 			String valDate = valSdf.format(cal.getTime());
 			dayList.append("<td><input type='radio' name='day' value='" + valDate + "' />");
 			dayList.append(strDate + "</td>");
+			cal.add(Calendar.DAY_OF_YEAR, 1);
 		} // for End
 		dayList.append("</tr>");
 		mav.addObject("dayList", dayList);
 		return mav;
 	} // method End
 
+	// 서진 : 예약 페이지 시간
 	public String timeSelect(HttpServletRequest request) {
 		HashMap<String, String> hMap = new HashMap<String, String>();
 		hMap.put("date", request.getParameter("date"));
 		hMap.put("emp_no", request.getParameter("emp"));
 		HashMap<String, String> timeMap = jinDao.selectEmpTime(hMap);
+		String todayDate = new SimpleDateFormat("yyMMdd").format(new Date());
 		String timeList = null;
 		if (timeMap == null) {
 			timeList = "직원 휴무일입니다.";
+		} else if (hMap.get("date").equals(todayDate)) {
+			String todayTimeStr = new SimpleDateFormat("HHmm").format(new Date());
+			int todayHour = Integer.parseInt(todayTimeStr.substring(0, 2));
+			int todayMin = Integer.parseInt(todayTimeStr.substring(2, 4));
+			String strHour = null;
+			String strMin = null;
+			if (todayMin < 30) {
+				strMin = "30";
+			} else {
+				strMin = "00";
+				todayHour++;
+			} // else End
+			todayHour += 1; // 현재 시각부터 한 시간 뒤까진 예약이 안 되도록 하기 위해 + 1
+			if (todayHour > 10) {
+				strHour = "0" + todayHour;
+			} else {
+				strHour = String.valueOf(todayHour);
+			} // else End
+			String todayTimeString = strHour + strMin;
+			int todayTime = Integer.parseInt(todayTimeString);
+			int amOpen = Integer.parseInt(timeMap.get("AM_OPEN"));
+			int amClose = Integer.parseInt(timeMap.get("AM_CLOSE"));
+			int pmOpen = Integer.parseInt(timeMap.get("PM_OPEN"));
+			int pmClose = Integer.parseInt(timeMap.get("PM_CLOSE"));
+			if (todayTime < amOpen) {
+				System.out.println("현재 : " + todayTime + ", AM_OPEN : " + amOpen);
+			} else if (todayTime < amClose) {
+				System.out.println("현재 : " + todayTime + ", AM_CLOSE : " + amClose);
+			} else if (todayTime < pmOpen) {
+				System.out.println("현재 : " + todayTime + ", PM_OPEN : " + pmOpen);
+			} else if (todayTime < pmClose) {
+				System.out.println("현재 : " + todayTime + ", PM_CLOSE :" + pmClose);
+			}
+			System.out.println();
 		} else {
 			List<HashMap<String, String>> noTimeList = jinDao.selectNoTime(hMap);
 			int amOpenHour = Integer.parseInt(timeMap.get("AM_OPEN").substring(0, 2));

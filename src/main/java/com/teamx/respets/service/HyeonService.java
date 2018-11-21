@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.dao.HyeonDao;
@@ -253,7 +255,7 @@ public class HyeonService {
 	}
 
 	/* 혜연 전체예약목록 */
-	public ModelAndView allBookingList(HttpSession session) {
+	public ModelAndView personalAllBookingList(HttpSession session) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
@@ -293,32 +295,15 @@ public class HyeonService {
 		mav = new ModelAndView();
 		String view = null;
 		StringBuilder sb = new StringBuilder();
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		String no = session.getAttribute("no").toString();
-		String timeS = new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
-		map.put("no", no);
-		map.put("timeS", timeS);
-		System.out.println(timeS);
-		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		bList = hyDao.todayScheduleList(map);
-		if (bList.size() != 0) {
-			
-			sb.append("<input type='radio' id='M' value='병원'>");
-			for (int i = 0; i < bList.size(); i++) {
-				String bk_no = (String) bList.get(i).get("BK_NO");
-				String pno = (String) bList.get(i).get("PER_NO");
-				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
-						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
-						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
-						+ bList.get(i).get("VS_START")
-						+ "<br/><span class='but'></span><span class='ton'><input type='button' class='com' value='방문' onclick=\"com(this,\'"
-						+ bk_no + "')\" />" + " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(this,\'"
-						+ bk_no + "',\'" + pno + "\')\" />"
-						+ " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(this,\'" + bk_no
-						+ "',\'" + pno + "')\"/></span></div><br>");
-
+		ArrayList<HashMap<String, Object>> sMap = hyDao.getSvcPri(no);
+		if (sMap.size() != 0) {
+			for (int i = 0; i < sMap.size(); i++) {
+				String svc = (String) sMap.get(i).get("BCT_NAME");
+				String code = (String) sMap.get(i).get("BCT_CODE");
+				sb.append("| <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>" + svc);
 			}
-			mav.addObject("toSdList", sb);
+			mav.addObject("bctList", sb);
 			view = "todayScheduleList";
 		} else {
 			mav.addObject("none", makeNoneHtml());
@@ -379,8 +364,7 @@ public class HyeonService {
 	}
 
 	/* 혜연 방문 클릭시 */
-	public int todayScheduleListCheck(HttpServletRequest request) {
-		String bk_no = request.getParameter("bk_no");
+	public int todayScheduleListCheck(String bk_no) {
 		System.out.println("예약번호 = " + bk_no);
 		int result = hyDao.todayScheduleListCheck(bk_no);
 		return result;
@@ -560,4 +544,59 @@ public class HyeonService {
 		return mav;
 	}
 
+	public String bctBookingList(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
+		StringBuilder sb = new StringBuilder();
+		String no = request.getParameter("no");
+		String bct_name = request.getParameter("bct_name");
+		String timeS = new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+		map.put("no", no);
+		map.put("timeS", timeS);
+		map.put("bct_name", bct_name);
+		bList = hyDao.bctBookingList(map);
+		if (bList != null) {
+			for (int i = 0; i < bList.size(); i++) {
+				String bk_no = (String) bList.get(i).get("BK_NO");
+				String pno = (String) bList.get(i).get("PER_NO");
+				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
+						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
+						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
+						+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START")
+						+ "<br/><span class='but'></span><span class='ton'><input type='button' class='com' value='방문' onclick=\"com(\'"
+						+ bk_no + "')\" />" + " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(this,\'"
+						+ bk_no + "',\'" + pno + "\')\" />"
+						+ " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(this,\'" + bk_no
+						+ "',\'" + pno + "')\"/></span></div><br>");
+
+			}
+		}
+		return sb.toString();
+	}
+
+	public String todayAllScheduleList(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
+		StringBuilder sb = new StringBuilder();
+		String no = request.getParameter("no");
+		String timeS = new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+		map.put("no", no);
+		map.put("timeS", timeS);
+		bList = hyDao.todayScheduleList(map);
+		for (int i = 0; i < bList.size(); i++) {
+			String bk_no = (String) bList.get(i).get("BK_NO");
+			String pno = (String) bList.get(i).get("PER_NO");
+			sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
+					+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
+					+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
+					+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START")
+					+ "<br/><span class='but'></span><span class='ton'><input type='button' class='com' value='방문' onclick=\"com(this,\'"
+					+ bk_no + "')\" />" + " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(this,\'"
+					+ bk_no + "',\'" + pno + "\')\" />"
+					+ " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(this,\'" + bk_no + "',\'"
+					+ pno + "')\"/></span></div><br>");
+
+		}
+		return sb.toString();
+	}
 }

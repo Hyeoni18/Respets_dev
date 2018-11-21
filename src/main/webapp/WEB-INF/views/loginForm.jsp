@@ -11,7 +11,7 @@
 	name="description">
 <meta content="Coderthemes" name="author">
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="resources/dist/assets/images/logo-sm.png">
 
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
@@ -21,7 +21,6 @@
 
 </head>
 <body class="authentication-bg enlarged">
-
 	<div class="account-pages mt-5 mb-5">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -44,17 +43,19 @@
 
 							<form action="loginProcess" method="post">
 								<div class="form-group">
-									<label for="emailaddress">이메일 주소</label> 
+									<label for="email">이메일 주소</label> 
 									<input class="form-control" type="text" id="email" name="email" placeholder="Enter your email">
 								</div>
 
 								<div class="form-group">
 									<a href="./findMyIdForm" class="text-muted float-right">
 									<small>아이디 찾기</small></a> 
-									<label for="password">비밀번호</label> <input
+									
+									<label for="pw">비밀번호</label> <input
 										class="form-control" type="password" id="pw" name="pw"
 										placeholder="Enter your password">
 								</div>
+								
 								<div class="form-group mb-0 text-center">
 									<button class="btn btn-success" type="submit">로그인</button>
 								</div>

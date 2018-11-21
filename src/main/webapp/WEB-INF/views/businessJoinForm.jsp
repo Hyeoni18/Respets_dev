@@ -43,65 +43,65 @@
 								<!-- 필수 입력 항목에 빨간 * 추가하기 -->
 								<!-- 이메일 유효성 검사 추가할 것 -->
 								<div class="form-group">
-									<label for="bus_email">이메일 주소</label> <br/>
-									<input type="text" name="bus_email" class="bus_email" id="이메일"
+									<label for="bus_email">이메일 주소</label>
+									<input type="text" class="form-control" name="bus_email" class="bus_email" id="이메일"
 										onchange="emailChk();" placeholder="ex)respets@respets.com"
 										required >
 									<div id="emailChkMsg"></div>
 								</div>
 								<!-- 비밀번호 유효성 검사, 확인 폼 추가할 것 -->
 								<div class="form-group">
-									<label for="bus_pw">비밀번호</label> <br/>
-									<input type="password" name="bus_pw" id="비밀번호" placeholder="비밀번호를 입력해주세요." required >
+									<label for="bus_pw">비밀번호</label>
+									<input type="password" class="form-control" name="bus_pw" id="비밀번호" placeholder="비밀번호를 입력해주세요." required >
 								</div>
 									
 								<div class="form-group">
-									<label for="bus_name">업체명</label> <br/>
-									<input type="text" name="bus_name" id="업체명" placeholder="업체명을 입력해주세요." required>
+									<label for="bus_name">업체명</label>
+									<input type="text" class="form-control" name="bus_name" id="업체명" placeholder="업체명을 입력해주세요." required>
 								</div>
 							
 								<div class="form-group">
-									<label for="bus_ceo">대표자명</label> <br/>
-									<input type="text" name="bus_ceo" id="대표자명" placeholder="대표자명을 입력해주세요." required>
+									<label for="bus_ceo">대표자명</label>
+									<input type="text" class="form-control" name="bus_ceo" id="대표자명" placeholder="대표자명을 입력해주세요." required>
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_lcno">사업자등록번호</label> <br/>
-									<input type="text" name="bus_lcno" class="bus_lcno" id="사업자 등록 번호" placeholder="ex)000-00-00000" onchange="taxIdChk();" required/>
+									<label for="bus_lcno">사업자등록번호</label>
+									<input type="text" class="form-control" name="bus_lcno" class="bus_lcno" id="사업자 등록 번호" placeholder="ex)000-00-00000" onchange="taxIdChk();" required/>
 									<div id="taxIdChkMsg"></div>
 								</div>
 								
 								<div class="form-group">
-									<label>사업자등록증사진</label> <br/>
-									<input type="file" name="busLicense" id="busLicense" />
+									<label>사업자등록증사진</label>
+									<input type="file" class="form-control" name="busLicense" id="busLicense" />
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_phone">업체 연락처</label> <br/>
-									<input type="text" name="bus_phone" id="업체 연락처" />
+									<label for="bus_phone">업체 연락처</label>
+									<input type="text" class="form-control" name="bus_phone" id="업체 연락처" />
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_address">업체 주소</label> <br/>
-									<input type="text" name="bus_post" id="우편번호" placeholder="우편번호" /><br/>
+									<label for="bus_address">업체 주소</label>
+									<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" /><br/>
 									<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-success"/>
 								</div>
 								<div class="form-group">
-									<input type="text" name="bus_addr" id="주소" placeholder="주소" /> 
+									<input type="text" class="form-control" name="bus_addr" id="주소" placeholder="주소" /> 
 								</div>
 								<div class="form-group">
-									<input type="text" name="bus_addr2" id="상세주소" placeholder="상세주소" />
+									<input type="text" class="form-control" name="bus_addr2" id="상세주소" placeholder="상세주소" />
 								</div>
 				
 								
 								<div class="form-group">
-									<label for="service">주력 서비스</label> <br/>
+									<label for="service">주력 서비스</label>
 									${input}
 								</div>
 								
 								<div class="form-group">
-									<label for="mainPhoto">대표 사진</label> <br/>
-									<input type="file" name="mainPhoto" onchange="fileChk(this)" /> 
+									<label for="mainPhoto">대표 사진</label>
+									<input type="file" class="form-control" name="mainPhoto" onchange="fileChk(this)" /> 
 									<input type="hidden" name="fileCheck" id="fileCheck" value="0" />
 								</div>
 

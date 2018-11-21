@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.service.JinService;
 
@@ -84,9 +85,13 @@ public class JinController {
 	
 	// 서진 : 예약
 	@RequestMapping(value = "/booking", method = RequestMethod.GET)
-	public ModelAndView booking(HttpServletRequest request) {
+	public ModelAndView booking(Booking bk, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("login");
+		System.out.println("bus_no="+bk.getBus_no());
+		System.out.println("bct_code="+bk.getBct_code());
+		System.out.println("emp_no="+bk.getEmp_no());
+		System.out.println("date="+request.getParameter("date"));
+		mav.setViewName("");
 		return mav;
 	} // method End
 

@@ -52,7 +52,7 @@
 		</div>
 	</form>
 </body>
-<script>
+<!-- <script>
 	function lengthCheck() {
 		var form = document.getElementById('comment').value.length
 	}
@@ -64,7 +64,7 @@
 	       frm.value = frm.value.substring(0,4000);  
 	       frm.focus();  
 	  } 
-</script>
+</script> -->
 <script>
 	$('#dayTable').html("${dayList}");
 	$('#day').hide();
@@ -74,7 +74,7 @@
 
 	var emp = null;
 
-	$('input[name=emp]').change(function() {
+	$('input[name=emp_no]').change(function() {
 		emp = $(this).val();
 		$('#day').show();
 	});
