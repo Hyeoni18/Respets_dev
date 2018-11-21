@@ -130,39 +130,33 @@
 	<!-- end demo js-->
 </body>
 <script>
-	$(document).ready(function() {
-		//불러온 값에 selected속성 부여하기
-		$("#abc_no option").each(function() {
-			if ($(this).val() == "${abo.abc_no}")
-				$(this).attr("selected", "selected");
-		})
-	});
-	$("#noticeUpdateSubmit").click(function() {
-		console.log(this.value + " 클릭함");
-		var frm = document.noticeUpdateForm;
-		var length = frm.length - 1;
-		for (var i = 0; i < length; i++) {
-			if (frm[i].name == "abc_no") {
-				if (frm[i].value == "" || frm[i].value == null) {
-					alert("카테고리가 입력되지 않았습니다");
-					frm[i].focus();
-					return;
-				}
-			} else if (frm[i].name == "abo_title") {
-				if (frm[i].value == "" || frm[i].value == null) {
-					alert("제목이 입력되지 않았습니다");
-					frm[i].focus();
-					return;
-				}
-			} else if (frm[i].name == "abo_ctt") {
-				if (frm[i].value == "" || frm[i].value == null) {
-					alert("내용이 입력되지 않았습니다");
-					frm[i].focus();
-					return;
-				}
-			}
+$(document).ready(function() {
+	//불러온 값에 selected속성 부여하기
+	$("#abc_no option").each(function() {
+		if ($(this).val() == "${abo.abc_no}")
+			$(this).attr("selected", "selected");
+	})
+});
+$("#noticeUpdateSubmit").click(function() {
+	console.log(this.value + " 클릭함");
+	var frm = document.noticeWriteForm;
+	var length = frm.length - 1;
+	for (var i = 0; i < length; i++) {
+		if (frm[i].name == "abc_no"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("카테고리가 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
+		}else if (frm[i].name == "abo_title"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("제목이 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
+		}else if (frm[i].name == "abo_ctt"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("내용이 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
 		}
-		frm.submit();
-	});
+	}
+	frm.submit();
+});
 </script>
 </html>
