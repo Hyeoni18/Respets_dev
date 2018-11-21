@@ -57,7 +57,7 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="row mb-2">
-								<div class="col-lg-8">
+								<div class="col-lg-6">
 									<form action="noticeListSearch" name="noticeListForm"
 										class="form-inline">
 										<div class="form-group mb-3">
@@ -72,14 +72,14 @@
 										<div class="form-group mb-3">
 											<label for="status-select" class="mr-2"> <!-- 검색&nbsp; -->
 												<input type="search" class="form-control form-control-sm"
-												placeholder="search" aria-controls="basic-datatable"
+												placeholder="제목" aria-controls="basic-datatable"
 												name="search">
 												<button type="submit" class="btn btn-success btn-sm">검색</button>
 											</label>
 										</div>
 									</form>
 								</div>
-								<div class="col-lg-4">
+								<div class="col-lg-6">
 									<div class="text-lg-right">
 										<a href="noticeWriteForm" class="btn btn-danger mb-2"><i
 											class="mdi mdi-plus-circle mr-2"></i> Add Notice</a>
@@ -87,6 +87,7 @@
 								</div>
 								<!-- end col-->
 							</div>
+							<!-- end row -->
 
 							<div class="table-responsive-sm">
 								<table class="table table-striped table-centered mb-0">
@@ -107,12 +108,18 @@
 												<td><a href="noticeDetail?abo_no=${notice.abo_no}">
 														${notice.abo_title}</a></td>
 												<td>${notice.abo_date}</td>
-												<td class="table-action"><a href="noticeUpdateForm?abo_no=${notice.abo_no}"
+												<td class="table-action"><a
+													href="noticeUpdateForm?abo_no=${notice.abo_no}"
 													class="action-icon"> <i class="mdi mdi-pencil"></i></a> <a
-													href="noticeDelete?abo_no=${notice.abo_no}" class="action-icon"> <i
-														class="mdi mdi-delete"></i></a></td>
+													href="noticeDelete?abo_no=${notice.abo_no}"
+													class="action-icon"> <i class="mdi mdi-delete"></i></a></td>
 											</tr>
 										</c:forEach>
+										<c:if test="${empty aboList}">
+											<tr>
+												<td colspan="5" style="text-align:center">검색한 내용이 없습니다</td>
+											</tr>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -123,30 +130,12 @@
 				</div>
 				<!-- end col -->
 			</div>
-			<div class="row">
-				<div class="col-12">
-					<%-- <div class="dataTables_paginate paging_simple_numbers"
-						id="selection-datatable_paginate">
-						<ul class="pagination pagination-rounded">
-							<li class="paginate_button page-item previous disabled"
-								id="selection-datatable_previous"><a href="#"
-								aria-controls="selection-datatable" data-dt-idx="0" tabindex="0"
-								class="page-link"><i class="mdi mdi-chevron-left"></i></a></li>
-							<c:forEach var="paging" items="" varStatus="status">
-								<li class="paginate_button page-item active"><a href="#"
-								aria-controls="selection-datatable" data-dt-idx="${status.count}" tabindex="0"
-								class="page-link">${status.count}</a></li>					
-							</c:forEach>
-							<li class="paginate_button page-item next"
-								id="selection-datatable_next"><a href="#"
-								aria-controls="selection-datatable" data-dt-idx="7" tabindex="0"
-								class="page-link"><i class="mdi mdi-chevron-right"></i></a></li>
-						</ul>
-					</div> --%>
-					${paging}
-				</div>
+			<!-- end row -->
+			<div class="row mb-2" style="">
+				<div class="col-lg-8">${paging}</div>
 			</div>
 			<!-- end row -->
+
 
 		</div>
 		<!-- content -->
@@ -155,11 +144,9 @@
 
 		<!-- end Footer -->
 
-	</div>
-
-	<!-- ============================================================== -->
-	<!-- End Page content -->
-	<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
 
 
 	</div>
@@ -170,20 +157,23 @@
 
 
 	<!-- App js -->
-	<script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script>
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- third party js -->
 	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
+		src="resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
 	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
+		src="resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="resources/dist/assets/js/vendor/jquery.dataTables.js"></script>
+	<script src="resources/dist/assets/js/vendor/dataTables.bootstrap4.js"></script>
 	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
+		src="resources/dist/assets/js/vendor/dataTables.responsive.min.js"></script>
+	<script
+		src="resources/dist/assets/js/vendor/responsive.bootstrap4.min.js"></script>
 	<!-- third party js ends -->
 
 	<!-- demo app -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
 <script>

@@ -59,8 +59,8 @@
 						<div class="card-body">
 							<form action="noticeInsert" name="noticeWriteForm" method="get">
 								<div class="form-group mb-3">
-									<label for="example-select">카테고리</label>
-									<select	class="form-control" name="abc_no">
+									<label for="example-select">카테고리</label> <select
+										class="form-control" name="abc_no">
 										<option value="">선택</option>
 										<option value="1">개인</option>
 										<option value="2">기업</option>
@@ -77,9 +77,13 @@
 										maxlength="225" rows="10" name="abo_ctt"
 										placeholder="게시글 내용을 입력하세요"></textarea>
 								</div>
-								<button id="noticeInsertSubmit" class="btn btn-success btn-sm mt-2">
-									<i class="mdi mdi-content-save-outline mr-1"></i> Save
-								</button>
+								<div style="text-align: right">
+									<button id="noticeInsertSubmit"
+										class="btn btn-success btn-sm mt-2">
+										<i class="mdi mdi-content-save-outline mr-1"></i> Save
+									</button>
+								</div>
+
 							</form>
 						</div>
 					</div>
@@ -96,9 +100,9 @@
 
 		<!-- end Footer -->
 
-	<!-- ============================================================== -->
-	<!-- End Page content -->
-	<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
 
 
 	</div>
@@ -129,26 +133,26 @@
 	<!-- end demo js-->
 </body>
 <script>
-	$("#noticeInsertSubmit").click(function() {
-		console.log(this.value + " 클릭함");
-		var frm = document.noticeWriteForm;
-		var length = frm.length - 1;
-		for (var i = 0; i < length; i++) {
-			if (frm[i].name == "abc_no"){
-				if (frm[i].value == "" || frm[i].value == null){
-					alert("카테고리가 입력되지 않았습니다"); frm[i].focus(); return;
-				}					
-			}else if (frm[i].name == "abo_title"){
-				if (frm[i].value == "" || frm[i].value == null){
-					alert("제목이 입력되지 않았습니다"); frm[i].focus(); return;
-				}					
-			}else if (frm[i].name == "abo_ctt"){
-				if (frm[i].value == "" || frm[i].value == null){
-					alert("내용이 입력되지 않았습니다"); frm[i].focus(); return;
-				}					
-			}
+$("#noticeInsertSubmit").click(function() {
+	console.log(this.value + " 클릭함");
+	var frm = document.noticeWriteForm;
+	var length = frm.length - 1;
+	for (var i = 0; i < length; i++) {
+		if (frm[i].name == "abc_no"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("카테고리가 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
+		}else if (frm[i].name == "abo_title"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("제목이 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
+		}else if (frm[i].name == "abo_ctt"){
+			if (frm[i].value == "" || frm[i].value == null){
+				alert("내용이 입력되지 않았습니다"); frm[i].focus(); return false;
+			}					
 		}
-		frm.submit();
-	});
+	}
+	frm.submit();
+});
 </script>
 </html>

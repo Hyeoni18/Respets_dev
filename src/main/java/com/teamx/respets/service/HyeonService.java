@@ -1,13 +1,10 @@
 package com.teamx.respets.service;
 
-import java.lang.reflect.Member;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +21,6 @@ import com.google.gson.JsonObject;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.dao.HyeonDao;
-import com.teamx.respets.dao.IJiyeDao;
 import com.teamx.respets.userClass.Paging;
 
 @Service
@@ -196,8 +192,10 @@ public class HyeonService {
 		String bk_no = request.getParameter("bk_no");
 		System.out.println("예약번호=" + bk_no);
 		// 방문날짜 가져오기
-		String start = hyDao.getBkStart(bk_no);
+		Date start = hyDao.getBkStart(bk_no);
 		System.out.println("방문날=" + start);
+		int count = cancleDateCheck(start);
+		System.out.println(count);
 		// 현재날짜(취소날짜)
 //		String timeS = new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 //		System.out.println("취소날=" + timeS);
@@ -224,10 +222,31 @@ public class HyeonService {
 //		 * "recentMyBookingList"; } else { mav.addObject("flas", makeFlasHtml()); view =
 //		 * "myBookingCancelPage"; } }
 //		 */
-//		mav.setViewName(view);
-//		return mav;
-		return null;
+		mav.setViewName("allBookingList"); //전체예약목록으로돌아가기 근데 왜안되지 분명 필요한 값은 세션하난데. 이상해 그치?
+		return mav;
 	}
+	
+	private int cancleDateCheck(Date booking) {
+		Date today = new Date(); //현재시간 
+		Calendar todayCal = Calendar.getInstance ();  
+		todayCal.setTime(today); //현재시간을 캘린더화 
+		Calendar bookingCal = Calendar.getInstance();
+		bookingCal.setTime(booking); //가져온 방문예정일을 캘린더화 
+		int count = 0; //현재날짜와 방문예정일의 차이를 나타낼 카운트 변수 
+		while(!todayCal.after(bookingCal)) { //현재날짜가 방문예정일을 지나지 않았으면 반복 
+			if(todayCal!=bookingCal) { //현재날짜가 방문예정일이랑 다르면 count++, 같으면 count하지 않는다.
+				count++;
+			}
+			todayCal.add(Calendar.DATE, 1); //현재날짜가 방문예정일이 될 때까지 +1일을 해준다.
+		}
+		if(count!=0) { 
+		System.out.println("방문예정일 까지 "+count+"일 남았습니다.");
+		} else { //현재날짜가 방문예정일 당일이거나 지난 후면 count가 되지 않는다. 
+			System.out.println("방문예정일이 지났습니다.");
+		}
+		return count;
+	}
+	
 
 	private Object makeCancInsertSucess() {
 		StringBuffer sb = new StringBuffer();

@@ -53,7 +53,7 @@
 			                <a href="./recentMyBookingList" class="side-nav-link">
 			                    <i class="dripicons-list"></i>
 			                    <span class="badge badge-success float-right">1</span>
-			                    <span> <a href='recentMyBookingList'>최근 예약 목록</a> </span>
+			                    <span> <a href='./recentMyBookingList'>최근 예약 목록</a> </span>
 			                </a>
 			            </li>
 			
