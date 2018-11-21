@@ -68,7 +68,7 @@
 
 				<button id="myPage" onclick="location.href='./myPage'">
 					기업마이페이지</button>
-				<button onclick="location.href='#'">스케줄</button>
+				<button onclick="location.href='./personalCalendar'">스케줄</button>
 
 				<li class="dropdown notification-list"><a
 					class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown"
@@ -146,7 +146,7 @@
 					data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 					aria-expanded="false"> <span class="account-user-avatar">
 							<img
-							src="${pageContext.request.contextPath}/resources/dist/assets/images/users/avatar-1.jpg"
+							src="${loc}${photo}"
 							alt="user-image" class="rounded-circle">
 					</span> <span> <span class="account-user-name">${name}</span> <span
 							class="account-position" id="memberType"></span>
