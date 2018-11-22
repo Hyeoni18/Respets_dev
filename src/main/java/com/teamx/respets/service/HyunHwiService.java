@@ -1189,11 +1189,16 @@ public class HyunHwiService {
 			hDao.updateServiceBSD(map); // 기업의 하루 스케줄 수정
 			map = holidayMap(request); // 기업의 휴일을 수정하기 위해 정보를 map에 담아오는 메소드
 			hDao.updateServiceBFX(map); // 기업의 고정 스케줄 수정
+			if(bct_code.equals("M")) {
+				hDao.deletePRC(map);
+				insertPrice(request);
+			} else {
 			String[] price = request.getParameterValues("price");
-			if (price[0] != null) {
+			System.out.print(request.getParameterValues("price"));
+			if (price != null) {
 				hDao.deletePRC(map);
 				insertPrice(request); // 기업이 지정한 서비스 가격 등록
-			}
+			}}
 		}
 		fileWriter(request); // 사진 등록 (사업장사진)
 
@@ -2374,6 +2379,7 @@ public class HyunHwiService {
 			e.printStackTrace();
 		}
 		int pNo = (pageNum == null) ? 1 : pageNum; // 페이지넘버
+		System.out.println(outputDate);
 		String tagList = tagList(outputDate, bct_code, city, pNo);
 		String busiList = busiList(outputDate, bct_code, city, pNo);
 		String paging = busiListPaging(pNo, outputDate, bct_code, city);
@@ -2409,7 +2415,7 @@ public class HyunHwiService {
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='busi'>");
-					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="+outputDate+"&bus_addr="+city+"'>");
 					sb.append("<div class='busiImage'>");
 					sb.append("<img src='" + glr_loc + glr_file + "'/>");
 					sb.append("</div>");

@@ -5,6 +5,11 @@ import java.util.Date;
 public class Booking {
 	/* 예약 테이블 */
 	private String bk_no;
+	private String per_no;
+	private String pet_no;
+	private String bus_no;
+	private String bct_code;
+	private String emp_no;
 	private Date bk_time;
 	private int bk_pay;
 	private Date vs_start;
@@ -12,7 +17,8 @@ public class Booking {
 	private String bk_cmt;
 	private String bk_chk;
 	private String vs_chk;
-	/*캘린더에서 사용*/
+	private String bk_rejmsg;
+	/* 캘린더에서 사용 */
 	private String pet_name;
 	private String bus_name;
 	private String bct_name;
@@ -26,37 +32,52 @@ public class Booking {
 	/* 예약 취소 테이블 */
 	private Date can_time;
 
-	
-	public String getPet_name() {
-		return pet_name;
-	}
-
-	public void setPet_name(String pet_name) {
-		this.pet_name = pet_name;
-	}
-
-	public String getBus_name() {
-		return bus_name;
-	}
-
-	public void setBus_name(String bus_name) {
-		this.bus_name = bus_name;
-	}
-
-	public String getBct_name() {
-		return bct_name;
-	}
-
-	public void setBct_name(String bct_name) {
-		this.bct_name = bct_name;
-	}
-
 	public String getBk_no() {
 		return bk_no;
 	}
 
 	public void setBk_no(String bk_no) {
 		this.bk_no = bk_no;
+	}
+
+	public String getPer_no() {
+		return per_no;
+	}
+
+	public void setPer_no(String per_no) {
+		this.per_no = per_no;
+	}
+
+	public String getPet_no() {
+		return pet_no;
+	}
+
+	public void setPet_no(String pet_no) {
+		this.pet_no = pet_no;
+	}
+
+	public String getBus_no() {
+		return bus_no;
+	}
+
+	public void setBus_no(String bus_no) {
+		this.bus_no = bus_no;
+	}
+
+	public String getBct_code() {
+		return bct_code;
+	}
+
+	public void setBct_code(String bct_code) {
+		this.bct_code = bct_code;
+	}
+
+	public String getEmp_no() {
+		return emp_no;
+	}
+
+	public void setEmp_no(String emp_no) {
+		this.emp_no = emp_no;
 	}
 
 	public Date getBk_time() {
@@ -115,6 +136,38 @@ public class Booking {
 		this.vs_chk = vs_chk;
 	}
 
+	public String getBk_rejmsg() {
+		return bk_rejmsg;
+	}
+
+	public void setBk_rejmsg(String bk_rejmsg) {
+		this.bk_rejmsg = bk_rejmsg;
+	}
+
+	public String getPet_name() {
+		return pet_name;
+	}
+
+	public void setPet_name(String pet_name) {
+		this.pet_name = pet_name;
+	}
+
+	public String getBus_name() {
+		return bus_name;
+	}
+
+	public void setBus_name(String bus_name) {
+		this.bus_name = bus_name;
+	}
+
+	public String getBct_name() {
+		return bct_name;
+	}
+
+	public void setBct_name(String bct_name) {
+		this.bct_name = bct_name;
+	}
+
 	public int getPm_price() {
 		return pm_price;
 	}
@@ -163,4 +216,4 @@ public class Booking {
 		this.can_time = can_time;
 	}
 
-}
+} // class End
