@@ -71,7 +71,7 @@
 		</div>
 	</div>
 </body>
-	<ul class="pagination-rounded" > 
+	<ul class="pagination-rounded"> 
 		${paging} 
 	</ul>
 	<form id="searchBusinessNotice" action="searchBusinessNotice">
