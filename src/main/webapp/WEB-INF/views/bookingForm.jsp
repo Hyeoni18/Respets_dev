@@ -45,7 +45,7 @@
 				</div>
 				<div id="comment">
 					<p>코멘트</p>
-					<textarea id="comment" name="comment" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
+					<textarea id="comment" name="bk_cmt" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
 				</div>
 				<input type="submit" id="submit" value="예약하기" />
 			</div>
