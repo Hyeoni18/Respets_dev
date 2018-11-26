@@ -266,7 +266,7 @@ public class HyunHwiService {
 		List<Map<String, Object>> list;
 		list = hDao.serviceInsertForm(bus_no); // 기업이 가진 서비스 검색
 		String codeSelectBut = codeSelectBut(); // 업종 선택 버튼 생성
-
+		System.out.println("확인: " + list.size());
 		// 각 업종들에게 필요한 메뉴를 검색하여 생성해준다.
 		String medical = menuSelect("M");
 		String beauty = menuSelect("B");

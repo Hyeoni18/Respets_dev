@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <html auto-config="true">
 <head>
-<head>
 <meta charset="utf-8" />
-<title>Respets 기업 공지사항</title>
+<title>Respets :: 기업 공지사항</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -24,7 +23,6 @@
 <style type="text/css">
 
 </style>
-
 </head>
 <body>
 	<div class="page-content">
