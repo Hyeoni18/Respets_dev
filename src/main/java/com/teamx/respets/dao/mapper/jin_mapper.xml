@@ -122,8 +122,8 @@
 	</insert>
 	
 	<!-- 서진 : 예약 메뉴 테이블에 반복문으로 INSERT -->
-	<insert id="insertBkMenu">
-		INSERT INTO BKM VALUES(#{bk_no}, ${menu_no});
+	<insert id="insertBkMenu" parameterType="Booking">
+		INSERT INTO BKM VALUES(#{bk_no}, ${menu_no})
 	</insert>
 
 </mapper>
