@@ -45,14 +45,14 @@
 				</div>
 				<div id="comment">
 					<p>코멘트</p>
-					<textarea id="comment" name="comment" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
+					<textarea id="comment" name="bk_cmt" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
 				</div>
 				<input type="submit" id="submit" value="예약하기" />
 			</div>
 		</div>
 	</form>
 </body>
-<script>
+<!-- <script>
 	function lengthCheck() {
 		var form = document.getElementById('comment').value.length
 	}
@@ -64,7 +64,7 @@
 	       frm.value = frm.value.substring(0,4000);  
 	       frm.focus();  
 	  } 
-</script>
+</script> -->
 <script>
 	$('#dayTable').html("${dayList}");
 	$('#day').hide();
@@ -74,7 +74,7 @@
 
 	var emp = null;
 
-	$('input[name=emp]').change(function() {
+	$('input[name=emp_no]').change(function() {
 		emp = $(this).val();
 		$('#day').show();
 	});

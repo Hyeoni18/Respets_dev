@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.dao.JinDao;
 
@@ -151,9 +152,11 @@ public class JinService {
 				hMap.put(name, value);
 			} // for End
 		} // if End
+
+		/* 나중에 삭제할 것 */
 		hMap.put("bus_no", "B1000063");
 		hMap.put("bct_code", "M");
-		// hMap.put("date", "11/28/2018 - 11/16/2018");
+
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
 		if (hMap.get("pet_no") == null) {
@@ -162,11 +165,19 @@ public class JinService {
 			petMap = jinDao.firstPet(hMap);
 		} // if End
 		hMap.put("pet_no", petMap.get("PET_NO"));
+		if (hMap.get("date") == null) {
+			hMap.put("date", "noDate");
+		} // if End
 		StringBuilder pet = new StringBuilder();
+		pet.append("<p>예약할 동물</p>");
 		pet.append("<div><img src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
 		pet.append("' style='width: 100%; height: auto;' />");
 		pet.append("<p>" + petMap.get("PET_NAME") + "</p></div>");
+		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
+		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
+		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
 		List<HashMap<String, String>> petList = jinDao.selectPetList(petMap);
+		pet.append("<p>다른 동물 선택</p>");
 		for (int i = 0; i < petList.size(); i++) {
 			pet.append("<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
 			pet.append("&bct_code=" + hMap.get("bct_code"));
@@ -178,29 +189,31 @@ public class JinService {
 		StringBuilder svc = new StringBuilder();
 		svc.append("<p>서비스 선택</p>");
 		for (int i = 0; i < svcList.size(); i++) {
-			svc.append("<input type='checkbox' name='service' value='");
-			svc.append(svcList.get(i).get("MENU_NO") + "' />");
+			svc.append("<input type='checkbox' name='menu_no' value='");
+			svc.append(String.valueOf(svcList.get(i).get("MENU_NO")) + "' />");
 			svc.append(svcList.get(i).get("MENU_NAME"));
 			if (!svcList.get(i).get("PRICE").equals("0")) {
 				svc.append(" (" + svcList.get(i).get("PRICE") + " 원)");
-			}
+			} // if End
 			svc.append("<br/>");
+			svc.append("<input type='hidden' name='" + String.valueOf(svcList.get(i).get("MENU_NO")));
+			svc.append("' value='" + svcList.get(i).get("PRICE") + "' />");
 		} // for End
 		mav.addObject("svcList", svc);
 		List<HashMap<String, String>> empList = jinDao.selectEmpList(hMap);
 		StringBuilder emp = new StringBuilder();
 		emp.append("<p>직원 선택</p>");
 		for (int i = 0; i < empList.size(); i++) {
-			emp.append("<input type='radio' name='emp' value='");
+			emp.append("<input type='radio' name='emp_no' value='");
 			emp.append(empList.get(i).get("EMP_NO") + "' /> ");
 			emp.append(empList.get(i).get("EMP_NAME") + " " + empList.get(i).get("EMP_POS"));
 			emp.append(" (" + empList.get(i).get("EMP_PART") + ")<br/>");
 		} // for End
 		mav.addObject("empList", emp);
 		Date date = null;
-		if (hMap.get("date") != null) {
+		if (hMap.get("date") != null && !hMap.get("date").equals("noDate")) {
 			try {
-				date = new SimpleDateFormat("MM/dd/yyyy").parse(hMap.get("date").split(" - ")[0]);
+				date = new SimpleDateFormat("yy/MM/dd").parse(hMap.get("date"));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			} // catch End
@@ -212,7 +225,6 @@ public class JinService {
 		StringBuilder dayList = new StringBuilder();
 		dayList.append("<tr>");
 		for (int i = 0; i < 7; i++) {
-			cal.add(Calendar.DAY_OF_YEAR, 1);
 			int day = cal.get(Calendar.DAY_OF_WEEK);
 			SimpleDateFormat valSdf = new SimpleDateFormat("yyMMdd");
 			SimpleDateFormat sdf = null;
@@ -235,37 +247,81 @@ public class JinService {
 			String valDate = valSdf.format(cal.getTime());
 			dayList.append("<td><input type='radio' name='day' value='" + valDate + "' />");
 			dayList.append(strDate + "</td>");
+			cal.add(Calendar.DAY_OF_YEAR, 1);
 		} // for End
 		dayList.append("</tr>");
 		mav.addObject("dayList", dayList);
 		return mav;
 	} // method End
 
+	// 서진 : 예약 페이지 시간
 	public String timeSelect(HttpServletRequest request) {
 		HashMap<String, String> hMap = new HashMap<String, String>();
 		hMap.put("date", request.getParameter("date"));
 		hMap.put("emp_no", request.getParameter("emp"));
 		HashMap<String, String> timeMap = jinDao.selectEmpTime(hMap);
-		String timeList = null;
-		if (timeMap == null) {
+		String timeList = "";
+		List<HashMap<String, String>> noTimeList = jinDao.selectNoTime(hMap);
+		if (timeMap == null) { // DB에 시간 없을 때
 			timeList = "직원 휴무일입니다.";
-		} else {
-			List<HashMap<String, String>> noTimeList = jinDao.selectNoTime(hMap);
+		} else { // DB에 시간 있을 때
 			int amOpenHour = Integer.parseInt(timeMap.get("AM_OPEN").substring(0, 2));
 			int amOpenMin = Integer.parseInt(timeMap.get("AM_OPEN").substring(2, 4));
 			int amCloseHour = Integer.parseInt(timeMap.get("AM_CLOSE").substring(0, 2));
 			int amCloseMin = Integer.parseInt(timeMap.get("AM_CLOSE").substring(2, 4));
-			String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 			int pmOpenHour = Integer.parseInt(timeMap.get("PM_OPEN").substring(0, 2));
 			int pmOpenMin = Integer.parseInt(timeMap.get("PM_OPEN").substring(2, 4));
 			int pmCloseHour = Integer.parseInt(timeMap.get("PM_CLOSE").substring(0, 2));
 			int pmCloseMin = Integer.parseInt(timeMap.get("PM_CLOSE").substring(2, 4));
-			String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
-			timeList = amTimeList + pmTimeList;
+			if (hMap.get("date").equals(new SimpleDateFormat("yyMMdd").format(new Date()))) { // 오늘일 때
+				String todayTime = new SimpleDateFormat("HHmm").format(new Date());
+				int todayHour = Integer.parseInt(todayTime.substring(0, 2));
+				int todayMin = Integer.parseInt(todayTime.substring(2, 4));
+				String strHour = "";
+				String strMin = "";
+				if (todayMin < 30) {
+					strMin = "30";
+				} else {
+					strMin = "00";
+					todayHour++;
+				} // else End
+				todayHour++;
+				if (todayHour < 10) {
+					strHour = "0" + todayHour;
+				} else {
+					strHour = String.valueOf(todayHour);
+				} // else End
+				todayTime = strHour + strMin;
+				// 비교를 위한 변수
+				if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_OPEN"))) {
+					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					timeList = amTimeList + pmTimeList;
+				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_CLOSE"))) {
+					amOpenHour = Integer.parseInt(todayTime.substring(0, 2));
+					amOpenMin = Integer.parseInt(todayTime.substring(2, 4));
+					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					timeList = amTimeList + pmTimeList;
+				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_OPEN"))) {
+					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_CLOSE"))) {
+					pmOpenHour = Integer.parseInt(todayTime.substring(0, 2));
+					pmOpenMin = Integer.parseInt(todayTime.substring(2, 4));
+					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+				} else {
+					timeList = "예약 가능한 시간이 없습니다.";
+				} // else End
+			} else { // 오늘 아닐 때
+				String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+				String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+				timeList = amTimeList + pmTimeList;
+			} // else End
 		} // else End
 		return timeList;
 	} // method End
 
+	// 서진 : 시간 만드는 메소드
 	private String timeHtml(int openHour, int openMin, int closeHour, int closeMin,
 			List<HashMap<String, String>> noTimeList) {
 		int length = 0;
@@ -282,6 +338,8 @@ public class JinService {
 		for (int i = 1; i <= length; i++) {
 			if (openHour == 0) {
 				time += "00";
+			} else if (openHour < 10) {
+				time = "0" + openHour;
 			} else {
 				time += openHour;
 			} // else End
@@ -290,6 +348,7 @@ public class JinService {
 			} else {
 				time += openMin;
 			} // else End
+			System.out.println("time" + time);
 			timeList.append("<td><input type='radio' name='time' value='" + time);
 			for (int j = 0; j < noTimeList.size(); j++) {
 				if (noTimeList.get(j).get("VS_START").equals(time)) {
@@ -310,6 +369,25 @@ public class JinService {
 		} // for End
 		timeList.append("</tr>");
 		return timeList.toString();
+	} // method End
+
+	// 서진 : 예약 메소드
+	@Transactional
+	public void insertBooking(Booking bk, HttpServletRequest request) {
+		bk.setPer_no(request.getSession().getAttribute("no").toString());
+		bk.setVs_start(request.getParameter("day") + request.getParameter("time"));
+		String[] menu_no = request.getParameterValues("menu_no");
+		int sum = 0;
+		for (int i = 0; i < menu_no.length; i++) {
+			sum += Integer.parseInt(menu_no[i]);
+		} // for End
+		bk.setBk_pay(sum);
+		jinDao.insertBooking(bk);
+		bk.setBk_no("K" + String.valueOf(bk.getBk_seq()));
+		for (int i = 0; i < menu_no.length; i++) {
+			bk.setMenu_no(Integer.parseInt(menu_no[i]));
+			jinDao.insertBkMenu(bk);
+		} // for End
 	} // method End
 
 } // class End

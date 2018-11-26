@@ -215,8 +215,6 @@ public class JiyeService {
 	public ModelAndView adminLogin(String adm_no, String adm_pw) {
 		mav = new ModelAndView();
 		String view = null;
-		System.out.println(adm_no);
-		System.out.println(adm_pw);
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap.put("adm_no", adm_no);
 		hmap.put("adm_pw", adm_pw);
@@ -297,7 +295,7 @@ public class JiyeService {
 				sb.append("<span>" + mList.get(i).get("MENU_NAME") + ", </span>");
 			}
 			mav.addObject("mList", sb);
-		}
+		} //for End
 
 		// 반려동물상세
 		for (int i = 0; i < tList.size(); i++) {
@@ -305,7 +303,7 @@ public class JiyeService {
 			sb.append("<tr><td>" + tList.get(i).get("PCL_NAME") + "</td><td>" + tList.get(i).get("PDT_CTT")
 					+ "</td></tr>");
 			mav.addObject("tList", sb);
-		}
+		}//for End
 
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(hmap);
@@ -649,8 +647,8 @@ public class JiyeService {
 		String view = null;
 		// String bus_no = request.getParameter("bk_no");
 		// String bct_code = request.getParameter("bct_code");
-		String bus_no = "B1000001";
-		String bct_code = "B";
+		String bus_no = "B1000097";
+		String bct_code = "M";
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> gList = new ArrayList<HashMap<String, Object>>();
 		hmap.put("bus_no", bus_no);
@@ -659,7 +657,7 @@ public class JiyeService {
 		StringBuilder sb = new StringBuilder();
 		System.out.println("gList=" + gList);
 		for (int i = 0; i < gList.size(); i++) {
-			sb.append("<div><img src='" + gList.get(i).get("GLR_LOC") + gList.get(i).get("GLR_FILE") + "' />");
+			sb.append("<div class='photo' float:left;'><img style='height:200px; weight:200px;' class='card-img-top' src='" + gList.get(i).get("GLR_LOC") + gList.get(i).get("GLR_FILE") + "' /></div>");
 		}
 		mav.addObject("gList", sb);
 		view = "businessGallery";
