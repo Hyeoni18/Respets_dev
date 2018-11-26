@@ -1,32 +1,29 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<html>
+<html auto-config="true">
+<head>
 <head>
 <meta charset="utf-8" />
-<title>관리자 공지사항</title>
+<title>Respets 기업 공지사항</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
 	name="description" />
 <meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
-<link rel="shortcut icon" href="resources/images/logo-sm.png">
-
-<!-- third party css -->
-<link
-	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
-	rel="stylesheet" type="text/css" />
-<!-- third party css end -->
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
 
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
+<style type="text/css">
+</style>
+
 </head>
 <body>
 	<!-- Begin page -->
@@ -58,14 +55,14 @@
 						<div class="card-body">
 							<div class="row mb-2">
 								<div class="col-lg-6">
-									<form action="noticeListSearch" name="noticeListForm"
-										class="form-inline">
+									<form action="searchBusinessNotice"
+										name="businessNoticeListForm" class="form-inline">
 										<div class="form-group mb-3">
 											<label for="status-select" class="mr-2"> <!-- 카테고리&nbsp; -->
-												<select class="custom-select" name="abc_name" id="abc_name">
+												<select class="custom-select" name="select" id="select">
 													<option>전체</option>
-													<option>개인</option>
-													<option>기업</option>
+													<option>공지사항</option>
+													<option>이벤트</option>
 											</select>
 											</label>
 										</div>
@@ -81,7 +78,7 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="text-lg-right">
-										<a href="noticeWriteForm" class="btn btn-danger mb-2"><i
+										<a href="businessNoticeWriteForm" class="btn btn-danger mb-2"><i
 											class="mdi mdi-plus-circle mr-2"></i> Add Notice</a>
 									</div>
 								</div>
@@ -95,34 +92,14 @@
 									<thead>
 										<tr>
 											<th>글번호</th>
+											<th>업종</th>
 											<th>카테고리</th>
 											<th>제목</th>
 											<th>작성일</th>
 											<th>수정/삭제</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach var="abo" items="${aboList}" varStatus="status">
-											<tr>
-												<td>${abo.abo_no}</td>
-												<td>${abo.abc_name}</td>
-												<td><a href="noticeDetail?abo_no=${abo.abo_no}">
-														${abo.abo_title}</a></td>
-												<td>${abo.abo_date}</td>
-												<td class="table-action">
-													<a href="noticeUpdateForm?abo_no=${abo.abo_no}"
-													class="action-icon"><i class="mdi mdi-pencil"></i></a>
-													<a href="noticeDelete?abo_no=${abo.abo_no}"  onclick="return deleteChk(this)" class="action-icon">
-													<i class="mdi mdi-delete"></i></a>
-												</td>
-											</tr>
-										</c:forEach>
-										<c:if test="${empty aboList}">
-											<tr>
-												<td colspan="5" style="text-align: center">검색한 내용이 없습니다</td>
-											</tr>
-										</c:if>
-									</tbody>
+									<tbody>${nList}</tbody>
 								</table>
 							</div>
 						</div>
@@ -155,10 +132,6 @@
 	</div>
 	<!-- END wrapper -->
 
-	<!-- alert -->
-	${Fail}
-
-
 	<!-- App js -->
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
@@ -176,11 +149,12 @@
 <script>
 	$(document).ready(function() {
 		//불러온 값에 selected속성 부여하기
-		$("#abc_name option").each(function() {
-			if ($(this).val() == "${abc_name}")
+		$("#select option").each(function() {
+			if ($(this).val() == "${param.select}")
 				$(this).attr("selected", "selected");
 		})
 	});
+	${alert}
 	function deleteChk(a) {
 		var con = confirm('정말로 삭제하겠습니까?');
 		con;

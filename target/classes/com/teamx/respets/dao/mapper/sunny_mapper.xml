@@ -139,7 +139,7 @@
 	</select>
 	<select id="getBoardDetail" resultType="abo"
 		parameterType="String">
-		SELECT * FROM ABO WHERE ABO_NO=#{abo_no}
+		SELECT * FROM ABO WHERE ABO_NO=#{value}
 	</select>
 	<insert id="boardInsert" parameterType="abo">
 		INSERT INTO ABO
@@ -147,11 +147,11 @@
 	</insert>
 	<delete id="boardDelete" parameterType="String">
 		DELETE FROM ABO WHERE
-		ABO_NO=#{abo_no}
+		ABO_NO=#{value}
 	</delete>
-	<update id="boardUpdate" parameterType="String">
+	<update id="boardUpdate" parameterType="abo">
 		UPDATE ABO SET
-		ABO_TITLE=#{abo_title},ABO_CTT=#{abo_ctt}
+		ABC_NO=#{abc_no},ABO_TITLE=#{abo_title},ABO_CTT=#{abo_ctt}
 		WHERE ABO_NO=#{abo_no}
 	</update>
 

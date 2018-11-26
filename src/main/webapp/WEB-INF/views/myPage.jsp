@@ -19,7 +19,7 @@
 			<input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br />
 		</div>
 	</form>
-	<form id="businessNotice" action="./businessNotice">
+	<form id="businessNoticeList" action="./businessNoticeList">
 		<input type="submit" value="공지사항 관리" />
 	</form>
 </body>

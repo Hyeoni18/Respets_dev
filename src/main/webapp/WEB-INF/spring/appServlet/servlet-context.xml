@@ -146,7 +146,7 @@
 			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
 			<!-- pet -->
-			<exclude-mapping path="/petList" />
+			<!-- <exclude-mapping path="/petList" /> -->
 			<exclude-mapping path="/petInsertForm" />
 			<exclude-mapping path="/petInfoDetail" />
 			<exclude-mapping path="/petInsert" />

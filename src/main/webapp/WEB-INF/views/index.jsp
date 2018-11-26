@@ -32,6 +32,7 @@
 ${no} <!-- 지예 -->
 ${alert} <!--현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
 ${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert --> 
+${sessionCheck} <!-- 진선 -->
 	<!-- Begin page -->
 	<div class="wrapper">
 
