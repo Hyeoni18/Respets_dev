@@ -6,6 +6,8 @@
 <head>
 <meta charset="utf-8" />
 <title>Respets 기업 공지사항</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -27,6 +29,7 @@
 
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<div class="page-content">
 		<div class="card">
 			<div class="card-body">

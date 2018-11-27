@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 <h1>업종 정보 수정</h1>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
