@@ -38,7 +38,7 @@
 						<div class="card-body p-4">
 							<div class="text-center w-75 m-auto">
 								<h4 class="text-dark-50 text-center mt-0 font-weight-bold">로그인</h4>
-								<p class="text-muted mb-4">로그인을 위해 계정과 비밀번호를 입력해주세요.</p>
+								<p class="text-muted mb-4">계정과 비밀번호를 입력해주세요.</p>
 							</div>
 
 							<form action="loginProcess" method="post">

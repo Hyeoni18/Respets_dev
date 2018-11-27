@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <html auto-config="true">
 <head>
-<head>
 <meta charset="utf-8" />
-<title>Respets 기업 공지사항</title>
+<title>Respets :: 기업 공지사항</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +25,6 @@
 <style type="text/css">
 
 </style>
-
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
@@ -74,7 +72,7 @@
 		</div>
 	</div>
 </body>
-	<ul class="pagination-rounded" > 
+	<ul class="pagination-rounded"> 
 		${paging} 
 	</ul>
 	<form id="searchBusinessNotice" action="searchBusinessNotice">
