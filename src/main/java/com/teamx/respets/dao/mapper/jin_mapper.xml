@@ -88,7 +88,7 @@
 
 	<!-- 서진 : 서비스 리스트 SELECT -->
 	<select id="selectSvcList" parameterType="HashMap" resultType="HashMap">
-		SELECT PTY.PTY_NAME, MENU.MENU_NAME, PRC.PRICE
+		SELECT PTY.PTY_NAME, PRC.MENU_NO, MENU.MENU_NAME, PRC.PRICE
 		FROM PET INNER JOIN PTY
 		ON PET.PTY_NO = PTY.PTY_NO
 		INNER JOIN PRC
@@ -97,19 +97,33 @@
 		ON MENU.MENU_NO = PRC.MENU_NO
 		WHERE PET.PET_NO = #{pet_no} AND PRC.BUS_NO = #{bus_no} AND PRC.BCT_CODE = #{bct_code}
 	</select>
-	
+
 	<!-- 서진 : 직원 시간 SELECT -->
 	<select id="selectEmpTime" parameterType="HashMap" resultType="HashMap">
 		SELECT TO_CHAR(ESD_DATE, 'YYMMDD') AS ESD_DATE, AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE
-		FROM ESD WHERE EMP_NO = #{emp_no} AND
-		ESD_DATE = TO_DATE(#{date}, 'YYMMDD')
+		FROM ESD WHERE EMP_NO = #{emp_no} AND ESD_DATE = TO_DATE(#{date}, 'YYMMDD')
 	</select>
-	
+
 	<!-- 서진 : 직원 안 되는 시간 SELECT -->
 	<select id="selectNoTime" parameterType="HashMap" resultType="HashMap">
 		SELECT TO_CHAR(VS_START, 'HH24MI') AS VS_START
-		FROM BK WHERE EMP_NO = #{emp_no} AND VS_START LIKE TO_DATE(#{date}, 'YYMMDD')
-		AND BK_CHK IN('신청', '승인')
+		FROM BK WHERE EMP_NO = #{emp_no} AND VS_START LIKE TO_DATE(#{date}, 'YYMMDD') AND BK_CHK IN('신청', '승인')
 	</select>
+
+	<!-- 예약 테이블에 예약 넣기 -->
+	<insert id="insertBooking" parameterType="Booking">
+		<selectKey keyProperty="bk_seq" resultType="int" order="BEFORE">
+			SELECT BK_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BK VALUES('K'||#{bk_seq}, #{per_no}, #{pet_no}, #{bus_no},
+		#{bct_code}, #{emp_no}, SYSDATE, ${bk_pay}, TO_DATE(#{vs_start}, 'YYMMDDHH24MI'), 
+		TO_DATE(#{vs_start}, 'YYMMDDHH24MI') + (INTERVAL '30' MINUTE),
+		NULL, DEFAULT, DEFAULT, NULL)
+	</insert>
+	
+	<!-- 서진 : 예약 메뉴 테이블에 반복문으로 INSERT -->
+	<insert id="insertBkMenu" parameterType="Booking">
+		INSERT INTO BKM VALUES(#{bk_no}, ${menu_no})
+	</insert>
 
 </mapper>
