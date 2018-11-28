@@ -112,9 +112,12 @@ public class JinService {
 	private String makeLikeBusListHtml(List<HashMap<String, String>> list) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<div><img src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "' />");
-			sb.append("<p>" + list.get(i).get("BUS_NAME") + "</p>");
-			sb.append("<a href='./likeBusinessCancel?bus_no=" + list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+			sb.append("<div class='card d-block'>");
+			sb.append("<img style='height:300px; weight:300px;' class='card-img-top' src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "' />");
+			sb.append("<div class='card-body'>");
+			sb.append("<span><b class='card-title'>" + list.get(i).get("BUS_NAME")+"</b></span><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=" + list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+			sb.append("</div>");
 		} // for End
 		return sb.toString();
 	} // method End
