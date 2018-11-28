@@ -313,25 +313,28 @@ public class Paging {
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		// 현재 그룹의 끝 페이지 번호
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
-		
+		sb.append("<nav>");
+		sb.append("<ul class='pagination'>");
 		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+			sb.append("<li class='page-item'><a href='" + boardName + "?pageNum=" + (start - 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+				sb.append("<li class='page-item'><a href='" + boardName + "?pageNum=" + i + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
 				sb.append("  "+ i +"</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
-				sb.append("<font style='color: red;'> "  + i + "  </font>");
+				sb.append("<li class='page-item active'><a class='page-link' href='#'> "  + i + "  </a></li>");
 			} // else End
 		} // for End
 		
 		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
+			sb.append("<li class='page-item'><a href='" + boardName + "?pageNum=" + (end + 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"'>");
 			sb.append("다음</a></li>");
 		} // if End
+		sb.append("</ul>");
+		sb.append("<nav>");
 		return sb.toString();
 	} // method End
 
@@ -353,25 +356,28 @@ public class Paging {
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		// 현재 그룹의 끝 페이지 번호
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
-		
+		sb.append("<nav>");
+		sb.append("<ul class='pagination'>");
 		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code="+bct_code+"'>");
+			sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code="+bct_code+"'>");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bct_code="+bct_code+"'>");
+				sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + i + "&bct_code="+bct_code+"'>");
 				sb.append("  "+ i +"</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
-				sb.append("<font style='color: red;'> "  + i + "  </font>");
+				sb.append("<li class='page-item active'><a class='page-link' href='#'> "  + i + "  </a></li>");
 			} // else End
 		} // for End
 		
 		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code="+bct_code+"'>");
+			sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code="+bct_code+"'>");
 			sb.append("다음</a></li>");
 		} // if End
+		sb.append("</ul>");
+		sb.append("<nav>");
 		return sb.toString();
 	}
 
@@ -396,25 +402,28 @@ public class Paging {
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		// 현재 그룹의 끝 페이지 번호
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
-		
+		sb.append("<nav>");
+		sb.append("<ul class='pagination'>");
 		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"businessList('"+bct_code+"','"+tag_no+"','"+bsd_date+"','"+bus_addr+"','"+(start - 1)+"')\">");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+				sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"businessList("+bct_code+"','"+tag_no+"','"+bsd_date+"','"+bus_addr+"','"+i+"')\">");
 				sb.append("  "+ i +"</a></li>");
-			} else { // 현재 페이지인 경우 링크 해제
-				sb.append("<font style='color: red;'> "  + i + "  </font>");
+			} else { // 현재 페이지인 경우 링크 
+				sb.append("<li class='page-item active'><a class='page-link' href='#'> "  + i + "  </a></li>");
 			} // else End
 		} // for End
 		
 		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bus_addr="+bus_addr+"&bsd_date="+bsd_date+"&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"businessList("+bct_code+"','"+tag_no+"','"+bsd_date+"','"+bus_addr+"','"+(end+1)+"')\">");
 			sb.append("다음</a></li>");
 		} // if End
+		sb.append("</ul>");
+		sb.append("<nav>");
 		return sb.toString();
 	}
 
@@ -437,25 +446,28 @@ public class Paging {
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		// 현재 그룹의 끝 페이지 번호
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
-		
+		sb.append("<nav>");
+		sb.append("<ul class='pagination'>");
 		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"butTagSelectList('"+bct_code+"','"+tag_no+"','"+ (start - 1) + "')\">");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+				sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"butTagSelectList('"+bct_code+"','"+tag_no+"','" + i + "')\">");
 				sb.append("  "+ i +"</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
-				sb.append("<font style='color: red;'> "  + i + "  </font>");
+				sb.append("<li class='page-item active'><a class='page-link' href='#'> "  + i + "  </a></li>");
 			} // else End
 		} // for End
 		
 		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code="+bct_code+"&tag_no="+tag_no+"'>");
+			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"butTagSelectList('"+bct_code+"','"+tag_no+"','" + (end + 1) + "')\">");
 			sb.append("다음</a></li>");
 		} // if End
+		sb.append("</ul>");
+		sb.append("<nav>");
 		return sb.toString();
 	}
 	

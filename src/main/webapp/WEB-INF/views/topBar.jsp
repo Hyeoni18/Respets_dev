@@ -33,7 +33,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body onunload="logout();">
-<a href="test"> 현휘 test창 </a>
 	<!-- Topbar Start -->
 	<div class="navbar-custom topnav-navbar">
 		<div class="container-fluid">

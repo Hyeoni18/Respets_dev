@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Booking {
 	/* 예약 테이블 */
+	private int bk_seq;
 	private String bk_no;
 	private String per_no;
 	private String pet_no;
@@ -12,12 +13,13 @@ public class Booking {
 	private String emp_no;
 	private Date bk_time;
 	private int bk_pay;
-	private Date vs_start;
-	private Date vs_end;
+	private String vs_start;
+	private String vs_end;
 	private String bk_cmt;
 	private String bk_chk;
 	private String vs_chk;
 	private String bk_rejmsg;
+	private int menu_no;
 	/* 캘린더에서 사용 */
 	private String pet_name;
 	private String bus_name;
@@ -31,6 +33,14 @@ public class Booking {
 	private int car_crg;
 	/* 예약 취소 테이블 */
 	private Date can_time;
+
+	public int getBk_seq() {
+		return bk_seq;
+	}
+
+	public void setBk_seq(int bk_seq) {
+		this.bk_seq = bk_seq;
+	}
 
 	public String getBk_no() {
 		return bk_no;
@@ -96,19 +106,19 @@ public class Booking {
 		this.bk_pay = bk_pay;
 	}
 
-	public Date getVs_start() {
+	public String getVs_start() {
 		return vs_start;
 	}
 
-	public void setVs_start(Date vs_start) {
+	public void setVs_start(String vs_start) {
 		this.vs_start = vs_start;
 	}
 
-	public Date getVs_end() {
+	public String getVs_end() {
 		return vs_end;
 	}
 
-	public void setVs_end(Date vs_end) {
+	public void setVs_end(String vs_end) {
 		this.vs_end = vs_end;
 	}
 
@@ -142,6 +152,14 @@ public class Booking {
 
 	public void setBk_rejmsg(String bk_rejmsg) {
 		this.bk_rejmsg = bk_rejmsg;
+	}
+
+	public int getMenu_no() {
+		return menu_no;
+	}
+
+	public void setMenu_no(int menu_no) {
+		this.menu_no = menu_no;
 	}
 
 	public String getPet_name() {

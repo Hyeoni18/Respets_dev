@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<h1>기업 마이페이지</h1>
 	${no}
 	<form name="myPage">
@@ -39,7 +41,7 @@
 			frm.action = "serviceManagement";
 		}
 		if (button.value == '직원 관리') {
-			frm.action = "stepManagement";
+			frm.action = "stepListBut";
 		}
 		if (button.value == '고객 관리') {
 			frm.action = "customerManagement";

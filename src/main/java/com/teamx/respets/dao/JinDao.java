@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
 
 public interface JinDao {
@@ -58,5 +59,11 @@ public interface JinDao {
 
 	// 서진 : 직원 안 되는 시간 SELECT
 	public List<HashMap<String, String>> selectNoTime(HashMap<String, String> hMap);
+
+	// 서진 : 예약 테이블에 INSERT
+	public void insertBooking(Booking bk);
+
+	// 서진 : 예약 메뉴 테이블에 INSERT
+	public void insertBkMenu(Booking bk);
 
 } // interface End
