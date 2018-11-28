@@ -254,19 +254,20 @@ public class HyunHwiService {
 			} else {
 				bctname = "호텔";
 			}
-			sb.append("<div class='header'><a href='serviceDetail?bct_code=" + bctcode + "'><div class='con'>"
-					+ "<p> 업종 : " + bctname + "</p><br/>" + "</div></a></div>");
+			sb.append("<div class='col-md-4'><div class='card card-pricing'><div class='card-body text-center'><a href='serviceDetail?bct_code=" + bctcode + "'><div class='con'>"
+					+ "<p> 업종 : " + bctname + "</p><br/>" + "</div></a></div></div></div>");
 		}
 		return sb.toString();
 	}
 
 	// 현휘; 기업의 업종등록 신청 전, 가지고 있는 업종이 있는지 검색
 	public ModelAndView serviceInsertForm() {
+		mav = new ModelAndView();
 		String bus_no = (String) session.getAttribute("no");
 		List<Map<String, Object>> list;
 		list = hDao.serviceInsertForm(bus_no); // 기업이 가진 서비스 검색
 		String codeSelectBut = codeSelectBut(); // 업종 선택 버튼 생성
-
+		System.out.println("확인: " + list.size());
 		// 각 업종들에게 필요한 메뉴를 검색하여 생성해준다.
 		String medical = menuSelect("M");
 		String beauty = menuSelect("B");
@@ -313,11 +314,11 @@ public class HyunHwiService {
 	private String codeSelectBut() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"<div id='con'><div id='medical_div'>&nbsp;<input type='radio' name='code' value='M' onclick='checkCode(this)'/> 병원 &nbsp;</div>");
+				"<li class='nav-item' id='medical_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"M\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #9ce1c2;\"> 병원 &nbsp;</a></li>");
 		sb.append(
-				"<div id='beauty_div'>&nbsp;<input type='radio' name='code' value='B' onclick='checkCode(this)'/> 미용 &nbsp;</div>");
+				"<li class='nav-item' id='beauty_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"B\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #b9ffe0;\"> 미용 &nbsp;</a></li>");
 		sb.append(
-				"<div id='hotel_div'>&nbsp;<input type='radio' name='code' value='H' onclick='checkCode(this)'/> 호텔 &nbsp;</div></div>");
+				"<li class='nav-item' id='hotel_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"H\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #d6fffe;\"> 호텔 &nbsp;</a></li>");
 		sb.append("<br/>");
 		return sb.toString();
 	}
@@ -550,6 +551,7 @@ public class HyunHwiService {
 					flag = false; // 맞으면 깃밧을 false로 바꿔준다.
 				}
 			}
+			System.out.println(date);
 			if (flag) { // 휴일이 아니라면,
 				map.put("bus_no", no);
 				map.put("bct_code", bct_code);
@@ -735,6 +737,7 @@ public class HyunHwiService {
 	// 기업의 상세정보 페이지//
 	// 현휘; 기업의 상세정보 페이지를 열기 위한 메소드
 	public ModelAndView serviceDetail(HttpServletRequest request) {
+		mav = new ModelAndView();
 		String bus_no = (String) session.getAttribute("no");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = hDao.searchBUS(bus_no);
@@ -815,6 +818,8 @@ public class HyunHwiService {
 			animal = " 등록이 필요합니다.";
 			firstInsert = "first";
 		}
+		System.out.println(bct_code);
+		System.out.println(bct_name);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("bct_code", bct_code);
 		mav.addObject("name", bus_name);
@@ -1008,17 +1013,58 @@ public class HyunHwiService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
-		map = hDao.searchBFX(map); // 기업의 고정 스케줄을 검색
-		Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다.
-		Iterator<String> iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다.
-		while (iter.hasNext()) { // 차례대로 값을 가져온다.
-			String key = iter.next(); // 가져온 값을 변수에 넣어준다.
-			String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다.
-			if (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' checked />" + key); // checked 옵션을
-																											// 준다.
+		map = hDao.searchBFX(map);
+		// 기업의 고정 스케줄을 검색
+		/*
+		 * Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다. Iterator<String>
+		 * iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다. while
+		 * (iter.hasNext()) { // 차례대로 값을 가져온다. String key = iter.next(); // 가져온 값을 변수에
+		 * 넣어준다. String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다. if
+		 * (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
+		 * "' checked />" + key); // checked 옵션을 // 준다. } else {
+		 * sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" +
+		 * key); // 아니면 그냥 만들어준다. } }
+		 */ if (map != null) {
+			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='월요일' checked /> 월요일"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" + key); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("화요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='화요일' checked /> 화요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("수요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='수요일' checked /> 수요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("목요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='목요일' checked /> 목요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("금요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='금요일' checked /> 금요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("토요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='토요일' checked /> 토요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("일요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='일요일' checked /> 일요일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("공휴일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked /> 공휴일"); // checked 옵션을 // 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일"); // 아니면 그냥 만들어준다.
 			}
 		}
 		return sb.toString();
@@ -1161,8 +1207,8 @@ public class HyunHwiService {
 		return sb.toString();
 	}
 
-	// 기업의 상세정보 수정//
-	// 현휘; 기업의 상세정보 수정 //가격수정 되는 부분 진행해야해
+	// 현휘; 기업의 상세정보 수정
+	@Transactional
 	public ModelAndView serviceUpdate(MultipartHttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -1189,10 +1235,16 @@ public class HyunHwiService {
 			hDao.updateServiceBSD(map); // 기업의 하루 스케줄 수정
 			map = holidayMap(request); // 기업의 휴일을 수정하기 위해 정보를 map에 담아오는 메소드
 			hDao.updateServiceBFX(map); // 기업의 고정 스케줄 수정
-			String[] price = request.getParameterValues("price");
-			if (price[0] != null) {
+			if (bct_code.equals("M")) {
 				hDao.deletePRC(map);
-				insertPrice(request); // 기업이 지정한 서비스 가격 등록
+				insertPrice(request);
+			} else {
+				String[] price = request.getParameterValues("price");
+				System.out.print(request.getParameterValues("price"));
+				if (price != null) {
+					hDao.deletePRC(map);
+					insertPrice(request); // 기업이 지정한 서비스 가격 등록
+				}
 			}
 		}
 		fileWriter(request); // 사진 등록 (사업장사진)
@@ -1257,7 +1309,7 @@ public class HyunHwiService {
 			String bct_name = hDao.searchBCTname(bct_code);
 			sb.append("<input type='radio' name='bct_code' value='" + bct_code + "' onclick='chk(this)'/>" + bct_name);
 		}
-		mav.addObject("code", sb);
+		mav.addObject("code", sb.toString());
 		mav.setViewName("stepList");
 		return mav;
 	}
@@ -1283,7 +1335,7 @@ public class HyunHwiService {
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
 				sb.append("<div>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
-				sb.append("<img src='" + emp_loc + emp_photo + "'/>");
+				sb.append("<img src='" + emp_loc + emp_photo + "'/></br>");
 				sb.append("이름: " + emp_name + "</br>");
 				sb.append("직급: " + emp_pos + "</br>");
 				sb.append("</a>");
@@ -1586,7 +1638,7 @@ public class HyunHwiService {
 		return map;
 	}
 
-	// 기업의 선택 된 휴일에 관련된 작업을 위한 메소드
+	// 기업의 선택 된 휴일에 관련된 작업을 위한 메소드 (직원만사용)
 	public String Holiday(String bct_code, String type) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("-고정휴무일: ");
@@ -1595,22 +1647,84 @@ public class HyunHwiService {
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		map = hDao.searchBFX(map); // 기업의 고정 스케줄을 검색
-		Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다.
-		Iterator<String> iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다.
-		while (iter.hasNext()) { // 차례대로 값을 가져온다.
-			String key = iter.next(); // 가져온 값을 변수에 넣어준다.
-			String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다.
-			if (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				if (type.equals("step")) {
-					sb.append("<input type='checkbox' name='holiday' value='" + key
-							+ "' checked onclick='return false;' />" + key);
-				} else {
-					sb.append("<input type='checkbox' name='holiday' value='" + key + "' checked />" + key); // checked
-																												// 옵션을
-																												// 준다.
-				}
+		/*
+		 * Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다. Iterator<String>
+		 * iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다. while
+		 * (iter.hasNext()) { // 차례대로 값을 가져온다. String key = iter.next(); // 가져온 값을 변수에
+		 * 넣어준다. String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다. if
+		 * (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면 if
+		 * (type.equals("step")) {
+		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
+		 * "' checked onclick='return false;' />" + key); } else {
+		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
+		 * "' checked />" + key); // checked // 옵션을 // 준다. } } else {
+		 * sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" +
+		 * key); // 아니면 그냥 만들어준다. } }
+		 */
+		if (map != null) {
+			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='월요일' checked onclick='return false;'/> 월요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" + key); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("화요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='화요일' checked onclick='return false;'/> 화요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("수요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='수요일' checked onclick='return false;'/> 수요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("목요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='목요일' checked onclick='return false;'/> 목요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("금요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='금요일' checked onclick='return false;'/> 금요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("토요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='토요일' checked onclick='return false;'/> 토요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("일요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='일요일' checked onclick='return false;'/> 일요일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일"); // 아니면 그냥 만들어준다.
+			}
+			if (map.get("공휴일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked onclick='return false;'/> 공휴일"); // checked
+																														// 옵션을
+																														// //
+																														// 준다.
+			} else {
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일"); // 아니면 그냥 만들어준다.
 			}
 		}
 		sb.append("<br/>");
@@ -1711,70 +1825,6 @@ public class HyunHwiService {
 				+ CloseTextSelect + " }    " + "	else {  " + CloseText + " }" + "	}\n" + "</script>\n"
 				+ "</select>");
 		sb.append("<br/>");
-		return sb.toString();
-	}
-
-	///////// 대
-	private String stepTimeSelect(String no) {
-		StringBuilder sb = new StringBuilder();
-		String lunch = hDao.searchLunchTime(no);
-		String amLunch = lunch.substring(0, 3);
-		System.out.println(amLunch);
-		String pmLunch = lunch.substring(4, 7);
-		System.out.println(pmLunch);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map = hDao.searchTime(no);
-		String amWork = (String) map.get("AM_OPEN");
-		String pmWork = (String) map.get("PM_CLOSE");
-
-		sb.append("<select name=\"am_open\">\n" + "<script>\n" + "for (i = 0; i < 48; i++) {\n" + "var hour = '';\n"
-				+ "var min = '00';\n" + "if ((Math.ceil(i / 2)) < 13) {\n" + "if((Math.floor(i / 2)) < 10){\n"
-				+ "hour = '0'+(Math.floor(i / 2));\n" + "}\n" + "else {\n" + "hour = (Math.floor(i / 2));\n" + "}\n"
-				+ "} else {\n" + "hour = (Math.floor(i / 2));\n" + "}\n" + "if (i % 2 != 0) {\n" + "min = '30';\n"
-				+ "}\n" + "document.write('<option value=' + hour + min + '>' + hour +\":\"+ min + '</option>');\n"
-				+ "}\n" + "</script>\n" + " </select> ~\n" + " <select name=\"pm_close\">\n" + "<script>\n"
-				+ "for (i = 0; i < 48; i++) {\n" + "var hour = '';\n" + "var min = '00';\n"
-				+ "if ((Math.ceil(i / 2)) < 13) {\n" + "if((Math.floor(i / 2)) < 10){\n"
-				+ "hour = '0'+(Math.floor(i / 2));\n" + "}\n" + "else {\n" + "hour = (Math.floor(i / 2));\n" + "}\n"
-				+ "} else {\n" + "hour = (Math.floor(i / 2));\n" + "}\n" + "if (i % 2 != 0) {\n" + "min = '30';\n"
-				+ "}\n" + "document.write('<option value=' + hour + min + '>' + hour +\":\"+ min + '</option>');\n"
-				+ "}\n" + "</script>\n" + " </select>");
-		return sb.toString();
-	}
-
-	private String holidaySelected(Map<String, Object> map) {
-		StringBuilder sb = new StringBuilder();
-		Set<String> mapkey = map.keySet();
-		Iterator<String> iter = mapkey.iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			String value = (String) map.get(key);
-			if (value.equals("XXXXXXXX")) {
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' checked onclick='return false;' />"
-						+ key);
-			} else {
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" + key);
-			}
-		}
-		return sb.toString();
-	}
-
-	private String stepListShow(List<Map<String, Object>> list, String no) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			String empno = (String) list.get(i).get("EMP_NO");
-			String loc = (String) list.get(i).get("EMP_LOC");
-			System.out.println(loc);
-			String photo = (String) list.get(i).get("EMP_PHOTO");
-			System.out.println(photo);
-			String name = (String) list.get(i).get("EMP_NAME");
-			String pos = (String) list.get(i).get("EMP_POS");
-			String part = (String) list.get(i).get("EMP_PART");
-			sb.append("<div class='header'><a href='stepDetail?empno=" + empno + "&no=" + no + "'><div class='photo'>"
-					+ "<img src='" + loc + photo + "' />" + "</div><br/><div class='con'>" + "<p> 이름 : " + name
-					+ "</p><br/>" + "<p> 직급 : " + pos + "</p><br/>" + "<p> 담당분야 : " + part + "</p><br/>"
-					+ "</div></a></div>");
-		}
 		return sb.toString();
 	}
 
@@ -1913,38 +1963,115 @@ public class HyunHwiService {
 	private String makeStepHoliday(Map<String, Object> busiMap, Map<String, Object> stepMap) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("고정휴무일 : ");
-		Set<String> busiKey = busiMap.keySet();
-		Set<String> stepKey = stepMap.keySet();
-		Iterator<String> siter = stepKey.iterator();
 		boolean flag = true;
-		while (siter.hasNext()) {
-			String key = siter.next();
-			String value = (String) stepMap.get(key);
-			if (value.equals("XXXXXXXX")) {
-				Iterator<String> biter = busiKey.iterator();
-				while (biter.hasNext()) {
-					String bkey = biter.next();
-					String bvalue = (String) busiMap.get(bkey);
-					System.out.println(bkey);
-					System.out.println(bvalue);
-					if (key.equals(bkey) && bvalue.equals("XXXXXXXX")) {
-						sb.append("<script></script>");
-						sb.append("<input type='checkbox' name='holiday' value='" + key
-								+ "' checked onclick='return false;' />" + key);
-						System.out.println("불가능한X값이야");
-						flag = false;
-					} else {
-						System.out.println(bkey + " : 지나가는 값 ");
-					}
-				}
-				if (flag) {
-					sb.append("<input type='checkbox' name='holiday' value='" + key + "' checked />" + key);
-					System.out.println("변화가능한X값이야 ");
-				}
-				flag = true;
+		System.out.println(stepMap.get("월요일"));
+		System.out.println(busiMap.get("월요일"));
+		if (stepMap.get("월요일").equals("XXXXXXXX")) {
+			if (busiMap.get("월요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='월요일' checked onclick='return false;' /> 월요일");
+				System.out.println("불가능한X값이야");
+				flag = false;
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" + key);
+				System.out.println("월요일은 지나가는 값 ");
 			}
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='월요일' checked /> 월요일");
+				System.out.println("변화가능한X값이야 ");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일");
+		}
+		if (stepMap.get("화요일").equals("XXXXXXXX")) {
+			if (busiMap.get("화요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='화요일' checked onclick='return false;' /> 화요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='화요일' checked /> 화요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일");
+		}
+		if (stepMap.get("수요일").equals("XXXXXXXX")) {
+			if (busiMap.get("수요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='수요일' checked onclick='return false;' /> 수요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='수요일' checked /> 수요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일");
+		}
+		if (stepMap.get("목요일").equals("XXXXXXXX")) {
+			if (busiMap.get("목요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='목요일' checked onclick='return false;' /> 목요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='목요일' checked /> 목요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일");
+		}
+		if (stepMap.get("금요일").equals("XXXXXXXX")) {
+			if (busiMap.get("금요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='금요일' checked onclick='return false;' /> 금요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='금요일' checked /> 금요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일");
+		}
+		if (stepMap.get("토요일").equals("XXXXXXXX")) {
+			if (busiMap.get("토요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='토요일' checked onclick='return false;' /> 토요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='토요일' checked /> 토요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일");
+		}if (stepMap.get("일요일").equals("XXXXXXXX")) {
+			if (busiMap.get("일요일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='일요일' checked onclick='return false;' /> 일요일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='일요일' checked /> 일요일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일");
+		}
+		if (stepMap.get("공휴일").equals("XXXXXXXX")) {
+			if (busiMap.get("공휴일").equals("XXXXXXXX")) {
+				sb.append("<script></script>");
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked onclick='return false;' /> 공휴일");
+				flag = false;
+			} 
+			if (flag) {
+				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked /> 공휴일");
+			}
+			flag = true;
+		} else {
+			sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일");
 		}
 		sb.append("<br/>");
 		return sb.toString();
@@ -2374,7 +2501,8 @@ public class HyunHwiService {
 			e.printStackTrace();
 		}
 		int pNo = (pageNum == null) ? 1 : pageNum; // 페이지넘버
-		String tagList = tagList(outputDate, bct_code, city, pNo);
+		System.out.println(outputDate);
+		String tagList = tagList(outputDate, bct_code, city, 1);
 		String busiList = busiList(outputDate, bct_code, city, pNo);
 		String paging = busiListPaging(pNo, outputDate, bct_code, city);
 		mav.addObject("busiList", busiList);
@@ -2394,32 +2522,63 @@ public class HyunHwiService {
 		mapo.put("bsd_date", outputDate);
 		mapo.put("bus_addr", city);
 		mapo.put("pageNum", pNo);
+		System.out.println(outputDate);
 		list = hDao.searchBUSaddr(mapo);
+		Map<String, Object> map = new HashMap<String, Object>();
 		if (list.size() != 0) {
+			int count = 0;
+			boolean flag = true;
 			for (int i = 0; i < list.size(); i++) {
-				Map<String, Object> map = new HashMap<String, Object>();
 				String bus_no = (String) list.get(i).get("BUS_NO");
+				System.out.println(bus_no);
 				String bus_name = (String) list.get(i).get("BUS_NAME");
 				String bus_addr = (String) list.get(i).get("BUS_ADDR");
-				System.out.println(bus_no);
+				map = new HashMap<String, Object>();
 				map.put("bus_no", bus_no);
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
+					if (count == 0 || count % 3 == 0) {
+						sb.append("<div class='row'>");
+						sb.append("<div class='col-12'>");
+						sb.append("<div class='card-deck-wrapper'>");
+						sb.append("<div class='card-deck'>");
+						flag = false;
+					}
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
-					sb.append("<div class='busi'>");
+					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<div class='busiImage'>");
-					sb.append("<img src='" + glr_loc + glr_file + "'/>");
-					sb.append("</div>");
-					sb.append("<div class='busiInfo'>");
-					sb.append("<h1> " + bus_name + "</h1>");
-					sb.append("<h2> 주소: " + bus_addr + "</h2>");
+					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					if (count % 3 == 2) {
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						flag = true;
+					}
+					count++;
 				}
+
+			}
+			if (count % 3 < 3 && count % 3 != 0) {
+				for (int i = 0; i < 3 - count % 3; i++) {
+					sb.append("<div class='card d-block'>");
+					sb.append("<div class='card-body'>");
+					sb.append("</div></div>");
+				}
+			}
+			if (flag != true) {
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
 			}
 		}
 		return sb.toString();
@@ -2433,7 +2592,7 @@ public class HyunHwiService {
 		map.put("bsd_date", outputDate);
 		map.put("bct_code", bct_code);
 		int maxNum = hDao.countBusiList(map);
-		int listCount = 10;
+		int listCount = 9;
 		int pageCount = 5;
 		String boardName = "searchList";
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
@@ -2445,11 +2604,14 @@ public class HyunHwiService {
 		StringBuilder sb = new StringBuilder();
 		List<Map<String, Object>> list;
 		list = hDao.selectTAG(bct_code);
+		pNo = 1;
 		for (int i = 0; i < list.size(); i++) {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
-			sb.append("<a href='javascript:void(0)' onclick=\"businessList('" + bct_code + "','" + tag_no + "','"
-					+ outputDate + "','" + city + "','" + pNo + "')\">" + tag_name + "</a>");
+			sb.append(
+					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"businessList('"
+							+ bct_code + "','" + tag_no + "','" + outputDate + "','" + city + "','" + pNo + "')\">"
+							+ tag_name + "</a>");
 		}
 		return sb.toString();
 	}
@@ -2461,7 +2623,7 @@ public class HyunHwiService {
 		String bsd_date = request.getParameter("bsd_date");
 		String bus_addr = request.getParameter("bus_addr");
 		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		int pNo = (pageNum == null) ? 1 : pageNum;
+		int pNo = (pageNum == null) ? 1 : pageNum; //아마 필요없으껄
 		StringBuilder sb = new StringBuilder();
 		sb.append("<h1> 주소 존재 태그 셀렉 </h1>");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -2472,9 +2634,13 @@ public class HyunHwiService {
 		map.put("pageNum", pNo);
 		map.put("tag_no", tag_no);
 		list = hDao.searchBUSaddrTag(map);
+		map = new HashMap<String, Object>();
 		if (list.size() != 0) {
+			int count = 0;
+			boolean flag = true;
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
+				System.out.println(bus_no);
 				String bus_name = (String) list.get(i).get("BUS_NAME");
 				bus_addr = (String) list.get(i).get("BUS_ADDR");
 				map = new HashMap<String, Object>();
@@ -2482,22 +2648,47 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
+					if (count == 0 || count % 3 == 0) {
+						sb.append("<div class='row'>");
+						sb.append("<div class='col-12'>");
+						sb.append("<div class='card-deck-wrapper'>");
+						sb.append("<div class='card-deck'>");
+						flag = false;
+					}
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
-					if (map != null) {
-						sb.append("<div class='busi'>");
-						sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-						sb.append("<div class='busiImage'>");
-						sb.append("<img src='" + glr_loc + glr_file + "'/>");
+					sb.append("<div class='card d-block'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					if (count % 3 == 2) {
 						sb.append("</div>");
-						sb.append("<div class='busiInfo'>");
-						sb.append("<h1> " + bus_name + "</h1>");
-						sb.append("<h2> 주소: " + bus_addr + "</h2>");
 						sb.append("</div>");
-						sb.append("</a>");
 						sb.append("</div>");
+						sb.append("</div>");
+						flag = true;
 					}
+					count++;
 				}
+
+			}
+			if (count % 3 < 3 && count % 3 != 0) {
+				for (int i = 0; i < 3 - count % 3; i++) {
+					sb.append("<div class='card d-block'>");
+					sb.append("<div class='card-body'>");
+					sb.append("</div></div>");
+				}
+			}
+			if (flag != true) {
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
 			}
 		}
 		return sb.toString();
@@ -2507,6 +2698,7 @@ public class HyunHwiService {
 		System.out.println("버튼누르면 첫 메소드 첫번째,");
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		mav = new ModelAndView();
+		boolean flag = true;
 		List<Map<String, Object>> list;
 		Map<String, Object> map = new HashMap<String, Object>();
 		StringBuilder sb = new StringBuilder();
@@ -2515,6 +2707,8 @@ public class HyunHwiService {
 		map.put("pageNum", pNo);
 		list = hDao.selectSVCcode(map);
 		if (list.size() != 0) {
+			int count = 0;
+			sb.append(list.size());
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
 				String bus_name = (String) list.get(i).get("BUS_NAME");
@@ -2524,24 +2718,51 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
+					if (count == 0 || count % 3 == 0) {
+						sb.append("<div class='row'>");
+						sb.append("<div class='col-12'>");
+						sb.append("<div class='card-deck-wrapper'>");
+						sb.append("<div class='card-deck'>");
+						flag = false;
+					}
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
-					sb.append("<div class='busi'>");
+					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<div class='busiImage'>");
-					sb.append("<img src='" + glr_loc + glr_file + "'/>");
-					sb.append("</div>");
-					sb.append("<div class='busiInfo'>");
-					sb.append("<h1> " + bus_name + "</h1>");
-					sb.append("<h2> 주소: " + bus_addr + "</h2>");
+					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					if (count % 3 == 2) {
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						flag = true;
+					}
+					count++;
 				}
+
+			}
+			if (count % 3 < 3 && count % 3 != 0) {
+				for (int i = 0; i < 3 - count % 3; i++) {
+					sb.append("<div class='card d-block'>");
+					sb.append("<div class='card-body'>");
+					sb.append("</div></div>");
+				}
+			}
+			if (flag != true) {
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
+				sb.append("</div>");
 			}
 			mav.addObject("busiList", sb.toString());
 		}
-		String tag = butTagList(bct_code, pNo);
+		String tag = butTagList(bct_code, 1);
 		mav.addObject("tagList", tag);
 		String paging = busiListCodePaging(pNo, bct_code);
 		mav.addObject("paging", paging);
@@ -2553,7 +2774,7 @@ public class HyunHwiService {
 		System.out.println("버튼클릭기업리스트불러오기, 페이징 부분");
 		System.out.println(bct_code);
 		int maxNum = hDao.countBusiButList(bct_code);
-		int listCount = 10;
+		int listCount = 9;
 		int pageCount = 5;
 		String boardName = "businessList";
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
@@ -2568,13 +2789,14 @@ public class HyunHwiService {
 		for (int i = 0; i < list.size(); i++) {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
-			sb.append("<a href='javascript:void(0)' onclick=\"butTagSelectList('" + bct_code + "','" + tag_no + "','"
-					+ pNo + "')\">" + tag_name + "</a>");
+			sb.append(
+					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
+							+ bct_code + "','" + tag_no + "','"+ pNo +"')\">" + tag_name + "</a>");
 		}
 		return sb.toString();
 	}
 
-	// 수정, 페이징 추가해야해.
+	//
 	public String butTagSelectList(HttpServletRequest request) {
 		System.out.println("버튼태그셀렉리스트, 리스트 띄워주기, 세번째 ");
 		String bct_code = request.getParameter("bct_code");
@@ -2589,32 +2811,62 @@ public class HyunHwiService {
 		map.put("pageNum", pNo);
 		map.put("tag_no", tag_no);
 		list = hDao.butTagSelectList(map);
-		if(list.size()!=0) {
-		for (int i = 0; i < list.size(); i++) {
-			String bus_no = (String) list.get(i).get("BUS_NO");
-			System.out.println(bus_no);
-			String bus_name = (String) list.get(i).get("BUS_NAME");
-			String bus_addr = (String) list.get(i).get("BUS_ADDR");
-			map = new HashMap<String, Object>();
-			map.put("bus_no", bus_no);
-			map.put("gct_no", "2");
-			map = hDao.selectGallery(map);
-			if (map != null) {
-				String glr_file = (String) map.get("GLR_FILE");
-				String glr_loc = (String) map.get("GLR_LOC");
-				sb.append("<div class='busi'>");
-				sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-				sb.append("<div class='busiImage'>");
-				sb.append("<img src='" + glr_loc + glr_file + "'/>");
+		if (list.size() != 0) {
+			int count = 0;
+			boolean flag = true;
+			for (int i = 0; i < list.size(); i++) {
+				String bus_no = (String) list.get(i).get("BUS_NO");
+				System.out.println(bus_no);
+				String bus_name = (String) list.get(i).get("BUS_NAME");
+				String bus_addr = (String) list.get(i).get("BUS_ADDR");
+				map = new HashMap<String, Object>();
+				map.put("bus_no", bus_no);
+				map.put("gct_no", "2");
+				map = hDao.selectGallery(map);
+				if (map != null) {
+					if (count == 0 || count % 3 == 0) {
+						sb.append("<div class='row'>");
+						sb.append("<div class='col-12'>");
+						sb.append("<div class='card-deck-wrapper'>");
+						sb.append("<div class='card-deck'>");
+						flag = false;
+					}
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					sb.append("<div class='card d-block'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					if (count % 3 == 2) {
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						sb.append("</div>");
+						flag = true;
+					}
+					count++;
+				}
+
+			}
+			if (count % 3 < 3 && count % 3 != 0) {
+				for (int i = 0; i < 3 - count % 3; i++) {
+					sb.append("<div class='card d-block'>");
+					sb.append("<div class='card-body'>");
+					sb.append("</div></div>");
+				}
+			}
+			if (flag != true) {
 				sb.append("</div>");
-				sb.append("<div class='busiInfo'>");
-				sb.append("<h1> " + bus_name + "</h1>");
-				sb.append("<h2> 주소: " + bus_addr + "</h2>");
 				sb.append("</div>");
-				sb.append("</a>");
+				sb.append("</div>");
 				sb.append("</div>");
 			}
-		}}
+		}
 		return sb.toString();
 	}
 
@@ -2632,13 +2884,13 @@ public class HyunHwiService {
 		map.put("bsd_date", bsd_date);
 		map.put("bus_addr", bus_addr);
 		int maxNum = hDao.countSearchBUSaddr(map);
-		int listCount = 10;
+		int listCount = 9;
 		int pageCount = 5;
 		String boardName = "businessList";
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.businessListTagPaging(map);
 	}
-	
+
 	public String butTagSelectListPaging(HttpServletRequest request) {
 		System.out.println("버튼클릭기업리스트불러오기, 페이징 부분");
 		String bct_code = request.getParameter("bct_code");
@@ -2649,11 +2901,11 @@ public class HyunHwiService {
 		map.put("bct_code", bct_code);
 		map.put("tag_no", tag_no);
 		int maxNum = hDao.countButTagSelectList(map);
-		int listCount = 10;
+		int listCount = 9;
 		int pageCount = 5;
-		String boardName = "businessList";
+		String boardName = "businessList"; ///필요없어 
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.butTagSelectListPaging(map);
 	}
-	
+
 }

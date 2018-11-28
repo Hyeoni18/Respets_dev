@@ -5,9 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>현휘// 직원 등록 페이지</title>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
-</head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<form action="stepInsert" name="step" method="post"
 		enctype="multipart/form-data">
 		-업종: ${type} <br /> 

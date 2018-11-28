@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>현휘 // 서비스페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 ${text} 
 	<p>${no}</p>
 	<form action="businessInfoDetail" name="servicePage">
@@ -18,9 +20,11 @@ ${text}
 		<button>업종 등록 신청</button>
 	</form>
 	<hr>
+	<div class="row mt-sm-5 mt-3 mb-3">
 	${servList}
 	<!--현휘; 서비스단에서 가져온 서비스 리스트 // 삭제예정 -->
 	${add}
+	</div> <!-- end row mt-sm-5 mt-3 mb-3 -->
 	<div>
 		<input type="button" value="회원탈퇴" onclick="forward(this)" />
 	</div>

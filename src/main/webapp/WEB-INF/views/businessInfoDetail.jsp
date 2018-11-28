@@ -11,6 +11,7 @@
 </script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<h1>기본 정보 확인</h1>
 	<hr />
 	<form action="businessInfoUpdateForm">

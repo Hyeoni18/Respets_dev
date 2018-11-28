@@ -497,11 +497,19 @@ public class HyeonService {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < servList.size(); i++) {
 			String no = (String) servList.get(i).get("BUS_NO");
-			sb.append(
-					"<div id='servDiv' style='border: 2px solid black'><div id='servPhoto' style='border: 1px solid black'><input type='image' value='"
-							+ servList.get(i).get("GLR_FILE") + "' onclick='forward(this)?no=" + no
-							+ "'></div><div style='border: 1px solid black' algin='center'>"
-							+ servList.get(i).get("BCT_NAME") + "</div></div><br>");
+			String bct_code = (String) servList.get(i).get("BCT_CODE");
+			String code = null;
+			if(bct_code.equals("M")) {
+				code="mdi mdi-hospital";
+			} else if (bct_code.equals("B")) {
+				code="mdi mdi-content-cut";
+			} else if (bct_code.equals("H")) {
+				code="mdi mdi-hotel";
+			}
+			sb.append("<div class='col-md-4'><div class='card card-pricing'><div class='card-body text-center'>");
+			sb.append("<a href='serviceDetail?bct_code=" + bct_code + "'><i class='card-pricing-icon "+code+"'></i></a><br/><br/>"
+					+"<h2 class='card-pricing-price'>"+servList.get(i).get("BCT_NAME")+"</h2>");
+			sb.append("</div></div></div>");
 		}
 		return sb.toString();
 	}

@@ -9,6 +9,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<h1>전체 예약 목록</h1>
 	<form name="noticeListForm" class="form-inline">
 		<input type='radio' name='radio' class='radio' value="전체" />전체

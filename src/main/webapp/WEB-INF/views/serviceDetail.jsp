@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 <h1> 업종 정보 확인</h1>
 -서비스 종류 : ${bct_name} <br/>
 -업체명 : ${name} <br/>

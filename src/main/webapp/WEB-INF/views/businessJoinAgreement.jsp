@@ -246,7 +246,9 @@
 	</div>
 	</div>
 		<div class="row justify-content-center">
-			동의하십니까? <input type="checkbox" name="agreeChk" id="agreeChk" />
+			동의하십니까? &nbsp;&nbsp; <input type="checkbox" name="agreeChk" id="agreeChk" /> <br/>
+		</div>
+		<div>
 			<input type="button" class="btn btn-success" value="가입하러가기" onclick="agreementChk()" />
 		</div>
 

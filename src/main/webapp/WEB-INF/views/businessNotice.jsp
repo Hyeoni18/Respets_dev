@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html auto-config="true">
 <head>
-<head>
 <meta charset="utf-8" />
-<title>Respets 기업 공지사항</title>
+<title>Respets :: 기업 공지사항</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -24,9 +25,9 @@
 <style type="text/css">
 
 </style>
-
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<div class="page-content">
 		<div class="card">
 			<div class="card-body">
@@ -71,7 +72,7 @@
 		</div>
 	</div>
 </body>
-	<ul class="pagination-rounded" > 
+	<ul class="pagination-rounded"> 
 		${paging} 
 	</ul>
 	<form id="searchBusinessNotice" action="searchBusinessNotice">

@@ -9,6 +9,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
 	<h1>오늘 일정 목록</h1>
 	${no}
 	<br>

@@ -4,35 +4,26 @@
 <mapper namespace="com.teamx.respets.dao.HyeonDao">
 	<!-- 혜연 개인 -->
 	<select id="myInfo" resultType="personal"
-		parameterType="personal">
-		SELECT * FROM PER WHERE PER_NO = #{no}
-	</select>
-
+		parameterType="personal"> SELECT * FROM PER WHERE PER_NO = #{no} </select>
 	<!-- 혜연 -->
 	<select id="myPwCheck" resultType="Personal"
 		parameterType="String">
 		SELECT PER_PW, PER_EMAIL FROM PER WHERE PER_NO = #{no}
 	</select>
-
 	<!-- 혜연 -->
 	<update id="myPwUpdate" parameterType="personal">
-		UPDATE PER SET PER_PW =
-		#{per_pw} WHERE PER_NO = #{per_no}
+		UPDATE PER SET PER_PW = #{per_pw} WHERE PER_NO = #{per_no}
 	</update>
-
 	<!-- 혜연 -->
 	<update id="myInfoUpdate" parameterType="personal">
-		UPDATE PER SET PER_NAME
-		= #{per_name}, PER_PHONE =
-		#{per_phone}, PER_PHOTO = #{per_photo} WHERE
-		PER_NO = #{per_no}
+		UPDATE PER SET PER_NAME = #{per_name}, PER_PHONE = #{per_phone}, PER_PHOTO =
+		#{per_photo} WHERE PER_NO = #{per_no}
 	</update>
-
 	<!-- 혜연 -->
 	<update id="personalPartDelete" parameterType="String">
-		UPDATE PER SET
-		PER_LEAVE = 'O', PER_LTIME = SYSDATE WHERE PER_NO = #{no}
+		UPDATE PER SET PER_LEAVE = 'O', PER_LTIME = SYSDATE WHERE PER_NO = #{no}
 	</update>
+<<<<<<< HEAD
 
 	<select id="getBkStart" resultType="Date" parameterType="String">
 		SELECT
@@ -64,64 +55,59 @@
 		INNER JOIN PER ON
 		BK.PER_NO = PER.PER_NO
 		WHERE PER_NO = #{no} ORDER BY BK.BK_NO DESC
+=======
+	<select id="getBkStart" resultType="date" parameterType="String"> SELECT
+		VS_START FROM BK WHERE BK_NO = #{bk_no} </select>
+	<!-- 혜연 -->
+	<insert id="cancelInsert" parameterType="String">
+		INSERT INTO CAN VALUES(#{no},#{timeS},(SELECT CAR_CRG FROM CAR WHERE CAR_DAY
+		= #{cancDay}))
+	</insert>
+	<select id="allBookingList" resultType="Hashmap"
+		parameterType="Hashmap">
+		SELECT BK.BK_NO, BUS.BUS_NAME, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME,
+		BK.BK_TIME, BK.VS_START, BK.BK_CHK FROM BK INNER JOIN BUS ON BK.BUS_NO
+		= BUS.BUS_NO INNER JOIN PET ON BK.PET_NO = PET.PET_NO INNER JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO
+		WHERE PER_NO = #{no}
+>>>>>>> origin/master
 	</select>
-
 	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
-
 	<!-- 혜연 기업 -->
+<<<<<<< HEAD
 
+=======
+	<select id="myPage" resultType="business"
+		parameterType="business">
+		SELECT BUS_NO FROM BUS WHERE BUS_EMAIL = #{param1} AND BUS_PW = #{param2}
+	</select>
+>>>>>>> origin/master
 	<!-- 오늘 예약 목록 -->
 	<select id="todayScheduleList" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS
-		ON BK.BUS_NO = BUS.BUS_NO
-		INNER JOIN PET
-		ON
-		BK.PET_NO = PET.PET_NO
-		INNER JOIN PER
-		ON BK.PER_NO = PER.PER_NO
-		INNER
-		JOIN PTY
-		ON PET.PTY_NO = PTY.PTY_NO
-		INNER JOIN BCT
-		ON BK.BCT_CODE =
-		BCT.BCT_CODE
+		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START, PET.PET_NAME,
+		PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME FROM BK INNER
+		JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON BK.PET_NO =
+		PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PTY ON
+		PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE
 		WHERE BK.BUS_NO = #{no} AND BK.VS_START = #{timeS}
 	</select>
-
 	<select id="getSvcPri" resultType="Hashmap"
 		parameterType="String">
-		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI
-		FROM BCT
-		INNER JOIN SVC ON BCT.BCT_CODE = SVC.BCT_CODE
-		WHERE BUS_NO = #{no}
-		ORDER BY SVC_PRI
+		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM BCT INNER JOIN SVC ON
+		BCT.BCT_CODE = SVC.BCT_CODE WHERE BUS_NO = #{no} ORDER BY SVC_PRI
 	</select>
-
 	<select id="bctBookingList" resultType="HashMap"
 		parameterType="HashMap">
-		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS
-		ON BK.BUS_NO = BUS.BUS_NO
-		INNER JOIN PET
-		ON
-		BK.PET_NO = PET.PET_NO
-		INNER JOIN PER
-		ON BK.PER_NO = PER.PER_NO
-		INNER
-		JOIN PTY
-		ON PET.PTY_NO = PTY.PTY_NO
-		INNER JOIN BCT
-		ON BK.BCT_CODE =
-		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{no}
-		AND BCT.BCT_NAME = #{bct_name}
-		AND
-		BK.VS_START = #{timeS}
+		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START, PET.PET_NAME,
+		PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME FROM BK INNER
+		JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON BK.PET_NO =
+		PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PTY ON
+		PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE
+		WHERE BK.BUS_NO = #{no} AND BCT.BCT_NAME = #{bct_name} AND BK.VS_START
+		= #{timeS}
 	</select>
+<<<<<<< HEAD
 
 	<select id="AllbctBookingList" resultType="HashMap"
 		parameterType="HashMap">
@@ -219,19 +205,28 @@
 		ON PTY.PTY_NO =
 		PET.PTY_NO
 		WHERE BK.BK_NO = #{bk_no}
+=======
+	<!-- 예약상세내역 -->
+	<select id="myBookingDetail" resultType="Hashmap"
+		parameterType="String">
+		SELECT BK.BK_NO, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_POST, BUS.BUS_ADDR,
+		BUS.BUS_ADDR2, BK.VS_START, EMP.EMP_NAME, PET.PET_NAME, PTY.PTY_NAME,
+		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT, PET.PET_NO FROM BUS INNER JOIN
+		BK ON BUS.BUS_NO = BK.BUS_NO INNER JOIN EMP ON EMP.EMP_NO = BK.EMP_NO
+		INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PET ON BK.PET_NO =
+		PET.PET_NO INNER JOIN PTY ON PTY.PTY_NO = PET.PTY_NO WHERE BK.BK_NO =
+		#{bk_no}
+>>>>>>> origin/master
 	</select>
-
 	<!-- 노쇼 -->
 	<update id="todayScheduleListNoShow" parameterType="String">
-		UPDATE PER
-		SET PER_NOSHOW = PER_NOSHOW +1 WHERE PER_NO = (SELECT BK.PER_NO
-		FROM
-		PER INNER JOIN BK ON BK.PER_NO = PER.PER_NO WHERE BK_NO =
+		UPDATE PER SET PER_NOSHOW = PER_NOSHOW +1 WHERE PER_NO = (SELECT BK.PER_NO
+		FROM PER INNER JOIN BK ON BK.PER_NO = PER.PER_NO WHERE BK_NO =
 		#{bkno})
 	</update>
-
 	<!-- 전체 일정 -->
 	<select id="businessBookingList" resultType="Hashmap"
+<<<<<<< HEAD
 		parameterType="HashMap">
 		<![CDATA[
 		SELECT X.* FROM 
@@ -252,57 +247,46 @@
 	<select id="contPerBkList" resultType="int">
 		SELECT COUNT(*) FROM BK
 		WHERE PER_NO = #{no}
+=======
+		parameterType="Hashmap">
+		SELECT BK.BK_NO,PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME, BK.BK_TIME,
+		BK.VS_START FROM BK INNER JOIN PET ON BK.PET_NO = PET.PET_NO INNER
+		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER JOIN PER ON BK.PER_NO =
+		PER.PER_NO WHERE BUS_NO = #{no} ORDER BY BK_NO DESC
+>>>>>>> origin/master
 	</select>
-
-	<select id="getListCount" resultType="int">
-		SELECT COUNT(*) FROM
-		BK
-		WHERE
-		BUS_NO = #{no}
-	</select>
-
+	<select id="getListCount" resultType="int"> SELECT COUNT(*) FROM BK
+		WHERE BUS_NO = #{no} </select>
 	<!-- 서비스 관리 -->
+	<!-- 업종 코드가 필요해서 SELECT문에 SVC.BCT_CODE 추가했어! //현휘 -->
 	<select id="serviceManagement" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME,
-		BUS.BUS_NAME, GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC FROM SVC INNER
-		JOIN BCT ON SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS ON SVC.BUS_NO =
-		BUS.BUS_NO INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO INNER JOIN GCT ON
-		GCT.GCT_NO = GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND GLR.GCT_NO = 2
-		ORDER BY SVC.SVC_PRI
+		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME, BUS.BUS_NAME, GCT.GCT_NAME,
+		GLR.GLR_FILE, GLR.GLR_LOC, SVC.BCT_CODE FROM SVC INNER JOIN BCT ON
+		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO INNER JOIN GCT ON GCT.GCT_NO
+		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND GLR.GCT_NO = 2 ORDER BY
+		SVC.SVC_PRI
 	</select>
-
 	<select id="serviceList" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM BCT
-		INNER JOIN SVC ON BCT.BCT_CODE = SVC.BCT_CODE WHERE BUS_NO = #{no}
+		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM BCT INNER JOIN SVC ON
+		BCT.BCT_CODE = SVC.BCT_CODE WHERE BUS_NO = #{no}
 	</select>
-
 	<update id="businessPartDelete" parameterType="String">
-		UPDATE BUS SET
-		BUS_LEAVE = 'O', BUS_LTIME = SYSDATE WHERE BUS_NO = #{no}
+		UPDATE BUS SET BUS_LEAVE = 'O', BUS_LTIME = SYSDATE WHERE BUS_NO = #{no}
 	</update>
-
 	<select id="businessInfo" resultType="HashMap"
 		parameterType="String">
-		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME,
-		BUS.BUS_NAME, BUS.BUS_LCNO, BUS.BUS_CEO,
-		BUS.BUS_PHONE, BUS.BUS_POST,
-		BUS.BUS_ADDR, BUS.BUS_ADDR2, GCT.GCT_NAME,
-		GLR.GLR_FILE, GLR.GLR_LOC
-		FROM SVC INNER JOIN BCT
-		ON SVC.BCT_CODE = BCT.BCT_CODE
-		INNER JOIN BUS
-		ON
-		SVC.BUS_NO = BUS.BUS_NO
-		INNER JOIN GLR
-		ON GLR.BUS_NO = BUS.BUS_NO
-		INNER
-		JOIN GCT
-		ON GCT.GCT_NO = GLR.GCT_NO
-		WHERE BUS.BUS_NO = #{no} AND
-		GLR.GCT_NO = 2 AND SVC.SVC_PRI = 1
+		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_LCNO,
+		BUS.BUS_CEO, BUS.BUS_PHONE, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC FROM SVC INNER JOIN BCT ON
+		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO INNER JOIN GCT ON GCT.GCT_NO
+		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND GLR.GCT_NO = 2 AND
+		SVC.SVC_PRI = 1
 	</select>
+<<<<<<< HEAD
 
 	<update id="businessInfoUpdate" parameterType="business">
 		UPDATE BUS SET
@@ -321,32 +305,22 @@
 		DEFAULT, GLR_LOC = DEFAULT WHERE BUS_NO = #{no} AND GCT_NO = 2
 	</update>
 
+=======
+>>>>>>> origin/master
 	<select id="getMenu" parameterType="String" resultType="HashMap">
-		SELECT
-		MENU.MENU_NAME FROM MENU INNER JOIN BKM
-		ON MENU.MENU_NO = BKM.MENU_NO
-		INNER JOIN BK
-		ON BKM.BK_NO = BK.BK_NO
-		WHERE BK.BK_NO = #{bk_no}
+		SELECT MENU.MENU_NAME FROM MENU INNER JOIN BKM ON MENU.MENU_NO = BKM.MENU_NO
+		INNER JOIN BK ON BKM.BK_NO = BK.BK_NO WHERE BK.BK_NO = #{bk_no}
 	</select>
-
 	<select id="getPetList" parameterType="String"
 		resultType="HashMap">
-		SELECT PCL.PCL_NAME, PDT.PDT_CTT
-		FROM PCL INNER JOIN PDT
-		ON
-		PCL.PCL_NO =
-		PDT.PCL_NO
-		WHERE PDT.PET_NO=#{pet_no}
+		SELECT PCL.PCL_NAME, PDT.PDT_CTT FROM PCL INNER JOIN PDT ON PCL.PCL_NO =
+		PDT.PCL_NO WHERE PDT.PET_NO=#{pet_no}
 	</select>
-
 	<!-- /////////////////////////////////////////////////////////////// -->
-
 	<!-- 혜연 ajxa -->
 	<!-- 방문체크 -->
 	<update id="todayScheduleListCheck" parameterType="String">
-		UPDATE BK SET
-		VS_CHK = 'O' WHERE BK_NO = #{bk_no}
+		UPDATE BK SET VS_CHK = 'O' WHERE BK_NO = #{bk_no}
 	</update>
 
 	<select id="getnoshowCount" resultType="String"
