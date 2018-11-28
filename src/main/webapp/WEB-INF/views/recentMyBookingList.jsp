@@ -72,7 +72,18 @@
 			</div>
 		</div>
 	</div>
+	${cancInsertSucess}
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
-
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url : "recentMyBookingList",
+			type : "get",
+			success : function() {
+				console.log("성공");
+			}
+		});
+	})
+</script>
 </html>

@@ -9,11 +9,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<form name="allBookingList">
-		<h1>전체 예약 목록</h1>
-		${no}
-		<table>${allList}</table>
-	</form>
-	${none}
+	<h1>전체 예약 목록</h1>
+	${no}
+	<table>${allList}</table>
+	<div id="paging">${paging}</div>
 </body>
 </html>

@@ -64,7 +64,8 @@
 										<div class="card mb-0">
 											<div class="card-body">
 												<h2>예약 상세 내역</h2>
-												<p class="text-muted font-14 mb-4">반려동물의 예약 상세 내역입니다.</p>
+												<p class="text-muted font-14 mb-4" id="comanet">반려동물의 예약
+													상세 내역입니다.</p>
 
 												<div class="table-responsive-sm">
 													<table class="table table-centered mb-0">
@@ -152,11 +153,14 @@
 							</div>
 						</div>
 					</div>
-					<br /> <br /> <!-- <input type="button" id="cancelButton"
+					<br /> <br />
+					<!-- <input type="button" id="cancelButton"
 						class="btn btn-success" value="예약 취소"
-						onclick="location.href='./myBookingCancelPage'" />  --><input
-						type="button" class="btn btn-success" value="목록으로 돌아가기"
+						onclick="location.href='./myBookingCancelPage'" />  -->
+					<input type="button" id="perBut" class="btn btn-success" value="목록으로 돌아가기"
 						onclick="location.href='./recentMyBookingList'">
+						<input type="button" id="busBut" class="btn btn-success" value="목록으로 돌아가기"
+						onclick="location.href='./todayScheduleList'">
 				</div>
 			</div>
 		</div>
@@ -213,16 +217,25 @@
 </script>
 
 <script>
-	var no = '$no';
+	var no = '${no}';
+	var chk = '${chk}';
 	$('#cencel').hide();
-	if (no.indexOf('P')) {
-		$('#cencel').show();
+	$('#perBut').hide();
+	$('#busBut').hide();
+	if (no.indexOf('P') == 0) {
+		//$('#cencel').show();
+		$('#perBut').show();
+		if (chk == '신청' || chk == '승인') {
+			$('#cencel').show();
+		} else if (chk == '취소' || chk == '거절') {
+			$('#cencel').hide();
+		}
 	} else {
-		$('#cencel').hide();
+		$('#busBut').show();
 	}
 </script>
 <script>
-	/* Aj("reviewInsertPage", "#review");
+	/*  Aj("reviewInsertPage", "#review");
 	 if(${page!=null}){
 	 Aj("${page}", "#review");
 	 }
