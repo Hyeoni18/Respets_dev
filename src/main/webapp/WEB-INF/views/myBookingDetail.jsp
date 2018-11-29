@@ -197,10 +197,7 @@
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
-	var jsonData = $
-	{
-		result
-	};
+	var jsonData = ${result};
 	console.log(jsonData.BK_NO);
 	console.log(jsonData.VS_CHK);
 	$('#reviewButton').hide();
