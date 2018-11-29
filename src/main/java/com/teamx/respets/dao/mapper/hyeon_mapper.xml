@@ -22,7 +22,8 @@
 
 	<!-- 혜연 -->
 	<update id="myInfoUpdate" parameterType="personal">
-		UPDATE PER SET PER_NAME=#{per_name}, PER_PHONE=#{per_phone} 
+		UPDATE PER SET
+		PER_NAME=#{per_name}, PER_PHONE=#{per_phone}
 		WHERE PER_NO = #{per_no}
 	</update>
 
@@ -264,6 +265,12 @@
 		BK
 		WHERE
 		BUS_NO = #{no}
+	</select>
+
+	<select id="bctAllPaging" resultType="int">
+		SELECT COUNT(*) FROM BK
+		INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BK.BUS_NO = #{no}
+		AND BCT.BCT_NAME = #{bct_name}
 	</select>
 
 	<!-- 서비스 관리 -->

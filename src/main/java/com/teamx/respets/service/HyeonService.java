@@ -370,7 +370,7 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("| <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>" + svc);
+				sb.append("| <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>"+svc);
 			}
 			mav.addObject("bctList", sb);
 			view = "todayScheduleList";
@@ -499,7 +499,7 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append(" | <input type='radio' name='radio' class='radio' value='" + svc + "'>" + svc + " ");
+				sb.append("  <input type='button' name='button' class='bct' onclick='bctListPaging()' value='" + svc + "'>");
 			}
 			mav.addObject("bctList", sb);
 		}
@@ -803,8 +803,10 @@ public class HyeonService {
 		return sb.toString();
 	}
 
-	public String AllPaging(HttpServletRequest request, Integer pageNum) {
+	public String AllPaging(HttpServletRequest request) {
 		String no = request.getParameter("bus_no");
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		System.out.println(pageNum);
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
@@ -814,7 +816,8 @@ public class HyeonService {
 		return paging.AllPaging(no);
 	}
 
-	public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
+	public String bctAllPaging(HttpServletRequest request) {
+		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		String no= request.getParameter("bus_no");
 		String bct_name = request.getParameter("bct_name");
 		int pNo = (pageNum == null) ? 1 : pageNum;
@@ -822,7 +825,11 @@ public class HyeonService {
 		map.put("no", no);
 		map.put("bct_name", bct_name);
 		int maxNum = hyDao.bctAllPaging(map);
-		return null;
+		int listCount = 9;
+		int pageCount = 5;
+		String boardName = "businessBookingList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.bctAllPaging(map);
 	}
 
 }

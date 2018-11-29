@@ -104,7 +104,7 @@
 															</tr>
 															<tr></tr>
 															<tr>
-																<td colspan='2'><h4>내 반려동물 정보</h4></td>
+																<td colspan='2'><h4>반려동물 정보</h4></td>
 															</tr>
 															<tr>
 																<td>이름</td>

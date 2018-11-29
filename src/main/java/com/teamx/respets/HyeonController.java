@@ -218,14 +218,14 @@ public class HyeonController {
 	}
 	
 	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String AllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.AllPaging(request, pageNum);
+	@ResponseBody public String AllPaging(HttpServletRequest request) {
+		String text = hy.AllPaging(request);
 		return text;
 	}
 	
 	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.bctAllPaging(request, pageNum);
+	@ResponseBody public String bctAllPaging(HttpServletRequest request) {
+		String text = hy.bctAllPaging(request);
 		return text;
 	}
 
