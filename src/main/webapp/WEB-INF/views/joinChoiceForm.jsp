@@ -68,6 +68,6 @@
 		</div>
 		<!-- col-7 -->
 	</div>
-	<%@ include file="footer.html"%>
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 </body>
 </html>

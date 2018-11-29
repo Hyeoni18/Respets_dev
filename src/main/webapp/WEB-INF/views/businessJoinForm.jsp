@@ -128,7 +128,9 @@
         </div>
         <!-- end page -->
 
-<%@ include file="footer.html"%>
+
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>

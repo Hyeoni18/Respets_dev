@@ -232,6 +232,8 @@
 		<input type="button" class="btn btn-success" value="가입하러가기"
 			onclick="agreementChk()" />
 	</div>
+	
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 
 
 

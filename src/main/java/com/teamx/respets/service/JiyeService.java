@@ -236,7 +236,7 @@ public class JiyeService {
 	public ModelAndView logout() {
 		mav = new ModelAndView();
 		session.invalidate();
-		mav.setViewName("redirect:/");
+		mav.setViewName("index");
 		return mav;
 	} // logout End
 
@@ -261,7 +261,15 @@ public class JiyeService {
 			sb.append("<td>" + hList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + hList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + hList.get(i).get("VS_START") + "</td>");
-			sb.append("<td name='chk'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+			if(hList.get(i).get("BK_CHK").equals("승인")) {
+				sb.append("<td class='text-success'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+			}else if(hList.get(i).get("BK_CHK").equals("거절")) {
+				sb.append("<td class='text-danger'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+			}else if(hList.get(i).get("BK_CHK").equals("취소")){
+				sb.append("<td class='text-warning'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+			}else {
+				sb.append("<td class='text-info'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+			}
 		} // for End
 		mav.addObject("hList", sb);
 		view = "recentMyBookingList";
