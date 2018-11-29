@@ -128,8 +128,7 @@
         </div>
         <!-- end page -->
 
-	<footer class="footer footer-alt"> 2018 © Hyper -
-		Coderthemes.com </footer>
+<%@ include file="footer.html"%>
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>

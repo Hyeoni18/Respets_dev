@@ -50,8 +50,7 @@
 	</insert>
 
 	<!-- 서진 : 개인 즐겨찾기 기업 SELECT -->
-	<select id="likeBusinessSelect" parameterType="String"
-		resultType="HashMap">
+	<select id="likeBusinessSelect" parameterType="String" resultType="HashMap">
 		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC
 		FROM FAV INNER JOIN BUS
 		ON FAV.BUS_NO = BUS.BUS_NO
@@ -78,7 +77,8 @@
 
 	<!-- 서진 : 사진 없는 동물 리스트 SELECT -->
 	<select id="selectPetList" parameterType="HashMap" resultType="HashMap">
-		SELECT * FROM PET WHERE PER_NO = #{PER_NO} AND PET_NO != #{PET_NO}
+		SELECT * FROM PET WHERE PER_NO = #{PER_NO} AND PET_NO !=
+		#{PET_NO}
 	</select>
 
 	<!-- 서진 : 직원 리스트 SELECT -->
@@ -87,7 +87,8 @@
 	</select>
 
 	<!-- 서진 : 서비스 리스트 SELECT -->
-	<select id="selectSvcList" parameterType="HashMap" resultType="HashMap">
+	<select id="selectSvcList" parameterType="HashMap"
+		resultType="HashMap">
 		SELECT PTY.PTY_NAME, PRC.MENU_NO, MENU.MENU_NAME, PRC.PRICE
 		FROM PET INNER JOIN PTY
 		ON PET.PTY_NO = PTY.PTY_NO
@@ -99,15 +100,18 @@
 	</select>
 
 	<!-- 서진 : 직원 시간 SELECT -->
-	<select id="selectEmpTime" parameterType="HashMap" resultType="HashMap">
+	<select id="selectEmpTime" parameterType="HashMap"
+		resultType="HashMap">
 		SELECT TO_CHAR(ESD_DATE, 'YYMMDD') AS ESD_DATE, AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE
 		FROM ESD WHERE EMP_NO = #{emp_no} AND ESD_DATE = TO_DATE(#{date}, 'YYMMDD')
 	</select>
 
 	<!-- 서진 : 직원 안 되는 시간 SELECT -->
-	<select id="selectNoTime" parameterType="HashMap" resultType="HashMap">
+	<select id="selectNoTime" parameterType="HashMap"
+		resultType="HashMap">
 		SELECT TO_CHAR(VS_START, 'HH24MI') AS VS_START
-		FROM BK WHERE EMP_NO = #{emp_no} AND VS_START LIKE TO_DATE(#{date}, 'YYMMDD') AND BK_CHK IN('신청', '승인')
+		FROM BK WHERE
+		EMP_NO = #{emp_no} AND VS_START LIKE TO_DATE(#{date}, 'YYMMDD') AND BK_CHK IN('신청', '승인')
 	</select>
 
 	<!-- 예약 테이블에 예약 넣기 -->
@@ -116,16 +120,15 @@
 			SELECT BK_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO BK VALUES('K'||#{bk_seq}, #{per_no}, #{pet_no}, #{bus_no},
-		#{bct_code}, #{emp_no}, SYSDATE, ${bk_pay}, TO_DATE(#{vs_start}, 'YYMMDDHH24MI'), 
-		TO_DATE(#{vs_start}, 'YYMMDDHH24MI') + (INTERVAL '30' MINUTE),
-		#{bk_cmt}, DEFAULT, DEFAULT, NULL)
+		#{bct_code}, #{emp_no}, SYSDATE, ${bk_pay}, TO_DATE(#{vs_start}, 'YYMMDDHH24MI'),
+		TO_DATE(#{vs_start}, 'YYMMDDHH24MI') + (INTERVAL '30' MINUTE), #{bk_cmt}, DEFAULT, DEFAULT, NULL)
 	</insert>
-	
+
 	<!-- 서진 : 예약 메뉴 테이블에 반복문으로 INSERT -->
 	<insert id="insertBkMenu" parameterType="Booking">
 		INSERT INTO BKM VALUES(#{bk_no}, ${menu_no})
 	</insert>
-	
+
 	<!-- 서진 : 예약 완료 정보 SELECT -->
 	<select id="bookingSuccess" parameterType="Booking" resultType="HashMap">
 		SELECT BUS.BUS_NAME, TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START, BCT.BCT_NAME
@@ -135,10 +138,11 @@
 		ON BK.BCT_CODE = BCT.BCT_CODE
 		WHERE BK.BK_NO = #{bk_no}
 	</select>
-	
+
 	<!-- 서진 : 기업 새로운 예약 -->
 	<select id="selectBooking" parameterType="String" resultType="HashMap">
-		SELECT BK.BK_NO, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME, TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START
+		SELECT BK.BK_NO, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME,
+		TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START
 		FROM BK INNER JOIN PET
 		ON BK.PET_NO = PET.PET_NO
 		INNER JOIN PTY
@@ -147,15 +151,24 @@
 		ON BK.PER_NO = PER.PER_NO
 		WHERE BK.BUS_NO = #{bus_no} AND BK.BK_CHK = '신청'
 	</select>
-	
+
 	<!-- 서진 : 기업 새로운 예약 수락 -->
 	<update id="bookingAccept" parameterType="String">
 		UPDATE BK SET BK_CHK = '승인' WHERE BK_NO = #{bk_no}
 	</update>
-	
+
 	<!-- 서진 : 기업 새로운 예약 거절 -->
 	<update id="bookingReject" parameterType="String">
 		UPDATE BK SET BK_CHK = '거절' WHERE BK_NO = #{bk_no}
 	</update>
+
+	<!-- 서진 : 메인 공지사항 -->
+	<select id="selectBoardList" resultType="abo">
+		<![CDATA[
+		SELECT ABC.ABC_NAME, ABO.ABO_TITLE, ABO.ABO_CTT, TO_CHAR(ABO.ABO_DATE, 'YYYY-MM-DD') AS ABO_DATE_STRING
+		FROM ABO INNER JOIN ABC
+		ON ABO.ABC_NO = ABC.ABC_NO
+		WHERE ROWNUM <= 3]]>
+	</select>
 
 </mapper>

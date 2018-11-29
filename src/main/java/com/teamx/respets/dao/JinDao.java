@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.teamx.respets.bean.AdminBoard;
 import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
 
@@ -77,5 +78,8 @@ public interface JinDao {
 
 	// 서진 : 예약 거절
 	public void bookingReject(String bk_no);
+
+	// 서진 : 메인 페이지 공지사항
+	public List<AdminBoard> selectBoardList();
 
 } // interface End

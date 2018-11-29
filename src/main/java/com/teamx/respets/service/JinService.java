@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.AdminBoard;
 import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.dao.JinDao;
@@ -415,6 +416,16 @@ public class JinService {
 		} // for End
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", sb.toString());
+		return mav;
+	} // method End
+
+	// 서진 : index
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView();
+		String bct = indexBusCategory();
+		mav.addObject("bct", bct);
+		List<AdminBoard> list = jinDao.selectBoardList();
+		mav.addObject("list", list);
 		return mav;
 	} // method End
 
