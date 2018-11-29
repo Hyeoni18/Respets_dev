@@ -14,18 +14,18 @@
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
-<body>
+<body class="authentication-bg">
 	<div class="row justify-content-center">
-		<div class="col-7">
+		<div class="col-7" style="margin-top: 50px;">
 			<div class="card">
 				<div class="card-body">
 					<div id="head" style="text-align: center">
 						<h4>Respets 기업회원 이용약관</h4>
 					</div>
 					<div class="form-control"
-						style="position: relative; overflow: hidden; width: auto; height: 430px;">
+						style="position: relative; overflow: hidden; width: auto; height: 400px;">
 						<div class="slimscroll"
-							style="max-height: 430px; overflow: hidden; width: auto; height: 430px;">
+							style="max-height: 400px; overflow: hidden; width: auto; height: 400px;">
 
 							<h5>제1조(목적)</h5>
 
@@ -225,15 +225,38 @@
 		</div>
 	</div>
 	<div class="row justify-content-center">
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" name="agreeChk" id="customCheck1">
+			<label class="custom-control-label" for="customCheck1">동의하시겠습니까?</label>
+		</div>
+		<!-- 동의하십니까? <input type="checkbox" name="agreeChk" id="agreeChk" /> <input
+			type="button" class="btn btn-success" value="다음 단계"
+			onclick="agreementChk()" /> -->
+	</div>
+	<div class="row justify-content-center" style="margin-top:20px;">
+		<input
+			type="button" class="btn btn-success" value="다음 단계"
+			onclick="agreementChk()" />
+	</div>
+	<!-- <div class="row justify-content-center">
 		동의하십니까? &nbsp;&nbsp; <input type="checkbox" name="agreeChk"
 			id="agreeChk" /> <br />
 	</div>
 	<div>
 		<input type="button" class="btn btn-success" value="가입하러가기"
 			onclick="agreementChk()" />
+<<<<<<< HEAD
 	</div>
 	
 	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+=======
+	</div> -->
+	
+	
+	<!-- footer start -->
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+	<!-- end footer -->
+>>>>>>> jinseon
 
 
 
@@ -245,7 +268,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 	function agreementChk() {
-		if ($('#agreeChk').is(':checked')) {
+		if ($('#customCheck1').is(':checked')) {
 			location.href = "./businessJoinForm";
 		} else {
 			alert("약관에 동의해주세요.");
