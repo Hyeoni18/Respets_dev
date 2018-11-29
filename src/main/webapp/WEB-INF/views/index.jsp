@@ -6,35 +6,18 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>리스펫츠</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
+<title>Respets</title>
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
-
-<!-- third party css -->
-<link
-	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
-	rel="stylesheet" type="text/css" />
-<!-- third party css end -->
-
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
-
 <body data-layout="topnav">
-
-	<%-- ${no} <!-- 지예 --> --%>
 	${alert}
-	<!--현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
+	<!-- 현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
 	${findPw}
-	<!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert -->
+	<!-- 현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert -->
 	${sessionCheck}
 	<!-- 진선 -->
 	<!-- Begin page -->
@@ -207,9 +190,9 @@
 										<table class="table table-centered mb-0">
 											<thead>
 												<tr style="text-align: center;">
-													<th>분류</th>
+													<th width="25%">분류</th>
 													<th>제목</th>
-													<th>날짜</th>
+													<th width="25%">날짜</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -323,7 +306,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
+			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 			<!-- end Footer -->
 
 		</div>
