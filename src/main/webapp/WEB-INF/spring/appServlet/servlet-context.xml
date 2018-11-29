@@ -141,8 +141,7 @@
 			<exclude-mapping path="/emailConfirmSuccess" />
 			<exclude-mapping path="/admin" />
 			<exclude-mapping path="/adminLogin" />
-			<exclude-mapping path="/myPwCheck" />
-			<exclude-mapping path="/myPwUpdateForm" />
+
 			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
 			<!-- pet -->
@@ -171,7 +170,6 @@
 			<exclude-mapping path="/serviceInsert" />
 			<exclude-mapping path="/stepList" />
 			<exclude-mapping path="/stepInsertForm" />
-			<exclude-mapping path="/servicePage" />
 			<exclude-mapping path="/stepInsert" />
 			<exclude-mapping path="/stepList" />
 			<exclude-mapping path="/stepDetail" />
@@ -182,8 +180,6 @@
 			<exclude-mapping path="/emailCheck" /> <!-- 서진 : 기업 회원 가입 이메일 확인 -->
 			<exclude-mapping path="/taxIdCheck" /> <!-- 서진 : 기업 회원 가입 사업자 등록 번호 확인 -->
 			<exclude-mapping path="/businessJoin" /> <!-- 서진 : 기업 회원 가입 -->
-			<exclude-mapping path="/todayScheduleList" />
-			<exclude-mapping path="/myBookingDetail" />
 			<exclude-mapping path="/stepUpdate" />
 			<exclude-mapping path="/stepDelete" />
 			<exclude-mapping path="/personalBlacklist" />
@@ -192,11 +188,7 @@
 			<exclude-mapping path="/serviceDelete" />
 			<exclude-mapping path="/serviceUpdate" />
 			<exclude-mapping path="/unconfirmBusiness" /> <!-- !!! 나중에 삭제할 것!!! 서진 : 관리자 -->
-			<exclude-mapping path="/myBookingCancelPage" />
 			<exclude-mapping path="/businessList" />
-			<exclude-mapping path="/businessInfoDetail" />
-			<exclude-mapping path="/businessInfoUpdateForm"/>
-			<exclude-mapping path="/businessBookingListPage"/>
 			<exclude-mapping path="/weekCal" />
 			<exclude-mapping path="/searchList" /> <!-- 서진 : index에서 검색 버튼 눌렀을 때 -->
 			<exclude-mapping path="/bookingForm" /> <!-- 서진 : 예약 페이지 -->
@@ -210,6 +202,20 @@
 			<exclude-mapping path="/butTagSelectList" />
 			<exclude-mapping path="/tagSelectListAddr" />
 			<exclude-mapping path="/butTagSelectListPaging" />
+			<!-- 혜연 -->
+			<!-- <exclude-mapping path="/myPwCheck" /> -->
+			<exclude-mapping path="/myInfo" />
+			<exclude-mapping path="/myPwUpdateForm" />
+			<exclude-mapping path="/myInfoUpdateForm" />
+			<exclude-mapping path="/myInfoUpdate" />
+			<exclude-mapping path="/allBookingList" />
+			<exclude-mapping path="/todayScheduleList" />
+			<exclude-mapping path="/myBookingDetail" />
+			<exclude-mapping path="/myBookingCancelPage" />
+			<exclude-mapping path="/servicePage" />
+			<exclude-mapping path="/businessInfoDetail" />
+			<exclude-mapping path="/businessInfoUpdateForm"/>
+			<exclude-mapping path="/businessBookingListPage"/>
 			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
 			<beans:bean
 				class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>

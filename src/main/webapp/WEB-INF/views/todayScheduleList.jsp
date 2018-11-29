@@ -18,7 +18,7 @@
 	${bctList}
 	<hr>
 	<div class="No" style="border: 2px solid red"></div>
-	<div class="Ok" style="border: 2px solid black"></div>
+	<div class="Ok"></div>
 	${none}
 </body>
 <script>
@@ -35,84 +35,6 @@
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
-						//방문 버튼 클릭 시
-						function com(bk_no) {
-							console.log(bk_no);
-							$.ajax({
-								url : 'todayScheduleListCheck',
-								type : 'post',
-								data : {
-									'bk_no' : bk_no
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.but').html("방문 완료");
-										$('.ton').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
-						//노쇼버튼 클릭 시
-						function noshow(button, bk_no, pno) {
-							var det;
-							det = confirm("노쇼를 선택하시겠습니까?");
-							if (det) {
-								$.ajax({
-									url : 'todayScheduleListNoShow',
-									type : 'post',
-									data : {
-										'no' : no,
-										'pno' : pno
-									},
-									success : function(data) {
-										console.log(data);
-										if (data != 0) {
-											console.log("성공");
-											$('.unNoshow').show();
-											$('.noshow').hide();
-										} else {
-											console.log("실패");
-										}
-									},
-									error : function(error) {
-										console.log(error);
-									}
-								});
-							}
-						}
-						//노쇼 취소버튼 클릭 시
-						function unNoshow(button, bk_no, pno) {
-							$.ajax({
-								url : 'todayScheduleListUnNoShow',
-								type : 'post',
-								data : {
-									'no' : no,
-									'pno' : pno
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.noshow').show();
-										$('.unNoshow').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
 					},
 					error : function(error) {
 						console.log(error);
@@ -127,81 +49,6 @@
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
-						function com(button, bk_no) {
-							console.log(bk_no);
-							$.ajax({
-								url : 'todayScheduleListCheck',
-								type : 'post',
-								data : {
-									'bk_no' : bk_no
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.but').html("방문 완료");
-										$('.ton').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
-						function noshow(button, bk_no, pno) {
-							var det;
-							det = confirm("노쇼를 선택하시겠습니까?");
-							if (det) {
-								$.ajax({
-									url : 'todayScheduleListNoShow',
-									type : 'post',
-									data : {
-										'no' : no,
-										'pno' : pno
-									},
-									success : function(data) {
-										console.log(data);
-										if (data != 0) {
-											console.log("성공");
-											$('.unNoshow').show();
-											$('.noshow').hide();
-										} else {
-											console.log("실패");
-										}
-									},
-									error : function(error) {
-										console.log(error);
-									}
-								});
-							}
-						}
-						function unNoshow(button, bk_no, pno) {
-							$.ajax({
-								url : 'todayScheduleListUnNoShow',
-								type : 'post',
-								data : {
-									'no' : no,
-									'pno' : pno
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.noshow').show();
-										$('.unNoshow').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
 					},
 					error : function(error) {
 						console.log(error);
@@ -212,8 +59,9 @@
 	});
 </script>
 <script>
-	/* function com(button, bk_no) {
-		console.log(bk_no);
+	function com(bk_no) {
+		var but = $('span[id]').val();
+		console.log(but);
 		$.ajax({
 			url : 'todayScheduleListCheck',
 			type : 'post',
@@ -221,10 +69,9 @@
 				'bk_no' : bk_no
 			},
 			success : function(data) {
-				console.log(data);
 				if (data != 0) {
 					console.log("성공");
-					$('.but').html("방문 완료");
+					$(but).html("방문 완료");
 					$('.ton').hide();
 				} else {
 					console.log("실패");
@@ -235,18 +82,14 @@
 			}
 		});
 
-	} */
-	/* function noshow(button, bk_no, pno) {
+	}
+	function noshow(bk_no, pno) {
 		var det;
 		det = confirm("노쇼를 선택하시겠습니까?");
 		if (det) {
 			$.ajax({
-				url : 'todayScheduleListNoShow',
+				url : 'todayScheduleListNoShow?bk_no=' + bk_no + '&pno=' + pno,
 				type : 'post',
-				data : {
-					'no' : no,
-					'pno' : pno
-				},
 				success : function(data) {
 					console.log(data);
 					if (data != 0) {
@@ -262,14 +105,13 @@
 				}
 			});
 		}
-	} */
-	/* function unNoshow(button, bk_no, pno) {
+	}
+	function unNoshow(pno) {
 		$.ajax({
 			url : 'todayScheduleListUnNoShow',
 			type : 'post',
 			data : {
-				'no' : no,
-				'pno' : pno
+				'per_no' : pno
 			},
 			success : function(data) {
 				console.log(data);
@@ -286,6 +128,6 @@
 			}
 		});
 
-	} */
+	}
 </script>
 </html>
