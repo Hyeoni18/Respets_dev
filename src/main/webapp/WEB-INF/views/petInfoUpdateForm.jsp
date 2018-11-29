@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Respets :: 반려동물 정보수정</title>
+<title>Respets :: 반려동물 정보 수정</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -216,6 +216,7 @@
 														따라요"</span>
 												</div>
 												<div style="text-align: right;">
+													<input type="hidden" value="${param.per_no}" name="per_no" />
 													<input type="hidden" value="${param.pet_no}" name="pet_no" />
 													<input type="reset" class="btn btn-success" value="초기화" />&nbsp;
 													<input type="submit" class="btn btn-success" value="수정 완료"
@@ -417,7 +418,7 @@
 	$("#petUpdateSubmit").click(function() {
 		console.log(this.value + " 클릭함");
 		var frm = document.petInfoUpdateForm;
-		var length = frm.length - 3;
+		var length = frm.length - 4;
 		for (var i = 0; i < length; i++) {
 			if (frm[i].name == "pet_name") {
 				if (frm[i].value == "" || frm[i].value == null) {

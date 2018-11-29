@@ -152,6 +152,7 @@ public class HyeonService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String view = null;
 		String no = session.getAttribute("no").toString();
+		/*int fileCheck = Integer.parseInt(session.getAttribute("fileCheck").toString());*/
 		System.out.println(no);
 		if (mb != null) {
 			mb.setPer_no(no);
@@ -162,7 +163,7 @@ public class HyeonService {
 			// 담은 정보로 update
 			boolean update = hyDao.myInfoUpdate(mb);
 			if (update) {
-				if (session.getAttribute("fileCheck").equals("1")) {
+				if (session.getAttribute("fileCheck").equals('1')) {
 					MultipartFile mainPhoto = ((MultipartRequest) session).getFile("mainPhoto");
 					map = saveFile((MultipartHttpServletRequest) session, mainPhoto, map);
 					map.put("no", no);

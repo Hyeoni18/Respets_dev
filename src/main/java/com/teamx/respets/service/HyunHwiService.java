@@ -97,9 +97,9 @@ public class HyunHwiService {
 		mav = new ModelAndView();
 		String userId = request.getParameter("email");
 		String userType = request.getParameter("type");
-		List<Map<String,Object>> list;
+		List<Map<String, Object>> list;
 		list = hDao.searchRND(userId);
-		if(list.size() != 0) {
+		if (list.size() != 0) {
 			hDao.deleteRcode(userId);
 		}
 		String view = null;
@@ -544,18 +544,48 @@ public class HyunHwiService {
 	private void checkTag(MultipartHttpServletRequest request) {
 		String code = request.getParameter("bct_code");
 		String no = (String) session.getAttribute("no");
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map;
 		String[] tag = request.getParameterValues("tag_name"); // 체크된 태크네임을 가져온다.
-		for (int i = 0; i < tag.length; i++) { // 가져온 태그만큼 반복
-			String tag_num = hDao.searchTAG(tag[i]); // 태그테이블에 존재하는지 검사, 존재하면 tag_num을 가져온다.
-			if (tag_num == null) { // 없다면
-				hDao.insertTAG(tag[i]); // 태그테이블에 해당 서비스 등록
-				tag_num = hDao.searchTAG(tag[i]); // 등록한 서비스를 다시 검색하여 tag_num을 가져온다.
+		String cat_tag = request.getParameter("cat_tag");
+		String dog_tag = request.getParameter("dog_tag");
+		String tag_num = null;
+		if (cat_tag != null) {
+			map = new HashMap<>();
+			String cat_num = hDao.searchTAG(cat_tag);
+			if (cat_num == null) {
+				hDao.insertTAG(cat_tag);
+				cat_num = hDao.searchTAG(cat_tag);
 			}
 			map.put("bus_no", no);
 			map.put("bct_code", code);
-			map.put("tag_num", tag_num);
-			hDao.insertBTG(map); // 기업이 제공하는 서비스들을 해시태그 테이블에 등록
+			map.put("tag_num", cat_num);
+			hDao.insertBTG(map);
+		}
+		if (dog_tag != null) {
+			map = new HashMap<>();
+			String dog_num = hDao.searchTAG(dog_tag);
+			if (dog_num == null) {
+				hDao.insertTAG(dog_tag);
+				dog_num = hDao.searchTAG(dog_tag);
+			}
+			map.put("bus_no", no);
+			map.put("bct_code", code);
+			map.put("tag_num", dog_num);
+			hDao.insertBTG(map);
+		}
+		if (tag != null) {
+			map = new HashMap<>();
+			for (int i = 0; i < tag.length; i++) { // 가져온 태그만큼 반복
+				tag_num = hDao.searchTAG(tag[i]); // 태그테이블에 존재하는지 검사, 존재하면 tag_num을 가져온다.
+				if (tag_num == null) { // 없다면
+					hDao.insertTAG(tag[i]); // 태그테이블에 해당 서비스 등록
+					tag_num = hDao.searchTAG(tag[i]); // 등록한 서비스를 다시 검색하여 tag_num을 가져온다.
+				}
+				map.put("bus_no", no);
+				map.put("bct_code", code);
+				map.put("tag_num", tag_num);
+				hDao.insertBTG(map); // 기업이 제공하는 서비스들을 해시태그 테이블에 등록
+			}
 		}
 	}
 
@@ -836,12 +866,14 @@ public class HyunHwiService {
 		String bct_name = null;
 		// 가격등록 창을 가져오기 위한 if문
 		if (bct_code.equals("H")) {
-			mav.addObject("price", "<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
+			mav.addObject("price",
+					"<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div id='H'></div>");
 			mav.addObject("cat_price", "<div id='H_price'></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
-			mav.addObject("price", "<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
+			mav.addObject("price",
+					"<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div id='B'></div>");
 			mav.addObject("cat_price", "<div id='B_price'></div>");
 			bct_name = "미용";
@@ -1206,12 +1238,32 @@ public class HyunHwiService {
 					insertPrice(request); // 기업이 지정한 서비스 가격 등록
 				}
 			}
+			hDao.deleteBTG(map);
+			checkTag(request);
 		}
 		fileWriter(request); // 사진 등록 (사업장사진)
 
 		mav.setView(new RedirectView("/serviceManagement"));
 		return mav;
 	}
+//	
+//	private void checkTag(MultipartHttpServletRequest request) {
+//		String code = request.getParameter("bct_code");
+//		String no = (String) session.getAttribute("no");
+//		Map<String, Object> map = new HashMap<>();
+//		String[] tag = request.getParameterValues("tag_name"); // 체크된 태크네임을 가져온다.
+//		for (int i = 0; i < tag.length; i++) { // 가져온 태그만큼 반복
+//			String tag_num = hDao.searchTAG(tag[i]); // 태그테이블에 존재하는지 검사, 존재하면 tag_num을 가져온다.
+//			if (tag_num == null) { // 없다면
+//				hDao.insertTAG(tag[i]); // 태그테이블에 해당 서비스 등록
+//				tag_num = hDao.searchTAG(tag[i]); // 등록한 서비스를 다시 검색하여 tag_num을 가져온다.
+//			}
+//			map.put("bus_no", no);
+//			map.put("bct_code", code);
+//			map.put("tag_num", tag_num);
+//			hDao.insertBTG(map); // 기업이 제공하는 서비스들을 해시태그 테이블에 등록
+//		}
+//	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 기업 업종 삭제
@@ -1268,13 +1320,16 @@ public class HyunHwiService {
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>"+bct_name+"&nbsp;</a></li>");
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\"" + bct_code
+					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>" + bct_name
+					+ "&nbsp;</a></li>");
 		}
 		sb.append("</ul>");
 		mav.addObject("code", sb.toString());
 		mav.setViewName("stepList");
 		return mav;
 	}
+
 	// 현휘; 해당 업종 직원 리스트 불러오기 (ajax)
 	public String stepList(HttpServletRequest request) {
 		List<Map<String, Object>> list;
@@ -1353,7 +1408,9 @@ public class HyunHwiService {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			System.out.println(bct_code);
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'> "+bct_name+" &nbsp;</a></li>");
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\"" + bct_code
+					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'> " + bct_name
+					+ " &nbsp;</a></li>");
 		}
 		sb.append("</ul>");
 		mav.addObject("type", sb.toString());
@@ -1377,8 +1434,8 @@ public class HyunHwiService {
 		// String work = Time(bct_code, "step", "work"); //영업시간을 보여주는 메소드
 		// String lunch = Time(bct_code, "step", "lunch"); //점심시간을 보여주는 메소드
 		String holiday = Holiday(bct_code, "step");
-		String hidden_code = "<input type='hidden' name='bct_code' value='"+bct_code+"'/>";
-		return work + lunch + holiday+hidden_code;
+		String hidden_code = "<input type='hidden' name='bct_code' value='" + bct_code + "'/>";
+		return work + lunch + holiday + hidden_code;
 	}
 
 	// 현휘; 해당 업종에 직원 등록
@@ -1811,8 +1868,10 @@ public class HyunHwiService {
 
 	private String button() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<br/><input type='button' class='btn btn-outline-secondary' name='수정완료' value='수정완료' onclick='but(this)' />");
-		sb.append("&nbsp;&nbsp;&nbsp;<input type='button' class='btn btn-outline-danger' name='삭제' value='삭제' onclick='but(this)' />");
+		sb.append(
+				"<br/><input type='button' class='btn btn-outline-secondary' name='수정완료' value='수정완료' onclick='but(this)' />");
+		sb.append(
+				"&nbsp;&nbsp;&nbsp;<input type='button' class='btn btn-outline-danger' name='삭제' value='삭제' onclick='but(this)' />");
 		return sb.toString();
 	}
 
@@ -1969,7 +2028,7 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='화요일' checked onclick='return false;' /> 화요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='화요일' checked /> 화요일");
 			}
@@ -1982,7 +2041,7 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='수요일' checked onclick='return false;' /> 수요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='수요일' checked /> 수요일");
 			}
@@ -1995,7 +2054,7 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='목요일' checked onclick='return false;' /> 목요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='목요일' checked /> 목요일");
 			}
@@ -2008,7 +2067,7 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='금요일' checked onclick='return false;' /> 금요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='금요일' checked /> 금요일");
 			}
@@ -2021,19 +2080,20 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='토요일' checked onclick='return false;' /> 토요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='토요일' checked /> 토요일");
 			}
 			flag = true;
 		} else {
 			sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일");
-		}if (stepMap.get("일요일").equals("XXXXXXXX")) {
+		}
+		if (stepMap.get("일요일").equals("XXXXXXXX")) {
 			if (busiMap.get("일요일").equals("XXXXXXXX")) {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='일요일' checked onclick='return false;' /> 일요일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='일요일' checked /> 일요일");
 			}
@@ -2046,7 +2106,7 @@ public class HyunHwiService {
 				sb.append("<script></script>");
 				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked onclick='return false;' /> 공휴일");
 				flag = false;
-			} 
+			}
 			if (flag) {
 				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked /> 공휴일");
 			}
@@ -2485,7 +2545,7 @@ public class HyunHwiService {
 		String bsd_date = request.getParameter("bsd_date");
 		String bus_addr = request.getParameter("bus_addr");
 		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		int pNo = (pageNum == null) ? 1 : pageNum; //아마 필요없으껄
+		int pNo = (pageNum == null) ? 1 : pageNum; // 아마 필요없으껄
 		StringBuilder sb = new StringBuilder();
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<String, Object>> list;
@@ -2651,7 +2711,7 @@ public class HyunHwiService {
 			String tag_name = hDao.changeTAG(tag_no);
 			sb.append(
 					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
-							+ bct_code + "','" + tag_no + "','"+ pNo +"')\">" + tag_name + "</a>");
+							+ bct_code + "','" + tag_no + "','" + pNo + "')\">" + tag_name + "</a>");
 		}
 		return sb.toString();
 	}
@@ -2760,7 +2820,7 @@ public class HyunHwiService {
 		int maxNum = hDao.countButTagSelectList(map);
 		int listCount = 9;
 		int pageCount = 5;
-		String boardName = "businessList"; ///필요없어 
+		String boardName = "businessList"; /// 필요없어
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.butTagSelectListPaging(map);
 	}
