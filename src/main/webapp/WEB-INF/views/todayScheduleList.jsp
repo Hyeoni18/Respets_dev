@@ -83,8 +83,6 @@
 			}
 		});
 	});
-</script>
-<script>
 	function com(bk_no) {
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');

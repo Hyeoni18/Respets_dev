@@ -741,14 +741,13 @@ public class HyeonService {
 		map.put("per_name", request.getParameter("per_name"));
 		map.put("page_no", pNo);
 		bPerList = hyDao.searchAllList(map);
-		if (bPerList != null) {
+		if (bPerList.size() != 0) {
 			for (int i = 0; i < bPerList.size(); i++) {
 				String bk_no = (String) bPerList.get(i).get("BK_NO");
 				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
 						+ bPerList.get(i).get("PTY_NAME") + " | " + bPerList.get(i).get("PET_NAME") + " | "
 						+ bPerList.get(i).get("PER_NAME") + " | " + bPerList.get(i).get("BCT_NAME") + " | "
 						+ bPerList.get(i).get("BK_TIME") + " | " + bPerList.get(i).get("VS_START"));
-
 			}
 		}
 		return sb.toString();
@@ -798,7 +797,6 @@ public class HyeonService {
 						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
 						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
 						+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START"));
-
 			}
 		}
 		return sb.toString();
