@@ -191,11 +191,16 @@ public class HyeonController {
 	 */
 
 	////////////////////////////////////////////////////////////////////////////////////
-
 	/* 혜연 방문 클릭시 */
-	@RequestMapping(value = "/todayScheduleListCheck", method = RequestMethod.POST)
-	public @ResponseBody int todayScheduleListCheck(String bk_no) {
-		int result = hy.todayScheduleListCheck(bk_no);
+	@RequestMapping(value = "/todayScheduleListCheck", produces = "application/text; charset=utf8")
+	public @ResponseBody String todayScheduleListCheck(HttpServletRequest request) {
+		String result = hy.todayScheduleListCheck(request);
+		return result;
+	}
+
+	@RequestMapping(value = "/todayScheduleListCancel", produces = "application/text; charset=utf8")
+	public @ResponseBody String todayScheduleListCancel(HttpServletRequest request) {
+		String result = hy.todayScheduleListCancel(request);
 		return result;
 	}
 
@@ -234,13 +239,37 @@ public class HyeonController {
 		String text = hy.todayAllScheduleList(request);
 		return text;
 	}
-
-	@RequestMapping(value = "/bctBookingList", produces = "application/text; charset=utf8")
-	public @ResponseBody String bctBookingList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.bctBookingList(request, pageNum);
+	
+	@RequestMapping(value = "/todayAllScheduleListOk", produces = "application/text; charset=utf8")
+	public @ResponseBody String todayAllScheduleListOk(HttpServletRequest request) {
+		String text = hy.todayAllScheduleListOk(request);
 		return text;
 	}
 
+	@RequestMapping(value = "/bctBookingList", produces = "application/text; charset=utf8")
+	public @ResponseBody String bctBookingList(HttpServletRequest request) {
+		String text = hy.bctBookingList(request);
+		return text;
+	} 
+
+	@RequestMapping(value = "/bctBookingListOk", produces = "application/text; charset=utf8")
+	public @ResponseBody String bctBookingListOk(HttpServletRequest request) {
+		String text = hy.bctBookingListOk(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/bctBookingListCheck", produces = "application/text; charset=utf8")
+	public @ResponseBody String bctBookingListCheck(HttpServletRequest request) {
+		String result = hy.bctBookingListCheck(request);
+		return result;
+	}
+	
+	@RequestMapping(value = "/bctBookingListCancel", produces = "application/text; charset=utf8")
+	public @ResponseBody String bctBookingListCancel(HttpServletRequest request) {
+		String text = hy.bctBookingListCancel(request);
+		return text;
+	}
+	
 	@RequestMapping(value = "/businessAllBookingList", produces = "application/text; charset=utf8")
 	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.businessAllBookingList(request, pageNum);
