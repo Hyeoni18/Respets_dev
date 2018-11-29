@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>현휘 // 새비밀번호 작성폼 </title>
+<title>Respets :: 비밀번호 변경</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -44,16 +44,14 @@
 							<!--현휘; 받은 메일을 통해서만 들어올 수 있는 폼. 비밀번호를 변경하는 폼.-->
 <form name="resetMyPwForm">
 <div class="form-group">
-새 비밀번호: <input type="password" name="per_pw" id="per_pw"/> <br/>
-</div>
-<div class="form-group">
-새 비밀번호 확인: <input type="password" name="check_pw" id="check_pw"/> <br/>
+새 비밀번호: <input type="password" class="form-control" name="per_pw" id="per_pw"/> <br/>
+새 비밀번호 확인: <input type="password" class="form-control" name="check_pw" id="check_pw"/> <br/>
 </div>
 <input type="hidden" name="per_email" value="${email}"/>
 <input type="hidden" name="code" value="${code}"/>
 <input type="hidden" name="type" value="${type}"/>
 <div class="form-group mb-0 text-center">
-<button class="btn btn-success" onclick="pwCheck()"> 비밀번호 변경하기</button>
+<button class="btn btn-success" onclick="pwCheck()">비밀번호 변경하기</button>
 </div>
 </form>
 </div>

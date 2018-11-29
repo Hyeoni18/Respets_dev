@@ -25,7 +25,7 @@
 					<div class="form-control"
 						style="position: relative; overflow: hidden; width: auto; height: 400px;">
 						<div class="slimscroll"
-							style="max-height: 400px; overflow: hidden; width: auto; height: 400px;">
+							style="max-height: 400px; overflow: scroll; width: auto; height: 400px;">
 
 							<h5>제1조(목적)</h5>
 
