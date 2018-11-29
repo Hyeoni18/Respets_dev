@@ -73,8 +73,7 @@
 	</div>
 	<!-- end container -->
 
-	<footer class="footer footer-alt"> 2018 © Hyper -
-		Coderthemes.com </footer>
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>

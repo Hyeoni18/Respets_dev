@@ -65,11 +65,19 @@
 						<div class="col-xl-12">
 							<div class="card mb-0">
 								<div class="card-body">
-									<p class="text-muted font-14 mb-4">내 반려동물의 최근 서비스 예약 목록을
-										확인해보세요.</p>
+									<span class="text-muted font-14 mb-4">내 반려동물의 최근 서비스 예약 목록을
+										확인해보세요.</span> <br/><br/>
+										<div class="button-list" style='float:right;'>
+                                            <button type="button" class="btn btn-outline-info" disabled="">신청</button>
+                                            <button type="button" class="btn btn-outline-success" disabled="">승인</button>
+                                            <button type="button" class="btn btn-outline-danger" disabled="">거절</button>
+                                            <button type="button" class="btn btn-outline-warning" disabled="">취소</button>
+                                        </div>
+                                        <br/>
+                                        <br/>
 
 									<div class="table-responsive-sm">
-										<table class="table table-centered mb-0">
+										<table class="table table-centered mb-0" style='text-align: center;'>
 											<thead>
 												<tr>
 													<th>예약번호</th>
@@ -131,14 +139,4 @@ ${cancInsertSucess}
 	})
 </script>
 
-<script>
-var test = $('#chk').text();
-console.log(test);
-if($('td[name=chk]').match(/승인/)) {
-	$('td[name=chk]').attr('class', 'text-success');
-}else {
-	$('td[name=chk]').attr('class', 'text-danger');
-}
-
-</script>
 </html>
