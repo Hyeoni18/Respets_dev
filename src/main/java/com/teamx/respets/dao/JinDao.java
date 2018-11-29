@@ -66,4 +66,16 @@ public interface JinDao {
 	// 서진 : 예약 메뉴 테이블에 INSERT
 	public void insertBkMenu(Booking bk);
 
+	// 서진 : 예약 완료 정보 SELECT
+	public HashMap<String, String> bookingSuccess(Booking bk);
+
+	// 서진 : 기업 새로운 예약
+	public List<HashMap<String, String>> selectBooking(String bus_no);
+
+	// 서진 : 예약 수락
+	public void bookingAccept(String bk_no);
+
+	// 서진 : 예약 거절
+	public void bookingReject(String bk_no);
+
 } // interface End

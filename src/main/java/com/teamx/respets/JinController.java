@@ -84,12 +84,20 @@ public class JinController {
 	} // method End
 
 	// 서진 : 예약
-	@RequestMapping(value = "/booking", method = RequestMethod.GET)
+	@RequestMapping(value = "/booking", method = RequestMethod.POST)
 	public ModelAndView booking(Booking bk, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		jinSvc.insertBooking(bk, request);
-		mav.setViewName("");
+		ModelAndView mav = jinSvc.insertBooking(bk, request);
+		mav.setViewName("bookingSuccess");
 		return mav;
 	} // method End
+	
+	// 서진 : 기업 새로운 예약
+	@RequestMapping(value = "/newScheduleList", method = RequestMethod.GET)
+	public ModelAndView newScheduleList(HttpServletRequest request) {
+		ModelAndView mav = jinSvc.newScheduleList(request);
+		mav.setViewName("newScheduleList");
+		return mav;
+	} // method End
+	
 
 } // class End

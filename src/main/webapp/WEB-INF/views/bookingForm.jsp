@@ -52,7 +52,7 @@
 		<div class="col-7">
 		<h5 class="text-success">서비스 예약</h5>
 		<hr/><br/><br/>
-			<form action="booking">
+			<form action="booking" method="post">
 				<!-- <div id="wrap"> -->
 				<div class="card d-block" style= 'width: 40%; height: 50%; margin:1.5px; margin: auto;'>
 					<br />
