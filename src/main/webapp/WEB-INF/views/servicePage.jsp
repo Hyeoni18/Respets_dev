@@ -4,24 +4,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>현휘 // 서비스페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-#div_menu {
-width: 15%;
-float:left;
-text-align: center;
-}
-#div_content {
-width: 85%;
-float:right;
-}
-</style>
+<title>Respets :: 서비스 관리</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- App favicon -->
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
+
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
+
 </head>
 <body>
-<div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
-<div id="div_content">
+	<%@ include file="left-sidebar.jsp"%>
+	<div class="content-page">
+		<%@ include file="topbar-dashboard.jsp"%>
+<br/>
 ${text} 
 	<form action="businessInfoDetail" name="servicePage">
 		<button class="btn btn-outline-success">기본 정보 확인</button>
@@ -41,6 +47,7 @@ ${text}
 	<div>
 		<input type="button" class="btn btn-outline-danger" value="회원탈퇴" onclick="forward(this)" />
 	</div>
+<%@ include file="footer.html"%>
 	</div>
 </body>
 <script>

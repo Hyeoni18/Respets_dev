@@ -116,35 +116,6 @@ public class HyeonService {
 		return mav;
 	}
 
-	/* 혜연 개인정보 수정 */
-	public ModelAndView myInfoUpdate(Personal mb, HttpSession session) {
-		this.session = session;
-		mav = new ModelAndView();
-		String view = null;
-		String no = session.getAttribute("no").toString();
-		System.out.println(no);
-		if (mb != null) {
-			// 가져온 정보를 담기
-			mb.setPer_no(no);
-			mb.setPer_email(mb.getPer_email());
-			mb.setPer_name(mb.getPer_name());
-			mb.setPer_phone(mb.getPer_phone());
-			mb.setPer_photo(mb.getPer_photo());
-			// 담은 정보로 update
-			boolean update = hyDao.myInfoUpdate(mb);
-			if (update) {
-				mav.addObject("mb", mb);
-				mav.addObject("infoSuccess", makeInfoSuccessHtml(mb));
-				view = "myInfo";
-			} else {
-				mav.addObject("flas", makeFlasHtml());
-				view = "myInfoUpdate";
-			}
-		}
-		mav.setViewName(view);
-		return mav;
-	}
-
 	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
 		mav = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -172,6 +143,43 @@ public class HyeonService {
 		mav.addObject("result", json);
 		mav.addObject("success", sb);
 		mav.setViewName("businessInfoDetail");
+		return mav;
+	}
+
+	/* 혜연 개인정보 수정 */
+	public ModelAndView myInfoUpdate(Personal mb, HttpSession session) {
+		this.session = session;
+		mav = new ModelAndView();
+		Map<String, Object> map = new HashMap<String, Object>();
+		String view = null;
+		String no = session.getAttribute("no").toString();
+		System.out.println(no);
+		if (mb != null) {
+			mb.setPer_no(no);
+			mb.setPer_email(mb.getPer_email());
+			mb.setPer_name(mb.getPer_name());
+			mb.setPer_phone(mb.getPer_phone());
+			mb.setPer_photo(mb.getPer_photo());
+			// 담은 정보로 update
+			boolean update = hyDao.myInfoUpdate(mb);
+			if (update) {
+				if (session.getAttribute("fileCheck").equals("1")) {
+					MultipartFile mainPhoto = ((MultipartRequest) session).getFile("mainPhoto");
+					map = saveFile((MultipartHttpServletRequest) session, mainPhoto, map);
+					map.put("no", no);
+					hyDao.perPhotoUpdate(map);
+				} else {
+					hyDao.PothoUpdate(no);
+				}
+				mav.addObject("mb", mb);
+				mav.addObject("infoSuccess", makeInfoSuccessHtml(mb));
+				view = "myInfo";
+			} else {
+				mav.addObject("flas", makeFlasHtml());
+				view = "myInfoUpdate";
+			}
+		}
+		mav.setViewName(view);
 		return mav;
 	}
 
@@ -414,19 +422,40 @@ public class HyeonService {
 		return result;
 	}
 
+	public String vs_chkOkList(HttpServletRequest request) {
+		System.out.println("IF문 안 에이작스컨트롤");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String timeS = new SimpleDateFormat("yy/MM/dd").format(Calendar.getInstance().getTime());
+		map.put("bus_no", request.getParameter("bus_no"));
+		map.put("bk_no", request.getParameter("bk_no"));
+		map.put("timeS", timeS);
+		ArrayList<HashMap<String, Object>> okList = hyDao.vs_chkOkList(map);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < okList.size(); i++) {
+			String bk_no = (String) okList.get(i).get("BK_NO");
+			sb.append("<div name='list' id='" + bk_no + "'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
+					+ okList.get(i).get("PTY_NAME") + " | " + okList.get(i).get("PET_NAME") + " | "
+					+ okList.get(i).get("PER_NAME") + " | " + okList.get(i).get("BCT_NAME") + " | "
+					+ okList.get(i).get("BK_TIME") + " | " + okList.get(i).get("VS_START") + "<br/> 방문완료 </div><br>");
+
+		}
+		return sb.toString();
+	}
+
 	/* 노쇼 클릭 시 */
 	public int todayScheduleListNoShow(HttpServletRequest request) {
 		String per_no = request.getParameter("pno");
 		System.out.println("개인=" + per_no);
-		String noshow = hyDao.getnoshowCount(per_no);
+		int noshow = hyDao.getnoshowCount(per_no);
 		System.out.println("노쇼 수=" + noshow);
 		int result = 0;
-		if (noshow == "0" || noshow == "1" || noshow == "2") { // 노쇼 수가 0이거나 2보다 작거나 같으면
+		if (noshow == 0 || noshow == 1 || noshow == 2) { // 노쇼 수가 0이거나 2보다 작거나 같으면
 			result = hyDao.noshowInsert(per_no); // 노쇼 레코드 인설트
 			System.out.println(result);
-		} else if (noshow == "3") { // 노쇼 수가 3개일 시
+		} else if (noshow == 3) { // 노쇼 수가 3개일 시
 			int delete = hyDao.noshowDelete(per_no); // 노쇼 레코드 삭제
 			int insert = hyDao.warningInsert(per_no); // 경고 레코드 추가
+			result = 1;
 		}
 		return result;
 	}
@@ -656,8 +685,8 @@ public class HyeonService {
 					+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START") + "<br/><span class='" + bk_no
 					+ "'></span><span id='" + bk_no
 					+ "' class='ton'><input type='button' class='com' value='방문' onclick=\"com(\'" + bk_no + "')\" />"
-					+ " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(\'" + bk_no + "',\'" + pno
-					+ "\')\" />" + " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(\'" + pno
+					+ " <input type='button' id='no" + bk_no + "' value='노쇼' onclick=\"noshow(\'" + bk_no + "',\'" + pno
+					+ "\')\" />" + " <input type='button' class='unNoshow' id='un" + bk_no + "' value='노쇼취소' onclick=\"unNoshow(\'" + pno
 					+ "')\"/></span></div><br>");
 
 		}

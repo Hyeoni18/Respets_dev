@@ -4,62 +4,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>현휘 // 서비스인서트폼</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Respets :: 전체 예약 목록</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- App favicon -->
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
+
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
 <style>
 td {
 	border: 1px solid white;
 }
-
 #con {
 	text-align: center;
 }
-
 #medical_div {
 	float: left;
 }
-
 #beauty_div {
 	float: left;
 }
-
 #hotel_div {
 	float: left;
 }
-
 #medical {
 	display: none;
 	width: 100%;
 	border: solid black 1px;
 }
-
 #beauty {
 	display: none;
 	width: 100%;
 	border: solid black 1px;
 }
-
 #hotel {
 	display: none;
 	width: 100%;
 	border: solid black 1px;
 }
-#div_menu {
-width: 15%;
-float:left;
-text-align: center;
-}
-#div_content {
-width: 85%;
-float:right;
-}
 </style>
+
 </head>
 <body>
-<div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
-<div id="div_content">
+	<%@ include file="left-sidebar.jsp"%>
+	<div class="content-page">
+		<%@ include file="topbar-dashboard.jsp"%>
 <br/>
 <div class="col-xl-6">
 <div class="card">
@@ -147,7 +146,10 @@ float:right;
 </div> <!-- end card-body-->
 </div> <!-- end card-->
 </div> <!-- end col-xl-6 -->
-</div>
+<%@ include file="footer.html"%>
+	</div>
+	<!-- App js -->
+    <script src="/resources/dist/assets/js/app.min.js"></script>
 </body>
 
 <script>

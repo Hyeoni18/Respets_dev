@@ -4,43 +4,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Respets :: 기업 리스트 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
 	name="description" />
 <meta content="Coderthemes" name="author" />
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="resources/images/logo-sm.png">
+
+<!-- third party css -->
+<link
+	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
+	rel="stylesheet" type="text/css" />
+<!-- third party css end -->
 
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-/* #busiList {
-	width: 30%;
-}
-
-#busi {
-	height: 20%;
-	display: inline;
-}
-
-#busiImage {
-	width: 30%;
-}
-
-#busiInfo {
-	width: 50%;
-} */
-</style>
 </head>
-<body>
+</head>
+<body data-layout="topnav">
+	<div class="wrapper">
+		<div class="content-page">
+			<div class="content">
+
+<jsp:include page="topbar-landing.jsp"></jsp:include>
+<div class="container-fluid">
+<br/>
 	<div id="tag">${tagList}</div>
 	<br/>
 	<div class="row">
@@ -54,6 +49,13 @@
 	</div>
 	<br/>
 	<div id="page">${paging}</div>
+	</div>
+			</div>
+			<%@ include file="footer.html"%>
+		</div>
+	</div>
+	
+	
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>

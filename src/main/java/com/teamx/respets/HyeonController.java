@@ -64,8 +64,14 @@ public class HyeonController {
 	/* 혜연 */
 	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
 	public ModelAndView myInfoUpdate(Personal mb, HttpSession session) {
-		System.out.println(mb.getPer_email());
 		mav = hy.myInfoUpdate(mb, session);
+		return mav;
+	}
+
+	/* 혜연 */
+	@RequestMapping(value = "/businessInfoUpdate")
+	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
+		mav = hy.businessInfoUpdate(bi, request);
 		return mav;
 	}
 
@@ -155,13 +161,6 @@ public class HyeonController {
 	}
 
 	/* 혜연 */
-	@RequestMapping(value = "/businessInfoUpdate")
-	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
-		mav = hy.businessInfoUpdate(bi, request);
-		return mav;
-	}
-
-	/* 혜연 */
 	@RequestMapping(value = "/businessPartDelete")
 	public ModelAndView businessPartDelete(HttpSession session) {
 		mav = hy.businessPartDelete(session);
@@ -169,28 +168,27 @@ public class HyeonController {
 	}
 
 	/* 혜연 */
-	/*@RequestMapping(value = "/montest", method = RequestMethod.GET)
-	public ModelAndView montest() {
-		mav = new ModelAndView();
-		mav.setViewName("montest");
-		return mav;
-	}*/
+	/*
+	 * @RequestMapping(value = "/montest", method = RequestMethod.GET) public
+	 * ModelAndView montest() { mav = new ModelAndView();
+	 * mav.setViewName("montest"); return mav; }
+	 */
 
 	/* 혜연 */
 	/* 기업중 업종별로 쉬는날 불러오기 */
-	/*@RequestMapping(value = "/monthSchedule")
-	public ModelAndView monthSchedule(HttpSession session) {
-		mav = hy.monthSchedule(session);
-		return mav;
-	}*/
+	/*
+	 * @RequestMapping(value = "/monthSchedule") public ModelAndView
+	 * monthSchedule(HttpSession session) { mav = hy.monthSchedule(session); return
+	 * mav; }
+	 */
 
 	////////////////////////////////////////////////////////////////////////////////////
 
-	/*@RequestMapping(value = "/unconfirmStep")
-	public ModelAndView unconfirmStep(HttpSession session) {
-		mav = hy.unconfirmStep(session);
-		return mav;
-	}*/
+	/*
+	 * @RequestMapping(value = "/unconfirmStep") public ModelAndView
+	 * unconfirmStep(HttpSession session) { mav = hy.unconfirmStep(session); return
+	 * mav; }
+	 */
 
 	////////////////////////////////////////////////////////////////////////////////////
 
@@ -200,13 +198,19 @@ public class HyeonController {
 		int result = hy.todayScheduleListCheck(bk_no);
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/vs_chkOkList", produces = "application/text; charset=utf8")
+	public @ResponseBody String vs_chkOkList(HttpServletRequest request) {
+		String text = hy.vs_chkOkList(request);
+		return text;
+	}
+
 	@RequestMapping(value = "/todayScheduleListNoShow", method = RequestMethod.POST)
 	public @ResponseBody int todayScheduleListNoShow(HttpServletRequest request) {
 		int result = hy.todayScheduleListNoShow(request);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/todayScheduleListUnNoShow", method = RequestMethod.POST)
 	public @ResponseBody int todayScheduleListUnNoShow(String per_no) {
 		int result = hy.todayScheduleListUnNoShow(per_no);
@@ -230,19 +234,19 @@ public class HyeonController {
 		String text = hy.businessAllBookingList(request, pageNum);
 		return text;
 	}
-	
+
 	@RequestMapping(value = "/searchAllList", produces = "application/text; charset=utf8")
 	public @ResponseBody String searchAllList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.searchAllList(request, pageNum);
 		return text;
 	}
-	
+
 	@RequestMapping(value = "/businessAllBctBookingList", produces = "application/text; charset=utf8")
 	public @ResponseBody String businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.businessAllBctBookingList(request, pageNum);
 		return text;
 	}
-	
+
 	@RequestMapping(value = "/searchBctAllsList", produces = "application/text; charset=utf8")
 	public @ResponseBody String searchBctAllsList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.searchBctAllsList(request, pageNum);

@@ -285,11 +285,11 @@ public class HyunHwiService {
 	private String codeSelectBut() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"<li class='nav-item' id='medical_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"M\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #9ce1c2;\"> 병원 &nbsp;</a></li>");
+				"<li class='nav-item' id='medical_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"M\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' > 병원 &nbsp;</a></li>");
 		sb.append(
-				"<li class='nav-item' id='beauty_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"B\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #b9ffe0;\"> 미용 &nbsp;</a></li>");
+				"<li class='nav-item' id='beauty_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"B\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' > 미용 &nbsp;</a></li>");
 		sb.append(
-				"<li class='nav-item' id='hotel_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"H\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: #d6fffe;\"> 호텔 &nbsp;</a></li>");
+				"<li class='nav-item' id='hotel_div'>&nbsp;<a href='javascript:void(0)' onclick='checkCode(\"H\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' > 호텔 &nbsp;</a></li>");
 		sb.append("<br/>");
 		return sb.toString();
 	}
@@ -1268,15 +1268,7 @@ public class HyunHwiService {
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
-			String color = null;
-			if(bct_code.equals("M")) {
-				color="#b9ffe0;";
-			} else if(bct_code.equals("B")) {
-				color="#9ce1c2;";
-			} else if(bct_code.equals("H")) {
-				color="#d6fffe;";
-			}
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: "+color+"\">"+bct_name+"&nbsp;</a></li>");
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>"+bct_name+"&nbsp;</a></li>");
 		}
 		sb.append("</ul>");
 		mav.addObject("code", sb.toString());
@@ -1360,16 +1352,8 @@ public class HyunHwiService {
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			System.out.println(bct_code);
-			String color = null;
-			if(bct_code.equals("M")) {
-				color="#d6fffe;";
-			} else if(bct_code.equals("B")) {
-				color="#9ce1c2;";
-			} else if(bct_code.equals("H")) {
-				color="#b9ffe0;";
-			}
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: "+color+"\"> "+bct_name+" &nbsp;</a></li>");
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'> "+bct_name+" &nbsp;</a></li>");
 		}
 		sb.append("</ul>");
 		mav.addObject("type", sb.toString());
