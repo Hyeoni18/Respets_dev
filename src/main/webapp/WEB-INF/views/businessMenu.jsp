@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
--근무시간: ${work} <br/>
--점심시간: ${lunch} <br/>
+<br/>
+기업메뉴
 </body>
 </html>

@@ -22,12 +22,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
-.card d-block {
+.card-deck {
 	max-width: 30%;
 	width: 30%;
 	height: 50%;
 	margin: 1.5px;
-	float:left;
 }
 .card-body{
 text-align:center;
