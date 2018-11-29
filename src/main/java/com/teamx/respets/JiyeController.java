@@ -132,13 +132,13 @@ public class JiyeController {
 		return mav;
 	}
 
-	// 개인예약디테일
-	/*@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
-	public ModelAndView recentMyBookingList(HttpServletRequest request) {
-		mav = new ModelAndView();
-		mav = js.myBookingDetail(request);
-		return mav;
-	}*/
+//	// 개인예약디테일
+//	@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
+//	public ModelAndView recentMyBookingList(HttpServletRequest request) {
+//		mav = new ModelAndView();
+//		mav = js.myBookingDetail(request);
+//		return mav;
+//	}
 	
 	//기업 공지사항 리스트
 	@RequestMapping (value="/businessNoticeList", method=RequestMethod.GET)
