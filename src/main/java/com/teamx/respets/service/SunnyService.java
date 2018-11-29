@@ -449,7 +449,7 @@ public class SunnyService {
 		String view = null;
 		if (petUpdateResult) {
 			mav.addObject("pet_no", pet.getPet_no());
-			view = "petInfoDetail";
+			view = "redirect:petInfoDetail";
 		} else {
 			mav.addObject("Fail", "<script>alert('petUpdate 실패')</script>");
 			view = "petUpdateForm";
@@ -463,17 +463,27 @@ public class SunnyService {
 		mav = new ModelAndView();
 		String view = null;
 		System.out.println("Delete pet_no=" + pet_no);
-		if (sDao.pdtAllDelete(pet_no)) {
+		List<HashMap<String, Object>> pdt = sDao.getPdt(pet_no);
+		if(pdt.size()!=0 || pdt.size()<0) {
+			if (sDao.pdtAllDelete(pet_no)) {
+				if (sDao.petDelete(pet_no)) {// 반려동물 정보 삭제에 성공하면
+					view = "redirect:petList";
+				} else {// 반려동물 정보 삭제에 실패하면
+					mav.addObject("Fail", "<script>alert('petDelete실패')</script>");
+					view = "petInfoDetail";
+				}
+			} else {// 반려동물 정보 삭제에 실패하면
+				mav.addObject("Fail", "<script>alert('pdtAllDelete실패')</script>");
+				view = "petInfoDetail";
+			}
+		}else {
 			if (sDao.petDelete(pet_no)) {// 반려동물 정보 삭제에 성공하면
-				view = "redirect:petList?userId=respets2018@gmail.com";
+				view = "redirect:petList";
 			} else {// 반려동물 정보 삭제에 실패하면
 				mav.addObject("Fail", "<script>alert('petDelete실패')</script>");
 				view = "petInfoDetail";
 			}
-		} else {// 반려동물 정보 삭제에 실패하면
-			mav.addObject("Fail", "<script>alert('pdtDelete실패')</script>");
-			view = "petInfoDetail";
-		}
+		}		
 		mav.setViewName(view);
 		return mav;
 	}

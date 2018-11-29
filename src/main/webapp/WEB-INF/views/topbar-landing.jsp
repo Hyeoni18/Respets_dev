@@ -15,9 +15,11 @@
 			<!-- LOGO -->
 			<a href="index.jsp" class="topnav-logo"> <span
 				class="topnav-logo-lg"> <img
-					src="resources/images/logo-mint.png" alt="respets logo" height="30">
-			</span> <span class="topnav-logo-sm"> <img
-					src="resources/images/logo-sm.png" alt="respets logo" height="30">
+					src="resources/images/logo-mint.png" 
+					alt="respets logo" height="30">
+			</span> <span class="topnav-logo-sm"> <img 
+			src="resources/images/logo-sm.png" 
+			alt="respets logo" height="30">
 			</span>
 			</a>
 

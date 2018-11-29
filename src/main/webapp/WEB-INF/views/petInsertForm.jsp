@@ -93,7 +93,7 @@
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="example-select">종류<span
+													<label for="pty_no">종류<span
 														style="color: red">*</span></label> <select class="form-control"
 														name="pty_no" id="pty_no">
 														<option value="">선택</option>
@@ -116,16 +116,16 @@
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">품종<span style="color: red">*</span></label>
-													<input type="text" name="pet_vrt" id="simpleinput"
+													<label for="pet_vrt">품종<span style="color: red">*</span></label>
+													<input type="text" name="pet_vrt" id="pet_vrt"
 														class="form-control"> <span
 														class="font-13 text-muted">e.g "진돗개"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="example-select">성별<span
+													<label for="pet_sex">성별<span
 														style="color: red">*</span></label> <select class="form-control"
-														id="example-select" name='pet_sex'>
+														id="pet_sex" name='pet_sex'>
 														<option value="">선택</option>
 														<option value='F'>암컷</option>
 														<option value='M'>수컷</option>
@@ -133,16 +133,16 @@
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">출생년도<span
+													<label for="pet_age">출생년도<span
 														style="color: red">*</span></label> <input type="text"
-														name="pet_age" id="simpleinput" class="form-control">
+														name="pet_age" id="pet_age" class="form-control">
 													<span class="font-13 text-muted">e.g "YYYY"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="example-select">중성화 수술<span
+													<label for="pet_ntr">중성화 수술<span
 														style="color: red">*</span></label> <select class="form-control"
-														id="example-select" name="pet_ntr">
+														id="pet_ntr" name="pet_ntr">
 														<option value="">선택</option>
 														<option value='O'>중성화 했음</option>
 														<option value='X'>중성화 안했음</option>
@@ -154,27 +154,27 @@
 											<div class="col-lg-6">
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">몸무게</label> <input type="text"
-														name="pet_wght" id="simpleinput" class="form-control">
+													<label for="pet_wght">몸무게</label> <input type="text"
+														name="pet_wght" id="pet_wght" class="form-control">
 													<span class="font-13 text-muted">e.g "00kg"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">질병</label> <input type="text"
-														id="simpleinput" class="form-control" name="pet_sick">
+													<label for="pet_sick">질병</label> <input type="text"
+														id="pet_sick" name="pet_sick" class="form-control">
 													<span class="font-13 text-muted">e.g "중이염"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">주의해야할 음식</label> <input
-														type="text" name="pet_food" id="simpleinput"
+													<label for="pet_food">주의해야할 음식</label> <input
+														type="text" name="pet_food" id="pet_food"
 														class="form-control"> <span
 														class="font-13 text-muted">e.g "양고기"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="example-select">배변 훈련</label> <select
-														class="form-control" id="example-select" name="pet_tot">
+													<label for="pet_tot">배변 훈련</label> <select
+														class="form-control" id="pet_tot" name="pet_tot">
 														<option value="미입력">선택</option>
 														<option value='O'>훈련되어있음</option>
 														<option value='X'>훈련되어있지 않음</option>
@@ -182,21 +182,21 @@
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">일일 배식횟수 및 회당 배식량</label> <input
-														type="text" name="pet_rat" id="simpleinput"
+													<label for="pet_rat">일일 배식횟수 및 회당 배식량</label> <input
+														type="text" name="pet_rat" id="pet_rat"
 														class="form-control"> <span
 														class="font-13 text-muted">e.g "0회 00g"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="simpleinput">가족이 된 날</label> <input type="text"
-														name="pet_mday" id="simpleinput" class="form-control">
+													<label for="pet_mday">가족이 된 날</label> <input type="text"
+														name="pet_mday" id="pet_mday" class="form-control">
 													<span class="font-13 text-muted">e.g "YYYY/MM/DD"</span>
 												</div>
 
 												<div class="form-group mb-3">
-													<label for="example-textarea">특이사항</label>
-													<textarea class="form-control" id="example-textarea"
+													<label for="pet_etc">특이사항</label>
+													<textarea class="form-control" id="pet_etc"
 														rows="5" name="pet_etc"></textarea>
 													<span class="font-13 text-muted">e.g "성격이 순하고 사람을 잘
 														따라요"</span>
@@ -400,43 +400,43 @@
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("이름이 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				}
 			} else if (frm[i].name == "pty_no") {
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("종류가 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				} else if (frm[i].value == "etc") {
 					if (frm[i + 1].value == "" || frm[i + 1].value == null) {
 						alert("종류가 입력되지 않았습니다");
 						frm[i + 1].focus();
-						return;
+						return false;
 					}
 				}
 			} else if (frm[i].name == "pet_vrt") {
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("품종이 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				}
 			} else if (frm[i].name == "pet_age") {
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("출생년도가 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				}
 			} else if (frm[i].name == "pet_sex") {
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("성별이 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				}
 			} else if (frm[i].name == "pet_ntr") {
 				if (frm[i].value == "" || frm[i].value == null) {
 					alert("중성화수술 여부가 입력되지 않았습니다");
 					frm[i].focus();
-					return;
+					return false;
 				}
 			} else if (frm[i].name == "pet_wght") {
 				if (frm[i].value == "" || frm[i].value == null) {
