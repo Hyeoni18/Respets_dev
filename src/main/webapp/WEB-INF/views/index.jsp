@@ -1,6 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +30,13 @@
 
 <body data-layout="topnav">
 
-${no} <!-- 지예 -->
-${alert} <!--현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
-${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert --> 
+	<%-- ${no} <!-- 지예 --> --%>
+	${alert}
+	<!--현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
+	${findPw}
+	<!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert -->
+	${sessionCheck}
+	<!-- 진선 -->
 	<!-- Begin page -->
 	<div class="wrapper">
 
@@ -43,123 +48,9 @@ ${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert
 			<div class="content">
 
 				<!-- Topbar Start -->
-				<div class="navbar-custom topnav-navbar">
-					<div class="container-fluid">
-
-						<!-- LOGO -->
-						<a href="index.jsp" class="topnav-logo"> <span
-							class="topnav-logo-lg"> <img
-								src="resources/images/logo-mint.png"
-								alt="respets logo" height="30">
-						</span> <span class="topnav-logo-sm"> <img
-								src="resources/images/logo-sm.png"
-								alt="respets logo" height="30">
-						</span>
-						</a>
-						<button id="loginForm" onclick="location.href='./loginForm'">로그인</button>
-						<button id="joinChoiceForm"
-							onclick="location.href='./joinChoiceForm'">회원가입</button>
-
-						<%-- 						<ul class="list-unstyled topbar-right-menu float-right mb-0">
-
-							<li class="dropdown notification-list"><a
-								class="nav-link dropdown-toggle arrow-none"
-								data-toggle="dropdown" href="#" role="button"
-								aria-haspopup="false" aria-expanded="false"> <i
-									class="dripicons-bell noti-icon"></i> <span
-									class="noti-icon-badge"></span>
-							</a>
-								<div
-									class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
-
-									<!-- item-->
-									<div class="dropdown-item noti-title">
-										<h5 class="m-0">
-											<span class="float-right"> <a
-												href="javascript: void(0);" class="text-dark"> <small>Clear
-														All</small>
-											</a>
-											</span>알림
-										</h5>
-									</div>
-
-									<div class="slimscroll" style="max-height: 230px;">
-										<!-- item-->
-										<a href="javascript:void(0);"
-											class="dropdown-item notify-item">
-											<div class="notify-icon bg-primary">
-												<i class="mdi mdi-comment-account-outline"></i>
-											</div>
-											<p class="notify-details">
-												Caleb Flakelar commented on Admin <small class="text-muted">1
-													min ago</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);"
-											class="dropdown-item notify-item">
-											<div class="notify-icon bg-info">
-												<i class="mdi mdi-account-plus"></i>
-											</div>
-											<p class="notify-details">
-												New user registered. <small class="text-muted">5
-													hours ago</small>
-											</p>
-										</a>
-									</div>
-
-									<!-- All-->
-									<a href="javascript:void(0);"
-										class="dropdown-item text-center text-primary notify-item notify-all">
-										View All </a>
-
-								</div></li>
-
-							<li class="dropdown notification-list"><a
-								class="nav-link dropdown-toggle nav-user arrow-none mr-0"
-								data-toggle="dropdown" href="#" role="button"
-								aria-haspopup="false" aria-expanded="false"> <span
-									class="account-user-avatar"> <img
-										src="${pageContext.request.contextPath}/resources/dist/assets/images/users/avatar-1.jpg"
-										alt="user-image" class="rounded-circle">
-								</span> <span> <span class="account-user-name">양남</span> <span
-										class="account-position">개인회원</span>
-								</span>
-							</a>
-								<div
-									class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
-									<!-- item-->
-									<div class=" dropdown-header noti-title">
-										<h6 class="text-overflow m-0">Welcome Respets!</h6>
-									</div>
-
-									<!-- item-->
-									<a href="javascript:void(0);" class="dropdown-item notify-item">
-										<i class="mdi mdi-account-settings-variant"></i> <span>스케줄</span>
-									</a>
-
-									<!-- item-->
-									<a href="javascript:void(0);" class="dropdown-item notify-item">
-										<i class="mdi mdi-account-circle"></i> <span>마이페이지</span>
-									</a>
-
-									<!-- item-->
-									<a href="javascript:void(0);" class="dropdown-item notify-item">
-										<i class="mdi mdi-logout"></i> <span>로그아웃</span>
-									</a>
-
-								</div></li>
-
-						</ul> --%>
-						<a class="navbar-toggle" data-toggle="collapse"
-							data-target="#topnav-menu-content">
-							<div class="lines">
-								<span></span> <span></span> <span></span>
-							</div>
-						</a>
-					</div>
-				</div>
+				<jsp:include page="topbar-landing.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include>
 				<!-- end Topbar -->
 
 
@@ -170,7 +61,19 @@ ${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert
 					<div class="row">
 						<div class="col-12">
 							<div class="page-title-box">
-								<h4 class="page-title">로그인을 하면 더 많은 서비스 이용이 가능합니다!</h4>
+								<h4 class="page-title" style="text-align:center;">
+									<c:if test="${no == null}">
+								로그인을 하면 더 많은 서비스 이용이 가능합니다!
+								</c:if>
+									<c:if test="${no != null}">
+										<c:if test="${fn:substring(no,0,1) eq 'P'}">
+											${name} 회원님, 반갑습니다! 반려동물 관련 예약서비스를 편리하게 누려보세요:)
+										</c:if>
+										<c:if test="${fn:substring(no,0,1) eq 'B'}">
+											${name} 회원님, 반갑습니다! 새로운 예약을 확인해보세요:)
+										</c:if>
+									</c:if>
+								</h4>
 							</div>
 						</div>
 					</div>
@@ -266,31 +169,28 @@ ${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert
 								<div class="card-deck">
 									<div class="card">
 										<img class="card-img-top img-fluid"
-											src="${pageContext.request.contextPath}/resources/images/card-medical.jpg"
-											alt="Card image cap">
+											src="resources/images/card-medical.jpg" alt="Card image cap">
 										<div class="card-body">
-											<h3 class="card-title" style="text-align: center;">병원</h3>
-											<a href="./businessList?bct_code=M" class="btn btn-block btn-success">Button</a>
+											<a href="./businessList?bct_code=M"
+												class="btn btn-block btn-success">병원</a>
 										</div>
 									</div>
 									<!-- end card-->
 									<div class="card">
 										<img class="card-img-top img-fluid"
-											src="${pageContext.request.contextPath}/resources/images/card-beauty.jpg"
-											alt="Card image cap">
+											src="resources/images/card-beauty.jpg" alt="Card image cap">
 										<div class="card-body">
-											<h3 class="card-title" style="text-align: center;">미용</h3>
-											<a href="./businessList?bct_code=B" class="btn btn-block btn-success">Button</a>
+											<a href="./businessList?bct_code=B"
+												class="btn btn-block btn-success">미용</a>
 										</div>
 									</div>
 									<!-- end card-->
 									<div class="card">
 										<img class="card-img-top img-fluid"
-											src="${pageContext.request.contextPath}/resources/images/card-hotel.jpg"
-											alt="Card image cap">
+											src="resources/images/card-hotel.jpg" alt="Card image cap">
 										<div class="card-body">
-											<h3 class="card-title" style="text-align: center;">호텔</h3>
-											<a href="./businessList?bct_code=H" class="btn btn-block btn-success">Button</a>
+											<a href="./businessList?bct_code=H"
+												class="btn btn-block btn-success">호텔</a>
 										</div>
 									</div>
 									<!-- end card-->
@@ -347,20 +247,7 @@ ${findPw} <!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-6">2018 © Hyper - Coderthemes.com</div>
-						<div class="col-md-6">
-							<div class="text-md-right footer-links d-none d-md-block">
-								<a href="javascript: void(0);">About</a> <a
-									href="javascript: void(0);">Support</a> <a
-									href="javascript: void(0);">Contact Us</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
+			<%@ include file="footer.html"%>
 			<!-- end Footer -->
 
 		</div>

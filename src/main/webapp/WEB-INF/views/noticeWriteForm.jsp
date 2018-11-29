@@ -74,7 +74,7 @@
 								<div class="form-group">
 									<label for="simpleinput">내용</label>
 									<textarea data-toggle="maxlength" class="form-control"
-										maxlength="225" rows="10" name="abo_ctt"
+										maxlength="1000" rows="10" name="abo_ctt"
 										placeholder="게시글 내용을 입력하세요"></textarea>
 								</div>
 								<div style="text-align: right">
@@ -113,23 +113,15 @@
 
 
 	<!-- App js -->
-	<script src="<c:url value="resources/dist/assets/js/app.min.js"/>"></script>
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- third party js -->
 	<!-- 게시판 -->
 	<script src="resources/dist/assets/js/vendor/summernote-bs4.min.js"></script>
-
-	<script
-		src="<c:url value="resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
 	<!-- third party js ends -->
 
 	<!-- demo app -->
-	<script
-		src="<c:url value="resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+	<script	src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
 <script>

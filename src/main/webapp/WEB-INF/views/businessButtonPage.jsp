@@ -16,10 +16,14 @@
 			<input type="button" name="businessBookingList" value="전체 예약 목록" onclick="forward(this)" /><br /> 
 			<input type="button" name="serviceManagement" value="서비스 관리" onclick="forward(this)" /><br />
 			<input type="button" name="stepManagement" value="직원 관리" onclick="forward(this)" /><br /> 
+<<<<<<< HEAD
 		<!-- <input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br /> -->
+=======
+			<!-- <input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br /> -->
+>>>>>>> hyeon
 		</div>
 	</form>
-	<form id="businessNotice" action="./businessNotice">
+	<form id="businessNoticeList" action="./businessNoticeList">
 		<input type="submit" value="공지사항 관리" />
 	</form>
 </body>
@@ -38,10 +42,17 @@
 		if (button.value == '서비스 관리') {
 			frm.action = "serviceManagement";
 		}
+<<<<<<< HEAD
 		 if (button.value == '직원 관리') {
 			frm.action = "stepListBut";
 		}
 	/*	if (button.value == '고객 관리') {
+=======
+		if (button.value == '직원 관리') {
+			frm.action = "stepListBut";
+		}
+		/* if (button.value == '고객 관리') {
+>>>>>>> hyeon
 			frm.action = "customerManagement";
 		} */
 		frm.submit();
