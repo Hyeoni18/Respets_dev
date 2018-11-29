@@ -98,8 +98,6 @@ pw: <input type="password" id="pw" name="pw"/> <br/>
 
 	${updateMyPw}
 	<!--현휘; 비밀번호 변경이 완료됐다는 안내 alert -->
-	<!-- App js -->
-	<script src="/resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
 	${alert}
