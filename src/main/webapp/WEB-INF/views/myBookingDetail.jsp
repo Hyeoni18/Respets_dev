@@ -140,7 +140,11 @@
 													</table>
 												</div>
 												<div id="cencel">
-													<input type="button" id="cenc" value="예약 취소"
+														&emsp;<input type="button" id="perBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
+														onclick="location.href='./recentMyBookingList'">
+														&emsp;<input type="button" id="busBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
+														onclick="location.href='./todayScheduleList'">
+													&emsp;<input type="button" class='btn btn-outline-danger btn-rounded' id="cenc" value="예약 취소"
 														onclick="location.href='myBookingCancelPage?bk_no=${bk_no}'" />
 												</div>
 
@@ -157,10 +161,6 @@
 					<!-- <input type="button" id="cancelButton"
 						class="btn btn-success" value="예약 취소"
 						onclick="location.href='./myBookingCancelPage'" />  -->
-					<input type="button" id="perBut" class="btn btn-success" value="목록으로 돌아가기"
-						onclick="location.href='./recentMyBookingList'">
-						<input type="button" id="busBut" class="btn btn-success" value="목록으로 돌아가기"
-						onclick="location.href='./todayScheduleList'">
 				</div>
 			</div>
 		</div>
