@@ -67,8 +67,6 @@
 
 				<button id="myPage" onclick="location.href='./todayScheduleList'">
 					기업마이페이지</button>
-				<button id="myPage" onclick="location.href='./businessButtonPage'">
-					기업 버튼</button>
 				<button onclick="location.href='./personalCalendar'">스케줄</button>
 
 

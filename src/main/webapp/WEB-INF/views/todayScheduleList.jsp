@@ -32,11 +32,7 @@ float:right;
 	<hr>
 	<div class="No" style="border: 2px solid red"></div>
 	<div class="Ok"></div>
-<<<<<<< HEAD
-	${none}
-	</div>
-=======
->>>>>>> hyeon
+</div>
 </body>
 <script>
 	$(document).ready(function() {
@@ -93,7 +89,7 @@ float:right;
 					$()
 					$(but).html("방문 완료");
 					$('#'+bk_no).hide();
-					$(div).insertAfter('.Ok');
+					$('.Ok').append(div);
 				} else {
 					console.log("실패");
 				}
