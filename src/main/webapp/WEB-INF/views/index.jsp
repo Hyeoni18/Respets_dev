@@ -306,7 +306,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
+			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 			<!-- end Footer -->
 
 		</div>
