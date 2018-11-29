@@ -652,18 +652,37 @@ public class SunnyService {
 		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
 		
 		String bus_no = request.getParameter("bus_no");
-		String bct_code = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
 		String bsd_date = request.getParameter("bsd_date");
 		
 		System.out.println("bus_no=" + bus_no);
 		System.out.println("bct_code=" + bct_code);
-		System.out.println("bct_code=" + bsd_date);
+		System.out.println("bsd_date=" + bsd_date);
+		
+		String no = null;
 		
 		//회원번호
-		String no = session.getAttribute("no").toString();
+		if(session.getAttribute("no")!=null) {
+			no = session.getAttribute("no").toString();
+			hmap.put("no", no);
+
+			//즐겨찾기
+			int favorite = 0;
+			char code = no.charAt(0);
+			String favResult = null;
+			if(code=='P') {
+				favResult = sDao.getFavorite(hmap);
+				if(favResult!=null) favorite = 1;
+			}			
+
+			mav.addObject("no", no);
+			mav.addObject("code", code);
+			mav.addObject("favorite", favorite);
+			
+		}
 		
-		// 해시맵에 쿼리스트링과 회원번호를 담는다
-		hmap.put("no", no);
+		
+		// 해시맵에 쿼리스트링과 회원번호를 담는다		
 		hmap.put("bus_no", bus_no);
 		hmap.put("bct_code", bct_code);
 
@@ -676,18 +695,10 @@ public class SunnyService {
 		// '기업+업종'의 총 리뷰개수를 가져온다
 		String rev_count = sDao.getReviewCount(hmap);
 		System.out.println("rev_count=" + rev_count);
-		// '기업+업종'의 리뷰평점 평균값을 가져온다
+/*		// '기업+업종'의 리뷰평점 평균값을 가져온다
 		String rev_avg = sDao.getReviewAvg(hmap);
-		System.out.println("rev_avg=" + rev_avg);
+		System.out.println("rev_avg=" + rev_avg);*/
 		
-		//즐겨찾기
-		int favorite = 0;
-		char code = no.charAt(0);
-		String favResult = null;
-		if(code=='P') {
-			favResult = sDao.getFavorite(hmap);
-			if(favResult!=null) favorite = 1;
-		}
 		
 		// 기업대표이미지를 가져온다
 		hmap = sDao.getBusinessImage(hmap);
@@ -698,17 +709,14 @@ public class SunnyService {
 		serviceList = sDao.getHaveService(bus_no);
 		System.out.println("serviceList=" + serviceList);
 		
-		mav.addObject("no", no);
-		mav.addObject("code", code);
 		mav.addObject("bus_no", bus_no);
 		mav.addObject("bsd_date", bsd_date);
 		mav.addObject("bct_code", bct_code);
-		mav.addObject("favorite", favorite);
 		mav.addObject("bus_img", bus_img);
 		mav.addObject("bus_name", bus_name);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("rev_count", rev_count);
-		mav.addObject("rev_avg", rev_avg);
+		//mav.addObject("rev_avg", rev_avg);
 		mav.addObject("serviceList", serviceList);
 		view = "businessDetailPage";
 		mav.setViewName(view);
