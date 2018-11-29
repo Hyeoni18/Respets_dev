@@ -207,9 +207,9 @@
 										<table class="table table-centered mb-0">
 											<thead>
 												<tr style="text-align: center;">
-													<th>분류</th>
+													<th width="25%">분류</th>
 													<th>제목</th>
-													<th>날짜</th>
+													<th width="25%">날짜</th>
 												</tr>
 											</thead>
 											<tbody>
