@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Respets :: 개인회원이용약관</title>
+<title>Respets :: 개인 회원 이용 약관</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -26,12 +26,12 @@
 	<div class="card">
 		<div class="card-body">
 			<div id="head" style="text-align: center">
-			<h4>Respets 기업회원 이용약관</h4>
+			<h4>Respets 개인 회원 이용 약관</h4>
 			</div>
 			<div class="form-control"
 				style="position: relative; overflow: hidden; width: auto; height: 430px;">
 				<div class="slimscroll"
-					style="max-height: 430px; overflow: hidden; width: auto; height: 430px;">
+					style="max-height: 430px; overflow: scroll; width: auto; height: 430px;">
 
 						<h5>제1조(목적)</h5>
 
