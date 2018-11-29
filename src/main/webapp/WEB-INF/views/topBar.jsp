@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리스펫츠</title>
+<title>Respets</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -71,12 +71,9 @@
 				<a href='./myPage' id='myPage'>기업마이페이지</a>
 				<a href='./personalCalendar' id='personalCalendar'>스케줄</a>
 
-<<<<<<< HEAD
 				<button id="myPage" onclick="location.href='./todayScheduleList'">
 					기업마이페이지</button>
 				<button onclick="location.href='./personalCalendar'">스케줄</button>
-=======
->>>>>>> 6c2dd0d0b28b26b2a0cd24828d41f855d497a01b
 
 
 				<li class="dropdown notification-list"><a

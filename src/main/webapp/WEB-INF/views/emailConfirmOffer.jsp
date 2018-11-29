@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Hyper - Responsive Bootstrap 4 Admin Dashboard</title>
+        <title>Respets :: 이메일 확인</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -36,10 +36,12 @@
                                     <img src="resources/dist/assets/images/mail_sent.svg" alt="mail sent image" height="64" />
                                     <h4 class="text-dark-50 text-center mt-4 font-weight-bold">이메일을 확인해주세요!</h4>
                                     <p class="text-muted mb-4" id="emailConfirmOfferLogin">
-                                        이메일 인증을 해주세요. <b>${email}</b>로 인증 링크를 전송했습니다.
+                                        이메일 인증을 해주세요.<br />
+                                        <b>${email}</b>로 인증 링크를 전송했습니다.
                                     </p>
                                     <p class="text-muted mb-4" id="emailConfirmOfferJoin">
-                                        이메일 미인증 회원입니다. <b>${mb.per_email}</b>로 인증 링크를 전송했습니다.
+                                        이메일 미인증 회원입니다.<br />
+                                        <b>${mb.per_email}</b>로 인증 링크를 전송했습니다.
                                     </p>
                                     
                                 </div>

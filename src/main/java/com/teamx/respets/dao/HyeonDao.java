@@ -56,4 +56,5 @@ public interface HyeonDao {
 	public int warningInsert(String per_no);
 	public int todayScheduleListUnNoShow(String per_no, String timeS);
 	public ArrayList<HashMap<String, Object>> vs_chkOkList(Map<String, Object> map);
+	public int bctAllPaging(Map<String, Object> map);
 }

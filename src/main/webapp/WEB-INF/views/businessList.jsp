@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 기업 리스트 </title>
+<title>Respets :: 기업 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -26,7 +26,6 @@
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
-</head>
 </head>
 <body data-layout="topnav">
 	<div class="wrapper">

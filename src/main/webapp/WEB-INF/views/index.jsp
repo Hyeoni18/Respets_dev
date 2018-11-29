@@ -6,35 +6,18 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>리스펫츠</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
+<title>Respets</title>
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
-
-<!-- third party css -->
-<link
-	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
-	rel="stylesheet" type="text/css" />
-<!-- third party css end -->
-
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
-
 <body data-layout="topnav">
-
-	<%-- ${no} <!-- 지예 --> --%>
 	${alert}
-	<!--현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
+	<!-- 현휘; 메일의 유효시간이 경과했다는 안내 || 존재하지 않는 메일이라는 안내 alert -->
 	${findPw}
-	<!--현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert -->
+	<!-- 현휘; 비밀번호 설정 이메일을 보냈다는 안내 alert -->
 	${sessionCheck}
 	<!-- 진선 -->
 	<!-- Begin page -->
@@ -207,16 +190,17 @@
 										<table class="table table-centered mb-0">
 											<thead>
 												<tr style="text-align: center;">
-													<th>분류</th>
+													<th width="25%">분류</th>
 													<th>제목</th>
-													<th>날짜</th>
+													<th width="25%">날짜</th>
 												</tr>
 											</thead>
 											<tbody>
+											<c:forEach var="list" items="${list}">
 												<tr>
-													<td style="text-align: center;">${list[0].abc_name}</td>
+													<td style="text-align: center;">${list.abc_name}</td>
 													<td><a href="#" data-toggle="modal"
-														data-target="#board0">${list[0].abo_title}</a></td>
+														data-target="#board0">${list.abo_title}</a></td>
 													<!-- Standard modal content -->
 													<div id="board0" class="modal fade" tabindex="-1"
 														role="dialog" aria-labelledby="myModalLabel"
@@ -224,12 +208,12 @@
 														<div class="modal-dialog">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[0].abo_title}</h4>
+																	<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
 																	<button type="button" class="close"
 																		data-dismiss="modal" aria-hidden="true">×</button>
 																</div>
 																<div class="modal-body">
-																	<p>${list[0].abo_ctt}</p>
+																	<p>${list.abo_ctt}</p>
 																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-light"
@@ -241,68 +225,9 @@
 														<!-- /.modal-dialog -->
 													</div>
 													<!-- /.modal -->
-													<td style="text-align: center;">${list[0].abo_date_string}</td>
-												</tr>
-												<tr>
-													<td style="text-align: center;">${list[1].abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#board1">${list[1].abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="board1" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[1].abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
-																</div>
-																<div class="modal-body">
-																	<p>${list[1].abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
-															</div>
-															<!-- /.modal-content -->
-														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list[2].abo_date_string}</td>
-												</tr>
-												<tr>
-													<td style="text-align: center;">${list[2].abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#board0">${list[2].abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="board0" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[2].abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
-																</div>
-																<div class="modal-body">
-																	<p>${list[2].abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
-															</div>
-															<!-- /.modal-content -->
-														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list[0].abo_date_string}</td>
-												</tr>
+													<td style="text-align: center;">${list.abo_date_string}</td>
+												</tr> 
+											</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -323,7 +248,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
+			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 			<!-- end Footer -->
 
 		</div>
@@ -339,20 +264,11 @@
 
 
 	<!-- App js -->
-	<script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script>
-
-	<!-- third party js -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
-	<!-- third party js ends -->
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
 	<script
-		src="<c:url value="/resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+		src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 
 </body>
