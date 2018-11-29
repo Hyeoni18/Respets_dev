@@ -236,7 +236,7 @@ public class JiyeService {
 	public ModelAndView logout() {
 		mav = new ModelAndView();
 		session.invalidate();
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;
 	} // logout End
 
