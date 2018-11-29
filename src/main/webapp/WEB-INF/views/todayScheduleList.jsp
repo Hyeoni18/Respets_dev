@@ -32,8 +32,11 @@ float:right;
 	<hr>
 	<div class="No" style="border: 2px solid red"></div>
 	<div class="Ok"></div>
+<<<<<<< HEAD
 	${none}
 	</div>
+=======
+>>>>>>> hyeon
 </body>
 <script>
 	$(document).ready(function() {
@@ -75,6 +78,7 @@ float:right;
 <script>
 	function com(bk_no) {
 		var but = $('span[class="'+bk_no+'"]');
+		var div = $('div[id="'+bk_no+'"]');
 		console.log(but);
 		console.log(bk_no);
 		$.ajax({
@@ -89,6 +93,7 @@ float:right;
 					$()
 					$(but).html("방문 완료");
 					$('#'+bk_no).hide();
+					$(div).insertAfter('.Ok');
 				} else {
 					console.log("실패");
 				}
