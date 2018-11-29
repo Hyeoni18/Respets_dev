@@ -28,6 +28,7 @@
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	
 </script>
 <body>
 	<table>
@@ -38,15 +39,17 @@
 			<td>${bus_name}(${bct_name})</td>
 		</tr>
 		<tr>
-			<td>
 				<!-- Center modal -->
+				<c:if test="${bsd_date==null}">
+					
+				</c:if>
 				<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=18/11/15" 
 				class="btn btn-block btn-sm btn-success">예약하기</a>
 			</td>
 		</tr>
 		<tr>
-			<td>${rev_avg} <c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
-				(${rev_count})
+			<td><%-- ${rev_avg} <c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
+				(${rev_count}) --%>
 				<div id="favorite">
 					<button type="button" id="fav-button">
 						<i class="mdi mdi-heart mr-1" id="fav-icon"></i> <span>즐겨찾기</span>
@@ -67,6 +70,46 @@
 				</c:forEach></td>
 		</tr>
 	</table>
+
+	<div class="col-xl-6">
+		<div class="card">
+			<div class="card-body">
+				<ul class="nav nav-pills bg-light nav-justified mb-3">
+					<li class="nav-item"><a href="#businessBasicInfo" data-toggle="tab"
+						aria-expanded="false" class="nav-link rounded-0 active show">
+							<i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i> <span
+							class="d-none d-lg-block">기본정보</span>
+					</a></li>
+					<li class="nav-item"><a href="#businessGallery" data-toggle="tab"
+						aria-expanded="true" class="nav-link rounded-0" onclick='businessGallery();'> <i
+							class="mdi mdi-account-circle d-lg-none d-block mr-1"></i> <span
+							class="d-none d-lg-block">갤러리</span>
+					</a></li>
+					<li class="nav-item"><a href="#businessDetailNoticeList" data-toggle="tab"
+						aria-expanded="false" class="nav-link rounded-0" onclick='businessDetailNoticeList();'> <i
+							class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i> <span
+							class="d-none d-lg-block">공지사항</span>
+					</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="businessBasicInfo">
+						
+						
+					</div>
+					<div class="tab-pane" id="businessGallery">
+						
+					</div>
+					<div class="tab-pane" id="businessDetailNoticeList">
+						
+					</div>
+				</div>
+
+			</div>
+			<!-- end card-body-->
+		</div>
+		<!-- end card-->
+	</div>
 
 	<!-- Center modal content 
 	
@@ -121,6 +164,7 @@
 		src="<c:url value="/resources/dist/assets/js/jquery/jquery-migrate.min.js"/>"></script>
 
 </body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01f5de4fda83eccb6c481552ba87be63&libraries=services"></script>
 <script>
 	$(document).ready(function() {
 		var no = "${no}";
@@ -197,4 +241,61 @@
 
 	});
 </script>
+
+
+<script>
+var bus_no = '${bus_no}';
+var bct_code = '${bct_code}';
+$(document).ready(function(){
+	$.ajax({
+		type: 'post',
+		url: 'businessBasicInfo?bus_no='+bus_no+'&bct_code='+bct_code,
+		dataType: 'html',
+		async: false,
+		success: function(data) {
+			console.log(data);
+			$('#businessBasicInfo').html(data);
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+});
+</script>
+
+<script>
+var bus_no = '${bus_no}';
+var bct_code = '${bct_code}';
+function businessGallery() {
+	$.ajax({
+		type: 'post',
+		url: 'businessGallery?bus_no='+bus_no+'&bct_code='+bct_code,
+		dataType: 'html',
+		success: function(data) {
+			$('#businessGallery').html(data);
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+}
+</script>
+<script>
+var bus_no = '${bus_no}';
+var bct_code = '${bct_code}';
+function businessDetailNoticeList() {
+	$.ajax({
+		type: 'post',
+		url: 'businessDetailNoticeList?bus_no='+bus_no+'&bct_code='+bct_code,
+		dataType: 'html',
+		success: function(data) {
+			$('#businessDetailNoticeList').html(data);
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+}
+</script>
+
 </html>

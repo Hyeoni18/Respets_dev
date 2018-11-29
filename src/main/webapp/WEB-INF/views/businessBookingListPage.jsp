@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 전체 예약 목록 </title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Respets :: 전체 예약 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -62,7 +63,7 @@
 						url : "AllPaging?bus_no=" + no + "&pageNum=" + pno,
 						type : "post",
 						dataType : "text",
-						success : function(data){
+						success : function(data) {
 							$('#page_navi').html(data);
 						}
 					});
@@ -83,10 +84,14 @@
 				success : function(data) {
 					$('#list').html(data);
 					$.ajax({
+<<<<<<< HEAD
 						url : "bctAllPaging?bus_no=" + no + "&bct_name="+bct_name,
+=======
+						url : "bctAllPaging?bus_no=${no}&bct_name=" + radio,
+>>>>>>> master
 						type : "post",
 						dataType : "text",
-						success : function(data){
+						success : function(data) {
 							$('#page_navi').html(data);
 						}
 					});

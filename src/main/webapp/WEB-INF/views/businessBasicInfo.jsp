@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="row justify-content-center">
-<div class="col-7">
+<div class="col-12">
 <div class="card">
 	<div class="card-body">
 <div id=wrapper>
@@ -167,6 +167,7 @@
 	 $('#lchTime').html(lchAmHr + ':' + lchAmMin + '~' + lchPmHr + ':' + lchPmMin); 
  
 </script>
+
 
 <script>
 /* 다음 지도 api */

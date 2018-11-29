@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Respets :: 기업회원가입</title>
+<title>Respets :: 기업 회원 가입</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -80,10 +80,13 @@
 									<input type="text" class="form-control" name="bus_phone" id="업체 연락처" />
 								</div>
 								<div class="form-row">								
-									<div class="form-group col-md-6">										
+									<div class="form-group col-md-12" style="margin-bottom:0;">										
 										<label for="bus_address">업체 주소 <span style="color: red">*</span></label>
-										<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" />
+										
 										<!-- <br/> -->									
+									</div>
+									<div class="form-group col-md-6">
+										<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" />
 									</div>
 									<div class="form-group col-md-6">
 										<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-outline-success"/>
@@ -134,7 +137,9 @@
         <!-- end page -->
 
 
+	<!-- footer start -->
 	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+	<!-- end footer -->
 
 
 	<!-- App js -->

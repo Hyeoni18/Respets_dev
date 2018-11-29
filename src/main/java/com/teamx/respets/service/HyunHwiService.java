@@ -2470,7 +2470,7 @@ public class HyunHwiService {
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
-					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="+mapo.get("bsd_date")+"'>");
 					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");

@@ -146,7 +146,7 @@ public class JiyeService {
 
 							if (perEmChk.equals("O")) {// 개인회원 인증 여부 확인
 								System.out.println("인증된 개인 회원");
-								view = "index";
+								view = "redirect:/";
 							} else {
 								System.out.println("개인회원 인증X");
 								String sendEmail = (String) hmap.get("PER_EMAIL");
@@ -169,7 +169,7 @@ public class JiyeService {
 								//String name = (String) hmap.get("BUS_NAME");
 								//mav.addObject("name", name);
 								System.out.println("기업회원 인증");
-								view = "index";
+								view = "redirect:/";
 							} else {
 								System.out.println("기업회원 인증X");
 								String sendEmail = (String) hmap.get("BUS_EMAIL");
@@ -236,7 +236,7 @@ public class JiyeService {
 	public ModelAndView logout() {
 		mav = new ModelAndView();
 		session.invalidate();
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;
 	} // logout End
 
@@ -655,10 +655,11 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		String bus_no = request.getParameter("bk_no");
+		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
 		//String bus_no = "B1000097";
 		//String bct_code = "M";
+		System.out.println("확인@@@@@" +bus_no);
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> gList = new ArrayList<HashMap<String, Object>>();
 		hmap.put("bus_no", bus_no);
@@ -674,6 +675,34 @@ public class JiyeService {
 		mav.setViewName(view);
 		return mav;
 	}// businessGallery
+	
+	public ModelAndView businessDetailNoticeList(HttpServletRequest request) {
+		this.request=request;
+		mav = new ModelAndView();
+		String view = null;
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		HashMap<String, Object> hmap = new HashMap<>();
+		List<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+		bList = jDao.businessDetailNoticeList(hmap);
+		StringBuilder sb = new StringBuilder();
+		if(bList.size()<1) {
+			sb.append("<tr><td colspan='6' style='text-align: center'>검색한 내용이 없습니다</td></tr>");
+		}
+		for(int i=0; i<bList.size(); i++) {
+			sb.append("<tr><td>" + bList.get(i).get("BBO_NO") + "</td>");
+			sb.append("<td>" + bList.get(i).get("BBC_NAME") + "</td>");
+			sb.append("<td><a href='businessNoticeDetail?" + bList.get(i).get("BBO_NO") + "'>"
+					+ bList.get(i).get("BBO_TITLE") + "</a></td>");
+			sb.append("<td>" + bList.get(i).get("BBO_DATE") + "</td></tr>");
+		}
+		mav.addObject("nList", sb);
+		view = "businessDetailNoticeList";
+		mav.setViewName(view);
+		return mav;
+	}
 
 	public ModelAndView unconfirmBusiness(HttpSession session) {
 		this.session = session;
