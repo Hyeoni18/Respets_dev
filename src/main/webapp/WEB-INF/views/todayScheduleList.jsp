@@ -39,29 +39,16 @@
 	$(document).ready(function() {
 		$('input[type="radio"]').click(function() {
 			var radio = $('input[type="radio"]:checked').val();
-			var noBut = $('input[type="button"]').val();
 			console.log(radio);
 			//전체리스트 불러오기
 			if (radio == '전체') {
 				$.ajax({
 					url : "todayAllScheduleList?no=${no}",
 					type : "post",
-					async : false,
 					dataType : "text",
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-				$.ajax({
-					url : 'vs_chkOkList?bus_no=${no}&bk_no=' + bk_no,
-					type : 'post',
-					async : false,
-					success : function(data) {
-						$('#Ok').html(data);
 					},
 					error : function(error) {
 						console.log(error);

@@ -515,13 +515,13 @@ public class Paging {
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
 
 		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&bct_code=" + no + "'>");
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&no=" + no + "'>");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&bct_code=" + no + "'>");
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&no=" + no + "'>");
 				sb.append("  " + i + "</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
 				sb.append("<font style='color: red;'> " + i + "  </font>");
@@ -529,7 +529,7 @@ public class Paging {
 		} // for End
 
 		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&bct_code=" + no + "'>");
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&no=" + no + "'>");
 			sb.append("다음</a></li>");
 		} // if End
 		return sb.toString();

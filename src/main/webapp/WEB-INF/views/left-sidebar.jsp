@@ -35,7 +35,7 @@
 							1</span> --> <span> 최근	예약 목록 </span>
 					</a></li>
 	
-					<li class="side-nav-item"><a href="allBookingList" class="side-nav-link">
+					<li class="side-nav-item"><a href="personalAllBookingList" class="side-nav-link">
 							<i class="dripicons-view-list"></i> <span> 전체 예약 목록 </span>
 					</a></li>
 	
