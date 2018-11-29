@@ -244,19 +244,11 @@
 			type="button" class="btn btn-success" value="다음 단계"
 			onclick="agreementChk()" />
 	</div>
-<<<<<<< HEAD
-		<div class="row justify-content-center">
-			동의하십니까? <input type="checkbox" name="agreeChk" id="agreeChk" />
-			<input type="button" class="btn btn-success" value="가입하러가기" onclick="agreementChk()" />
-		</div>
-		
-		<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
-=======
+	
 	<!-- footer start -->
 	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 	<!-- end footer -->
-	
->>>>>>> jinseon
+
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>

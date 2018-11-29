@@ -58,12 +58,8 @@
 		</div>
 		<!-- col-7 -->
 	</div>
-<<<<<<< HEAD
-	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
-=======
 	<!-- footer start -->
 	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 	<!-- end footer -->
->>>>>>> jinseon
 </body>
 </html>

@@ -245,18 +245,12 @@
 	<div>
 		<input type="button" class="btn btn-success" value="가입하러가기"
 			onclick="agreementChk()" />
-<<<<<<< HEAD
-	</div>
-	
-	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
-=======
-	</div> -->
+	</div>-->
 	
 	
 	<!-- footer start -->
 	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 	<!-- end footer -->
->>>>>>> jinseon
 
 
 
