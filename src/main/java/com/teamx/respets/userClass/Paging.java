@@ -413,6 +413,40 @@ public class Paging {
 		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
 		return businessListTag(currentGroup, totalPage, boardName, map);
 	}
+	
+	@SuppressWarnings("unused")
+	public String AllPaging(String no) {
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return busAllPaging(currentGroup, totalPage, boardName, no);
+	}
+
+	private String busAllPaging(int currentGroup, int totalPage, String boardName, String no) {
+		StringBuffer sb = new StringBuffer();
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+
+		if (start != 1) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&no=" + no + "'>");
+			sb.append("이전</a></li>");
+		} // method End
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&no=" + no + "'>");
+				sb.append("  " + i + "</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<font style='color: red;'> " + i + "  </font>");
+			} // else End
+		} // for End
+
+		if (end != totalPage) {
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&no=" + no + "'>");
+			sb.append("다음</a></li>");
+		} // if End
+		return sb.toString();
+	}
 
 	private String businessListTag(int currentGroup, int totalPage, String boardName2, Map<String, Object> map) {
 		String bus_addr = (String) map.get("bus_addr");

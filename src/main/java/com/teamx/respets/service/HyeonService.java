@@ -521,14 +521,14 @@ public class HyeonService {
 		return mav;
 	}
 
-	private String businessBookingList(int pNo, String no) {
+	/*private String businessBookingList(int pNo, String no) {
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
 		int pageCount = 5;
 		String boardName = "businessBookingList";
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.BookingListButton(no);
-	}
+	}*/
 
 	/*
 	 * private Object makePaging(int pageNum, String no) { int maxNum =
@@ -801,6 +801,28 @@ public class HyeonService {
 			}
 		}
 		return sb.toString();
+	}
+
+	public String AllPaging(HttpServletRequest request, Integer pageNum) {
+		String no = request.getParameter("bus_no");
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		int maxNum = hyDao.getListCount(no);
+		int listCount = 9;
+		int pageCount = 5;
+		String boardName = "businessBookingList";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.AllPaging(no);
+	}
+
+	public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
+		String no= request.getParameter("bus_no");
+		String bct_name = request.getParameter("bct_name");
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("bct_name", bct_name);
+		int maxNum = hyDao.
+		return null;
 	}
 
 }

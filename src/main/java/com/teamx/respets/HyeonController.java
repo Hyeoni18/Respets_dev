@@ -216,6 +216,18 @@ public class HyeonController {
 		int result = hy.todayScheduleListUnNoShow(request);
 		return result;
 	}
+	
+	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String AllPaging(HttpServletRequest request, Integer pageNum) {
+		String text = hy.AllPaging(request, pageNum);
+		return text;
+	}
+	
+	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
+		String text = hy.bctAllPaging(request, pageNum);
+		return text;
+	}
 
 	@RequestMapping(value = "/todayAllScheduleList", produces = "application/text; charset=utf8")
 	public @ResponseBody String todayAllScheduleList(HttpServletRequest request) {
