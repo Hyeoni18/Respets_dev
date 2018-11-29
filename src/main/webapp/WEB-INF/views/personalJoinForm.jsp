@@ -41,30 +41,30 @@
 									enctype="multipart/form-data">
 
                                     <div class="form-group">
-                                        <label for="email">이메일 주소</label>
+                                        <label for="email">이메일 주소 <span style="color: red">*</span></label>
                                         <input class="form-control" type="text" id="per_email" name="per_email" onchange="emailChk()" placeholder="ex)respets@respets.com" required/>
                                     	<div id="chkMsg"></div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="pw">비밀번호</label>
+                                        <label for="pw">비밀번호 <span style="color: red">*</span></label>
                                         <input class="form-control" type="password" id="per_pw" name="per_pw" required placeholder="비밀번호를 입력해주세요.">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password">비밀번호 확인</label>
+                                        <label for="password">비밀번호 확인 <span style="color: red">*</span></label>
                                         <input class="form-control" type="password" required id="pwChk" name="pwChk" placeholder="비밀번호를 재입력해주세요.">
                                         		<div id="chkSame" style="color:blue">비밀번호가 일치합니다.</div>
 												<div id="chkAlert" style="color:red">비밀번호가 일치하지 않습니다.</div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="name">이름</label>
+                                        <label for="name">이름 <span style="color: red">*</span></label>
                                         <input class="form-control" type="text" id="per_name" name="per_name" placeholder="이름을 입력해주세요." required>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="phone">연락처</label>
+                                        <label for="phone">연락처 <span style="color: red">*</span></label>
                                         <input class="form-control" type="text" id="per_phone" name="per_phone" placeholder="연락처를 입력해주세요(010-0000-0000)" required>
                                     </div>
                                     
@@ -105,32 +105,6 @@
         <!-- App js -->
         <script src="/resources/dist/assets/js/app.min.js"></script>
 	
-<!-- 	<form action="personalJoin" name="personalJoin" id="personalJoin" onsubmit="return formChk();" method="post" 
-	enctype="multipart/form-data">
-		이메일<br/>
-		<input type="text" name="per_email" id="per_email"   placeholder="이메일을 입력하세요."/>
-		<div id="chkMsg"></div>
-		
-		비밀번호 <br/>
-		<input type="password" name="per_pw" id="per_pw" /> <br/>
-		
-		비밀번호 확인 <br/>
-		<input type="password" name="pwChk" id="pwChk" /> <br/>
-		<div id="chkSame" style="color:blue">비밀번호가 일치합니다.</div>
-		<div id="chkAlert" style="color:red">비밀번호가 일치하지 않습니다.</div>
-		
-		이름 <br/>
-		<input type="text" name="per_name" id="per_name"/> <br/>
-		
-		연락처 <br/>
-		<input type="text" name="per_phone" id="per_phone" /> <br/>
-		
-		프로필 사진
-		<input type="file" name="photo" onchange="fileChk(this)" /><br />
-		<input type="hidden" name="fileCheck" id="fileCheck" value="0" />
-		
-		<input type="submit" value="가입하기" id="submit" disabled/>
-	</form> -->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -169,9 +143,9 @@ function emailChk() {
 		success:function(data) {
 			console.log(data);
 			if(data != 1) {
-				$('#chkMsg').html("<p style='COLOR:blue'>사용가능</p>");
+				$('#chkMsg').html("<p style='COLOR:blue'>사용 가능한 이메일입니다.</p>");
 			}else {
-				$('#chkMsg').html("<p style='COLOR:red'>사용불가</p>");
+				$('#chkMsg').html("<p style='COLOR:red'>이미 사용 중인 이메일입니다.</p>");
 				$('#submit').attr('disable', 'disabled');
 			}
 		},

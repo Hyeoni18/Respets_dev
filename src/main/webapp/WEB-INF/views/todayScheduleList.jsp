@@ -7,8 +7,22 @@
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
+<div id="div_content">
 	<h1>오늘 일정 목록</h1>
 	${no}
 	<br>
@@ -17,8 +31,12 @@
 	${bctList}
 	<hr>
 	<div class="No" style="border: 2px solid red"></div>
-	<div class="Ok" style="border: 2px solid black"></div>
+	<div class="Ok"></div>
+<<<<<<< HEAD
 	${none}
+	</div>
+=======
+>>>>>>> hyeon
 </body>
 <script>
 	$(document).ready(function() {
@@ -34,84 +52,6 @@
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
-						//방문 버튼 클릭 시
-						function com(bk_no) {
-							console.log(bk_no);
-							$.ajax({
-								url : 'todayScheduleListCheck',
-								type : 'post',
-								data : {
-									'bk_no' : bk_no
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.but').html("방문 완료");
-										$('.ton').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
-						//노쇼버튼 클릭 시
-						function noshow(button, bk_no, pno) {
-							var det;
-							det = confirm("노쇼를 선택하시겠습니까?");
-							if (det) {
-								$.ajax({
-									url : 'todayScheduleListNoShow',
-									type : 'post',
-									data : {
-										'no' : no,
-										'pno' : pno
-									},
-									success : function(data) {
-										console.log(data);
-										if (data != 0) {
-											console.log("성공");
-											$('.unNoshow').show();
-											$('.noshow').hide();
-										} else {
-											console.log("실패");
-										}
-									},
-									error : function(error) {
-										console.log(error);
-									}
-								});
-							}
-						}
-						//노쇼 취소버튼 클릭 시
-						function unNoshow(button, bk_no, pno) {
-							$.ajax({
-								url : 'todayScheduleListUnNoShow',
-								type : 'post',
-								data : {
-									'no' : no,
-									'pno' : pno
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.noshow').show();
-										$('.unNoshow').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
 					},
 					error : function(error) {
 						console.log(error);
@@ -126,81 +66,6 @@
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
-						function com(button, bk_no) {
-							console.log(bk_no);
-							$.ajax({
-								url : 'todayScheduleListCheck',
-								type : 'post',
-								data : {
-									'bk_no' : bk_no
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.but').html("방문 완료");
-										$('.ton').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
-						function noshow(button, bk_no, pno) {
-							var det;
-							det = confirm("노쇼를 선택하시겠습니까?");
-							if (det) {
-								$.ajax({
-									url : 'todayScheduleListNoShow',
-									type : 'post',
-									data : {
-										'no' : no,
-										'pno' : pno
-									},
-									success : function(data) {
-										console.log(data);
-										if (data != 0) {
-											console.log("성공");
-											$('.unNoshow').show();
-											$('.noshow').hide();
-										} else {
-											console.log("실패");
-										}
-									},
-									error : function(error) {
-										console.log(error);
-									}
-								});
-							}
-						}
-						function unNoshow(button, bk_no, pno) {
-							$.ajax({
-								url : 'todayScheduleListUnNoShow',
-								type : 'post',
-								data : {
-									'no' : no,
-									'pno' : pno
-								},
-								success : function(data) {
-									console.log(data);
-									if (data != 0) {
-										console.log("성공");
-										$('.noshow').show();
-										$('.unNoshow').hide();
-									} else {
-										console.log("실패");
-									}
-								},
-								error : function(error) {
-									console.log(error);
-								}
-							});
-
-						}
 					},
 					error : function(error) {
 						console.log(error);
@@ -211,7 +76,10 @@
 	});
 </script>
 <script>
-	/* function com(button, bk_no) {
+	function com(bk_no) {
+		var but = $('span[class="'+bk_no+'"]');
+		var div = $('div[id="'+bk_no+'"]');
+		console.log(but);
 		console.log(bk_no);
 		$.ajax({
 			url : 'todayScheduleListCheck',
@@ -220,11 +88,12 @@
 				'bk_no' : bk_no
 			},
 			success : function(data) {
-				console.log(data);
 				if (data != 0) {
 					console.log("성공");
-					$('.but').html("방문 완료");
-					$('.ton').hide();
+					$()
+					$(but).html("방문 완료");
+					$('#'+bk_no).hide();
+					$(div).insertAfter('.Ok');
 				} else {
 					console.log("실패");
 				}
@@ -234,18 +103,14 @@
 			}
 		});
 
-	} */
-	/* function noshow(button, bk_no, pno) {
+	}
+	function noshow(bk_no, pno) {
 		var det;
 		det = confirm("노쇼를 선택하시겠습니까?");
 		if (det) {
 			$.ajax({
-				url : 'todayScheduleListNoShow',
+				url : 'todayScheduleListNoShow?bk_no=' + bk_no + '&pno=' + pno,
 				type : 'post',
-				data : {
-					'no' : no,
-					'pno' : pno
-				},
 				success : function(data) {
 					console.log(data);
 					if (data != 0) {
@@ -261,14 +126,13 @@
 				}
 			});
 		}
-	} */
-	/* function unNoshow(button, bk_no, pno) {
+	}
+	function unNoshow(pno) {
 		$.ajax({
 			url : 'todayScheduleListUnNoShow',
 			type : 'post',
 			data : {
-				'no' : no,
-				'pno' : pno
+				'per_no' : pno
 			},
 			success : function(data) {
 				console.log(data);
@@ -285,6 +149,6 @@
 			}
 		});
 
-	} */
+	}
 </script>
 </html>

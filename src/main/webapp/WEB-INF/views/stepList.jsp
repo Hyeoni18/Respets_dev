@@ -5,48 +5,46 @@
 <head>
 <meta charset="UTF-8">
 <title>현휘// 직원관리 페이지</title>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
+<div id="div_content">
 <form action="stepInsertFormBut">
-<button>직원 추가 버튼</button> <br/>
+<button class="btn btn-outline-info">직원 등록 하기</button> <br/><br/>
 ${code} <br/>
 <div id="List">
-
 </div>
 </form>
+</div>
 </body>
 <script>
-function chk(val) {
-	console.log("찍혀랏");
-	var code = val;
-	var url = "stepList?bct_code="+code;
-	Aj(url,"#List");
-	function Aj(url, position) { //파라미터 값이 3개라고 꼭 3개를 받을 필요는 없다.
-		$.ajax({
-			url: url,
-			type: "post",
-			//dataType: 'html',
-			contentType: 'application/json; charset=utf-8',
-			success: function(html) {
-				$(position).html(html);
-			},
-			error: function(error) {
-				console.log("error");
-			}
-		}); //ajax End
-	} 
-}
+
 
 function chk(val) {
+	console.log(val);
+	$("#List *").remove();
 	var code = val;
-	var url = "stepList?bct_code="+encodeURI(code);
+	var url = "stepList?bct_code="+code;
 	Aj(url,"#List");
 	function Aj(url, position) {
 		$.ajax({
 			url: url,
 			type: "post",
 			dataType: "text",
+			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				$(position).append(data);
 			},

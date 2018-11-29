@@ -5,10 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
-#busiList {
+/* #busiList {
 	width: 30%;
 }
 
@@ -23,69 +37,24 @@
 
 #busiInfo {
 	width: 50%;
-}
+} */
 </style>
 </head>
 <body>
 	<div id="tag">${tagList}</div>
-	<div id="businessList">${busiList}</div>
-	<div id="page">${paging}</div>
-
+	<br/>
 	<div class="row">
-		<div class="col-12">
-			<div class="card-deck-wrapper">
-				<div class="card-deck">
-					<div class="card d-block">
-						<img class="card-img-top" src="assets/images/small/small-4.jpg"
-							alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">This is a longer card with supporting
-								text below as a natural lead-in to additional content. This
-								content is a little bit longer.</p>
-							<p class="card-text">
-								<small class="text-muted">Last updated 3 mins ago</small>
-							</p>
-						</div>
-					</div>
-					<!-- end card-->
-					<div class="card d-block">
-						<img class="card-img-top" src="assets/images/small/small-1.jpg"
-							alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">This card has supporting text below as a
-								natural lead-in to additional content.</p>
-							<p class="card-text">
-								<small class="text-muted">Last updated 3 mins ago</small>
-							</p>
-						</div>
-					</div>
-					<!-- end card-->
-					<div class="card d-block">
-						<img class="card-img-top" src="assets/images/small/small-2.jpg"
-							alt="Card image cap">
-						<div class="card-body">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text">This is a wider card with supporting
-								text below as a natural lead-in to additional content. This card
-								has even longer content than the first to show that equal height
-								action.</p>
-							<p class="card-text">
-								<small class="text-muted">Last updated 3 mins ago</small>
-							</p>
-						</div>
-					</div>
-					<!-- end card-->
-				</div>
+		<div class="col-12" id="businessList">
+					<%-- <div id="businessList">${busiList}</div> --%>
+					${busiList}
 				<!-- end card-deck-->
-			</div>
 			<!-- end card-deck-wrapper-->
 		</div>
 		<!-- end col-->
 	</div>
-
-
+	<br/>
+	<div id="page">${paging}</div>
+	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
 	function businessList(bct_code, tag_no, date, city, pno) {
@@ -93,6 +62,7 @@
 		console.log(tag_no);
 		console.log(date);
 		console.log(city);
+		console.log(pno)
 		var url = "tagSelectList?bct_code=" + bct_code + "&tag_no=" + tag_no
 				+ "&bsd_date=" + date + "&bus_addr=" + city + "&pageNum=" + pno;
 		console.log(url);

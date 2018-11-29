@@ -177,6 +177,7 @@ public class JiyeService {
 								String title = "[Respets] 계정 인증 메일";
 								String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email=" + sendEmail;
 								hhs.mailSending(tomail, title, content);
+								mav.addObject("email", sendEmail);
 								session.invalidate(); // 세션 만
 								view = "emailConfirmOffer";
 						}

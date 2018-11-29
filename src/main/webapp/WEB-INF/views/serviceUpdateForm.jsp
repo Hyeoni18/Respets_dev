@@ -5,27 +5,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
+<div id="div_content">
 <h1>업종 정보 수정</h1>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <form action="serviceUpdate" method="post"
 			enctype="multipart/form-data">
 			<input type="hidden" name="first" value="${first}"/>
--서비스 종류: ${bct_name} <input type="hidden" name="bct_code" value="${bct_code}"/> <br/>
+서비스 종류: ${bct_name} <input type="hidden" name="bct_code" value="${bct_code}"/> <br/>
 ${top} 
--영업시간: ${work} <br/>
--점심시간: ${lunch} <br/>
--고정휴무일: ${holiday} <br/>
--${menu} 
-${animal} <br/>
--사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
-${price}
+영업시간: ${work} <br/>
+점심시간: ${lunch} <br/>
+고정휴무일: ${holiday} <br/>
+${menu} 
+${animal} 
+사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
+<br/>
+${medi_submit}
+${price} <br/><br/>
 ${bct_price}
-${cat_price}
-<button> 수정하기 </button>
+${cat_price} <br/>
+<div id="but"></div>
 </form>
+</div>
 </body>
 <script>
 function chk(val) {
@@ -108,127 +125,12 @@ function priceBox(cnt) {
 	
 	var trObj; //tr태그 생성 
     var div; //div네임 담는 변수 
-  /*   if(code=='hotel'){	//호텔이라면 
- 		div = $("#hotel_price"); //div네임에 호텔이름 넣어주고 
-		$("#hotel_price *").remove(); //만약 append 된 것이 있다면 지워줘.
-		var cat_div = $("#cat_price");
-		$("#cat_price *").remove();
-		var num1=aniName.length;         //num1에 애니멀 개수를 넣어줘.
-		var num2=tagName.length;         //num2에 태그 개수를 넣어줘.
-	     
-		var x; //input태그 생성 변수.
-	    for(var i=0; i<num1+1; i++){ // 애니멀 개수만큼 돌거야.
-		     trObj=document.createElement("tr");     // tr 생성      
-		     for(var j=0; j<num2+1; j++){ //서비스 개수만큼 돌거야. 
-			      var tdObj=document.createElement("td");  //td 생성 
-			      trObj.appendChild(tdObj); //td를 tr에 붙여줘. 
-			      if(i==0) { 
-			    	  if(j==0) { //(0,0) 은 빈칸이여야해. 
-			    		  tdObj.innerHTML= " ";	    		  
-			    	  } else {
-			    		  tdObj.innerHTML = tagName[j-1];
-			    	  }
-			      } //if End 
-		  	   else {
-		    	  if(j==0) {
-			    	  x = document.createElement("input");
-			    	  x.setAttribute("type", "text");
-		    		  x.setAttribute("name", "sort");
-		    		  x.setAttribute("readonly", true);
-		    		  x.setAttribute("value", aniName[i-1]);
-		    		  tdObj.appendChild(x);
-		    	  } else {
-		    		  x = document.createElement("input");
-		    		  x.setAttribute("type", "text");
-		    		  x.setAttribute("name", "price");
-		    		  var price;
-		    		  var url = "searchPrice?tag_name="+tagName[j-1]+"&ani_name="+aniName[i-1]+"&bct_code="+bct_code;
-		    			Aj(url);
-		    			function Aj(url) { 
-		    				$.ajax({
-		    					url: url,
-		    					type: "post",
-		    					dataType: "text", 
-		    					async: false,
-		    					success: function(data) {
-		    						price = data;
-		    					},
-		    					error: function(error) {
-		    						console.log("error");
-		    					}
-		    				}); //ajax End
-		    			} 
-		    		 x.setAttribute("value", price);
-		    		 tdObj.appendChild(x);
-		    	  }
-		      }  	      	          
-		    } //for End (td)    
-		    div.append(trObj);    //div 태그에 tr태그를 붙여넣는다.
-	    } //for End (tr)
-	    var catBox = new Array();
-		var o=0;
-				
-		if(cat_code[0].checked) {
-			if(cat_tag[0] != null){
-				catBox[o]=cat_tag[0];
-				o++;
-			} 
-			for(var i=0; i<num2; i++) {
-				catBox[o]=tagName[i];
-				o++;
-			}
-		}
-		var num4 = catBox.length;
-		
-		for(var i=0; i<catName.length+1; i++){ // 애니멀 개수만큼 돌거야.
-		     trObj=document.createElement("tr");     // tr 생성      
-		     for(var j=0; j<num4+1; j++){ //서비스 개수만큼 돌거야. 
-			      var tdObj=document.createElement("td");  //td 생성 
-			      trObj.appendChild(tdObj); //td를 tr에 붙여줘. 
-			      if(i==0) { 
-			    	  if(j==0) { //(0,0) 은 빈칸이여야해. 
-			    		  tdObj.innerHTML = " ";	    		  
-			    	  } else {
-			    		  tdObj.innerHTML = catBox[j-1];
-			    	  }
-			      } //if(i==0) End 
-		  	   else {
-		    	  if(j==0) {
-		    		  tdObj.innerHTML = catName[i-1];
-		    	  } else {
-		    		  x = document.createElement("input");
-		    		  x.setAttribute("type", "text");
-		    		  x.setAttribute("name", "price");
-		    		  var price;
-		    		  var url = "searchPrice?tag_name="+tagName[j-1]+"&ani_name="+aniName[i-1]+"&bct_code="+bct_code;
-		    			Aj(url);
-		    			function Aj(url) { 
-		    				$.ajax({
-		    					url: url,
-		    					type: "post",
-		    					dataType: "text", 
-		    					async: false,
-		    					success: function(data) {
-		    						price = data;
-		    					},
-		    					error: function(error) {
-		    						console.log("error");
-		    					}
-		    				}); //ajax End
-		    			} 
-		    		 x.setAttribute("value", price);
-		    		  tdObj.appendChild(x);
-		    	  }
-		      } //if (i!=0) End 	      	          
-		    } //for End (td)    
-		    cat_div.append(trObj);    //div 태그에 tr태그를 붙여넣는다.
-	    } //for End (tr)
- 	}//hotel if End
- 	else if(code=='beauty'){ */
  		div = $("#"+code); //div네임에 호텔이름 넣어주고 
 		$("#"+code+" *").remove(); //만약 append 된 것이 있다면 지워줘.
 		var cat_div = $("#"+code+"_price");
 		$("#"+code+"_price *").remove();
+		var but = $("#but");
+		$("#but *").remove();
 		var num1=aniName.length;         //num1에 애니멀 개수를 넣어줘.
 		var num2=tagName.length;         //서비스 개수를 넣어줘. 
 		
@@ -355,6 +257,15 @@ function priceBox(cnt) {
 	    } //for End (tr)
 		
  //	}//beauty else if End
+ var para = document.createElement("P");  
+ var noti = document.createTextNode("제공을 원하지 않는 서비스에는 'X'를 입력해주세요.");
+ para.appendChild(noti);
+ cat_div.append(para);
+ var btn = document.createElement("BUTTON");
+ btn.setAttribute("class", "btn btn-outline-secondary")
+ var t = document.createTextNode("수정하기"); 
+ btn.appendChild(t);	
+ cat_div.append(btn);
 }	
 </script>
 </html>

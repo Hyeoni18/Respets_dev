@@ -16,7 +16,6 @@
         <link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 </head>
  <body class="authentication-bg">
- 
          <div class="account-pages mt-5 mb-5">
             <div class="container">
                 <div class="row justify-content-center">
@@ -43,46 +42,46 @@
 								<!-- 필수 입력 항목에 빨간 * 추가하기 -->
 								<!-- 이메일 유효성 검사 추가할 것 -->
 								<div class="form-group">
-									<label for="bus_email">이메일 주소</label>
-									<input type="text" class="form-control" name="bus_email" class="bus_email" id="이메일"
+									<label for="bus_email">이메일 주소 <span style="color: red">*</span></label>
+									<input type="email" class="form-control" name="bus_email" id="이메일"
 										onchange="emailChk();" placeholder="ex)respets@respets.com"
 										required >
 									<div id="emailChkMsg"></div>
 								</div>
 								<!-- 비밀번호 유효성 검사, 확인 폼 추가할 것 -->
 								<div class="form-group">
-									<label for="bus_pw">비밀번호</label>
+									<label for="bus_pw">비밀번호 <span style="color: red">*</span></label>
 									<input type="password" class="form-control" name="bus_pw" id="비밀번호" placeholder="비밀번호를 입력해주세요." required >
 								</div>
 									
 								<div class="form-group">
-									<label for="bus_name">업체명</label>
+									<label for="bus_name">업체명 <span style="color: red">*</span></label>
 									<input type="text" class="form-control" name="bus_name" id="업체명" placeholder="업체명을 입력해주세요." required>
 								</div>
 							
 								<div class="form-group">
-									<label for="bus_ceo">대표자명</label>
+									<label for="bus_ceo">대표자명 <span style="color: red">*</span></label>
 									<input type="text" class="form-control" name="bus_ceo" id="대표자명" placeholder="대표자명을 입력해주세요." required>
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_lcno">사업자등록번호</label>
-									<input type="text" class="form-control" name="bus_lcno" class="bus_lcno" id="사업자 등록 번호" placeholder="ex)000-00-00000" onchange="taxIdChk();" required/>
+									<label for="bus_lcno">사업자등록번호 <span style="color: red">*</span></label>
+									<input type="text" class="form-control" name="bus_lcno" id="사업자 등록 번호" placeholder="ex)000-00-00000" onchange="taxIdChk();" required/>
 									<div id="taxIdChkMsg"></div>
 								</div>
 								
 								<div class="form-group">
-									<label>사업자등록증사진</label>
+									<label>사업자등록증 사진 <span style="color: red">*</span></label>
 									<input type="file" class="form-control" name="busLicense" id="busLicense" />
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_phone">업체 연락처</label>
+									<label for="bus_phone">업체 연락처 <span style="color: red">*</span></label>
 									<input type="text" class="form-control" name="bus_phone" id="업체 연락처" />
 								</div>
 								
 								<div class="form-group">
-									<label for="bus_address">업체 주소</label>
+									<label for="bus_address">업체 주소 <span style="color: red">*</span></label>
 									<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" /><br/>
 									<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-success"/>
 								</div>
@@ -95,7 +94,8 @@
 				
 								
 								<div class="form-group">
-									<label for="service">주력 서비스</label>
+									<label for="service">주력 서비스 <span style="color: red">*</span></label>
+									<br />
 									${input}
 								</div>
 								
@@ -232,7 +232,7 @@
 <!-- 사업자 등록 번호 사용 가능 여부를 확인하는 Ajax Script -->
 <script>
 	function taxIdChk() {
-		var taxId = $('.bus_lcno').val();
+		var taxId = $('input[name=bus_lcno]').val();
 		$.ajax({
 			url : 'taxIdCheck',
 			type : 'post',
@@ -241,10 +241,10 @@
 			},
 			success : function(data) {
 				if (data == 0) {
-					$('#taxIdChkMsg').html("사용 가능");
+					$('#taxIdChkMsg').html("사용 가능한 사업자등록번호입니다.");
 					$('#submit').attr('disabled', false);
 				} else {
-					$('#taxIdChkMsg').html("사용 불가능");
+					$('#taxIdChkMsg').html("<p style='color: red'>사용 중인 사업자등록번호입니다.</p>");
 					$('#submit').attr('disabled', true);
 				}
 			},
@@ -258,7 +258,7 @@
 <!-- 이메일 사용 가능 여부를 확인하는 Ajax Script -->
 <script>
 	function emailChk() {
-		var email = $('.bus_email').val();
+		var email = $('input[name=bus_email]').val();
 		$.ajax({
 			url : 'emailCheck',
 			type : 'post',
@@ -267,10 +267,10 @@
 			},
 			success : function(data) {
 				if (data == 0) {
-					$('#emailChkMsg').html("사용 가능");
+					$('#emailChkMsg').html("사용 가능한 이메일입니다.");
 					$('#submit').attr('disabled', false);
 				} else {
-					$('#emailChkMsg').html("사용 불가능");
+					$('#emailChkMsg').html("<p style='color: red'>사용 중인 이메일입니다.</p>");
 					$('#submit').attr('disabled', true);
 				}
 			},

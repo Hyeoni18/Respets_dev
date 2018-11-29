@@ -33,7 +33,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body onunload="logout();">
-<a href="test"> 현휘 test창 </a>
 	<!-- Topbar Start -->
 	<div class="navbar-custom topnav-navbar">
 		<div class="container-fluid">
@@ -66,8 +65,10 @@
 					<button>개인마이페이지</button>
 				</form>
 
-				<button id="myPage" onclick="location.href='./myPage'">
+				<button id="myPage" onclick="location.href='./todayScheduleList'">
 					기업마이페이지</button>
+				<button id="myPage" onclick="location.href='./businessButtonPage'">
+					기업 버튼</button>
 				<button onclick="location.href='./personalCalendar'">스케줄</button>
 
 

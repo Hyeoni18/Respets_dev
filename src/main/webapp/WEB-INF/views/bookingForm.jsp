@@ -6,7 +6,36 @@
 <head>
 <meta charset="UTF-8">
 <title>리스펫츠 : 예약 페이지</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<!-- App favicon -->
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
+
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
+.card d-block{
+	max-width: 400px;;
+	width: 400px;
+	height: 40%;
+	margin: 1.5px;
+}
+
+.row justify-content-center{
+	margin:auto;
+}
+</style>
+
+<!-- <style>
 #petDiv {
 	width: 20%;
 	margin: 30px;
@@ -14,43 +43,60 @@
 	float: left;
 	border: 1px solid #bcbcbc;
 }
-
-#bkDiv {
-	width: 70%;
-	margin: 30px;
-	margin-bottom: 20px;
-	float: left;
-	border: 1px solid #bcbcbc;
-}
-</style>
+</style> -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<form action="booking">
-		<div id="wrap">
-			<div id="petDiv">${petList}</div>
-			<div id="bkDiv">
-				<div id="svcDiv">${svcList}</div>
-				<div id="empDiv">${empList}</div>
-				<div id="day">
-					<p>날짜 선택</p>
-					<table id="dayTable">
-					</table>
+	<div class="row justify-content-center">
+		<div class="col-7">
+		<h5 class="text-success">서비스 예약</h5>
+		<hr/><br/><br/>
+			<form action="booking" method="post">
+				<!-- <div id="wrap"> -->
+				<div class="card d-block" style= 'width: 40%; height: 50%; margin:1.5px; margin: auto;'>
+					<br />
+					<p class='text-success' style='text-align: center'>선택한 반려동물</p>
+					<hr />
+					${petList}
+					<br/>
 				</div>
-				<div id="time">
-					<p>시간 선택</p>
-					<table id="timeTable">
-					</table>
+				<br/><br/>
+				<%-- <div id="petDiv">${petList}</div> --%>
+				<div id="bkDiv">
+					<div id="svcDiv">${svcList}</div>
+					<div id="empDiv">${empList}</div>
+					<div id="day">
+						<h5 class='text-success'>날짜 선택</h5>
+						<table id="dayTable">
+						</table>
+					</div>
+					<div id="time">
+						<h5 class='text-success'>시간 선택</h5>
+						<table id="timeTable">
+						</table>
+					</div>
+					<div id="comment">
+						<h5 class='text-success'>코멘트</h5>
+						<textarea id="comment" name="bk_cmt" row="10" cols="60"
+							onkeyup="lengthCheck();"></textarea>
+					</div>
+					<input class='btn btn-success' type="submit" id="submit"
+						value="예약하기" />
 				</div>
-				<div id="comment">
-					<p>코멘트</p>
-					<textarea id="comment" name="bk_cmt" row="10" cols="60" onkeyup="lengthCheck();"></textarea>
-				</div>
-				<input type="submit" id="submit" value="예약하기" />
-			</div>
+			</form>
 		</div>
-	</form>
+	</div>
+	<!-- App js -->
+	<script src="/resources/dist/assets/js/app.min.js"></script>
+
+	<!-- third party js -->
+	<script src="/resources/dist/assets/js/vendor/Chart.bundle.min.js"></script>
+
+	<!-- demo app -->
+	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
+	<!-- demo app -->
+	<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
 </body>
 <!-- <script>
 	function lengthCheck() {

@@ -113,9 +113,12 @@ public class JinService {
 	private String makeLikeBusListHtml(List<HashMap<String, String>> list) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<div><img src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "' />");
-			sb.append("<p>" + list.get(i).get("BUS_NAME") + "</p>");
-			sb.append("<a href='./likeBusinessCancel?bus_no=" + list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+			sb.append("<div class='card d-block'>");
+			sb.append("<img style='height:300px; weight:300px;' class='card-img-top' src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "' />");
+			sb.append("<div class='card-body'>");
+			sb.append("<span><b class='card-title'>" + list.get(i).get("BUS_NAME")+"</b></span><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=" + list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+			sb.append("</div>");
 		} // for End
 		return sb.toString();
 	} // method End
@@ -169,25 +172,26 @@ public class JinService {
 			hMap.put("date", "noDate");
 		} // if End
 		StringBuilder pet = new StringBuilder();
-		pet.append("<p>예약할 동물</p>");
-		pet.append("<div><img src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
-		pet.append("' style='width: 100%; height: auto;' />");
-		pet.append("<p>" + petMap.get("PET_NAME") + "</p></div>");
+		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
+		pet.append(" style='height:300px; weight:300px;' />");
+		pet.append("<div class='card-body'><br/><br/>");
+		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
 		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
 		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
+		pet.append("</div>");
 		List<HashMap<String, String>> petList = jinDao.selectPetList(petMap);
-		pet.append("<p>다른 동물 선택</p>");
+		pet.append("<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
 		for (int i = 0; i < petList.size(); i++) {
-			pet.append("<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
+			pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
 			pet.append("&bct_code=" + hMap.get("bct_code"));
 			pet.append("&date=" + hMap.get("date") + "&pet_no=" + petList.get(i).get("PET_NO"));
-			pet.append("'>" + petList.get(i).get("PET_NAME") + "</a><br/>");
+			pet.append("'> " + petList.get(i).get("PET_NAME") + "</a><br/>");
 		} // for End
 		mav.addObject("petList", pet);
 		List<HashMap<String, String>> svcList = jinDao.selectSvcList(hMap);
 		StringBuilder svc = new StringBuilder();
-		svc.append("<p>서비스 선택</p>");
+		svc.append("<hr/><h5 class='text-success'>서비스 선택</h5>");
 		for (int i = 0; i < svcList.size(); i++) {
 			svc.append("<input type='checkbox' name='menu_no' value='");
 			svc.append(String.valueOf(svcList.get(i).get("MENU_NO")) + "' />");
@@ -202,7 +206,7 @@ public class JinService {
 		mav.addObject("svcList", svc);
 		List<HashMap<String, String>> empList = jinDao.selectEmpList(hMap);
 		StringBuilder emp = new StringBuilder();
-		emp.append("<p>직원 선택</p>");
+		emp.append("<br/><br/<br/><hr/><h5 class='text-success'>직원 선택</h5>");
 		for (int i = 0; i < empList.size(); i++) {
 			emp.append("<input type='radio' name='emp_no' value='");
 			emp.append(empList.get(i).get("EMP_NO") + "' /> ");
@@ -373,13 +377,13 @@ public class JinService {
 
 	// 서진 : 예약 메소드
 	@Transactional
-	public void insertBooking(Booking bk, HttpServletRequest request) {
+	public ModelAndView insertBooking(Booking bk, HttpServletRequest request) {
 		bk.setPer_no(request.getSession().getAttribute("no").toString());
 		bk.setVs_start(request.getParameter("day") + request.getParameter("time"));
 		String[] menu_no = request.getParameterValues("menu_no");
 		int sum = 0;
 		for (int i = 0; i < menu_no.length; i++) {
-			sum += Integer.parseInt(menu_no[i]);
+			sum += Integer.parseInt(request.getParameter(menu_no[i]));
 		} // for End
 		bk.setBk_pay(sum);
 		jinDao.insertBooking(bk);
@@ -388,6 +392,29 @@ public class JinService {
 			bk.setMenu_no(Integer.parseInt(menu_no[i]));
 			jinDao.insertBkMenu(bk);
 		} // for End
+		HashMap<String, String> hMap = jinDao.bookingSuccess(bk);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("bus_name", hMap.get("BUS_NAME"));
+		mav.addObject("vs_start", hMap.get("VS_START"));
+		mav.addObject("bct_name", hMap.get("BCT_NAME"));
+		return mav;
+	} // method End
+
+	// 서진 : 새로운 예약 목록
+	public ModelAndView newScheduleList(HttpServletRequest request) {
+		String bus_no = request.getSession().getAttribute("no").toString();
+		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<div>" + list.get(i).get("BK_NO") + " | " + list.get(i).get("PTY_NAME") + " | ");
+			sb.append(list.get(i).get("PET_NAME") + " | " + list.get(i).get("PER_NAME") + " | ");
+			sb.append(list.get(i).get("VS_START") + "</div><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<input type='button' value='확정' name='" + list.get(i).get("BK_NO") + "' />");
+			sb.append("<input type='button' value='거절' name='" + list.get(i).get("BK_NO") + "' /></span>");
+		} // for End
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", sb.toString());
+		return mav;
 	} // method End
 
 } // class End

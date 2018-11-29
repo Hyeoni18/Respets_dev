@@ -18,5 +18,6 @@
 		<input type="button" id="cenc" value="예약 취소"
 			onclick="location.href='myBookingCancel?bk_no=${bk_no}'" />
 	</div>
+	${flas}
 </body>
 </html>
