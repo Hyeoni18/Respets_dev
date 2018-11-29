@@ -45,10 +45,22 @@ td {
 	width: 100%;
 	border: solid black 1px;
 }
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
 </style>
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_content">
+<br/>
 <div class="col-xl-6">
 <div class="card">
 <div class="card-body">
@@ -76,8 +88,8 @@ td {
 				 	<input type="checkbox" name="animal_code" value="가축" class="checkbox"/> 가축 <br /> &nbsp;
 	 사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
 	 안내- 등록신청 시 등록완료까지 인증시간이 소요됩니다. <br /> &nbsp;
-			<button>등록 신청</button>
-			<input type="reset" value="취소" />
+			<button class="btn btn-outline-secondary">등록 신청</button>
+			<input type="reset" class="btn btn-outline-danger" value="취소" />
 		</form>
 		<h4>휴일등록 필쑤 ... 팀원분들 해당 페이지를 이용하실 경우 널값을 허용하지 말아주세여...</h4>
 	</div>
@@ -99,7 +111,7 @@ td {
 	  ${beauty} &nbsp;
 	  사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
 	  안내- 등록신청 시 등록완료까지 인증시간이 소요됩니다. <br /> &nbsp; 
-	  		<button type="button" class="btn btn-outline-secondary" name="B" onclick="priceBox(this)">가격 등록 </button> &nbsp;
+	  		<button type="button" class="btn btn-outline-secondary" name="B" onclick="priceBox(this)">가격 등록 </button>&nbsp;
 			<input type="reset" class="btn btn-outline-danger" value="취소" onclick="cancel()"/>
 			<div id="B"></div> <!--서비스 가격 찍히는 div-->
 			<div id="B_price"></div> <!--고양이 서비스 가격 찍히는 div-->
@@ -135,6 +147,7 @@ td {
 </div> <!-- end card-body-->
 </div> <!-- end card-->
 </div> <!-- end col-xl-6 -->
+</div>
 </body>
 
 <script>

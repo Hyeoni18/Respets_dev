@@ -1,10 +1,7 @@
 package com.teamx.respets.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +18,7 @@ import java.util.Set;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,7 @@ public class HyunHwiService {
 	HttpServletRequest request;
 	@Autowired
 	HttpSession session;
-	private FileOutputStream fos; // 파일등록시 필요
+	HttpServletResponse response;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 이메일, 비밀번호 찾기//
 	// 현휘; findMyIdForm에서 가져온 type, per_name, per_phone를 들고 회원테이블로 이동
@@ -99,6 +97,11 @@ public class HyunHwiService {
 		mav = new ModelAndView();
 		String userId = request.getParameter("email");
 		String userType = request.getParameter("type");
+		List<Map<String,Object>> list;
+		list = hDao.searchRND(userId);
+		if(list.size() != 0) {
+			hDao.deleteRcode(userId);
+		}
 		String view = null;
 		String temp = "";
 		Random rnd = new Random();
@@ -131,7 +134,7 @@ public class HyunHwiService {
 		if (result != 0) { // insert에 성공 했을 경우
 			String tomail = rtb.getRnd_email(); // 메일을 받는 이메일 주소
 			String title = "비밀번호 변경 페이지"; // 메일의 제목
-			String content = "http://localhost:8080/resetMyPwForm?per_email=" + rtb.getRnd_email() + "&code="
+			String content = "http://localhost/resetMyPwForm?per_email=" + rtb.getRnd_email() + "&code="
 					+ rtb.getRnd_code() + "&type=" + rtb.getRnd_type();
 			mailSending(tomail, title, content); // 메일 보내기 메소드로 이동
 		}
@@ -228,38 +231,6 @@ public class HyunHwiService {
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////	
-	// 업종 등록 창 띄우기//
-	// 현휘; 기업이 가지고 있는 서비스들을 리스트로 뽑아오는 메소드 (혜연이 메소드 이용시 삭제될 예정)
-	public ModelAndView servicePage() {
-		mav = new ModelAndView();
-		String no = (String) session.getAttribute("no");
-		List<Map<String, Object>> list;
-		list = hDao.selectBusinessService(no);
-		String business = businessListShow(list);
-		mav.addObject("servList", business);
-		mav.setViewName("servicePage");
-		return mav;
-	}
-
-	// 검색해온 서비스 리스트 뽑아주는 메소드, 삭제예정 //기업 상세정보를 위해 필요-serviceDetail
-	private String businessListShow(List<Map<String, Object>> list) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			String bctcode = (String) list.get(i).get("BCT_CODE");
-			String bctname;
-			if (bctcode.equals("B")) {
-				bctname = "미용";
-			} else if (bctcode.equals("M")) {
-				bctname = "병원";
-			} else {
-				bctname = "호텔";
-			}
-			sb.append("<div class='col-md-4'><div class='card card-pricing'><div class='card-body text-center'><a href='serviceDetail?bct_code=" + bctcode + "'><div class='con'>"
-					+ "<p> 업종 : " + bctname + "</p><br/>" + "</div></a></div></div></div>");
-		}
-		return sb.toString();
-	}
-
 	// 현휘; 기업의 업종등록 신청 전, 가지고 있는 업종이 있는지 검색
 	public ModelAndView serviceInsertForm() {
 		mav = new ModelAndView();
@@ -267,7 +238,7 @@ public class HyunHwiService {
 		List<Map<String, Object>> list;
 		list = hDao.serviceInsertForm(bus_no); // 기업이 가진 서비스 검색
 		String codeSelectBut = codeSelectBut(); // 업종 선택 버튼 생성
-		System.out.println("확인: " + list.size());
+
 		// 각 업종들에게 필요한 메뉴를 검색하여 생성해준다.
 		String medical = menuSelect("M");
 		String beauty = menuSelect("B");
@@ -438,12 +409,13 @@ public class HyunHwiService {
 	// 현휘; 가져온 업종 정보들을 등록하는 메소드
 	@Transactional
 	public ModelAndView serviceInsert(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
 		fileWriter(request); // 사진 등록 (사업장사진)
 		weekSet(request); // 스케줄 등록 (영업시간,점심시간,고정휴무일)
 		checkTag(request); // 제공서비스 등록
 		insertPrice(request); // 기업이 지정한 서비스 가격 등록
 		addBusinessCode(request); // 업종 등록
-		mav.setView(new RedirectView("/servicePage"));
+		mav.setView(new RedirectView("/serviceManagement"));
 		// mav.setViewName("/servicePage");
 		return mav;
 	}
@@ -836,6 +808,7 @@ public class HyunHwiService {
 	// 기업의 상세정보 수정 페이지//
 	// 현휘; 기업의 상세정보 수정 페이지를 열기 위한 메소드 //가격등록창 수정해야해
 	public ModelAndView serviceUpdateForm(HttpServletRequest request) {
+		mav = new ModelAndView();
 		String bus_no = (String) session.getAttribute("no");
 		String bct_code = request.getParameter("bct_code");
 		System.out.println(bct_code);
@@ -868,16 +841,17 @@ public class HyunHwiService {
 		String bct_name = null;
 		// 가격등록 창을 가져오기 위한 if문
 		if (bct_code.equals("H")) {
-			mav.addObject("price", "<input type='button' name='H' onclick='priceBox(this)'/> 가격등록");
+			mav.addObject("price", "<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div id='H'></div>");
 			mav.addObject("cat_price", "<div id='H_price'></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
-			mav.addObject("price", "<input type='button' name='B' onclick='priceBox(this)'/> 가격등록");
+			mav.addObject("price", "<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div id='B'></div>");
 			mav.addObject("cat_price", "<div id='B_price'></div>");
 			bct_name = "미용";
 		} else if (bct_code.equals("M")) {
+			mav.addObject("medi_submit", "<button class='btn btn-outline-secondary'>수정하기</button>");
 			bct_name = "병원";
 		}
 		mav.addObject("bct_name", bct_name);
@@ -1015,17 +989,7 @@ public class HyunHwiService {
 		map.put("bct_code", bct_code);
 		map = hDao.searchBFX(map);
 		// 기업의 고정 스케줄을 검색
-		/*
-		 * Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다. Iterator<String>
-		 * iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다. while
-		 * (iter.hasNext()) { // 차례대로 값을 가져온다. String key = iter.next(); // 가져온 값을 변수에
-		 * 넣어준다. String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다. if
-		 * (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
-		 * "' checked />" + key); // checked 옵션을 // 준다. } else {
-		 * sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" +
-		 * key); // 아니면 그냥 만들어준다. } }
-		 */ if (map != null) {
+		if (map != null) {
 			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
 				sb.append("<input type='checkbox' name='holiday' value='월요일' checked /> 월요일"); // checked 옵션을 // 준다.
 			} else {
@@ -1210,6 +1174,7 @@ public class HyunHwiService {
 	// 현휘; 기업의 상세정보 수정
 	@Transactional
 	public ModelAndView serviceUpdate(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		String bct_code = request.getParameter("bct_code");
@@ -1249,7 +1214,7 @@ public class HyunHwiService {
 		}
 		fileWriter(request); // 사진 등록 (사업장사진)
 
-		mav.setView(new RedirectView("/servicePage"));
+		mav.setView(new RedirectView("/serviceManagement"));
 		return mav;
 	}
 
@@ -1289,7 +1254,7 @@ public class HyunHwiService {
 			hDao.deleteGLR(map); // 해당 업종의 사진 삭제
 			hDao.deleteSVC(map); // 해당 업종의 정보 삭제
 		}
-		mav.setView(new RedirectView("/servicePage"));
+		mav.setView(new RedirectView("/serviceManagement"));
 		return mav;
 	}
 
@@ -1304,16 +1269,25 @@ public class HyunHwiService {
 		list = hDao.selectSVC(bus_no);
 		System.out.println(list);
 		sb.append(" ");
+		sb.append("<ul class='nav nav-pills bg-light nav-justified mb-3'>");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<input type='radio' name='bct_code' value='" + bct_code + "' onclick='chk(this)'/>" + bct_name);
+			String color = null;
+			if(bct_code.equals("M")) {
+				color="#b9ffe0;";
+			} else if(bct_code.equals("B")) {
+				color="#9ce1c2;";
+			} else if(bct_code.equals("H")) {
+				color="#d6fffe;";
+			}
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: "+color+"\">"+bct_name+"&nbsp;</a></li>");
 		}
+		sb.append("</ul>");
 		mav.addObject("code", sb.toString());
 		mav.setViewName("stepList");
 		return mav;
 	}
-
 	// 현휘; 해당 업종 직원 리스트 불러오기 (ajax)
 	public String stepList(HttpServletRequest request) {
 		List<Map<String, Object>> list;
@@ -1322,45 +1296,87 @@ public class HyunHwiService {
 		String bus_no = (String) session.getAttribute("no");
 		String bct_code = request.getParameter("bct_code");
 		System.out.println(bct_code);
+		boolean flag = true;
+		int count = 0;
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		list = hDao.selectEMP(map);
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {
+				if (count == 0 || count % 3 == 0) {
+					sb.append("<div class='row'>");
+					sb.append("<div class='col-12'>");
+					sb.append("<div class='card-deck-wrapper'>");
+					sb.append("<div class='card-deck'>");
+					flag = false;
+				}
 				String emp_no = (String) list.get(i).get("EMP_NO");
 				String emp_name = (String) list.get(i).get("EMP_NAME");
 				String emp_pos = (String) list.get(i).get("EMP_POS");
 				String emp_part = (String) list.get(i).get("EMP_PART");
 				String emp_photo = (String) list.get(i).get("EMP_PHOTO");
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
-				sb.append("<div>");
+				sb.append("<div class='card d-block'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
-				sb.append("<img src='" + emp_loc + emp_photo + "'/></br>");
-				sb.append("이름: " + emp_name + "</br>");
-				sb.append("직급: " + emp_pos + "</br>");
+				sb.append("<img class='card-img-top' src='" + emp_loc + emp_photo + "'/></br>");
+				sb.append("<div class='card-body'>");
+				sb.append("<h5 class='card-title'> 이름: " + emp_name + "</h1>");
+				sb.append("<h5 class='card-title'> 직급: " + emp_pos + "</h1>");
+				sb.append("</div>");
 				sb.append("</a>");
 				sb.append("</div>");
+				if (count % 3 == 2) {
+					sb.append("</div>");
+					sb.append("</div>");
+					sb.append("</div>");
+					sb.append("</div>");
+					flag = true;
+				}
+				count++;
 			}
 		} else {
 			sb.append("<script>alert('직원을 등록해주세요');</script>");
+		}
+		if (count % 3 < 3 && count % 3 != 0) {
+			for (int i = 0; i < 3 - count % 3; i++) {
+				sb.append("<div class='card d-block'>");
+				sb.append("<div class='card-body'>");
+				sb.append("</div></div>");
+			}
+		}
+		if (flag != true) {
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 		}
 		return sb.toString();
 	}
 
 	// 현휘; 직원 등록 페이지로 이동 (
 	public ModelAndView stepInsertFormBut() {
+		mav = new ModelAndView();
 		StringBuilder sb = new StringBuilder();
 		String bus_no = (String) session.getAttribute("no");
 		List<Map<String, Object>> list;
 		list = hDao.selectSVC(bus_no);
 		sb.append("");
+		sb.append("<ul class='nav nav-pills bg-light nav-justified mb-3'>");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			System.out.println(bct_code);
+			String color = null;
+			if(bct_code.equals("M")) {
+				color="#d6fffe;";
+			} else if(bct_code.equals("B")) {
+				color="#9ce1c2;";
+			} else if(bct_code.equals("H")) {
+				color="#b9ffe0;";
+			}
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<input type='radio' class='bct_code' name='bct_code' value='" + bct_code
-					+ "' onClick='chk(this)'/> " + bct_name);
+			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\""+bct_code+"\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0' style=\"background-color: "+color+"\"> "+bct_name+" &nbsp;</a></li>");
 		}
+		sb.append("</ul>");
 		mav.addObject("type", sb.toString());
 
 		String time = timeSelect();
@@ -1377,13 +1393,13 @@ public class HyunHwiService {
 	// 현휘; 해당 업종에 직원 등록하는 페이지 //점심시간 시간이 안나와ㅏ 수정필요
 	public String stepInsertForm(HttpServletRequest request) {
 		String bct_code = request.getParameter("bct_code");
-
 		String work = checkWorkTime(request);
 		String lunch = checkLunchTime(request);
 		// String work = Time(bct_code, "step", "work"); //영업시간을 보여주는 메소드
 		// String lunch = Time(bct_code, "step", "lunch"); //점심시간을 보여주는 메소드
 		String holiday = Holiday(bct_code, "step");
-		return work + lunch + holiday;
+		String hidden_code = "<input type='hidden' name='bct_code' value='"+bct_code+"'/>";
+		return work + lunch + holiday+hidden_code;
 	}
 
 	// 현휘; 해당 업종에 직원 등록
@@ -1433,7 +1449,6 @@ public class HyunHwiService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		map.put("bus_no", no);
 		map.put("bct_code", code);
 		map.put("name", name);
@@ -1532,6 +1547,7 @@ public class HyunHwiService {
 	// 현휘; 직원 상세정보 (수정)
 	@Transactional
 	public ModelAndView stepDetail(HttpServletRequest request) {
+		mav = new ModelAndView();
 		String emp_no = request.getParameter("emp_no");
 		System.out.println(emp_no);
 		String bus_no = (String) session.getAttribute("no");
@@ -1647,20 +1663,6 @@ public class HyunHwiService {
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		map = hDao.searchBFX(map); // 기업의 고정 스케줄을 검색
-		/*
-		 * Set<String> mapKey = map.keySet(); // 고정 스케줄의 컬럼명을 가져온다. Iterator<String>
-		 * iter = mapKey.iterator(); // 차례로 뽑아오기 위해 iterator를 선언한다. while
-		 * (iter.hasNext()) { // 차례대로 값을 가져온다. String key = iter.next(); // 가져온 값을 변수에
-		 * 넣어준다. String value = (String) map.get(key); // 컬럼명이 가지고 있는 값을 변수에 넣어준다. if
-		 * (value.equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면 if
-		 * (type.equals("step")) {
-		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
-		 * "' checked onclick='return false;' />" + key); } else {
-		 * sb.append("<input type='checkbox' name='holiday' value='" + key +
-		 * "' checked />" + key); // checked // 옵션을 // 준다. } } else {
-		 * sb.append("<input type='checkbox' name='holiday' value='" + key + "' />" +
-		 * key); // 아니면 그냥 만들어준다. } }
-		 */
 		if (map != null) {
 			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
 				sb.append("<input type='checkbox' name='holiday' value='월요일' checked onclick='return false;'/> 월요일"); // checked
@@ -1830,8 +1832,8 @@ public class HyunHwiService {
 
 	private String button() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<input type='button' name='수정완료' value='수정완료' onclick='but(this)' />");
-		sb.append("<input type='button' name='삭제' value='삭제' onclick='but(this)' />");
+		sb.append("<br/><input type='button' class='btn btn-outline-secondary' name='수정완료' value='수정완료' onclick='but(this)' />");
+		sb.append("&nbsp;&nbsp;&nbsp;<input type='button' class='btn btn-outline-danger' name='삭제' value='삭제' onclick='but(this)' />");
 		return sb.toString();
 	}
 
@@ -2324,125 +2326,6 @@ public class HyunHwiService {
 		return mav;
 	}
 
-	public ModelAndView personalBlacklist() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> yList;
-		// 경고 리스트 (한달정지)
-		yList = hDao.yellowList();
-		String bList = blackList(yList);
-		mav.addObject("bList", bList);
-		mav.setViewName("personalBlackListPage");
-		// 경고번호, 2-경고 3-정지에 따른 값 따로 불러오기
-		// 불러올 때 해제 버튼 만들어서 가져오기.
-		return mav;
-	}
-
-	private String blackList(List<Map<String, Object>> list) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			String per_no = (String) list.get(i).get("PER_NO");
-			BigDecimal out_no = (BigDecimal) list.get(i).get("OUT_NO");
-			Timestamp blk_time = (Timestamp) list.get(i).get("BLK_TIME");
-			map = hDao.searchPER(per_no);
-			String per_name = (String) map.get("PER_NAME");
-			String pty_name = (String) map.get("PTY_NAME");
-			String pet_name = (String) map.get("PET_NAME");
-			BigDecimal per_noshow = (BigDecimal) map.get("PER_NOSHOW");
-			System.out.println(per_no);
-			System.out.println(per_name);
-			System.out.println(pty_name);
-			System.out.println(pet_name);
-			System.out.println(blk_time);
-			System.out.println(per_noshow);
-			System.out.println(out_no);
-			sb.append("<div>");
-			sb.append("<p>" + per_no + "|" + per_name + "|" + pty_name + "|" + pet_name + "|" + blk_time + "|"
-					+ per_noshow + "|" + out_no + "</p>");
-			sb.append("<input type='button' name='해제' value='해제'/>");
-			sb.append("</div>");
-			// 회원번호 클릭하면 모달박스 뜨는 거 구현하기
-			// 라디오 버튼으로 버튼 값에 따라 경고, 정지 페이지 다르게 나오게 하기.(Ajax)
-			//
-		}
-		return sb.toString();
-	}
-
-	public ModelAndView blackList(HttpServletRequest request) {
-		String black = request.getParameter("black");
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> bList = null;
-		if (black.equals("yellow")) {
-			bList = hDao.searchYellowBLK();
-		} else if (black.equals("red")) {
-			bList = hDao.searchRedBLK();
-		}
-		String List = makeBlackList(bList);
-		mav.addObject("List", List);
-		mav.setViewName("blackList");
-		return mav;
-	}
-
-	private String makeBlackList(List<Map<String, Object>> bList) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < bList.size(); i++) {
-			String per_no = (String) bList.get(i).get("PER_NO");
-			String per_name = (String) bList.get(i).get("PER_NAME");
-			String blk_time = (String) bList.get(i).get("BLK_TIME");
-			String out_no = (String) bList.get(i).get("OUT_NO");
-			sb.append("<p><a href='customerInfoDetail?per_no=" + per_no + "'>");
-			sb.append(per_no + "</a>||" + per_name + "||" + blk_time + "||" + out_no + "</p>");
-			sb.append("<button> 해제 </button>");
-		}
-		return sb.toString();
-	}
-
-	public ModelAndView weekCal() {
-		mav = new ModelAndView();
-		String bus_no = (String) session.getAttribute("no");
-		List<Map<String, Object>> list;
-		Map<String, Object> map = new HashMap<String, Object>();
-		StringBuilder sb = new StringBuilder();
-		map.put("bus_no", bus_no);
-		map.put("bct_code", 'M');
-		list = hDao.selectEMP(map);
-		sb.append("<input type='hidden' name='bct_code' value='" + list.get(0).get("BCT_CODE") + "'/>");
-		for (int i = 0; i < list.size(); i++) {
-			sb.append("<a href='javascript:;' class='step' value='" + list.get(i).get("EMP_NO") + "'>"
-					+ list.get(i).get("EMP_NAME") + "/</a>");
-		}
-		mav.addObject("weekCal", sb.toString());
-		mav.addObject("test", "okkkk");
-		mav.setViewName("weekCal");
-		return mav;
-	}
-
-	public ModelAndView stepCal(HttpServletRequest request) {
-		mav = new ModelAndView();
-		String emp_no = request.getParameter("emp_no");
-		String bus_no = (String) session.getAttribute("no");
-		String bct_code = request.getParameter("bct_code");
-		System.out.println(emp_no);
-		System.out.println(bus_no);
-		System.out.println(bct_code);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("bus_no", bus_no);
-		map.put("bct_code", bct_code);
-		map = hDao.searchBSD(map);
-		String am_open = (String) map.get("AM_OPEN");
-		String pm_close = (String) map.get("PM_CLOSE");
-
-		String am_pre = am_open.substring(0, 2);
-		String am_las = am_open.substring(2, 4);
-		String pm_pre = pm_close.substring(0, 2);
-		String pm_las = pm_close.substring(2, 4);
-
-		mav.addObject("am", am_pre + ":" + am_las + ":00");
-		mav.addObject("pm", pm_pre + ":" + pm_las + ":00");
-		mav.setViewName("stepCal");
-		return mav;
-	}
-
 	public String searchPrice(HttpServletRequest request) {
 		String tag_name = request.getParameter("tag_name");
 		String ani_name = request.getParameter("ani_name");
@@ -2797,11 +2680,10 @@ public class HyunHwiService {
 	}
 
 	//
-	public String butTagSelectList(HttpServletRequest request) {
+	public String butTagSelectList(HttpServletRequest request, Integer pageNum) {
 		System.out.println("버튼태그셀렉리스트, 리스트 띄워주기, 세번째 ");
 		String bct_code = request.getParameter("bct_code");
 		String tag_no = request.getParameter("tag_no");
-		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		StringBuilder sb = new StringBuilder();
 		sb.append("<h1> 버튼 클릭 태그 셀렉 </h1>");
@@ -2891,11 +2773,10 @@ public class HyunHwiService {
 		return paging.businessListTagPaging(map);
 	}
 
-	public String butTagSelectListPaging(HttpServletRequest request) {
+	public String butTagSelectListPaging(HttpServletRequest request, Integer pageNum) {
 		System.out.println("버튼클릭기업리스트불러오기, 페이징 부분");
 		String bct_code = request.getParameter("bct_code");
 		String tag_no = request.getParameter("tag_no");
-		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bct_code", bct_code);

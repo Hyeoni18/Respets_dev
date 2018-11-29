@@ -9,8 +9,22 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	
 </script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_content">
 	<h1>기본 정보 수정</h1>
 	<hr />
 	${no}
@@ -50,9 +64,10 @@
 					onchange="fileChk(this)" /><br /> <input type="hidden"
 					name="fileCheck" id="fileCheck" value="0" /></td>
 			</tr>
-		</table>
-		<button>수정 완료</button>
+		</table> <br/>
+		<button class="btn btn-outline-secondary">수정하기</button>
 	</form>
+	</div>
 </body>
 <script>
 	var jsonData = ${result};
