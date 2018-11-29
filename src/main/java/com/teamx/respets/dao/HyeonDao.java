@@ -29,8 +29,8 @@ public interface HyeonDao {
 	/* 혜연 기업 */
 	public ArrayList<HashMap<String, Object>> todayScheduleList(Map<String, Object> map);
 	public HashMap<String, Object> myBookingDetail(String bk_no);
-	public ArrayList<HashMap<String, Object>> serviceManagement(HashMap<String, Object> map);
-	public ArrayList<HashMap<String, Object>> businessBookingList(String no);
+	public ArrayList<HashMap<String, Object>> serviceManagement(String no);
+	public ArrayList<HashMap<String, Object>> businessBookingList(Map<String, Object> map);
 	public int todayScheduleListNoShow(HashMap<String, String> map);
 	public int todayScheduleListCheck(String bk_no);
 	public ArrayList<HashMap<String, Object>> serviceList(HashMap<String, Object> map);

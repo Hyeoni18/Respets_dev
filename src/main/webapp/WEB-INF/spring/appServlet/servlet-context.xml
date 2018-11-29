@@ -216,6 +216,7 @@
 			<exclude-mapping path="/businessInfoDetail" />
 			<exclude-mapping path="/businessInfoUpdateForm"/>
 			<exclude-mapping path="/businessBookingListPage"/>
+			<exclude-mapping path="/businessButtonPage"/>
 			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
 			<beans:bean
 				class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>

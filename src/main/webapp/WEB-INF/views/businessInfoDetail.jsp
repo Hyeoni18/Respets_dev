@@ -44,7 +44,7 @@
 					<td id="BCT_NAME"></td>
 				</tr>
 			</table>
-			사진 <br> <span id="GLR_FILE"></span>
+			사진 <br> ${img}
 		</div>
 		<h3>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h3>
 		<div>

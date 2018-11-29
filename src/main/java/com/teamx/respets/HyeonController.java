@@ -104,10 +104,10 @@ public class HyeonController {
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	/* 혜연 */
-	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
-	public ModelAndView myPage() {
+	@RequestMapping(value = "/businessButtonPage", method = RequestMethod.GET)
+	public ModelAndView businessButtonPage() {
 		mav = new ModelAndView();
-		mav.setViewName("myPage");
+		mav.setViewName("businessButtonPage");
 		return mav;
 	}
 
@@ -127,8 +127,8 @@ public class HyeonController {
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessBookingList")
-	public ModelAndView businessBookingList(HttpSession session) {
-		mav = hy.businessBookingList(session);
+	public ModelAndView businessBookingList(HttpSession session, Integer pageNum) {
+		mav = hy.businessBookingList(session, pageNum);
 		return mav;
 	}
 
@@ -226,8 +226,8 @@ public class HyeonController {
 	}
 
 	@RequestMapping(value = "/businessAllBookingList", produces = "application/text; charset=utf8")
-	public @ResponseBody String businessAllBookingList(HttpServletRequest request) {
-		String text = hy.businessAllBookingList(request);
+	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
+		String text = hy.businessAllBookingList(request, pageNum);
 		return text;
 	}
 	

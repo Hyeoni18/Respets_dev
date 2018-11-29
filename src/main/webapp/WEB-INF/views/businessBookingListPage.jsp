@@ -25,8 +25,8 @@
 			</label>
 		</div>
 	</form>
-	<div id="list"></div>
-	<div id="page_navi"></div>
+	<div id="list">${bokList}</div>
+	<div id="page_navi">${paging}</div>
 	<input type="hidden" id="page_index" class="page_index" />
 </body>
 <script>
@@ -36,35 +36,14 @@
 		var per = $('#per_name').val();
 		var pet = $('#pet_name').val();
 		console.log(per + ' ' + pet);
-		$result['paging'] = array(
-				'startPage' => $startPage, //시작페이지
-				'endPage' => $endPage, //종료페이지
-				'totalBlock' => $totalBlock, //전체페이지 블럭 수
-				'totalPage' => $totalPage, //전체 페이지 수
-				'blockPageNum' => $blockPageNum, //한 페이지에 나올 블럭 수
-				'rowPage' => $rowPage, //한 페이지에 나올 리스트 수
-				'totalCount' => $totalCount, //전체 리스트 수
-				'block' => $block, //현재 페이지가 어느 블럭에 포함되어있는지
-				'page' => $page //현재 페이지
-				);
-		var page = 1;
-		var searchKey = "";
 			if (radio == '전체') {
 				if(per == "" || pet == "" && per == null || pet == null){
 					$.ajax({
-						url : "businessAllBookingList?no=${no}",
+						url : "businessAllBookingList?no=${no}&pageNum=",
 						type : "post",
 						dataType : "text",
 						success : function(data) {
 							$('#list').html(data);
-							paging = result.paging;
-							
-							if(paging.page != 1){            // 페이지가 1페이지 가아니면
-						       	$(".pagination").append("<li class=\"goFirstPage\"><a><<</a></li>");        //첫페이지로가는버튼 활성화
-						    }else{
-						       	$(".pagination").append("<li class=\"disabled\"><a><<</a></li>");        //첫페이지로가는버튼 비활성화
-						    }
-							
 						},
 						error : function(error) {
 							console.log(error);

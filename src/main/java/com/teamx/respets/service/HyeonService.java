@@ -419,7 +419,7 @@ public class HyeonService {
 		String per_no = request.getParameter("pno");
 		System.out.println("개인=" + per_no);
 		String noshow = hyDao.getnoshowCount(per_no);
-		System.out.println("노쇼 수="+noshow);
+		System.out.println("노쇼 수=" + noshow);
 		int result = 0;
 		if (noshow == "0" || noshow == "1" || noshow == "2") { // 노쇼 수가 0이거나 2보다 작거나 같으면
 			result = hyDao.noshowInsert(per_no); // 노쇼 레코드 인설트
@@ -428,7 +428,6 @@ public class HyeonService {
 			int delete = hyDao.noshowDelete(per_no); // 노쇼 레코드 삭제
 			int insert = hyDao.warningInsert(per_no); // 경고 레코드 추가
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -440,10 +439,10 @@ public class HyeonService {
 	}
 
 	/* 혜연 전체 예약 */
-	public ModelAndView businessBookingList(HttpSession session) {
+	public ModelAndView businessBookingList(HttpSession session, Integer pageNum) {
 		this.session = session;
 		mav = new ModelAndView();
-		String view = null;
+		int pNo = (pageNum == null) ? 1 : pageNum;
 		StringBuilder sb = new StringBuilder();
 		String no = session.getAttribute("no").toString();
 		ArrayList<HashMap<String, Object>> sMap = hyDao.getSvcPri(no);
@@ -454,13 +453,34 @@ public class HyeonService {
 				sb.append(" | <input type='radio' name='radio' class='radio' value='" + svc + "'>" + svc);
 			}
 			mav.addObject("bctList", sb);
-			view = "businessBookingListPage";
-		} else {
-			mav.addObject("none", makeNoneHtml());
-			view = "businessBookingListPage";
 		}
-		mav.setViewName(view);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("page_no", pNo);
+		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
+		bList = hyDao.businessBookingList(map);
+		StringBuilder sb2 = new StringBuilder();
+		for (int i = 0; i < bList.size(); i++) {
+			String bk_no = (String) bList.get(i).get("BK_NO");
+			sb2.append("<a href='myBookingDetail?no=" + bk_no + "'>" + bk_no + "</a> | " + bList.get(i).get("PTY_NAME")
+					+ " | " + bList.get(i).get("PET_NAME") + " | " + bList.get(i).get("PER_NAME") + " | "
+					+ bList.get(i).get("BCT_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
+					+ bList.get(i).get("VS_START") + "<br>");
+		}
+		mav.addObject("bokList", sb2);
+		String paging = businessBookingList(pNo, no);
+		mav.addObject("paging", paging);
+		mav.setViewName("businessBookingListPage");
 		return mav;
+	}
+
+	private String businessBookingList(int pNo, String no) {
+		int maxNum = hyDao.getListCount(no);
+		int listCount = 9;
+		int pageCount = 5;
+		String boardName = "businessBookingListPage";
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.BookingListButton(no);
 	}
 
 	/*
@@ -476,12 +496,10 @@ public class HyeonService {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		String no = session.getAttribute("no").toString();
-		System.out.println(no);
-		map.put("no", no);
+		System.out.println("기업번호 = " + no);
 		ArrayList<HashMap<String, Object>> servList = new ArrayList<HashMap<String, Object>>();
-		servList = hyDao.serviceManagement(map);
+		servList = hyDao.serviceManagement(no);
 		if (servList != null) {
 			mav.addObject("servList", makeServiceListHtml(servList));
 			view = "servicePage";
@@ -496,19 +514,19 @@ public class HyeonService {
 	private Object makeServiceListHtml(ArrayList<HashMap<String, Object>> servList) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < servList.size(); i++) {
-			String no = (String) servList.get(i).get("BUS_NO");
 			String bct_code = (String) servList.get(i).get("BCT_CODE");
 			String code = null;
-			if(bct_code.equals("M")) {
-				code="mdi mdi-hospital";
+			if (bct_code.equals("M")) {
+				code = "mdi mdi-hospital";
 			} else if (bct_code.equals("B")) {
-				code="mdi mdi-content-cut";
+				code = "mdi mdi-content-cut";
 			} else if (bct_code.equals("H")) {
-				code="mdi mdi-hotel";
+				code = "mdi mdi-hotel";
 			}
 			sb.append("<div class='col-md-4'><div class='card card-pricing'><div class='card-body text-center'>");
-			sb.append("<a href='serviceDetail?bct_code=" + bct_code + "'><i class='card-pricing-icon "+code+"'></i></a><br/><br/>"
-					+"<h2 class='card-pricing-price'>"+servList.get(i).get("BCT_NAME")+"</h2>");
+			sb.append("<a href='serviceDetail?bct_code=" + bct_code + "'><i class='card-pricing-icon " + code
+					+ "'></i></a><br/><br/>" + "<h2 class='card-pricing-price'>" + servList.get(i).get("BCT_NAME")
+					+ "</h2>");
 			sb.append("</div></div></div>");
 		}
 		return sb.toString();
@@ -551,10 +569,15 @@ public class HyeonService {
 		System.out.println("bmap" + bmap);
 		String view = null;
 		if (bmap != null) {
+			String glr_file = (String) bmap.get("GLR_FILE");
+			String glr_loc = (String) bmap.get("GLR_LOC");
+			StringBuilder sb = new StringBuilder();
+			sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
 			Gson gson = new GsonBuilder().create();
 			String json = gson.toJson(bmap);
 			System.out.println(json);
 			mav.addObject("result", json);
+			mav.addObject("img", sb);
 			view = "businessInfoDetail";
 		}
 		mav.setViewName(view);
@@ -630,23 +653,26 @@ public class HyeonService {
 			sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
 					+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
 					+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
-					+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START")
-					+ "<br/><span class='but'></span><span class='ton'><input type='button' class='com' value='방문' onclick=\"com(\'"
-					+ bk_no + "')\" />" + " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(\'" + bk_no
-					+ "',\'" + pno + "\')\" />"
-					+ " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(\'" + pno
+					+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START") + "<br/><span class='" + bk_no
+					+ "'></span><span id='" + bk_no
+					+ "' class='ton'><input type='button' class='com' value='방문' onclick=\"com(\'" + bk_no + "')\" />"
+					+ " <input type='button' class='noshow' value='노쇼' onclick=\"noshow(\'" + bk_no + "',\'" + pno
+					+ "\')\" />" + " <input type='button' class='unNoshow' value='노쇼취소' onclick=\"unNoshow(\'" + pno
 					+ "')\"/></span></div><br>");
 
 		}
 		return sb.toString();
 	}
 
-	public String businessAllBookingList(HttpServletRequest request) {
+	public String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
+		mav = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
+		int pNo = (pageNum == null) ? 1 : pageNum;
 		String no = request.getParameter("no");
 		map.put("no", no);
+		map.put("page_no", pNo);
 		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		bList = hyDao.businessBookingList(no);
+		bList = hyDao.businessBookingList(map);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");

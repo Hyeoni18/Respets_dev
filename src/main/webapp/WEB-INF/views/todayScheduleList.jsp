@@ -60,8 +60,9 @@
 </script>
 <script>
 	function com(bk_no) {
-		var but = $('span[id]').val();
+		var but = $('span[class="'+bk_no+'"]');
 		console.log(but);
+		console.log(bk_no);
 		$.ajax({
 			url : 'todayScheduleListCheck',
 			type : 'post',
@@ -71,8 +72,9 @@
 			success : function(data) {
 				if (data != 0) {
 					console.log("성공");
+					$()
 					$(but).html("방문 완료");
-					$('.ton').hide();
+					$('#'+bk_no).hide();
 				} else {
 					console.log("실패");
 				}
