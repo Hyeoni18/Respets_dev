@@ -37,15 +37,15 @@
 			</tr>
 			<tr>
 				<td>업체명 :</td>
-				<td><input type="text" name="bus_name" id="bus_name"/></td>
+				<td><input type="text" name="bus_name" value="${bmap.BUS_NAME}"/></td>
 			</tr>
 			<tr>
 				<td>대표자명 :</td>
-				<td><input type="text" name="bus_ceo" id="bus_ceo" /></td>
+				<td><input type="text" name="bus_ceo" value="${bmap.BUS_CEO}" /></td>
 			</tr>
 			<tr>
 				<td>업체 연락처 :</td>
-				<td><input type="text" name="bus_phone" id="bus_phone" /></td>
+				<td><input type="text" name="bus_phone" value="${bmap.BUS_PHONE}" /></td>
 			</tr>
 			<tr>
 				<td>사업장 주소 :</td>
