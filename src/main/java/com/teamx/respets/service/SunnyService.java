@@ -645,17 +645,22 @@ public class SunnyService {
 	}
 
 	/* 기업 상세페이지 */
-	public ModelAndView businessDetailPage(String bus_no, String bct_code) {
+	public ModelAndView businessDetailPage(HttpSession session, HttpServletRequest request) {
 		mav = new ModelAndView();
 		String view = null;
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
+		
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bus_no");
+		String bsd_date = request.getParameter("bsd_date");
+		
 		System.out.println("bus_no=" + bus_no);
 		System.out.println("bct_code=" + bct_code);
+		System.out.println("bct_code=" + bsd_date);
 		
 		//회원번호
-		String no = "P1000001";
-		//String no = session.getAttribute("no").toString();
+		String no = session.getAttribute("no").toString();
 		
 		// 해시맵에 쿼리스트링과 회원번호를 담는다
 		hmap.put("no", no);
@@ -696,6 +701,7 @@ public class SunnyService {
 		mav.addObject("no", no);
 		mav.addObject("code", code);
 		mav.addObject("bus_no", bus_no);
+		mav.addObject("bsd_date", bsd_date);
 		mav.addObject("bct_code", bct_code);
 		mav.addObject("favorite", favorite);
 		mav.addObject("bus_img", bus_img);

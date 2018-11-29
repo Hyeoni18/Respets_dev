@@ -40,6 +40,9 @@
 		<tr>
 			<td>
 				<!-- Center modal -->
+				<c:if test="${bsd_date}">
+				
+				</c:if>
 				<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=18/11/15" 
 				class="btn btn-block btn-sm btn-success">예약하기</a>
 			</td>

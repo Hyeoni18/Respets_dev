@@ -256,7 +256,6 @@
 
 	<!-- demo app -->
 	<script src="resources/dist/assets/js/pages/demo.widgets.js"></script>
-	<%@ include file="footer.html"%>
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
