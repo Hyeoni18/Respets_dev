@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Respets</title>
+        <title>Respets :: 이메일 확인</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -34,7 +34,7 @@
                                 
                                 <div class="text-center w-75 m-auto">
                                     <h4 class="text-dark-50 text-center mt-3 font-weight-bold">안녕하세요. 회원님! </h4>
-                                    <p class="text-muted mb-4">이메일 인증에 성공하였습니다. 정상적인 서비스 이용이 가능합니다.</p>
+                                    <p class="text-muted mb-4">이메일 인증에 성공하였습니다.<br />정상적인 서비스 이용이 가능합니다.</p>
                                 </div>
 
                                     <div class="form-group mb-0 text-center">
