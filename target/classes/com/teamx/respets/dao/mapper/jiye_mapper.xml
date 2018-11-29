@@ -259,6 +259,7 @@
 	<update id="confirmLicense" parameterType="String">
 		UPDATE BUS SET BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
+	
 <!-- 	<select id="getPerCalendar" resultType="HashMap" parameterType="String">
 		SELECT PER_NAME,BK_NO,PET_NAME,BUS_NAME,BCT_NAME,
 		TO_CHAR(VS_START, 'yyyy-mm-dd hh24:mi') VS_START,
