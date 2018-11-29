@@ -27,7 +27,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<form action="booking">
+	<form action="booking" method="post">
 		<div id="wrap">
 			<div id="petDiv">${petList}</div>
 			<div id="bkDiv">

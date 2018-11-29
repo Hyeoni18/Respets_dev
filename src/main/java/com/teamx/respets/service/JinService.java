@@ -373,13 +373,13 @@ public class JinService {
 
 	// 서진 : 예약 메소드
 	@Transactional
-	public void insertBooking(Booking bk, HttpServletRequest request) {
+	public ModelAndView insertBooking(Booking bk, HttpServletRequest request) {
 		bk.setPer_no(request.getSession().getAttribute("no").toString());
 		bk.setVs_start(request.getParameter("day") + request.getParameter("time"));
 		String[] menu_no = request.getParameterValues("menu_no");
 		int sum = 0;
 		for (int i = 0; i < menu_no.length; i++) {
-			sum += Integer.parseInt(menu_no[i]);
+			sum += Integer.parseInt(request.getParameter(menu_no[i]));
 		} // for End
 		bk.setBk_pay(sum);
 		jinDao.insertBooking(bk);
@@ -388,6 +388,29 @@ public class JinService {
 			bk.setMenu_no(Integer.parseInt(menu_no[i]));
 			jinDao.insertBkMenu(bk);
 		} // for End
+		HashMap<String, String> hMap = jinDao.bookingSuccess(bk);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("bus_name", hMap.get("BUS_NAME"));
+		mav.addObject("vs_start", hMap.get("VS_START"));
+		mav.addObject("bct_name", hMap.get("BCT_NAME"));
+		return mav;
+	} // method End
+
+	// 서진 : 새로운 예약 목록
+	public ModelAndView newScheduleList(HttpServletRequest request) {
+		String bus_no = request.getSession().getAttribute("no").toString();
+		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<div>" + list.get(i).get("BK_NO") + " | " + list.get(i).get("PTY_NAME") + " | ");
+			sb.append(list.get(i).get("PET_NAME") + " | " + list.get(i).get("PER_NAME") + " | ");
+			sb.append(list.get(i).get("VS_START") + "</div><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<input type='button' value='확정' name='" + list.get(i).get("BK_NO") + "' />");
+			sb.append("<input type='button' value='거절' name='" + list.get(i).get("BK_NO") + "' /></span>");
+		} // for End
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", sb.toString());
+		return mav;
 	} // method End
 
 } // class End
