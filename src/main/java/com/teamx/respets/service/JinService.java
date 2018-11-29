@@ -172,25 +172,26 @@ public class JinService {
 			hMap.put("date", "noDate");
 		} // if End
 		StringBuilder pet = new StringBuilder();
-		pet.append("<p>예약할 동물</p>");
-		pet.append("<div><img src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
-		pet.append("' style='width: 100%; height: auto;' />");
-		pet.append("<p>" + petMap.get("PET_NAME") + "</p></div>");
+		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
+		pet.append(" style='height:300px; weight:300px;' />");
+		pet.append("<div class='card-body'><br/><br/>");
+		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
 		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
 		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
+		pet.append("</div>");
 		List<HashMap<String, String>> petList = jinDao.selectPetList(petMap);
-		pet.append("<p>다른 동물 선택</p>");
+		pet.append("<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
 		for (int i = 0; i < petList.size(); i++) {
-			pet.append("<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
+			pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
 			pet.append("&bct_code=" + hMap.get("bct_code"));
 			pet.append("&date=" + hMap.get("date") + "&pet_no=" + petList.get(i).get("PET_NO"));
-			pet.append("'>" + petList.get(i).get("PET_NAME") + "</a><br/>");
+			pet.append("'> " + petList.get(i).get("PET_NAME") + "</a><br/>");
 		} // for End
 		mav.addObject("petList", pet);
 		List<HashMap<String, String>> svcList = jinDao.selectSvcList(hMap);
 		StringBuilder svc = new StringBuilder();
-		svc.append("<p>서비스 선택</p>");
+		svc.append("<hr/><h5 class='text-success'>서비스 선택</h5>");
 		for (int i = 0; i < svcList.size(); i++) {
 			svc.append("<input type='checkbox' name='menu_no' value='");
 			svc.append(String.valueOf(svcList.get(i).get("MENU_NO")) + "' />");
@@ -205,7 +206,7 @@ public class JinService {
 		mav.addObject("svcList", svc);
 		List<HashMap<String, String>> empList = jinDao.selectEmpList(hMap);
 		StringBuilder emp = new StringBuilder();
-		emp.append("<p>직원 선택</p>");
+		emp.append("<br/><br/<br/><hr/><h5 class='text-success'>직원 선택</h5>");
 		for (int i = 0; i < empList.size(); i++) {
 			emp.append("<input type='radio' name='emp_no' value='");
 			emp.append(empList.get(i).get("EMP_NO") + "' /> ");
