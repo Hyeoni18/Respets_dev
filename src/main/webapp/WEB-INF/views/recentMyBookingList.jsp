@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,56 +24,99 @@
 
 </head>
 <body>
-	<div id="recentBookingList">
-		<div class="page-content">
-			<div class="card">
-				<div class="card-body">
-					<div class="p-lg-1"></div>
+	<!-- Begin page -->
+	<div class="wrapper">
 
-					<div class="p-lg-1">
-						<div class="example-container">
-							<div class="row">
-								<div class="col-xl-12">
-									<div class="card mb-0">
-										<div class="card-body">
-											<h3 class="header-title">최근 예약 목록</h3>
-											<p class="text-muted font-14 mb-4">내 반려동물의 최근 서비스 예약 목록을
-												확인해보세요.</p>
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
 
-											<div class="table-responsive-sm">
-												<table class="table table-centered mb-0">
-													<thead>
-														<tr>
-															<th>예약번호</th>
-															<th>업체명</th>
-															<th>동물종류</th>
-															<th>동물이름</th>
-															<th>예약자명</th>
-															<th>예약일시</th>
-															<th>방문일시</th>
-															<th>예약확정상태</th>
-														</tr>
-														${hList}
-													</thead>
-													<tbody>
-													</tbody>
-												</table>
-											</div>
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
 
-										</div>
-										<!-- end card body-->
-									</div>
-									<!-- end card -->
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
 								</div>
+								<h4 class="page-title">최근 예약 목록</h4>
 							</div>
 						</div>
-
 					</div>
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card mb-0">
+								<div class="card-body">
+									<p class="text-muted font-14 mb-4">내 반려동물의 최근 서비스 예약 목록을
+										확인해보세요.</p>
+
+									<div class="table-responsive-sm">
+										<table class="table table-centered mb-0">
+											<thead>
+												<tr>
+													<th>예약번호</th>
+													<th>업체명</th>
+													<th>동물종류</th>
+													<th>동물이름</th>
+													<th>예약자명</th>
+													<th>예약일시</th>
+													<th>방문일시</th>
+													<th>예약확정상태</th>
+												</tr>
+												${hList}
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+								<!-- end card body-->
+							</div>
+							<!-- end card -->
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+
 				</div>
+				<!-- container -->
+
 			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
 		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
 	</div>
-	${cancInsertSucess}
+	<!-- END wrapper -->
+${cancInsertSucess}
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
@@ -85,5 +129,16 @@
 			}
 		});
 	})
+</script>
+
+<script>
+var test = $('#chk').text();
+console.log(test);
+if($('td[name=chk]').match(/승인/)) {
+	$('td[name=chk]').attr('class', 'text-success');
+}else {
+	$('td[name=chk]').attr('class', 'text-danger');
+}
+
 </script>
 </html>

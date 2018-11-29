@@ -36,9 +36,9 @@ public class SunnyController {
 	
 	/*진선*/
 	@RequestMapping (value="/petList", method=RequestMethod.GET)
-	public ModelAndView petList(String per_no) {
+	public ModelAndView petList(HttpSession session) {
 		mav = new ModelAndView();
-		mav=ss.petList(per_no);
+		mav=ss.petList(session);
 		return mav;
 	}
 	

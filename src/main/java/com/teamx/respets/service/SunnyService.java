@@ -47,21 +47,29 @@ public class SunnyService {
 	 */
 
 	/* 메뉴 나의 동물 정보 클릭 시 실행 */
-	public ModelAndView petList(String per_no) { // userId는 이메일
+	public ModelAndView petList(HttpSession session) { // userId는 이메일
 		ArrayList<Pet> petList = new ArrayList<Pet>();
 		mav = new ModelAndView();
 		String view = null;
 		petList = null;
-		// 검색한 회원번호로 반려동물 리스트 불러오기
-		petList = sDao.getPetList(per_no);
-		mav.addObject("per_no", per_no);// 회원번호 담기
-		if (petList.size() > 0) {// 리스트가 존재하면
-			mav.addObject("petList", petList);// 반려동물 리스트 담기
-		} else {// 등록된 반려동물이 없으면
-			mav.addObject("petEmpty", "등록된 동물이 없습니다");
+		String no = session.getAttribute("no").toString();
+		char code = no.charAt(0);
+		if(code=='P') {
+			// 검색한 회원번호로 반려동물 리스트 불러오기
+			petList = sDao.getPetList(no);
+			mav.addObject("per_no", no);// 회원번호 담기
+			if (petList.size() > 0) {// 리스트가 존재하면
+				mav.addObject("petList", petList);// 반려동물 리스트 담기
+			} else {// 등록된 반려동물이 없으면
+				mav.addObject("petEmpty", "등록된 동물이 없습니다");
+			}
+			view = "petList";
+			mav.setViewName(view);
+		}else {
+			view = "lock-screen-bus";
+			mav.setViewName(view);
 		}
-		view = "petList";
-		mav.setViewName(view);
+		
 		return mav;
 	}
 
@@ -576,22 +584,29 @@ public class SunnyService {
 	
 	/* 검색한 게시글 리스트 */
 	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {
-		mav = new ModelAndView();
-		String view = null;
+		//pageNum이 null이면 1
 		int page_no = (pageNum == null) ? 1 : pageNum;
+		
 		abo = new AdminBoard();
 		abo.setPage_no(page_no);
 		abo.setAbc_name(abc_name);
 		abo.setSearch(search);
+		
 		List<AdminBoard> aboList = null;
-		System.out.println("aboList=" + aboList);
-		if(abo.getAbc_name().equals("전체") && abo.getSearch()=="") {
+		if(abc_name.equals("전체") && search=="") {
 			noticeList(pageNum);
-		}else if(abo.getAbc_name().equals("전체")) {
+		}else if(abc_name.equals("전체")) {
 			aboList = sDao.getNoticeListAllSearch(abo);
-		}else aboList = sDao.getNoticeListCategoriSearch(abo);	
-		System.out.println("aboList=" + aboList);
+		}else aboList = sDao.getNoticeListCategoriSearch(abo);
+		
+		System.out.println("aboList=" + aboList); //log
+		
+		mav = new ModelAndView();
+		String view = null;
+		
 		if (aboList != null) {
+			mav.addObject("searchNotifications", "<div class='alert alert-primary' role='alert' style='text-align:center'>"
+					+ "<strong>'"+abo.getSearch()+"'</strong>에 대한 검색 결과입니다</div>");
 			mav.addObject("aboList", aboList);
 			mav.addObject("abc_name", abc_name);
 			mav.addObject("paging", getPagingSearch(abo));
@@ -605,7 +620,8 @@ public class SunnyService {
 		mav.setViewName(view);
 		return mav;
 	}
-
+	
+	/* 검색한 리스트 페이징 */
 	private String getPagingSearch(AdminBoard abo) {
 		int maxNum = 0;
 		if(abo.getAbc_name().equals("전체")) 
@@ -618,7 +634,7 @@ public class SunnyService {
 		return paging.makeHtmlSearchPaging(abo);
 	}
 
-
+	/* 기업 상세페이지 */
 	public ModelAndView businessDetailPage(String bus_no, String bct_code) {
 		mav = new ModelAndView();
 		String view = null;
@@ -683,6 +699,7 @@ public class SunnyService {
 		return mav;
 	}
 
+	/* 즐겨찾기 추가 삭제 (Ajax) */
 	public int favoriteChange(HttpServletRequest request) {
 		int result = 0;
 		HashMap<String, Object> hmap = new HashMap<>();
@@ -705,14 +722,16 @@ public class SunnyService {
 		return result;
 	}
 
+	/* 개인 캘린더 */
 	public ModelAndView personalCalendar(HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;
-		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
-		HashMap<String,Object> hmap = new HashMap<>();
 		//회원번호
 		//String no = "P1000001";
 		String no = session.getAttribute("no").toString();
+		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String,Object>> bList = new ArrayList<HashMap<String, Object>>();
+		System.out.println("세션확인: " + no);
 		
 		//회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = sDao.getPerCalendar(no);
@@ -727,33 +746,41 @@ public class SunnyService {
 		
 		mav.addObject("no", no);
 		for(int i=0;i<bookingList.size();i++) {
-			System.out.println("bookingList=" + bookingList);
-			hmap.put("bookingList", bookingList);
-			System.out.println("코드수정확인");
-			//bookingInfo = new JSONObject();
-			//String petName = bookingList.get(i).get("PET_NAME").toString();
-			//String busName = bookingList.get(i).get("BUS_NAME").toString();
-			//String bctName = bookingList.get(i).get("BCT_NAME").toString();
-			//if(bctName.equals("병원")) bctName="진료";
-			//String start = bookingList.get(i).get("VS_START").toString();
-			//String end = bookingList.get(i).get("VS_END").toString();
+			HashMap<String,Object> hmap = new HashMap<>();
+			System.out.println("bookingList!!!!!!!!!!!!!!!" + bookingList.get(i));
+			String bk_no = bookingList.get(i).get("BK_NO").toString();
+			String petName = bookingList.get(i).get("PET_NAME").toString();
+			String busName = bookingList.get(i).get("BUS_NAME").toString();
+			String bctName = bookingList.get(i).get("BCT_NAME").toString();
+			if(bctName.equals("병원")) {
+				bctName="진료";
+			}
+
+			String start = bookingList.get(i).get("VS_START").toString();
+			String end = bookingList.get(i).get("VS_END").toString();
 			
 			//데이터 입력
-			//bookingInfo.put("title", petName+"-"+busName+"("+bctName+")");
-			//bookingInfo.put("start", start);
-			//bookingInfo.put("end", end);
-			//if(bctName.equals("진료")) bookingInfo.put("className", "bg-warning");
-			//if(bctName.equals("미용")) bookingInfo.put("className", "bg-success");
-			//if(bctName.equals("호텔")) bookingInfo.put("className", "bg-info");
-			//Array에 입력
-			//bookingArray.add(bookingInfo);
-			Gson gson =  new GsonBuilder().create();
-			String json = gson.toJson(hmap);
-			System.out.println("json=" + json);
-			mav.addObject("e", json);
+			hmap.put("title", petName+"-"+busName+"("+bctName+")");
+			hmap.put("start", start);
+			hmap.put("end", end);
+			hmap.put("bk_no", bk_no);
+			if(bctName.equals("진료")) {
+				hmap.put("className", "bg-warning");
+			}else if(bctName.equals("미용")) {
+				hmap.put("className", "bg-success");
+			}else {
+				hmap.put("className", "bg-info");
+			}
+			bList.add(hmap);
 		}
+		System.out.println("hmap!!!!!!!!!!!!!!: " + bList);
+		Gson gson =  new GsonBuilder().create();
+		String json = gson.toJson(bList);
+		System.out.println("json!!!!!!!!!!!!!1" + json);
+		mav.addObject("e", json);
 		//bookingObject.put("e",bookingArray);
 		//System.out.println("bookingObject="+bookingObject.toJSONArray(bookingArray));
+		System.out.println("확인: " + mav);
 		view = "personalCalendar";
 		mav.setViewName(view);
 		return mav;

@@ -27,36 +27,35 @@ float:right;
 <div id="div_content">
 	<h1>기본 정보 수정</h1>
 	<hr />
-	${no}
 	<form action="businessInfoUpdate" method="post">
 		<table>
 			<tr>
-				<td>사업자 번호</td>
+				<td>사업자 번호 :</td>
 				<td id="BUS_LCNO"></td>
 			</tr>
 			<tr>
-				<td>업체명</td>
+				<td>업체명 :</td>
 				<td><input type="text" name="bus_name" id="bus_name"/></td>
 			</tr>
 			<tr>
-				<td>대표자명</td>
+				<td>대표자명 :</td>
 				<td><input type="text" name="bus_ceo" id="bus_ceo" /></td>
 			</tr>
 			<tr>
-				<td>업체 연락처</td>
+				<td>업체 연락처 :</td>
 				<td><input type="text" name="bus_phone" id="bus_phone" /></td>
 			</tr>
 			<tr>
-				<td>사업장 주소</td>
+				<td>사업장 주소 :</td>
 				<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
 						id="BUS_ADDR2"></span></td>
 			</tr>
 			<tr>
-				<td>주력서비스</td>
+				<td>주력서비스 :</td>
 				<td id="BCT_NAME"></td>
 			</tr>
 			<tr>
-				<td>대표사진</td>
+				<td>대표사진 :</td>
 				<td><input type="file" name="mainPhoto"
 					onchange="fileChk(this)" /><br /> <input type="hidden"
 					name="fileCheck" id="fileCheck" value="0" /></td>

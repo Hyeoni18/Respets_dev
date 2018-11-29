@@ -152,6 +152,26 @@
 	</select>
 	
 	<!-- 기업공지사항 검색 카운트  -->
+	<select id="getSearchBusinessAllNoticeCount" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND BBO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	
+	<!-- 기업 공지사항 검색 페이징 -->
+	<select id="searchBusinessAllNotice" parameterType="HashMap" resultType="HashMap">
+		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_DATE
+				FROM BUS_NOTICE_VIEW
+				WHERE BUS_NO=#{no} AND BBO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9
+		]]>
+	</select>
+	
+	<!-- 기업공지사항 검색 카운트  -->
 	<select id="getSearchBusinessNoticeCount" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) AS MAXNUM FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND BBC_NAME=#{select} AND BBO_TITLE LIKE '%'||#{search}||'%'
 	</select>
@@ -170,7 +190,7 @@
 		WHERE X.RNUM >= ${pageNum} * 10-9
 		]]>
 	</select>
-	
+		
 	<!-- 기업공지사항등록 -->
 	<insert id="businessNoticeInsert" parameterType="HashMap" >
 		INSERT INTO BBO VALUES(BBO_SEQ.NEXTVAL, #{no}, #{bct_code}, #{bbc_no}, #{bbo_title}, #{bbo_ctt}, SYSDATE)
@@ -239,6 +259,7 @@
 	<update id="confirmLicense" parameterType="String">
 		UPDATE BUS SET BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
+	
 <!-- 	<select id="getPerCalendar" resultType="HashMap" parameterType="String">
 		SELECT PER_NAME,BK_NO,PET_NAME,BUS_NAME,BCT_NAME,
 		TO_CHAR(VS_START, 'yyyy-mm-dd hh24:mi') VS_START,

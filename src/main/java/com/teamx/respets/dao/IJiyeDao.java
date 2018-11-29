@@ -54,8 +54,11 @@ public interface IJiyeDao {
 	
 	public HashMap<String, Object> noticeDetailPage(HashMap<String, Object> hmap);
 	public List<HashMap<String, Object>> searchBusinessNotice(HashMap<String, Object> hmap);
+	public List<HashMap<String, Object>> searchBusinessAllNotice(HashMap<String, Object> hmap);
+	
 	public int getBusinessNoticeCount(String no);
 	public int getSearchBusinessNoticeCount(HashMap<String, Object> hmap);
+	public int getSearchBusinessAllNoticeCount(HashMap<String, Object> hmap);
 	public int businessNoticeInsert(HashMap<String, Object> hmap);
 	public HashMap<String, Object> businessNoticeUpdateForm(String no);
 	public int businessNoticeUpdate(HashMap<String, Object> hmap);
@@ -75,6 +78,10 @@ public interface IJiyeDao {
 	public HashMap<String, Object> getBusinessInfo(HashMap<String, Object> bMap);
 
 	public int confirmLicense(String bus_no);
+
+	public int getRecentMyBookingList(String no);
+
+
 
 
 }

@@ -21,7 +21,6 @@ float:right;
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
 <div id="div_content">
 <form name="stepDetail" method="post"
 			enctype="multipart/form-data">

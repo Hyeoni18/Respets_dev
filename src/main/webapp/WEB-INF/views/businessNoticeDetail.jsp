@@ -1,13 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<title>관리자 공지사항</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -67,43 +65,47 @@
 									x-placement="bottom-end"
 									style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-142px, 20px, 0px);">
 									<!-- item-->
-									<a href="noticeUpdateForm?abo_no=${abo.abo_no}"
+									<a href="businessNoticeUpdateForm?${bbo_no}"
 										class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
 									<!-- item-->
-									<a href="noticeDelete?abo_no=${abo.abo_no}"
+									<a href="businessNoticeDelete?${bbo_no}"
 										onclick="return deleteChk(this)" class="dropdown-item"><i
 										class="mdi mdi-delete mr-1"></i> Delete</a>
 								</div>
 							</div>
 
 							<!-- badge-->
-							<div class="badge badge-info mb-2"
+							<div class="badge badge-primary mb-2"
 								style="margin-bottom: 0.5rem">
-								<c:if test="${1 == abo.abc_no}">개인</c:if>
-								<c:if test="${2 == abo.abc_no}">기업</c:if>
+								<c:if test="${'병원' == bct_name}">병원</c:if>
+								<c:if test="${'미용' == bct_name}">미용</c:if>
+								<c:if test="${'호텔' == bct_name}">호텔</c:if>
+							</div>
+							<div class="badge badge-secondary mb-2"
+								style="margin-bottom: 0.5rem">
+								<c:if test="${'공지사항' == bbc_name}">공지사항</c:if>
+								<c:if test="${'이벤트' == bbc_name}">이벤트</c:if>
 							</div>
 							<!-- title-->
-							<h3 class="mt-0 mb-3">${abo.abo_title}</h3>
+							<h3 class="mt-0 mb-3">${bbo_title}</h3>
 
 							<h5>내용</h5>
-							<p class="text-muted mb-2">${abo.abo_ctt}</p>
+							<p class="text-muted mb-2">${bbo_ctt}</p>
 
 							<div class="row">
 								<div class="col-md-4">
 									<div class="mb-4">
 										<h5>작성일</h5>
-										<p>${abo.abo_date}</p>
+										<p>${bbo_date}</p>
 									</div>
 								</div>
 							</div>
-							<input type="hidden" value="${abo.abo_no}" name="abo_no" /> 
 							<div style="text-align: right">
-								<input
+								<input type="hidden" value="${bbo_no}" name="bbo_no" /> <input
 								type="button" class="btn btn-warning"
-								onclick="javascript:history.back();" value="목록" />
+								onclick="javascript:history.back();" value="목록" />								
 							</div>
 							
-
 						</div>
 						<!-- end card-body-->
 
@@ -130,8 +132,6 @@
 	</div>
 	<!-- END wrapper -->
 
-	<!-- alert -->
-	${Fail}
 
 
 	<!-- App js -->
@@ -146,6 +146,7 @@
 	<script src="resources/dist/assets/js/pages/demo.project-detail.js"></script>
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
+
 </body>
 <script>
 	function deleteChk(a) {
