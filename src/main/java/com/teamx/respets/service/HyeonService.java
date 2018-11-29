@@ -821,7 +821,7 @@ public class HyeonService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("no", no);
 		map.put("bct_name", bct_name);
-		int maxNum = hyDao.
+		int maxNum = hyDao.bctAllPaging(map);
 		return null;
 	}
 
