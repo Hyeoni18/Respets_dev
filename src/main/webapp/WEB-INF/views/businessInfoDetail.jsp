@@ -9,9 +9,22 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	
 </script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_content">
 	<h1>기본 정보 확인</h1>
 	<hr />
 	<form action="businessInfoUpdateForm">
@@ -44,13 +57,14 @@
 					<td id="BCT_NAME"></td>
 				</tr>
 			</table>
-			사진 <br> <span id="GLR_FILE"></span>
+			사진 <br> ${img}
 		</div>
 		<h3>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h3>
 		<div>
-			<button>수정</button>
+			<button class="btn btn-outline-secondary">수정</button>
 		</div>
 	</form>
+	</div>
 </body>
 <script>
 	var jsonData = ${result};

@@ -711,8 +711,8 @@ public class SunnyService {
 		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String,Object> hmap = new HashMap<>();
 		//회원번호
-		String no = "P1000001";
-		//String no = session.getAttribute("no").toString();
+		//String no = "P1000001";
+		String no = session.getAttribute("no").toString();
 		
 		//회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = sDao.getPerCalendar(no);

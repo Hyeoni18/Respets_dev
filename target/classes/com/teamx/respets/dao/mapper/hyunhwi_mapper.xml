@@ -9,6 +9,9 @@
 		SELECT EMAIL FROM FIND_VIEW WHERE NAME=#{name} AND PHONE=#{phone} AND NO
 		LIKE '${type}%'
 	</select>
+	<select id="searchRND" parameterType="String"
+		resultType="hashmap"> SELECT RND_CODE FROM RND WHERE RND_EMAIL=#{userId}
+	</select>
 	<!-- 랜덤값확인; -->
 	<select id="checkRcode" resultType="randomtb"
 		parameterType="randomtb">

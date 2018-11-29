@@ -9,8 +9,22 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	
 </script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
+<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_content">
 	<h1>기본 정보 수정</h1>
 	<hr />
 	${no}
@@ -22,23 +36,20 @@
 			</tr>
 			<tr>
 				<td>업체명</td>
-				<td id="BUS_NAME"><input type="text" name="bus_name"></td>
+				<td><input type="text" name="bus_name" id="bus_name"/></td>
 			</tr>
 			<tr>
 				<td>대표자명</td>
-				<td id="BUS_CEO"><input type="text" name="bus_ceo"></td>
+				<td><input type="text" name="bus_ceo" id="bus_ceo" /></td>
 			</tr>
 			<tr>
 				<td>업체 연락처</td>
-				<td id="BUS_PHONE"><input type="text" name="bus_phone"></td>
+				<td><input type="text" name="bus_phone" id="bus_phone" /></td>
 			</tr>
 			<tr>
 				<td>사업장 주소</td>
-				<td><input type="text" name="bus_post" id="우편번호"
-					placeholder="우편번호" /> <input type="button" onclick="findAddr()"
-					value="우편번호 찾기"> <br /> <input type="text" name="bus_addr"
-					id="주소" placeholder="주소" /> <input type="text" name="bus_addr2"
-					id="상세주소" placeholder="상세주소" /></td>
+				<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
+						id="BUS_ADDR2"></span></td>
 			</tr>
 			<tr>
 				<td>주력서비스</td>
@@ -50,9 +61,10 @@
 					onchange="fileChk(this)" /><br /> <input type="hidden"
 					name="fileCheck" id="fileCheck" value="0" /></td>
 			</tr>
-		</table>
-		<button>수정 완료</button>
+		</table> <br/>
+		<button class="btn btn-outline-secondary">수정하기</button>
 	</form>
+	</div>
 </body>
 <script>
 	var jsonData = ${result};
@@ -69,7 +81,7 @@
 		} // else End
 	} // fct End
 </script>
-<script>
+<!-- <script>
 	// 다음 주소 API 함수
 	function findAddr() {
 		new daum.Postcode(
@@ -115,5 +127,5 @@
 					}
 				}).open();
 	}
-</script>
+</script> -->
 </html>

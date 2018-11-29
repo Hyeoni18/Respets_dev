@@ -11,6 +11,7 @@ public interface HyunHwiDao {
 
 	// 현휘 
 	public Map<String,Object> selectUser (Map<String,Object> map); //아이디 찾기
+	public List<Map<String, Object>> searchRND(String userId);
 	public RandomTB checkRcode(RandomTB rtb); //신원확인을 위한 랜덤값 비교
 	public int findMyPw(RandomTB rtb);	//메일을 보내기 전, 랜덤 테이블에 가지고 온 정보 입력
 	public void resetPerPw(Personal ps); //개인일 경우 비밀번호 변경
@@ -107,4 +108,5 @@ public interface HyunHwiDao {
 	public int countSearchBUSaddr(Map<String, Object> map);
 	public List<Map<String, Object>> butTagSelectList(Map<String, Object> map);
 	public int countButTagSelectList(Map<String, Object> map);
+	
 }

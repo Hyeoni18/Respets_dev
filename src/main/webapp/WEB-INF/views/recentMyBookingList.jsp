@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Respets 최근 예약 목록</title>
+<title>Respets :: 최근 예약 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -72,7 +72,18 @@
 			</div>
 		</div>
 	</div>
+	${cancInsertSucess}
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
-
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url : "recentMyBookingList",
+			type : "get",
+			success : function() {
+				console.log("성공");
+			}
+		});
+	})
+</script>
 </html>

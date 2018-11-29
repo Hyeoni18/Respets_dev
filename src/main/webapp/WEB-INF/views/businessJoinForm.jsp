@@ -16,7 +16,6 @@
         <link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 </head>
  <body class="authentication-bg">
- 
          <div class="account-pages mt-5 mb-5">
             <div class="container">
                 <div class="row justify-content-center">
