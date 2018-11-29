@@ -235,8 +235,8 @@ public class JiyeService {
 	// 지예 로그아웃
 	public ModelAndView logout() {
 		mav = new ModelAndView();
-		session.invalidate();
 		mav.setViewName("redirect:/");
+		session.invalidate();
 		return mav;
 	} // logout End
 
