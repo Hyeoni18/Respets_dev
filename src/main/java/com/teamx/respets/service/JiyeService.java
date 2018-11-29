@@ -261,7 +261,7 @@ public class JiyeService {
 			sb.append("<td>" + hList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + hList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + hList.get(i).get("VS_START") + "</td>");
-			sb.append("<td>" + hList.get(i).get("BK_CHK") + " </td></tr>");
+			sb.append("<td name='chk'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
 		} // for End
 		mav.addObject("hList", sb);
 		view = "recentMyBookingList";

@@ -130,4 +130,15 @@ ${cancInsertSucess}
 		});
 	})
 </script>
+
+<script>
+var test = $('#chk').text();
+console.log(test);
+if($('td[name=chk]').match(/승인/)) {
+	$('td[name=chk]').attr('class', 'text-success');
+}else {
+	$('td[name=chk]').attr('class', 'text-danger');
+}
+
+</script>
 </html>
