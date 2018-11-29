@@ -406,11 +406,11 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<div>" + list.get(i).get("BK_NO") + " | " + list.get(i).get("PTY_NAME") + " | ");
-			sb.append(list.get(i).get("PET_NAME") + " | " + list.get(i).get("PER_NAME") + " | ");
-			sb.append(list.get(i).get("VS_START") + "</div><span id='" + list.get(i).get("BK_NO") + "'>");
-			sb.append("<input type='button' value='확정' name='" + list.get(i).get("BK_NO") + "' />");
-			sb.append("<input type='button' value='거절' name='" + list.get(i).get("BK_NO") + "' /></span>");
+			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
+			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
+			sb.append("<td>" + list.get(i).get("VS_START") + "</td><td><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO") + "' />&nbsp;");
+			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO") + "' /></span></td></tr>");
 		} // for End
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", sb.toString());
