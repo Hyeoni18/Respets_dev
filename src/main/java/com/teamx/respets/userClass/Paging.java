@@ -326,7 +326,7 @@ public class Paging {
 		return businessListBut(currentGroup, totalPage, boardName, bct_code);
 	} // method End
 
-	/* 혜연 */
+	/*혜연*/
 	public String BookingListButton(String no) {
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
 		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
@@ -334,7 +334,7 @@ public class Paging {
 		return BookingListBut(currentGroup, totalPage, boardName, no);
 	}
 
-	/* 혜연 */
+	/*혜연*/
 	private String BookingListBut(int currentGroup, int totalPage, String boardName, String no) {
 		StringBuffer sb = new StringBuffer();
 		// 현재 그룹의 시작 페이지 번호
@@ -351,8 +351,8 @@ public class Paging {
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + i + "&no="
-						+ no + "'>");
+				sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + i
+						+ "&no=" + no + "'>");
 				sb.append("  " + i + "</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
 				sb.append("<li class='page-item active'><a class='page-link' href='#'> " + i + "  </a></li>");
@@ -360,8 +360,8 @@ public class Paging {
 		} // for End
 
 		if (end != totalPage) {
-			sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + (end + 1) + "&no="
-					+ no + "'>");
+			sb.append("<li class='page-item'><a class='page-link' href='" + boardName + "?pageNum=" + (end + 1)
+					+ "&no=" + no + "'>");
 			sb.append("다음</a></li>");
 		} // if End
 		sb.append("</ul>");
@@ -413,14 +413,7 @@ public class Paging {
 		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
 		return businessListTag(currentGroup, totalPage, boardName, map);
 	}
-
-	public String bctAllPaging(Map<String, Object> map) {
-		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
-		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
-		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
-		return bctAllPaging(currentGroup, totalPage, boardName, map);
-	}
-
+	
 	@SuppressWarnings("unused")
 	public String AllPaging(String no) {
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
@@ -433,16 +426,15 @@ public class Paging {
 		StringBuffer sb = new StringBuffer();
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+
 		if (start != 1) {
-			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"butListPaging('" + no + "','"
-					+ (start - 1) + "')\">");
+			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&no=" + no + "'>");
 			sb.append("이전</a></li>");
 		} // method End
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"butListPaging('" + no + "','"
-						+ (start - 1) + "')\">");
+				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&no=" + no + "'>");
 				sb.append("  " + i + "</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
 				sb.append("<font style='color: red;'> " + i + "  </font>");
@@ -453,40 +445,6 @@ public class Paging {
 			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&no=" + no + "'>");
 			sb.append("다음</a></li>");
 		} // if End
-		return sb.toString();
-	}
-
-	private String bctAllPaging(int currentGroup, int totalPage, String boardName, Map<String, Object> map) {
-		String no = (String) map.get("no");
-		String bct_name = (String) map.get("bct_name");
-		StringBuffer sb = new StringBuffer();
-		int start = (currentGroup * pageCount) - (pageCount - 1);
-		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
-		sb.append("<nav>");
-		sb.append("<ul class='pagination'>");
-		if (start != 1) {
-			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"bctAllPaging('" + bct_name + "','"
-					+ no + "','" + (start - 1) + "')\">");
-			sb.append("이전</a></li>");
-		} // method End
-
-		for (int i = start; i <= end; i++) {
-			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"bctAllPaging('" + bct_name
-						+ "','" + no + "','" + (start - 1) + "')\">");
-				sb.append("  " + i + "</a></li>");
-			} else { // 현재 페이지인 경우 링크
-				sb.append("<li class='page-item active'><a class='page-link' href='#'> " + i + "  </a></li>");
-			} // else End
-		} // for End
-
-		if (end != totalPage) {
-			sb.append("<li class='page-item'><a href='javascript:void(0)' onclick=\"bctAllPaging('" + bct_name + "','"
-					+ no + "','" + (start - 1) + "')\">");
-			sb.append("다음</a></li>");
-		} // if End
-		sb.append("</ul>");
-		sb.append("<nav>");
 		return sb.toString();
 	}
 

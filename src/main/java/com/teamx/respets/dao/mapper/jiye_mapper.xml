@@ -75,7 +75,7 @@
 	<!-- 개인 최근예약리스트 -->
 	<select id="recentMyBookingList" parameterType="HashMap" resultType="HashMap">
 		SELECT BK.BK_NO, BUS.BUS_NAME ,PTY.PTY_NAME, PET.PET_NO, 
-		PET.PET_NAME, PER.PER_NAME, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi') AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START, BK.BK_CHK
+		PET.PET_NAME, PER.PER_NAME, BK.BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START, BK.BK_CHK
 		FROM BK INNER JOIN PET
 		ON BK.PET_NO = PET.PET_NO
 		INNER JOIN PTY
@@ -232,13 +232,6 @@
 	<!-- 기업상세페이지 갤러리 -->
 	<select id="businessGallery" parameterType="HashMap" resultType="HashMap">
 		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
-	</select>
-	
-	<select id="businessDetailNoticeList" parameterType="HashMap" resultType="HashMap">
-		SELECT BBO.BBO_NO, BBC.BBC_NAME, BBO.BBO_TITLE, TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd') AS BBO_DATE
-        FROM BBO INNER JOIN BBC 
-        ON BBO.BBC_NO = BBC.BBC_NO
-        WHERE BBO.BUS_NO =#{bus_no} AND BBO.BCT_CODE=#{bct_code}
 	</select>
 	
 	<select id="getBusinessList" resultType="HashMap">

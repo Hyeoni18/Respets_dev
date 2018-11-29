@@ -10,8 +10,6 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
