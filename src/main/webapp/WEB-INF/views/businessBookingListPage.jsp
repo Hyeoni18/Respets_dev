@@ -35,88 +35,6 @@
 				<label for="status-select" class="mr-2"> 검색&nbsp; 보호자<input
 					type="search" class="form-control form-control-sm"
 					placeholder="search" aria-controls="basic-datatable"
-<<<<<<< HEAD
-					name="per_name" id="per_name" /> <input type="button"
-					onclick="opList()" class="btn" value="검색" />
-				</label>
-			</div>
-		</form>
-		<div id="list"></div>
-		<div id="page_navi">${paging}</div>
-		<!-- <input type="hidden" id="page_index" class="page_index" /> -->
-	</div>
-</body>
-<script>
-	$('input[type="radio"]').click(function() {
-			var radio = $("input[name='radio']:checked").val();
-			console.log(radio);
-			var per = $('#per_name').val();
-			console.log(per);
-			if (radio == '전체') {
-				//if (per == "" || per == null) {
-					$.ajax({
-						url : "businessAllBookingList?no=${no}",
-						type : "post",
-						dataType : "text",
-						success : function(data) {
-							$('#list').html(data);
-						},
-						error : function(error) {
-							console.log(error);
-						}
-					});
-				//}
-			}
-			function opList() {
-				if (radio == '전체') {
-					//if (per != "" || per != null) {
-						$.ajax({
-							url : "searchAllList?no=${no}&per_name=" + per,
-							type : 'post',
-							dataType : "text",
-							success : function(data) {
-								$('#list').html(data);
-							},
-							error : function(error) {
-								console.log("실패");
-							}
-						});
-					//}
-				}
-			}
-			if (radio == '병원' || radio == '미용' || radio == '호텔') {
-				$.ajax({
-					url : "businessAllBctBookingList?no=${no}&bct_name=" + radio,
-					type : "post",
-					dataType : "text",
-					success : function(data) {
-						$('#list').html(data);
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-			}
-			function opList() {
-				if (radio == '전체') {
-					//if (per != "" || per != null) {
-						$.ajax({
-							url : "searchBctAllsList?no=${no}&bct_name=" + radio+"&per_name=" + per,
-							type : 'post',
-							dataType : "text",
-							success : function(data) {
-								$('#list').html(data); 
-							},
-							error : function(error) {
-								console.log(error);
-							}
-						}); //ajax end
-					//}
-				}
-			} //function end
-		})
-		
-=======
 					name="per_name" id="per_name" />&nbsp; 동물<input type="search"
 					class="form-control form-control-sm" placeholder="search"
 					aria-controls="basic-datatable" name="pet_name" id="pet_name" /> <input
@@ -222,6 +140,5 @@
 							}
 						} //function end
 					})
->>>>>>> master
 </script>
 </html>
