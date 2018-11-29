@@ -362,6 +362,7 @@ public class JiyeService {
 		return paging.makeHtmlPaging();
 	} // method End
 
+
 	// 기업공지사항갯수확인
 	private String getSearchBusinessNoticeCount(HttpSession session, String select, String search, int pageNum) {
 		this.session = session;
@@ -561,10 +562,10 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		// String bus_no = request.getParameter("bus_no");
-		// String bct_code = request.getParameter("bct_code");
-		String bus_no = "B1000001";
-		String bct_code = "B";
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		//String bus_no = "B1000001";
+		//String bct_code = "B";
 		HashMap<String, Object> hmap = new HashMap<>();
 		HashMap<String, Object> tMap = new HashMap<>(); // 태그 셀렉트
 		List<HashMap<String, Object>> tList = new ArrayList<>();
@@ -629,10 +630,10 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		// String bus_no = request.getParameter("bk_no");
-		// String bct_code = request.getParameter("bct_code");
-		String bus_no = "B1000097";
-		String bct_code = "M";
+		String bus_no = request.getParameter("bk_no");
+		String bct_code = request.getParameter("bct_code");
+		//String bus_no = "B1000097";
+		//String bct_code = "M";
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> gList = new ArrayList<HashMap<String, Object>>();
 		hmap.put("bus_no", bus_no);

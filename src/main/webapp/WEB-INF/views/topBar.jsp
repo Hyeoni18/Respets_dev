@@ -38,7 +38,7 @@
 		<div class="container-fluid">
 
 			<!-- LOGO -->
-			<a href="index.jsp" class="topnav-logo"> <span
+			<a href="./" class="topnav-logo"> <span
 				class="topnav-logo-lg"> <img
 					src="${pageContext.request.contextPath}/resources/images/logo-mint.png"
 					alt="respets logo" height="30">
@@ -50,9 +50,11 @@
 
 			<!-- 지예 로그인 하지 않았을때 -->
 			<div id="logoutTopBar">
-				<button id="loginForm" onclick="location.href='./loginForm'">로그인</button>
+				<a href='./loginForm' id='loginForm'>로그인</a>
+				<a href='./joinChoiceForm' id='joinChoiceForm'>회원가입</a>
+				<!-- <button id="loginForm" onclick="location.href='./loginForm'">로그인</button>
 				<button id="joinChoiceForm"
-					onclick="location.href='./joinChoiceForm'">회원가입</button>
+					onclick="location.href='./joinChoiceForm'">회원가입</button> -->
 			</div>
 
 			<ul class="list-unstyled topbar-right-menu float-right mb-0"
@@ -60,14 +62,18 @@
 				<form id="logoutFrm" action="./logout" method="post">
 					<a href="javascript:logoutFrm()">로그아웃</a>
 				</form>
-
-				<form id="dashboard" action="dashboard">
+				
+				<a href='./dashboard' id='dashboard'>마이페이지</a>
+				<!-- <form id="dashboard" action="dashboard">
 					<button>개인마이페이지</button>
-				</form>
+				</form> -->
+				
+				<a href='./myPage' id='myPage'>기업마이페이지</a>
+				<a href='./personalCalendar' id='personalCalendar'>스케줄</a>
 
-				<button id="myPage" onclick="location.href='./myPage'">
+				<!-- <button id="myPage" onclick="location.href='./myPage'">
 					기업마이페이지</button>
-				<button onclick="location.href='./personalCalendar'">스케줄</button>
+				<button onclick="location.href='./personalCalendar'">스케줄</button> -->
 
 
 				<li class="dropdown notification-list"><a
@@ -94,7 +100,7 @@
 							<form id="logoutFrm" action="./logout" method="post">
 								<a href="javascript:logoutFrm()">로그아웃</a>
 							</form>
-
+							
 							<form id="dashboard" action="./dashboard">
 								<button>개인마이페이지</button>
 							</form>
@@ -213,13 +219,16 @@
 
 	$('#dashboard').hide();
 	$('#myPage').hide();
+	$('#personalCalendar').hide();
 
 	if ('${no}'.match(/B/)) {
 		$('#dashboard').hide();
 		$('#myPage').show();
+		$('#personalCalendar').hide();
 	} else if ('${no}'.indexOf(/P/)) {
 		$('#dashboard').show();
 		$('#myPage').hide();
+		$('#personalCalendar').show();
 	}
 
 	if (no == null || no == "") {
@@ -232,7 +241,7 @@
 
 	if ('${no}'.match(/P/)) {
 		$('#memberType').html('개인회원');
-	} else if ('${no}'.indexOf('B')) {
+	} else if ('${no}'.match(/B/)) {
 		$('#memberType').html('기업회원');
 	} else {
 		$('#memberType').html(' ');

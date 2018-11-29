@@ -76,5 +76,7 @@ public interface IJiyeDao {
 
 	public int confirmLicense(String bus_no);
 
+	public int getRecentMyBookingList(String no);
+
 
 }

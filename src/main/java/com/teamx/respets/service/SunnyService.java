@@ -708,11 +708,12 @@ public class SunnyService {
 	public ModelAndView personalCalendar(HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;
-		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
-		HashMap<String,Object> hmap = new HashMap<>();
 		//회원번호
 		//String no = "P1000001";
 		String no = session.getAttribute("no").toString();
+		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String,Object>> bList = new ArrayList<HashMap<String, Object>>();
+		System.out.println("세션확인: " + no);
 		
 		//회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = sDao.getPerCalendar(no);
@@ -727,33 +728,41 @@ public class SunnyService {
 		
 		mav.addObject("no", no);
 		for(int i=0;i<bookingList.size();i++) {
-			System.out.println("bookingList=" + bookingList);
-			hmap.put("bookingList", bookingList);
-			System.out.println("코드수정확인");
-			//bookingInfo = new JSONObject();
-			//String petName = bookingList.get(i).get("PET_NAME").toString();
-			//String busName = bookingList.get(i).get("BUS_NAME").toString();
-			//String bctName = bookingList.get(i).get("BCT_NAME").toString();
-			//if(bctName.equals("병원")) bctName="진료";
-			//String start = bookingList.get(i).get("VS_START").toString();
-			//String end = bookingList.get(i).get("VS_END").toString();
+			HashMap<String,Object> hmap = new HashMap<>();
+			System.out.println("bookingList!!!!!!!!!!!!!!!" + bookingList.get(i));
+			String bk_no = bookingList.get(i).get("BK_NO").toString();
+			String petName = bookingList.get(i).get("PET_NAME").toString();
+			String busName = bookingList.get(i).get("BUS_NAME").toString();
+			String bctName = bookingList.get(i).get("BCT_NAME").toString();
+			if(bctName.equals("병원")) {
+				bctName="진료";
+			}
+
+			String start = bookingList.get(i).get("VS_START").toString();
+			String end = bookingList.get(i).get("VS_END").toString();
 			
 			//데이터 입력
-			//bookingInfo.put("title", petName+"-"+busName+"("+bctName+")");
-			//bookingInfo.put("start", start);
-			//bookingInfo.put("end", end);
-			//if(bctName.equals("진료")) bookingInfo.put("className", "bg-warning");
-			//if(bctName.equals("미용")) bookingInfo.put("className", "bg-success");
-			//if(bctName.equals("호텔")) bookingInfo.put("className", "bg-info");
-			//Array에 입력
-			//bookingArray.add(bookingInfo);
-			Gson gson =  new GsonBuilder().create();
-			String json = gson.toJson(hmap);
-			System.out.println("json=" + json);
-			mav.addObject("e", json);
+			hmap.put("title", petName+"-"+busName+"("+bctName+")");
+			hmap.put("start", start);
+			hmap.put("end", end);
+			hmap.put("bk_no", bk_no);
+			if(bctName.equals("진료")) {
+				hmap.put("className", "bg-warning");
+			}else if(bctName.equals("미용")) {
+				hmap.put("className", "bg-success");
+			}else {
+				hmap.put("className", "bg-info");
+			}
+			bList.add(hmap);
 		}
+		System.out.println("hmap!!!!!!!!!!!!!!: " + bList);
+		Gson gson =  new GsonBuilder().create();
+		String json = gson.toJson(bList);
+		System.out.println("json!!!!!!!!!!!!!1" + json);
+		mav.addObject("e", json);
 		//bookingObject.put("e",bookingArray);
 		//System.out.println("bookingObject="+bookingObject.toJSONArray(bookingArray));
+		System.out.println("확인: " + mav);
 		view = "personalCalendar";
 		mav.setViewName(view);
 		return mav;

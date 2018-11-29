@@ -902,7 +902,9 @@
 
 	<!-- demo app -->
 	<!-- <script src="/resources/dist/assets/js/pages/demo.calendar-per.js"></script> -->
-	
+<script>
+
+</script>
 <script>
 ! function (e) {
     "use strict";
