@@ -43,7 +43,7 @@
 								<!-- 이메일 유효성 검사 추가할 것 -->
 								<div class="form-group">
 									<label for="bus_email">이메일 주소 <span style="color: red">*</span></label>
-									<input type="email" class="form-control" name="bus_email" id="이메일"
+									<input type="text" class="form-control" name="bus_email" id="이메일"
 										onchange="emailChk();" placeholder="ex)respets@respets.com"
 										required >
 									<div id="emailChkMsg"></div>

@@ -68,5 +68,6 @@
 		</div>
 		<!-- col-7 -->
 	</div>
+	<%@ include file="footer.html"%>
 </body>
 </html>
