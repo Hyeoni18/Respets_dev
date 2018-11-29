@@ -44,7 +44,7 @@ public interface SunnyDao {
 	public String getPdtCtt(Pet pet);
 	public boolean pdtAllDelete(String pet_no);
 	public void pdtDelete(Pet pet);
-	
+	public List<HashMap<String, Object>> getPdt(String pet_no);
 	
 	/*------------ ABO_TB ------------*/
 	public AdminBoard getBoardDetail(String abo_no);
@@ -71,6 +71,7 @@ public interface SunnyDao {
 	
 	/* 개인 캘린더 */
 	public List<HashMap<String, Object>> getPerCalendar(String no);
+	
 	
 	
 	

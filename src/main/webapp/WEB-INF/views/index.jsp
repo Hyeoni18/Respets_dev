@@ -61,7 +61,7 @@
 					<div class="row">
 						<div class="col-12">
 							<div class="page-title-box">
-								<h4 class="page-title" style="text-align:center;">
+								<h4 class="page-title" style="text-align: center;">
 									<c:if test="${no == null}">
 								로그인을 하면 더 많은 서비스 이용이 가능합니다!
 								</c:if>
@@ -199,33 +199,109 @@
 							</div>
 							<!-- end card-deck-wrapper-->
 
+
 							<div class="card" style="margin-top: 30px;">
-								<div class="card-body" style="text-align: center;">
+								<div class="card-body">
 									<h3 class="card-title" style="text-align: center;">공지사항</h3>
 									<div class="table-responsive-sm" style="margin-top: 20px;">
 										<table class="table table-centered mb-0">
 											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Phone Number</th>
-													<th>Date of Birth</th>
+												<tr style="text-align: center;">
+													<th>분류</th>
+													<th>제목</th>
+													<th>날짜</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td>Risa D. Pearson</td>
-													<td>336-508-2157</td>
-													<td>July 24, 1950</td>
+													<td style="text-align: center;">${list[0].abc_name}</td>
+													<td><a href="#" data-toggle="modal"
+														data-target="#board0">${list[0].abo_title}</a></td>
+													<!-- Standard modal content -->
+													<div id="board0" class="modal fade" tabindex="-1"
+														role="dialog" aria-labelledby="myModalLabel"
+														aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title" id="myModalLabel">${list[0].abo_title}</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-hidden="true">×</button>
+																</div>
+																<div class="modal-body">
+																	<p>${list[0].abo_ctt}</p>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-light"
+																		data-dismiss="modal">Close</button>
+																</div>
+															</div>
+															<!-- /.modal-content -->
+														</div>
+														<!-- /.modal-dialog -->
+													</div>
+													<!-- /.modal -->
+													<td style="text-align: center;">${list[0].abo_date_string}</td>
 												</tr>
 												<tr>
-													<td>Ann C. Thompson</td>
-													<td>646-473-2057</td>
-													<td>January 25, 1959</td>
+													<td style="text-align: center;">${list[1].abc_name}</td>
+													<td><a href="#" data-toggle="modal"
+														data-target="#board1">${list[1].abo_title}</a></td>
+													<!-- Standard modal content -->
+													<div id="board1" class="modal fade" tabindex="-1"
+														role="dialog" aria-labelledby="myModalLabel"
+														aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title" id="myModalLabel">${list[1].abo_title}</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-hidden="true">×</button>
+																</div>
+																<div class="modal-body">
+																	<p>${list[1].abo_ctt}</p>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-light"
+																		data-dismiss="modal">Close</button>
+																</div>
+															</div>
+															<!-- /.modal-content -->
+														</div>
+														<!-- /.modal-dialog -->
+													</div>
+													<!-- /.modal -->
+													<td style="text-align: center;">${list[2].abo_date_string}</td>
 												</tr>
 												<tr>
-													<td>Paul J. Friend</td>
-													<td>281-308-0793</td>
-													<td>September 1, 1939</td>
+													<td style="text-align: center;">${list[2].abc_name}</td>
+													<td><a href="#" data-toggle="modal"
+														data-target="#board0">${list[2].abo_title}</a></td>
+													<!-- Standard modal content -->
+													<div id="board0" class="modal fade" tabindex="-1"
+														role="dialog" aria-labelledby="myModalLabel"
+														aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title" id="myModalLabel">${list[2].abo_title}</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-hidden="true">×</button>
+																</div>
+																<div class="modal-body">
+																	<p>${list[2].abo_ctt}</p>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-light"
+																		data-dismiss="modal">Close</button>
+																</div>
+															</div>
+															<!-- /.modal-content -->
+														</div>
+														<!-- /.modal-dialog -->
+													</div>
+													<!-- /.modal -->
+													<td style="text-align: center;">${list[0].abo_date_string}</td>
 												</tr>
 											</tbody>
 										</table>

@@ -79,13 +79,15 @@
 		PDT_CTT FROM PDT WHERE PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
 	</select>
 	<delete id="pdtDelete" parameterType="pet">
-		DELETE PDT WHERE
+		DELETE FROM PDT WHERE
 		PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
 	</delete>
 	<delete id="pdtAllDelete" parameterType="String">
-		DELETE PDT WHERE
-		PET_NO=#{value}
+		DELETE FROM PDT WHERE PET_NO=#{value}
 	</delete>
+	<select id="getPdt" resultType="HashMap" parameterType="String">
+		SELECT * FROM PDT WHERE PET_NO=#{value}
+	</select>
 
 
 	<!-- ABO -->

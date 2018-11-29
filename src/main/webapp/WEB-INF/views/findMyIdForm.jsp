@@ -78,6 +78,7 @@
 
 	${none}
 	<!-- 찾는 아이디가 없을 경우 alert창이 뜬다. -->
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 </body>
 <script>
 	/* 개인,기업 선택 하지 않으면 넘어가지 않도록. */

@@ -23,8 +23,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 .card-deck {
-	max-width: 30%;
-	width: 30%;
+ 	max-width: 70%;
+	width: 70%;
 	height: 50%;
 	margin: 1.5px;
 }
@@ -56,6 +56,6 @@ text-align:center;
 	<!-- demo app -->
 	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
 	<!-- demo app -->
-	<script src="resources/dist/assets/js/pages/demo.widgets.js"></script>
+	<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
 </body>
 </html>

@@ -4,35 +4,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-#div_menu {
-	width: 15%;
-	float: left;
-	text-align: center;
-}
+<title>Respets :: 오늘 일정 목록</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- App favicon -->
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
 
-#div_content {
-	width: 85%;
-	float: right;
-}
-</style>
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
+
 </head>
 <body>
-	<div id="div_top"><jsp:include page="topBar.jsp" /></div>
-	<div id="div_menu"><jsp:include page="businessButtonPage.jsp" /></div>
-	<div id="div_content">
-		<h1>오늘 일정 목록</h1>
-		${no} <br>
+	<%@ include file="left-sidebar.jsp"%>
+	<div class="content-page">
+		<%@ include file="topbar-dashboard.jsp"%>
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<form class="form-inline"></form>
+					</div>
+					<h4 class="page-title">오늘 일정 목록</h4>
+				</div>
+			</div>
+		</div>
 		<h3>미확인 예약 (*예약을 확인해주세요*)</h3>
 		<input type='radio' name='radio' class='radio' value="전체" />전체
 		${bctList}
 		<hr>
 		<div class="No" style="border: 2px solid red"></div>
-		<br />
 		<div id="Ok" style="border: 2px solid yellow"></div>
+		<%@ include file="footer.html"%>
 	</div>
 </body>
 <script>

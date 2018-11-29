@@ -72,12 +72,8 @@
 							<i class=" dripicons-store"></i> <span> 서비스 관리 </span>
 					</a></li>
 	
-					<li class="side-nav-item"><a href="stepManagement" class="side-nav-link">
+					<li class="side-nav-item"><a href="stepListBut" class="side-nav-link">
 							<i class="dripicons-user-id"></i> <span> 직원 관리 </span>
-					</a></li>
-	
-					<li class="side-nav-item"><a href="customerManagement" class="side-nav-link">
-							<i class="dripicons-user-group"></i> <span> 고객 관리 </span>
 					</a></li>
 	
 					<li class="side-nav-item"><a href="businessNoticeList" class="side-nav-link">

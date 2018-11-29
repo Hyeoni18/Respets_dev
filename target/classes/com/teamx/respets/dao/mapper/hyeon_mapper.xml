@@ -23,9 +23,9 @@
 	<!-- 혜연 -->
 	<update id="myInfoUpdate" parameterType="personal">
 		UPDATE PER SET PER_NAME
-		= #{per_name}, PER_PHONE =
-		#{per_phone}, PER_PHOTO = #{per_photo} WHERE
-		PER_NO = #{per_no}
+		= #{mb.per_name}, PER_PHONE =
+		#{mb.per_phone} WHERE
+		PER_NO = #{mb.per_no}
 	</update>
 
 	<!-- 혜연 -->
