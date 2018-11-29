@@ -146,7 +146,7 @@ public class JiyeService {
 
 							if (perEmChk.equals("O")) {// 개인회원 인증 여부 확인
 								System.out.println("인증된 개인 회원");
-								view = "index";
+								view = "redirect:/";
 							} else {
 								System.out.println("개인회원 인증X");
 								String sendEmail = (String) hmap.get("PER_EMAIL");
@@ -169,7 +169,7 @@ public class JiyeService {
 								//String name = (String) hmap.get("BUS_NAME");
 								//mav.addObject("name", name);
 								System.out.println("기업회원 인증");
-								view = "index";
+								view = "redirect:/";
 							} else {
 								System.out.println("기업회원 인증X");
 								String sendEmail = (String) hmap.get("BUS_EMAIL");
