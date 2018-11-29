@@ -20,7 +20,7 @@ float:right;
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
 <div id="div_content">
 <h1> 업종 정보 확인</h1>
 서비스 종류 : ${bct_name} <br/>

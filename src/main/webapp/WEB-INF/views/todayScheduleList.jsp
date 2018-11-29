@@ -7,9 +7,22 @@
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
+<div id="div_content">
 	<h1>오늘 일정 목록</h1>
 	${no}
 	<br>
@@ -20,6 +33,7 @@
 	<div class="No" style="border: 2px solid red"></div>
 	<div class="Ok"></div>
 	${none}
+	</div>
 </body>
 <script>
 	$(document).ready(function() {
