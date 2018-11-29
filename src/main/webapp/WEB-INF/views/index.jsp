@@ -213,10 +213,11 @@
 												</tr>
 											</thead>
 											<tbody>
+											<c:forEach var="list" items="${list}">
 												<tr>
-													<td style="text-align: center;">${list[0].abc_name}</td>
+													<td style="text-align: center;">${list.abc_name}</td>
 													<td><a href="#" data-toggle="modal"
-														data-target="#board0">${list[0].abo_title}</a></td>
+														data-target="#board0">${list.abo_title}</a></td>
 													<!-- Standard modal content -->
 													<div id="board0" class="modal fade" tabindex="-1"
 														role="dialog" aria-labelledby="myModalLabel"
@@ -224,12 +225,12 @@
 														<div class="modal-dialog">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[0].abo_title}</h4>
+																	<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
 																	<button type="button" class="close"
 																		data-dismiss="modal" aria-hidden="true">×</button>
 																</div>
 																<div class="modal-body">
-																	<p>${list[0].abo_ctt}</p>
+																	<p>${list.abo_ctt}</p>
 																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-light"
@@ -241,68 +242,9 @@
 														<!-- /.modal-dialog -->
 													</div>
 													<!-- /.modal -->
-													<td style="text-align: center;">${list[0].abo_date_string}</td>
-												</tr>
-												<tr>
-													<td style="text-align: center;">${list[1].abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#board1">${list[1].abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="board1" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[1].abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
-																</div>
-																<div class="modal-body">
-																	<p>${list[1].abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
-															</div>
-															<!-- /.modal-content -->
-														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list[2].abo_date_string}</td>
-												</tr>
-												<tr>
-													<td style="text-align: center;">${list[2].abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#board0">${list[2].abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="board0" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list[2].abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
-																</div>
-																<div class="modal-body">
-																	<p>${list[2].abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
-															</div>
-															<!-- /.modal-content -->
-														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list[0].abo_date_string}</td>
-												</tr>
+													<td style="text-align: center;">${list.abo_date_string}</td>
+												</tr> 
+											</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -339,20 +281,11 @@
 
 
 	<!-- App js -->
-	<script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script>
-
-	<!-- third party js -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
-	<!-- third party js ends -->
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
 	<script
-		src="<c:url value="/resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+		src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 
 </body>

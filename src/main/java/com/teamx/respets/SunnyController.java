@@ -177,9 +177,9 @@ public class SunnyController {
 	
 	/*기업 상세 페이지*/
 	@RequestMapping (value="/businessDetailPage", method=RequestMethod.GET)
-	public ModelAndView businessDetailPage(String bus_no, String bct_code) {
+	public ModelAndView businessDetailPage(HttpSession session, HttpServletRequest request) {
 		mav = new ModelAndView();
-		mav=ss.businessDetailPage(bus_no,bct_code);
+		mav=ss.businessDetailPage(session, request);
 		return mav;
 	}
 	
