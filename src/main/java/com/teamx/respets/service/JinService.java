@@ -114,10 +114,12 @@ public class JinService {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<div class='card d-block'>");
-			sb.append("<img style='height:300px; weight:300px;' class='card-img-top' src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "' />");
+			sb.append("<img style='height:300px; weight:300px;' class='card-img-top' src='" + list.get(i).get("GLR_LOC")
+					+ list.get(i).get("GLR_FILE") + "' />");
 			sb.append("<div class='card-body'>");
-			sb.append("<span><b class='card-title'>" + list.get(i).get("BUS_NAME")+"</b></span><br/>");
-			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=" + list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+			sb.append("<span><b class='card-title'>" + list.get(i).get("BUS_NAME") + "</b></span><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no="
+					+ list.get(i).get("BUS_NO") + "'>삭제</a></div>");
 			sb.append("</div>");
 		} // for End
 		return sb.toString();
@@ -155,11 +157,6 @@ public class JinService {
 				hMap.put(name, value);
 			} // for End
 		} // if End
-
-		/* 나중에 삭제할 것 */
-		hMap.put("bus_no", "B1000063");
-		hMap.put("bct_code", "M");
-
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
 		if (hMap.get("pet_no") == null) {
@@ -181,9 +178,11 @@ public class JinService {
 		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
 		pet.append("</div>");
 		List<HashMap<String, String>> petList = jinDao.selectPetList(petMap);
-		pet.append("<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
+		pet.append(
+				"<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
 		for (int i = 0; i < petList.size(); i++) {
-			pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no=" + hMap.get("bus_no"));
+			pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no="
+					+ hMap.get("bus_no"));
 			pet.append("&bct_code=" + hMap.get("bct_code"));
 			pet.append("&date=" + hMap.get("date") + "&pet_no=" + petList.get(i).get("PET_NO"));
 			pet.append("'> " + petList.get(i).get("PET_NAME") + "</a><br/>");
@@ -409,8 +408,10 @@ public class JinService {
 			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("VS_START") + "</td><td><span id='" + list.get(i).get("BK_NO") + "'>");
-			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO") + "' />&nbsp;");
-			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO") + "' /></span></td></tr>");
+			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO")
+					+ "' />&nbsp;");
+			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO")
+					+ "' /></span></td></tr>");
 		} // for End
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", sb.toString());
