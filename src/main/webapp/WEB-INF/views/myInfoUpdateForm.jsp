@@ -9,13 +9,13 @@
 <body>
 	<h1>개인 정보 수정</h1>
 	<hr />
-	<form id="myInfoUpdate" action="myInfoUpdate"
-		method="post">
+	<form id="myInfoUpdate" action="myInfoUpdate" method="post">
 		- 이메일 : ${mb.per_email}
 		<hr>
 		<div>
-			- 프로필 사진 : <input type="text" name="per_photo"
-				value="${mb.per_photo}" />
+			- 프로필 사진 :<input type="file" name="mainPhoto"
+				onchange="fileChk(this)" /><br /> <input type="hidden"
+				name="fileCheck" id="fileCheck" value="0" />
 		</div>
 		- 이름 : <input type="text" name="per_name" value="${mb.per_name}" /><br>-
 		연락처 : <input type="text" name="per_phone" value="${mb.per_phone}" />
@@ -24,4 +24,13 @@
 			value="리셋" />
 	</form>
 </body>
+<script>
+	function fileChk(file) {
+		if (file.value == "") {
+			$("#fileCheck").val(0);
+		} else {
+			$("#fileCheck").val(1);
+		} // else End
+	} // fct End
+</script>
 </html>

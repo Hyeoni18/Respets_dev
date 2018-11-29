@@ -38,14 +38,12 @@
 				</div>
 			</div>
 		</div>
-
 		<h3>미확인 예약 (*예약을 확인해주세요*)</h3>
 		<input type='radio' name='radio' class='radio' value="전체" />전체
 		${bctList}
 		<hr>
 		<div class="No" style="border: 2px solid red"></div>
-		<div class="Ok"></div>
-
+		<div id="Ok" style="border: 2px solid yellow"></div>
 		<%@ include file="footer.html"%>
 	</div>
 </body>
@@ -53,16 +51,29 @@
 	$(document).ready(function() {
 		$('input[type="radio"]').click(function() {
 			var radio = $('input[type="radio"]:checked').val();
+			var noBut = $('input[type="button"]').val();
 			console.log(radio);
 			//전체리스트 불러오기
 			if (radio == '전체') {
 				$.ajax({
 					url : "todayAllScheduleList?no=${no}",
 					type : "post",
+					async : false,
 					dataType : "text",
 					success : function(data) {
 						$('.No').html(data);
 						$('.unNoshow').hide();
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+				$.ajax({
+					url : 'vs_chkOkList?bus_no=${no}&bk_no=' + bk_no,
+					type : 'post',
+					async : false,
+					success : function(data) {
+						$('#Ok').html(data);
 					},
 					error : function(error) {
 						console.log(error);
@@ -101,10 +112,17 @@
 			success : function(data) {
 				if (data != 0) {
 					console.log("성공");
-					$()
-					$(but).html("방문 완료");
 					$('#' + bk_no).hide();
-					$(div).insertAfter('.Ok');
+					$.ajax({
+						url : 'vs_chkOkList?bus_no=${no}&bk_no=' + bk_no,
+						type : 'post',
+						success : function(data) {
+							$('#Ok').html(data);
+						},
+						error : function(error) {
+							console.log(error);
+						}
+					});
 				} else {
 					console.log("실패");
 				}
@@ -126,8 +144,8 @@
 					console.log(data);
 					if (data != 0) {
 						console.log("성공");
-						$('.unNoshow').show();
-						$('.noshow').hide();
+						$('#un' + bk_no).show();
+						$('#no' + bk_no).hide();
 					} else {
 						console.log("실패");
 					}
@@ -138,7 +156,7 @@
 			});
 		}
 	}
-	function unNoshow(pno) {
+	function unNoshow(pno, bk_no) {
 		$.ajax({
 			url : 'todayScheduleListUnNoShow',
 			type : 'post',
@@ -149,8 +167,8 @@
 				console.log(data);
 				if (data != 0) {
 					console.log("성공");
-					$('.noshow').show();
-					$('.unNoshow').hide();
+					$('#no' + bk_no).show();
+					$('#un' + bk_no).hide();
 				} else {
 					console.log("실패");
 				}

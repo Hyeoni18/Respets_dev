@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Respets :: 반려동물 상세정보</title>
+<title>Respets :: 반려동물 상세 정보</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -78,7 +78,7 @@
 												<div class="media">
 													<span class="float-left mr-4"><img id="petProfile"
 														src="${pet.pet_loc}/${pet.pet_photo}" alt="pet profile"
-														style="height: 100px;"
+														style="width: 100px;height: 100px;"
 														class="rounded-circle img-thumbnail"></span>
 													<div class="media-body">
 
@@ -364,7 +364,7 @@
 		}else forward(button);
 	}
 	function forward(button) {
-		alert("button id=" + button.id);
+		//alert("button id=" + button.id);
 		var frm = document.petInfoDetail;
 		if (button.id == 'edit') {
 			frm.action = "petInfoUpdateForm?pet_no=${pet.pet_no}";
