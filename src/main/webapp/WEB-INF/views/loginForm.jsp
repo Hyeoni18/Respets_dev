@@ -85,8 +85,7 @@
 	<!-- end container -->
 	<!-- end page -->
 
-	<footer class="footer footer-alt"> 2018 © Hyper -
-		Coderthemes.com </footer>
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 
 	<!-- <form name="loginProcess" action="loginProcess" method="post">
 id: <input type="text" id="email" name="email"/> <br/>

@@ -140,11 +140,11 @@
 													</table>
 												</div>
 												<div id="cencel">
-														&emsp;<input type="button" id="perBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
+													&emsp;<input type="button" id="perBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
 														onclick="location.href='./recentMyBookingList'">
-														&emsp;<input type="button" id="busBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
+													&emsp;<input type="button" id="busBut" class="btn btn-outline-success btn-rounded" value="목록으로 돌아가기"
 														onclick="location.href='./todayScheduleList'">
-													&emsp;<input type="button" class='btn btn-outline-danger btn-rounded' id="cenc" value="예약 취소"
+													&emsp;<input type="button" class='btn btn-outline-danger btn-rounded' id="cancel" value="예약 취소"
 														onclick="location.href='myBookingCancelPage?bk_no=${bk_no}'" />
 												</div>
 
@@ -219,16 +219,16 @@
 <script>
 	var no = '${no}';
 	var chk = '${chk}';
-	$('#cencel').hide();
+	$('#cancel').hide();
 	$('#perBut').hide();
 	$('#busBut').hide();
 	if (no.indexOf('P') == 0) {
 		//$('#cencel').show();
 		$('#perBut').show();
 		if (chk == '신청' || chk == '승인') {
-			$('#cencel').show();
+			$('#cancel').show();
 		} else if (chk == '취소' || chk == '거절') {
-			$('#cencel').hide();
+			$('#cancel').hide();
 		}
 	} else {
 		$('#busBut').show();

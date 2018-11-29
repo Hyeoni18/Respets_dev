@@ -232,11 +232,14 @@
 		<input type="button" class="btn btn-success" value="가입하러가기"
 			onclick="agreementChk()" />
 	</div>
+	
+	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 
 
 
 	<!-- demo app -->
 	<script src="resources/dist/assets/js/pages/demo.widgets.js"></script>
+	<%@ include file="footer.html"%>
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

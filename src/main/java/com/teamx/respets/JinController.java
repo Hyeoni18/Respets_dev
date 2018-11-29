@@ -22,9 +22,7 @@ public class JinController {
 	// 서진 : 메인 페이지
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView();
-		String sb = jinSvc.indexBusCategory();
-		mav.addObject("bct", sb);
+		ModelAndView mav = jinSvc.index();
 		mav.setViewName("index");
 		return mav;
 	} // method End
@@ -99,5 +97,4 @@ public class JinController {
 		return mav;
 	} // method End
 	
-
 } // class End
