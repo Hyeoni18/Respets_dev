@@ -40,16 +40,16 @@
 		</tr>
 		<tr>
 				<!-- Center modal -->
-				<c:if test="${bsd_date}">
-				
+				<c:if test="${bsd_date==null}">
+					
 				</c:if>
 				<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=18/11/15" 
 				class="btn btn-block btn-sm btn-success">예약하기</a>
 			</td>
 		</tr>
 		<tr>
-			<td>${rev_avg}<c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
-				(${rev_count})
+			<td><%-- ${rev_avg} <c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
+				(${rev_count}) --%>
 				<div id="favorite">
 					<button type="button" id="fav-button">
 						<i class="mdi mdi-heart mr-1" id="fav-icon"></i> <span>즐겨찾기</span>
