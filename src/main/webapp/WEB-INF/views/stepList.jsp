@@ -20,7 +20,7 @@ float:right;
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
 <div id="div_content">
 <form action="stepInsertFormBut">
 <button class="btn btn-outline-info">직원 등록 하기</button> <br/><br/>

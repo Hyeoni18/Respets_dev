@@ -25,9 +25,22 @@
 <style type="text/css">
 
 </style>
+<style>
+#div_menu {
+width: 15%;
+float:left;
+text-align: center;
+}
+#div_content {
+width: 85%;
+float:right;
+}
+</style>
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
+<div id="div_content">
 	<div class="page-content">
 		<div class="card">
 			<div class="card-body">
@@ -71,7 +84,6 @@
 			</div>
 		</div>
 	</div>
-</body>
 	<ul class="pagination-rounded"> 
 		${paging} 
 	</ul>
@@ -86,6 +98,7 @@
 	<span><button class="btn btn-success" onclick="location.href='./writeBusinessNoticePage'">글쓰기</button></span>                   
                                     
 <script src="/resources/dist/assets/js/app.min.js"></script>
+</div>
 </body>
 <script>
 ${alert}

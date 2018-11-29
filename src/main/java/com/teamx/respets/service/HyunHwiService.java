@@ -813,11 +813,6 @@ public class HyunHwiService {
 		String bct_code = request.getParameter("bct_code");
 		System.out.println(bct_code);
 		String top = serviceTopUpdateForm(bus_no); // 이름, 연락처를 보여주는 메소드
-		// String work = Time(bct_code, "business", "work"); //영업시간을 보여주는 메소드
-		// String lunch = Time(bct_code, "business", "lunch"); //점심시간을 보여주는 메소드
-		// String holiday = Holiday(bct_code, "business"); //휴일을 보여주는 메소드
-		// String menu = serviceMenuUpdateForm(bus_no, bct_code); //제공서비스와 이용가능한동물을 보여주는
-		// 메소드
 		String first = request.getParameter("first");
 		String work = null;
 		String lunch = null;
@@ -2508,7 +2503,6 @@ public class HyunHwiService {
 		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		int pNo = (pageNum == null) ? 1 : pageNum; //아마 필요없으껄
 		StringBuilder sb = new StringBuilder();
-		sb.append("<h1> 주소 존재 태그 셀렉 </h1>");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<String, Object>> list;
 		map.put("bct_code", bct_code);
@@ -2591,7 +2585,6 @@ public class HyunHwiService {
 		list = hDao.selectSVCcode(map);
 		if (list.size() != 0) {
 			int count = 0;
-			sb.append(list.size());
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
 				String bus_name = (String) list.get(i).get("BUS_NAME");
@@ -2686,7 +2679,6 @@ public class HyunHwiService {
 		String tag_no = request.getParameter("tag_no");
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		StringBuilder sb = new StringBuilder();
-		sb.append("<h1> 버튼 클릭 태그 셀렉 </h1>");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<String, Object>> list;
 		map.put("bct_code", bct_code);

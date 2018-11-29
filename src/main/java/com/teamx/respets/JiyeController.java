@@ -141,17 +141,17 @@ public class JiyeController {
 	}*/
 	
 	//기업 공지사항 리스트
-	@RequestMapping (value="/businessNotice", method=RequestMethod.GET)
-	public ModelAndView businessNotice(HttpSession session, Integer pageNum) {
+	@RequestMapping (value="/businessNoticeList", method=RequestMethod.GET)
+	public ModelAndView businessNoticeList(HttpSession session, Integer pageNum) {
 		mav = new ModelAndView();
-		mav = js.businessNotice(session, pageNum);
+		mav = js.businessNoticeList(session, pageNum);
 		return mav;
 	}
 	
-	@RequestMapping (value="/noticeDetailPage")
-	public ModelAndView noticeDetailPage(HttpServletRequest request) {
+	@RequestMapping (value="/businessNoticeDetail")
+	public ModelAndView businessNoticeDetail(HttpServletRequest request) {
 		mav = new ModelAndView();
-		mav = js.noticeDetailPage(request);
+		mav = js.businessNoticeDetail(request);
 		return mav;
 	}
 	
@@ -162,10 +162,10 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping (value="/writeBusinessNoticePage")
-	public ModelAndView writeBusinessNoticePage() {
+	@RequestMapping (value="/businessNoticeWriteForm")
+	public ModelAndView businessNoticeWriteForm() {
 		mav = new ModelAndView();
-		mav.setViewName("writeBusinessNoticePage");
+		mav.setViewName("businessNoticeWriteForm");
 		return mav;
 	}
 	

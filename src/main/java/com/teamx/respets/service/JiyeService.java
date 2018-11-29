@@ -146,7 +146,7 @@ public class JiyeService {
 
 							if (perEmChk.equals("O")) {// 개인회원 인증 여부 확인
 								System.out.println("인증된 개인 회원");
-								view = "topBar";
+								view = "index";
 							} else {
 								System.out.println("개인회원 인증X");
 								String sendEmail = (String) hmap.get("PER_EMAIL");
@@ -169,7 +169,7 @@ public class JiyeService {
 								//String name = (String) hmap.get("BUS_NAME");
 								//mav.addObject("name", name);
 								System.out.println("기업회원 인증");
-								view = "topBar";
+								view = "index";
 							} else {
 								System.out.println("기업회원 인증X");
 								String sendEmail = (String) hmap.get("BUS_EMAIL");
@@ -315,7 +315,7 @@ public class JiyeService {
 	} // myBookingDetail End
 
 	// 기업 공지사항 리스트
-	public ModelAndView businessNotice(HttpSession session, Integer pageNum) {
+	public ModelAndView businessNoticeList(HttpSession session, Integer pageNum) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
@@ -333,7 +333,7 @@ public class JiyeService {
 			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
 			sb.append("<td>" + nList.get(i).get("BCT_NAME") + "</td>");
 			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
-			sb.append("<td><a href='./noticeDetailPage?" + nList.get(i).get("BBO_NO") + "'>"
+			sb.append("<td><a href='businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
 					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
 			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td>");
 			sb.append("<td class='table-action'><a href='./businessNoticeUpdateForm?" + nList.get(i).get("BBO_NO")
@@ -345,7 +345,7 @@ public class JiyeService {
 		}
 		mav.addObject("nList", sb);
 		mav.addObject("paging", getPaging(pNo, session));
-		view = "businessNotice";
+		view = "businessNoticeList";
 		mav.setViewName(view);
 		return mav;
 	} // businessNotice end
@@ -357,7 +357,7 @@ public class JiyeService {
 		int maxNum = jDao.getBusinessNoticeCount(no); // 전체 글의 개수
 		int listCount = 10; // 페이지당 글의 수
 		int pageCount = 5; // 그룹당 페이지 수 [1] [2] [3] [4] [5] ▶ [6] [7]....
-		String boardName = "businessNotice"; // 게시판이 여러 개일 때 쓴다.
+		String boardName = "businessNoticeList"; // 게시판이 여러 개일 때 쓴다.
 		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
 		return paging.makeHtmlPaging();
 	} // method End
@@ -371,7 +371,9 @@ public class JiyeService {
 		hmap.put("select", select);
 		hmap.put("search", search);
 		System.out.println("hmap= " + hmap);
-		int maxNum = jDao.getSearchBusinessNoticeCount(hmap); // 전체 글의 개수
+		int maxNum = 0;
+		if(select.equals("전체")) maxNum = jDao.getSearchBusinessAllNoticeCount(hmap); // 전체 글의 개수
+		else maxNum = jDao.getSearchBusinessNoticeCount(hmap); // 전체 글의 개수
 		int listCount = 10; // 페이지당 글의 수
 		int pageCount = 5; // 그룹당 페이지 수 [1] [2] [3] [4] [5] ▶ [6] [7]....
 		String boardName = "searchBusinessNotice"; // 게시판이 여러 개일 때 쓴다.
@@ -380,7 +382,7 @@ public class JiyeService {
 	} // method End
 
 	// 기업공지사항상세
-	public ModelAndView noticeDetailPage(HttpServletRequest request) {
+	public ModelAndView businessNoticeDetail(HttpServletRequest request) {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
@@ -401,7 +403,7 @@ public class JiyeService {
 		mav.addObject("bbo_title", bbo_title);
 		mav.addObject("bbo_ctt", bbo_ctt);
 		mav.addObject("bbo_date", bbo_date);
-		view = "noticeDetailPage";
+		view = "businessNoticeDetail";
 		mav.setViewName(view);
 		return mav;
 	} // noticeDetailPage end
@@ -420,19 +422,34 @@ public class JiyeService {
 		hmap.put("search", search);
 		List<HashMap<String, Object>> nList = new ArrayList<HashMap<String, Object>>();
 		StringBuilder sb = new StringBuilder();
-		nList = jDao.searchBusinessNotice(hmap);
-		System.out.println(nList);
+		if(search.equals("전체") && search=="") {
+			businessNoticeList(session, pageNum);
+		}else if(select.equals("전체")) {
+			nList = jDao.searchBusinessAllNotice(hmap);
+		}else nList = jDao.searchBusinessNotice(hmap);
+		System.out.println("searh nList="+nList);
+		if(nList.size()<1) {
+			sb.append("<tr><td colspan='6' style='text-align: center'>검색한 내용이 없습니다</td></tr>");
+		}
 		for (int i = 0; i < nList.size(); i++) {
 			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
 			sb.append("<td>" + nList.get(i).get("BCT_NAME") + "</td>");
 			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
 			sb.append("<td><a href='./noticeDetailPage?" + nList.get(i).get("BBO_NO") + "'>"
 					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
-			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td></tr>");
+			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td>");
+			sb.append("<td class='table-action'><a href='./businessNoticeUpdateForm?" + nList.get(i).get("BBO_NO")
+					+ "'class='action-icon'>");
+			sb.append("<i class='mdi mdi-pencil'></i></a>");
+			sb.append("<a href='./businessNoticeDelete?" + nList.get(i).get("BBO_NO")
+					+ "'class='action-icon' onclick='return deleteChk(this);'>");
+			sb.append("<i class='mdi mdi-delete'></i></a></td></tr>");
 		}
+		mav.addObject("searchNotifications", "<div class='alert alert-primary' role='alert' style='text-align:center'>"
+				+ "<strong>'"+search+"'</strong>에 대한 검색 결과입니다</div>");
 		mav.addObject("nList", sb);
 		mav.addObject("paging", getSearchBusinessNoticeCount(session, select, search, pNo));
-		view = "businessNotice";
+		view = "businessNoticeList";
 		mav.setViewName(view);
 		return mav;
 	} // searchBusinessNotice End
@@ -456,10 +473,10 @@ public class JiyeService {
 		System.out.println("what's the result? " + result);
 		if (result != 0) {
 			System.out.println("글쓰기 성공~");
-			view = "redirect:businessNotice";
+			view = "redirect:businessNoticeList";
 		} else {
 			System.out.println("글쓰기 실패 ㅠㅠ");
-			view = "writeBusinessNoticePage";
+			view = "businessNoticeWriteForm";
 		}
 		mav.setViewName(view);
 		return mav;
@@ -507,7 +524,7 @@ public class JiyeService {
 		if (result != 0) {
 			System.out.println("수정성공");
 			request.setAttribute("bbo_no", bbo_no);
-			view = "redirect:noticeDetailPage?" + bbo_no;
+			view = "redirect:businessNoticeDetail?" + bbo_no;
 		} else {
 			System.out.println("수정 실패");
 			String alert = "alert('수정을 실패했습니다.');";
@@ -532,10 +549,10 @@ public class JiyeService {
 			System.out.println("삭제 결과는? " + result);
 			if (result != 0) {
 				System.out.println("두구두구두구두");
-				view = "redirect:businessNotice";
+				view = "redirect:businessNoticeList";
 			} else {
 				System.out.println("삭제 실패~ ");
-				view = "redirect:noticeDetailPage?" + bbo_no;
+				view = "redirect:businessNoticeDetail?" + bbo_no;
 				alert = "alert(삭제를 실패하였습니다.);";
 				mav.addObject("alert", alert);
 			}
@@ -545,9 +562,9 @@ public class JiyeService {
 			System.out.println("확인=" + bbo_no);
 			result = jDao.businessNoticeDelete(bbo_no);
 			if (result != 0) {
-				view = "redirect:businessNotice";
+				view = "redirect:businessNoticeList";
 			} else {
-				view = "businessNotice";
+				view = "businessNoticeList";
 				alert = "alert(삭제를 실패하였습니다.);";
 				mav.addObject("alert", alert);
 			}

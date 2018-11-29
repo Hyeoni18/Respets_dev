@@ -23,41 +23,40 @@ float:right;
 </head>
 <body>
 <div id="div_top"><jsp:include page="topBar.jsp"/></div>
-<div id="div_menu"><jsp:include page="businessMenu.jsp"/></div>
+<div id="div_menu"><jsp:include page="businessButtonPage.jsp"/></div>
 <div id="div_content">
 	<h1>기본 정보 확인</h1>
 	<hr />
 	<form action="businessInfoUpdateForm">
-		${no}
 		<div>
 			<table>
 				<tr>
-					<td>사업자 번호</td>
+					<td>사업자 번호 :</td>
 					<td id="BUS_LCNO"></td>
 				</tr>
 				<tr>
-					<td>업체명</td>
+					<td>업체명 :</td>
 					<td id="BUS_NAME"></td>
 				</tr>
 				<tr>
-					<td>대표자명</td>
+					<td>대표자명 :</td>
 					<td id="BUS_CEO"></td>
 				</tr>
 				<tr>
-					<td>업체 연락처</td>
+					<td>업체 연락처 :</td>
 					<td id="BUS_PHONE"></td>
 				</tr>
 				<tr>
-					<td>사업장 주소</td>
+					<td>사업장 주소 :</td>
 					<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
 						id="BUS_ADDR2"></span></td>
 				</tr>
 				<tr>
-					<td>주력서비스</td>
+					<td>주력서비스 :</td>
 					<td id="BCT_NAME"></td>
 				</tr>
 			</table>
-			사진 <br> ${img}
+		<br> ${img}
 		</div>
 		<h3>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h3>
 		<div>

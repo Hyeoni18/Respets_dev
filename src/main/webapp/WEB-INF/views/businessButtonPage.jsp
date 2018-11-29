@@ -8,18 +8,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<div id="div_top"><jsp:include page="topBar.jsp"/></div>
+<br/><br/>
 	<form name="businessButtonPage">
 		<div>
 			<input type="button" name="todayScheduleList" value="오늘 일정 목록" onclick="forward(this)" /><br /> 
 			<input type="button" name="newScheduleList" value="새로운 예약" onclick="forward(this)" /><br />
 			<input type="button" name="businessBookingList" value="전체 예약 목록" onclick="forward(this)" /><br /> 
 			<input type="button" name="serviceManagement" value="서비스 관리" onclick="forward(this)" /><br />
-			<!-- <input type="button" name="stepManagement" value="직원 관리" onclick="forward(this)" /><br /> 
-			<input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br /> -->
+			<input type="button" name="stepManagement" value="직원 관리" onclick="forward(this)" /><br /> 
+<<<<<<< HEAD
+		<!-- <input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br /> -->
+=======
+			<!-- <input type="button" name="customerManagement" value="고객 관리" onclick="forward(this)" /><br /> -->
+>>>>>>> hyeon
 		</div>
 	</form>
-	<form id="businessNotice" action="./businessNotice">
+	<form id="businessNoticeList" action="./businessNoticeList">
 		<input type="submit" value="공지사항 관리" />
 	</form>
 </body>
@@ -38,10 +42,17 @@
 		if (button.value == '서비스 관리') {
 			frm.action = "serviceManagement";
 		}
-		/* if (button.value == '직원 관리') {
+<<<<<<< HEAD
+		 if (button.value == '직원 관리') {
 			frm.action = "stepListBut";
 		}
-		if (button.value == '고객 관리') {
+	/*	if (button.value == '고객 관리') {
+=======
+		if (button.value == '직원 관리') {
+			frm.action = "stepListBut";
+		}
+		/* if (button.value == '고객 관리') {
+>>>>>>> hyeon
 			frm.action = "customerManagement";
 		} */
 		frm.submit();

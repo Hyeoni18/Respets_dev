@@ -47,21 +47,29 @@ public class SunnyService {
 	 */
 
 	/* 메뉴 나의 동물 정보 클릭 시 실행 */
-	public ModelAndView petList(String per_no) { // userId는 이메일
+	public ModelAndView petList(HttpSession session) { // userId는 이메일
 		ArrayList<Pet> petList = new ArrayList<Pet>();
 		mav = new ModelAndView();
 		String view = null;
 		petList = null;
-		// 검색한 회원번호로 반려동물 리스트 불러오기
-		petList = sDao.getPetList(per_no);
-		mav.addObject("per_no", per_no);// 회원번호 담기
-		if (petList.size() > 0) {// 리스트가 존재하면
-			mav.addObject("petList", petList);// 반려동물 리스트 담기
-		} else {// 등록된 반려동물이 없으면
-			mav.addObject("petEmpty", "등록된 동물이 없습니다");
+		String no = session.getAttribute("no").toString();
+		char code = no.charAt(0);
+		if(code=='P') {
+			// 검색한 회원번호로 반려동물 리스트 불러오기
+			petList = sDao.getPetList(no);
+			mav.addObject("per_no", no);// 회원번호 담기
+			if (petList.size() > 0) {// 리스트가 존재하면
+				mav.addObject("petList", petList);// 반려동물 리스트 담기
+			} else {// 등록된 반려동물이 없으면
+				mav.addObject("petEmpty", "등록된 동물이 없습니다");
+			}
+			view = "petList";
+			mav.setViewName(view);
+		}else {
+			view = "lock-screen-bus";
+			mav.setViewName(view);
 		}
-		view = "petList";
-		mav.setViewName(view);
+		
 		return mav;
 	}
 
@@ -576,22 +584,29 @@ public class SunnyService {
 	
 	/* 검색한 게시글 리스트 */
 	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {
-		mav = new ModelAndView();
-		String view = null;
+		//pageNum이 null이면 1
 		int page_no = (pageNum == null) ? 1 : pageNum;
+		
 		abo = new AdminBoard();
 		abo.setPage_no(page_no);
 		abo.setAbc_name(abc_name);
 		abo.setSearch(search);
+		
 		List<AdminBoard> aboList = null;
-		System.out.println("aboList=" + aboList);
-		if(abo.getAbc_name().equals("전체") && abo.getSearch()=="") {
+		if(abc_name.equals("전체") && search=="") {
 			noticeList(pageNum);
-		}else if(abo.getAbc_name().equals("전체")) {
+		}else if(abc_name.equals("전체")) {
 			aboList = sDao.getNoticeListAllSearch(abo);
-		}else aboList = sDao.getNoticeListCategoriSearch(abo);	
-		System.out.println("aboList=" + aboList);
+		}else aboList = sDao.getNoticeListCategoriSearch(abo);
+		
+		System.out.println("aboList=" + aboList); //log
+		
+		mav = new ModelAndView();
+		String view = null;
+		
 		if (aboList != null) {
+			mav.addObject("searchNotifications", "<div class='alert alert-primary' role='alert' style='text-align:center'>"
+					+ "<strong>'"+abo.getSearch()+"'</strong>에 대한 검색 결과입니다</div>");
 			mav.addObject("aboList", aboList);
 			mav.addObject("abc_name", abc_name);
 			mav.addObject("paging", getPagingSearch(abo));
@@ -605,7 +620,8 @@ public class SunnyService {
 		mav.setViewName(view);
 		return mav;
 	}
-
+	
+	/* 검색한 리스트 페이징 */
 	private String getPagingSearch(AdminBoard abo) {
 		int maxNum = 0;
 		if(abo.getAbc_name().equals("전체")) 
@@ -618,7 +634,7 @@ public class SunnyService {
 		return paging.makeHtmlSearchPaging(abo);
 	}
 
-
+	/* 기업 상세페이지 */
 	public ModelAndView businessDetailPage(String bus_no, String bct_code) {
 		mav = new ModelAndView();
 		String view = null;
@@ -683,6 +699,7 @@ public class SunnyService {
 		return mav;
 	}
 
+	/* 즐겨찾기 추가 삭제 (Ajax) */
 	public int favoriteChange(HttpServletRequest request) {
 		int result = 0;
 		HashMap<String, Object> hmap = new HashMap<>();
@@ -705,6 +722,7 @@ public class SunnyService {
 		return result;
 	}
 
+	/* 개인 캘린더 */
 	public ModelAndView personalCalendar(HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;

@@ -14,8 +14,7 @@
 	name="description" />
 <meta content="Coderthemes" name="author" />
 <!-- App favicon -->
-<link rel="shortcut icon"
-	href="resources/images/logo-sm.png">
+<link rel="shortcut icon" href="resources/images/logo-sm.png">
 
 <!-- third party css -->
 <link
@@ -24,22 +23,189 @@
 <!-- third party css end -->
 
 <!-- App css -->
-<link
-	href="resources/dist/assets/css/icons.min.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="resources/dist/assets/css/app.min.css"
-	rel="stylesheet" type="text/css" />
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
 <style type="text/css">
-#petProfile {
-	width: 150px;
-	height: 150px;
-	margin-top: 20px;
-}
 </style>
 </head>
 <body>
-	반려동물 상세정보
+	<!-- Begin page -->
+	<div class="wrapper">
+
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
+								</div>
+								<h4 class="page-title">반려동물 상세 정보</h4>
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+					<form name="petInfoDetail" method="get">
+						<div class="row">
+							<div class="col-12">
+								<div class="card bg-primary">
+									<div class="card-body profile-user-box">
+
+										<div class="row">
+											<div class="col-sm-8">
+												<div class="media">
+													<span class="float-left mr-4"><img id="petProfile"
+														src="${pet.pet_loc}/${pet.pet_photo}" alt="pet profile"
+														style="height: 100px;"
+														class="rounded-circle img-thumbnail"></span>
+													<div class="media-body">
+
+														<h4 class="mt-1 mb-1 text-white">${pet.pet_name}</h4>
+														<p class="font-13 text-white-50">${pet.pet_vrt}</p>
+
+														<ul class="mb-0 list-inline text-light">
+															<li class="list-inline-item mr-3">
+																<h5 class="mb-1">
+																	<c:set var="now" value="<%=new java.util.Date()%>" />
+																	<c:set var="sysYear">
+																		<fmt:formatDate value="${now}" pattern="yyyy" />
+																	</c:set>${sysYear-pet.pet_age+1}살
+																</h5>
+															</li>
+															<li class="list-inline-item">
+																<h5 class="mb-1">
+																	<c:if test="${'F' eq pet.pet_sex}">암컷</c:if>
+																	<c:if test="${'M' eq pet.pet_sex}">수컷</c:if>
+																</h5>
+															</li>
+														</ul>
+													</div>
+													<!-- end media-body-->
+												</div>
+											</div>
+											<!-- end col-->
+
+											<div class="col-sm-4">
+												<div class="text-center mt-sm-0 mt-3 text-sm-right">
+													<button type="button" class="btn btn-light"
+														onclick="javascript:forward(this)" id="edit">
+														<i class="mdi mdi-pencil mr-1"></i> 수정
+													</button>
+													<button type="button" class="btn btn-light"
+														style="margin-left: 10px;" onclick="javascript:deleteChk(this)" id="delete">
+														<i class="mdi mdi-delete-empty mr-1"></i> 삭제
+													</button>
+												</div>
+											</div>
+											<!-- end col-->
+										</div>
+										<!-- end row -->
+									</div>
+									<!-- end card-body/ profile-user-box-->
+								</div>
+								<!-- end card -->
+
+								<div class="card">
+									<div class="card-body">
+										<h4 class="header-title mt-0 mb-3">Pet Detail Information</h4>
+
+										<div class="row">
+											<div class="col-lg-6">
+												<div class="text-left">
+													<p class="text-muted">
+														<strong>중성화 수술 :</strong> <span class="ml-2">${pet.pet_ntr}</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>몸무게 :</strong> <span class="ml-2">${pet.pet_wght}
+															<c:if test="${null == pet.pet_wght}">-</c:if>
+														</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>질병 :</strong><span class="ml-2">${pet.pet_sick}
+															<c:if test="${null == pet.pet_sick}">-</c:if>
+														</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>주의해야할 음식 :</strong><span class="ml-2">${pet.pet_food}
+															<c:if test="${null == pet.pet_food}">-</c:if>
+														</span>
+													</p>
+												</div>
+											</div>
+											<!-- end col -->
+
+											<div class="col-lg-6">
+												<div class="text-left">
+
+													<p class="text-muted">
+														<strong>배변훈련 :</strong> <span class="ml-2">${pet.pet_tot}
+															<c:if test="${null == pet.pet_tot}">-</c:if>
+														</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>일일 배식횟수 및 회당 배식량 :</strong> <span class="ml-2">${pet.pet_rat}
+															<c:if test="${null == pet.pet_rat}">-</c:if>
+														</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>가족이 된 날 :</strong> <span class="ml-2">${pet.pet_mday}
+															<c:if test="${null == pet.pet_mday}">-</c:if>
+														</span>
+													</p>
+
+													<p class="text-muted">
+														<strong>특이사항 :</strong> <span class="ml-2">${pet.pet_etc}
+															<c:if test="${null == pet.pet_etc}">-</c:if>
+														</span>
+													</p>
+												</div>
+											</div>
+											<!-- end col -->
+										</div>
+										<!-- end row-->
+
+									</div>
+									<!-- end card-body -->
+								</div>
+								<!-- end card -->
+							</div>
+							<!-- end col -->
+						</div>
+
+						<input type="hidden" value="${pet.per_no}" name="per_no" /> <input
+							type="hidden" value="${pet.pet_no}" name="pet_no" />
+					</form>
+					<%-- <div class="row">
+						<div class="col-12">
+							반려동물 등록 폼 <br> 회원번호 : ${param.per_no}
+							반려동물 상세정보
 	<br> 동물번호 : ${pet.pet_no}
 	<form name="petInfoDetail" method="get">
 		<table>
@@ -151,36 +317,59 @@
 		<input type="hidden" value="${pet.per_no}" name="per_no" />
 		<input type="hidden" value="${pet.pet_no}" name="pet_no" /> 
 	</form>
-	
+						</div>
+					</div>
+ --%>
+				</div>
+				<!-- container -->
+
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
+		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
+	</div>
+	<!-- END wrapper -->
+
+
+
 	<!-- alert -->
 	${Fail}
-	
-	
-	<!-- App js -->
-	<script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script>
 
-	<!-- third party js -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
-	<!-- third party js ends -->
+
+	<!-- App js -->
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+	<!-- <script src="resources/dist/assets/js/pages/demo.dashboard.js"></script> -->
+	<script src="resources/dist/assets/js/pages/demo.profile.js"></script>
 	<!-- end demo js-->
+
 </body>
 <script>
+	function deleteChk(button) {
+		var con = confirm('정말로 삭제하겠습니까?');
+		con;
+		if (con == false) {
+			return false;
+		}else forward(button);
+	}
 	function forward(button) {
-		console.log("button="+button.value);
+		alert("button id=" + button.id);
 		var frm = document.petInfoDetail;
-		if (button.value == '수정') {
+		if (button.id == 'edit') {
 			frm.action = "petInfoUpdateForm?pet_no=${pet.pet_no}";
 		}
-		if (button.value == '삭제') {
+		if (button.id == 'delete') {
 			frm.action = "petDelete?pet_no=${pet.pet_no}";
 		}
 		frm.submit();
