@@ -57,6 +57,14 @@
 				dataType : "text",
 				success : function(data) {
 					$('#list').html(data);
+					$.ajax({
+						url : "AllPaging?bus_no=${no}",
+						type : "post",
+						dataType : "text",
+						success : function(data){
+							$('#page_navi').html(data);
+						}
+					});
 				},
 				error : function(error) {
 					console.log(error);
@@ -70,6 +78,14 @@
 				dataType : "text",
 				success : function(data) {
 					$('#list').html(data);
+					$.ajax({
+						url : "bctAllPaging?bus_no=${no}&bct_name="+radio,
+						type : "post",
+						dataType : "text",
+						success : function(data){
+							$('#page_navi').html(data);
+						}
+					});
 				},
 				error : function(error) {
 					console.log(error);

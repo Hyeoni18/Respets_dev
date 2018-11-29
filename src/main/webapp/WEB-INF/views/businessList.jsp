@@ -27,7 +27,6 @@
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
-</head>
 <body data-layout="topnav">
 	<div class="wrapper">
 		<div class="content-page">
