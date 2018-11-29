@@ -212,8 +212,8 @@ public class HyeonController {
 	}
 
 	@RequestMapping(value = "/todayScheduleListUnNoShow", method = RequestMethod.POST)
-	public @ResponseBody int todayScheduleListUnNoShow(String per_no) {
-		int result = hy.todayScheduleListUnNoShow(per_no);
+	public @ResponseBody int todayScheduleListUnNoShow(HttpServletRequest request) {
+		int result = hy.todayScheduleListUnNoShow(request);
 		return result;
 	}
 

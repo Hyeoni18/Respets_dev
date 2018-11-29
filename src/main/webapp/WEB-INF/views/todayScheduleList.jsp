@@ -143,11 +143,8 @@
 	}
 	function unNoshow(pno, bk_no) {
 		$.ajax({
-			url : 'todayScheduleListUnNoShow',
+			url : 'todayScheduleListUnNoShow?bk_no=' + bk_no + '&pno=' + pno,
 			type : 'post',
-			data : {
-				'per_no' : pno
-			},
 			success : function(data) {
 				console.log(data);
 				if (data != 0) {
