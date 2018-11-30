@@ -56,10 +56,12 @@
 				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
-
+				
+				
+				
 				<!-- Start Content-->
 				<div class="container-fluid">
-
+				${petEmpty}
 					<!-- start page title -->
 					<div class="page-title-box">
 						<div class="page-title-right">
@@ -76,7 +78,7 @@
 						<div class="col-12">
 							<div class="card-deck-wrapper">
 								<div class="card-deck">
-									${petEmpty}
+									
 									<c:forEach var="petList" items="${petList}" varStatus="status">
 										<%-- <div class="col-lg-4">
 											<div class="card">
@@ -114,8 +116,9 @@
 												<!-- end card-body-->
 											</div>
 										</div> --%>
-										<div class="col-lg-4" style="padding:0;">
-											<div class="card d-block" style="text-align: center;margin-bottom:20px;">
+										<div class="col-lg-4" style="padding: 0;">
+											<div class="card d-block"
+												style="text-align: center; margin-bottom: 20px;">
 												<a href="petInfoDetail?pet_no=${petList.pet_no}"> <img
 													class="rounded-circle img-thumbnail" id="petProfile"
 													src="${petList.pet_loc}/${petList.pet_photo}"
@@ -176,20 +179,12 @@
 
 
 	<!-- App js -->
-	<script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script>
+	<script src="resources/dist/assets/js/app.min.js"></script>
 
-	<!-- third party js -->
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script>
-	<!-- third party js ends -->
 
 	<!-- demo app -->
 	<script
-		src="<c:url value="resources/dist/assets/js/pages/demo.dashboard.js"/>"></script>
+		src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
 </html>

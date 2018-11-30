@@ -81,14 +81,14 @@
 										<table class="table table-centered mb-0" style='text-align: center;'>
 											<thead>
 												<tr>
-													<th>예약번호</th>
+													<th>예약 번호</th>
 													<th>업체명</th>
-													<th>동물종류</th>
-													<th>동물이름</th>
+													<th>동물 종류</th>
+													<th>동물 이름</th>
 													<th>예약자명</th>
-													<th>예약일시</th>
-													<th>방문일시</th>
-													<th>예약확정상태</th>
+													<th>예약 일시</th>
+													<th>방문 일시</th>
+													<th>예약 상태</th>
 												</tr>
 												${hList}
 											</thead>

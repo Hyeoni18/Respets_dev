@@ -153,7 +153,10 @@ public class HyeonService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String view = null;
 		String no = session.getAttribute("no").toString();
-		/*int fileCheck = Integer.parseInt(session.getAttribute("fileCheck").toString());*/
+		/*
+		 * int fileCheck =
+		 * Integer.parseInt(session.getAttribute("fileCheck").toString());
+		 */
 		System.out.println(no);
 		if (mb != null) {
 			mb.setPer_no(no);
@@ -332,10 +335,19 @@ public class HyeonService {
 		if (allList != null) {
 			for (int i = 0; i < allList.size(); i++) {
 				String bk_no = (String) allList.get(i).get("BK_NO");
-				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
-						+ allList.get(i).get("PTY_NAME") + " | " + allList.get(i).get("PET_NAME") + " | "
-						+ allList.get(i).get("PER_NAME") + " | " + allList.get(i).get("BK_TIME") + " | "
-						+ allList.get(i).get("VS_START") + " | " + allList.get(i).get("BK_CHK") + "</td></tr>");
+				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
+						+ allList.get(i).get("BUS_NAME") + "</td><td>" + allList.get(i).get("PTY_NAME") + "</td><td>"
+						+ allList.get(i).get("PET_NAME") + "</td><td>" + allList.get(i).get("PER_NAME") + "</td><td>"
+						+ allList.get(i).get("BK_TIME") + "</td><td>" + allList.get(i).get("VS_START") + "</td>");
+				if (allList.get(i).get("BK_CHK").equals("승인")) {
+					sb.append("<td class='text-success'>" + allList.get(i).get("BK_CHK") + "</td></tr>");
+				} else if (allList.get(i).get("BK_CHK").equals("거절")) {
+					sb.append("<td class='text-danger'>" + allList.get(i).get("BK_CHK") + "</td></tr>");
+				} else if (allList.get(i).get("BK_CHK").equals("취소")) {
+					sb.append("<td class='text-warning'>" + allList.get(i).get("BK_CHK") + "</td></tr>");
+				} else {
+					sb.append("<td class='text-info'>" + allList.get(i).get("BK_CHK") + "</td></tr>");
+				}
 			}
 			mav.addObject("allList", sb);
 			String paging = BookingListPaging(page_no, no);
@@ -526,7 +538,7 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append(" | <input type='radio' name='radio' class='radio' value='" + svc + "'>" + svc + " ");
+				sb.append("&nbsp;  <input type='button' name='button' class='button' onclick='bctListPaging()' value='" + svc + "'>");
 			}
 			mav.addObject("bctList", sb);
 		}
@@ -548,14 +560,12 @@ public class HyeonService {
 		return mav;
 	}
 
-	/*private String businessBookingList(int pNo, String no) {
-		int maxNum = hyDao.getListCount(no);
-		int listCount = 9;
-		int pageCount = 5;
-		String boardName = "businessBookingList";
-		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
-		return paging.BookingListButton(no);
-	}*/
+	/*
+	 * private String businessBookingList(int pNo, String no) { int maxNum =
+	 * hyDao.getListCount(no); int listCount = 9; int pageCount = 5; String
+	 * boardName = "businessBookingList"; Paging paging = new Paging(maxNum, pNo,
+	 * listCount, pageCount, boardName); return paging.BookingListButton(no); }
+	 */
 
 	/*
 	 * private Object makePaging(int pageNum, String no) { int maxNum =
@@ -880,6 +890,7 @@ public class HyeonService {
 	}
 
 	public String AllPaging(HttpServletRequest request, Integer pageNum) {
+	/*public String AllPaging(String searcht, Integer pageNum) {*/
 		String no = request.getParameter("bus_no");
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
