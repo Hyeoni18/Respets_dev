@@ -211,20 +211,6 @@ public class HyeonController {
 		int result = hy.todayScheduleListUnNoShow(request);
 		return result;
 	}
-	
-	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	public @ResponseBody String AllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.AllPaging(request, pageNum);
-	/*@ResponseBody public String AllPaging(String search, Integer pageNum) {
-		String text = hy.AllPaging(search, pageNum);*/
-		return text;
-	}
-	
-	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	public @ResponseBody String bctAllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.bctAllPaging(request, pageNum);
-		return text;
-	}
 
 	@RequestMapping(value = "/todayAllScheduleList", produces = "application/text; charset=utf8")
 	public @ResponseBody String todayAllScheduleList(HttpServletRequest request) {
@@ -262,9 +248,22 @@ public class HyeonController {
 		return text;
 	}
 	
-	@RequestMapping(value = "/businessAllBookingList", produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/businessAllBookingList", method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.businessAllBookingList(request, pageNum);
+		return text;
+	}
+	
+	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	public @ResponseBody String AllPaging(HttpServletRequest request ,Integer pageNum) {
+		String text = hy.AllPaging(request, pageNum);
+		System.out.println("확인@@@@@@@" + text);
+		return text;
+	}
+	
+	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
+		String text = hy.bctAllPaging(request, pageNum);
 		return text;
 	}
 

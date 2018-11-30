@@ -126,9 +126,9 @@ public class JiyeController {
 
 	// 최근 예약 목록
 	@RequestMapping(value = "/recentMyBookingList", method = RequestMethod.GET)
-	public ModelAndView recentMyBookingList(HttpSession session) {
+	public ModelAndView recentMyBookingList(HttpSession session, Integer pageNum) {
 		mav = new ModelAndView();
-		mav = js.recentMyBookingList(session);
+		mav = js.recentMyBookingList(session, pageNum);
 		return mav;
 	}
 

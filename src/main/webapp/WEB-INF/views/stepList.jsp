@@ -24,20 +24,71 @@
 
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-		<br/>
-<form action="stepInsertFormBut">
-<button class="btn btn-outline-info">직원 등록 하기</button> <br/><br/>
-${code} <br/>
-<div id="List">
-</div>
-</form>
-<%@ include file="footer.html"%>
+	<!-- Begin page -->
+	<div class="wrapper">
+
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="page-title-box">
+						<div class="page-title-right">
+							<form class="form-inline">
+								<a href="stepInsertFormBut" class="btn btn-success">직원
+									등록</a>
+							</form>
+						</div>
+						<h4 class="page-title">직원 관리</h4>
+					</div>
+					<!-- end page title -->
+
+					${code}
+					<div id="List"></div>
+
+				</div>
+				<!-- container -->
+
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
+		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
 	</div>
+	<!-- END wrapper -->
+
 	<!-- App js -->
-    <script src="/resources/dist/assets/js/app.min.js"></script>
+	<script src="resources/dist/assets/js/app.min.js"></script>
+
+	<!-- demo app -->
+	<script	src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<!-- end demo js-->
 </body>
 <script>
 

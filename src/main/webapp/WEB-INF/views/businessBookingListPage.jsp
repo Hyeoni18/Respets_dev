@@ -42,7 +42,7 @@
 			</div>
 		</form>
 		<div id="list"></div>
-		<div id="page_navi">${paging}</div>
+		<div id="page_navi"> </div>
 		<!-- <input type="hidden" id="page_index" class="page_index" /> -->
 		<%@ include file="footer.html"%>
 	</div>
