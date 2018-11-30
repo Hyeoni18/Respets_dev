@@ -250,7 +250,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+			<%@ include file="footer.html"%>
 			<!-- end Footer -->
 
 		</div>

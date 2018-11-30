@@ -54,22 +54,24 @@ public class SunnyService {
 		petList = null;
 		String no = session.getAttribute("no").toString();
 		char code = no.charAt(0);
-		if(code=='P') {
+		if (code == 'P') {
 			// 검색한 회원번호로 반려동물 리스트 불러오기
 			petList = sDao.getPetList(no);
 			mav.addObject("per_no", no);// 회원번호 담기
 			if (petList.size() > 0) {// 리스트가 존재하면
 				mav.addObject("petList", petList);// 반려동물 리스트 담기
 			} else {// 등록된 반려동물이 없으면
-				mav.addObject("petEmpty", "등록된 동물이 없습니다");
+				mav.addObject("petEmpty", "<div class=\"alert alert-info\" role=\"alert\" style='margin-top:2rem;margin-bottom:0;'>"
+						+ "<i class=\"dripicons-information mr-2\"></i> 반려동물을 등록하셔야 <strong>예약 서비스</strong>"
+						+ "&nbsp;이용이 가능합니다!</div>");
 			}
 			view = "petList";
 			mav.setViewName(view);
-		}else {
+		} else {
 			view = "lock-screen-bus";
 			mav.setViewName(view);
 		}
-		
+
 		return mav;
 	}
 
@@ -464,7 +466,7 @@ public class SunnyService {
 		String view = null;
 		System.out.println("Delete pet_no=" + pet_no);
 		List<HashMap<String, Object>> pdt = sDao.getPdt(pet_no);
-		if(pdt.size()!=0 || pdt.size()<0) {
+		if (pdt.size() != 0 || pdt.size() < 0) {
 			if (sDao.pdtAllDelete(pet_no)) {
 				if (sDao.petDelete(pet_no)) {// 반려동물 정보 삭제에 성공하면
 					view = "redirect:petList";
@@ -476,14 +478,14 @@ public class SunnyService {
 				mav.addObject("Fail", "<script>alert('pdtAllDelete실패')</script>");
 				view = "petInfoDetail";
 			}
-		}else {
+		} else {
 			if (sDao.petDelete(pet_no)) {// 반려동물 정보 삭제에 성공하면
 				view = "redirect:petList";
 			} else {// 반려동물 정보 삭제에 실패하면
 				mav.addObject("Fail", "<script>alert('petDelete실패')</script>");
 				view = "petInfoDetail";
 			}
-		}		
+		}
 		mav.setViewName(view);
 		return mav;
 	}
@@ -591,32 +593,34 @@ public class SunnyService {
 		mav.setViewName("redirect:noticeList");
 		return mav;
 	}
-	
+
 	/* 검색한 게시글 리스트 */
 	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {
-		//pageNum이 null이면 1
+		// pageNum이 null이면 1
 		int page_no = (pageNum == null) ? 1 : pageNum;
-		
+
 		abo = new AdminBoard();
 		abo.setPage_no(page_no);
 		abo.setAbc_name(abc_name);
 		abo.setSearch(search);
-		
+
 		List<AdminBoard> aboList = null;
-		if(abc_name.equals("전체") && search=="") {
+		if (abc_name.equals("전체") && search == "") {
 			noticeList(pageNum);
-		}else if(abc_name.equals("전체")) {
+		} else if (abc_name.equals("전체")) {
 			aboList = sDao.getNoticeListAllSearch(abo);
-		}else aboList = sDao.getNoticeListCategoriSearch(abo);
-		
-		System.out.println("aboList=" + aboList); //log
-		
+		} else
+			aboList = sDao.getNoticeListCategoriSearch(abo);
+
+		System.out.println("aboList=" + aboList); // log
+
 		mav = new ModelAndView();
 		String view = null;
-		
+
 		if (aboList != null) {
-			mav.addObject("searchNotifications", "<div class='alert alert-primary' role='alert' style='text-align:center'>"
-					+ "<strong>'"+abo.getSearch()+"'</strong>에 대한 검색 결과입니다</div>");
+			mav.addObject("searchNotifications",
+					"<div class='alert alert-primary' role='alert' style='text-align:center'>" + "<strong>'"
+							+ abo.getSearch() + "'</strong>에 대한 검색 결과입니다</div>");
 			mav.addObject("aboList", aboList);
 			mav.addObject("abc_name", abc_name);
 			mav.addObject("paging", getPagingSearch(abo));
@@ -630,13 +634,14 @@ public class SunnyService {
 		mav.setViewName(view);
 		return mav;
 	}
-	
+
 	/* 검색한 리스트 페이징 */
 	private String getPagingSearch(AdminBoard abo) {
 		int maxNum = 0;
-		if(abo.getAbc_name().equals("전체")) 
+		if (abo.getAbc_name().equals("전체"))
 			maxNum = sDao.getBoardCountAllSearch(abo); // 전체 글의 개수
-		else maxNum = sDao.getBoardCountCategoriSearch(abo); // 전체 글의 개수
+		else
+			maxNum = sDao.getBoardCountCategoriSearch(abo); // 전체 글의 개수
 		int listCount = 10; // 페이지당 글의 수
 		int pageCount = 5; // 그룹당 페이지 수
 		String boardName = "noticeListSearch"; // 게시판이 여러개일 때
@@ -650,41 +655,41 @@ public class SunnyService {
 		String view = null;
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
-		
+
 		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
 		String bsd_date = request.getParameter("bsd_date");
-		
+
 		System.out.println("bus_no=" + bus_no);
 		System.out.println("bct_code=" + bct_code);
 		System.out.println("bsd_date=" + bsd_date);
-		
+
+		// 해시맵에 쿼리스트링과 회원번호를 담는다
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+
 		String no = null;
-		
-		//회원번호
-		if(session.getAttribute("no")!=null) {
+
+		// 회원번호
+		if (session.getAttribute("no") != null) {
 			no = session.getAttribute("no").toString();
 			hmap.put("no", no);
 
-			//즐겨찾기
+			// 즐겨찾기
 			int favorite = 0;
 			char code = no.charAt(0);
 			String favResult = null;
-			if(code=='P') {
+			if (code == 'P') {
 				favResult = sDao.getFavorite(hmap);
-				if(favResult!=null) favorite = 1;
-			}			
+				if (favResult != null)
+					favorite = 1;
+			}
 
 			mav.addObject("no", no);
 			mav.addObject("code", code);
 			mav.addObject("favorite", favorite);
-			
+
 		}
-		
-		
-		// 해시맵에 쿼리스트링과 회원번호를 담는다		
-		hmap.put("bus_no", bus_no);
-		hmap.put("bct_code", bct_code);
 
 		// 기업명을 가져온다
 		String bus_name = sDao.getBusName(hmap);
@@ -695,20 +700,20 @@ public class SunnyService {
 		// '기업+업종'의 총 리뷰개수를 가져온다
 		String rev_count = sDao.getReviewCount(hmap);
 		System.out.println("rev_count=" + rev_count);
-/*		// '기업+업종'의 리뷰평점 평균값을 가져온다
-		String rev_avg = sDao.getReviewAvg(hmap);
-		System.out.println("rev_avg=" + rev_avg);*/
-		
-		
+		/*
+		 * // '기업+업종'의 리뷰평점 평균값을 가져온다 String rev_avg = sDao.getReviewAvg(hmap);
+		 * System.out.println("rev_avg=" + rev_avg);
+		 */
+
 		// 기업대표이미지를 가져온다
 		hmap = sDao.getBusinessImage(hmap);
 		String bus_img = hmap.get("GLR_LOC").toString() + hmap.get("GLR_FILE").toString();
 		System.out.println("bus_img" + bus_img);
-		
+
 		// 기업이 제공하는 모든 서비스를 가져온다
 		serviceList = sDao.getHaveService(bus_no);
 		System.out.println("serviceList=" + serviceList);
-		
+
 		mav.addObject("bus_no", bus_no);
 		mav.addObject("bsd_date", bsd_date);
 		mav.addObject("bct_code", bct_code);
@@ -716,7 +721,7 @@ public class SunnyService {
 		mav.addObject("bus_name", bus_name);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("rev_count", rev_count);
-		//mav.addObject("rev_avg", rev_avg);
+		// mav.addObject("rev_avg", rev_avg);
 		mav.addObject("serviceList", serviceList);
 		view = "businessDetailPage";
 		mav.setViewName(view);
@@ -728,21 +733,21 @@ public class SunnyService {
 		int result = 0;
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap.put("per_no", request.getParameter("per_no"));
-		hmap.put("bus_no", request.getParameter("bus_no"));		
+		hmap.put("bus_no", request.getParameter("bus_no"));
 		String action = request.getParameter("action");
-		System.out.println("action="+action);
-		if(action.equals("insert")) {
-			System.out.println("action="+action);
+		System.out.println("action=" + action);
+		if (action.equals("insert")) {
+			System.out.println("action=" + action);
 			System.out.println(hmap.get("per_no").toString());
 			System.out.println(hmap.get("bus_no").toString());
 			result = sDao.favoriteInsert(hmap);
 		}
-		if(action.equals("delete")) {
-			System.out.println("action="+action);
+		if (action.equals("delete")) {
+			System.out.println("action=" + action);
 			System.out.println(hmap.get("per_no").toString());
 			System.out.println(hmap.get("bus_no").toString());
 			result = sDao.favoriteDelete(hmap);
-		}		
+		}
 		return result;
 	}
 
@@ -750,60 +755,60 @@ public class SunnyService {
 	public ModelAndView personalCalendar(HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;
-		//회원번호
-		//String no = "P1000001";
+		// 회원번호
+		// String no = "P1000001";
 		String no = session.getAttribute("no").toString();
 		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String,Object>> bList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
 		System.out.println("세션확인: " + no);
-		
-		//회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
+
+		// 회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = sDao.getPerCalendar(no);
-		//System.out.println("serviceList=" + bookingList);		
-		
-		//최종 완성될 JSONObject 선언(전체)
-        //JSONObject bookingObject = new JSONObject(); 
-        //person의 JSON정보를 담을 Array 선언
-        //JSONArray bookingArray = new JSONArray();
-        //person의 하나의 예약 정보가 들어갈 JSONObject 선언
-        //JSONObject bookingInfo = new JSONObject();
-		
+		// System.out.println("serviceList=" + bookingList);
+
+		// 최종 완성될 JSONObject 선언(전체)
+		// JSONObject bookingObject = new JSONObject();
+		// person의 JSON정보를 담을 Array 선언
+		// JSONArray bookingArray = new JSONArray();
+		// person의 하나의 예약 정보가 들어갈 JSONObject 선언
+		// JSONObject bookingInfo = new JSONObject();
+
 		mav.addObject("no", no);
-		for(int i=0;i<bookingList.size();i++) {
-			HashMap<String,Object> hmap = new HashMap<>();
+		for (int i = 0; i < bookingList.size(); i++) {
+			HashMap<String, Object> hmap = new HashMap<>();
 			System.out.println("bookingList!!!!!!!!!!!!!!!" + bookingList.get(i));
 			String bk_no = bookingList.get(i).get("BK_NO").toString();
 			String petName = bookingList.get(i).get("PET_NAME").toString();
 			String busName = bookingList.get(i).get("BUS_NAME").toString();
 			String bctName = bookingList.get(i).get("BCT_NAME").toString();
-			if(bctName.equals("병원")) {
-				bctName="진료";
+			if (bctName.equals("병원")) {
+				bctName = "진료";
 			}
 
 			String start = bookingList.get(i).get("VS_START").toString();
 			String end = bookingList.get(i).get("VS_END").toString();
-			
-			//데이터 입력
-			hmap.put("title", petName+"-"+busName+"("+bctName+")");
+
+			// 데이터 입력
+			hmap.put("title", petName + "-" + busName + "(" + bctName + ")");
 			hmap.put("start", start);
 			hmap.put("end", end);
 			hmap.put("bk_no", bk_no);
-			if(bctName.equals("진료")) {
+			if (bctName.equals("진료")) {
 				hmap.put("className", "bg-warning");
-			}else if(bctName.equals("미용")) {
+			} else if (bctName.equals("미용")) {
 				hmap.put("className", "bg-success");
-			}else {
+			} else {
 				hmap.put("className", "bg-info");
 			}
 			bList.add(hmap);
 		}
 		System.out.println("hmap!!!!!!!!!!!!!!: " + bList);
-		Gson gson =  new GsonBuilder().create();
+		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(bList);
 		System.out.println("json!!!!!!!!!!!!!1" + json);
 		mav.addObject("e", json);
-		//bookingObject.put("e",bookingArray);
-		//System.out.println("bookingObject="+bookingObject.toJSONArray(bookingArray));
+		// bookingObject.put("e",bookingArray);
+		// System.out.println("bookingObject="+bookingObject.toJSONArray(bookingArray));
 		System.out.println("확인: " + mav);
 		view = "personalCalendar";
 		mav.setViewName(view);

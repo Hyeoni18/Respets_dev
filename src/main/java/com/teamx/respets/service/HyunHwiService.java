@@ -1315,7 +1315,6 @@ public class HyunHwiService {
 		String bus_no = (String) session.getAttribute("no");
 		list = hDao.selectSVC(bus_no);
 		System.out.println(list);
-		sb.append(" ");
 		sb.append("<ul class='nav nav-pills bg-light nav-justified mb-3'>");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
@@ -1344,38 +1343,49 @@ public class HyunHwiService {
 		map.put("bct_code", bct_code);
 		list = hDao.selectEMP(map);
 		if (list != null) {
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-12'>");
+			sb.append("<div class='card-deck-wrapper'>");
+			sb.append("<div class='card-deck'>");
+			
 			for (int i = 0; i < list.size(); i++) {
-				if (count == 0 || count % 3 == 0) {
-					sb.append("<div class='row'>");
-					sb.append("<div class='col-12'>");
-					sb.append("<div class='card-deck-wrapper'>");
-					sb.append("<div class='card-deck'>");
-					flag = false;
-				}
 				String emp_no = (String) list.get(i).get("EMP_NO");
 				String emp_name = (String) list.get(i).get("EMP_NAME");
 				String emp_pos = (String) list.get(i).get("EMP_POS");
 				String emp_part = (String) list.get(i).get("EMP_PART");
 				String emp_photo = (String) list.get(i).get("EMP_PHOTO");
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
-				sb.append("<div class='card d-block'>");
+				/*sb.append("<div class=\"col-lg-4\""
+						+ "<div class='card d-block'"
+						+ "style='text-align: center; margin-bottom: 20px;'>"
+						+ "<a href='stepDetail?emp_no=" + emp_no + "'> <img"
+						+ "class='rounded-circle img-thumbnail' id='petProfile'"
+						+ "src='" + emp_loc + emp_photo + "' alt='pet profile' style='width: 150px;height: 150px;margin-top: 20px;'>"
+						+ "</a>"
+						+ "<div class=\"card-body\">"
+						+ "<h5 class=\"card-title\">"+emp_name</h5>"
+						+ "<p class=\"card-text\">직급 :"+emp_pos
+						+ "</p>"
+						+ "</div>"
+						+ "</div>"
+						+ "</div>");*/
+				sb.append("<div class='col-lg-4'>");
+				sb.append("<div class='card d-block' style='text-align: center; margin-bottom: 20px;'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
-				sb.append("<img class='card-img-top' src='" + emp_loc + emp_photo + "'/></br>");
-				sb.append("<div class='card-body'>");
-				sb.append("<h5 class='card-title'> 이름: " + emp_name + "</h1>");
-				sb.append("<h5 class='card-title'> 직급: " + emp_pos + "</h1>");
-				sb.append("</div>");
+				sb.append("<img class='rounded-circle img-thumbnail' src='" + emp_loc + emp_photo + "' style='width: 150px;height: 150px;margin-top: 20px;'/>");
 				sb.append("</a>");
+				sb.append("<div class='card-body'>");
+				sb.append("<h5 class='card-title'>" + emp_name + "</h5>");
+				sb.append("<p class='card-text'> 직급: " + emp_pos + "</p>");
 				sb.append("</div>");
-				if (count % 3 == 2) {
-					sb.append("</div>");
-					sb.append("</div>");
-					sb.append("</div>");
-					sb.append("</div>");
-					flag = true;
-				}
-				count++;
+				
+				sb.append("</div>");
+				sb.append("</div>");
 			}
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 		} else {
 			sb.append("<script>alert('직원을 등록해주세요');</script>");
 		}
@@ -2470,7 +2480,8 @@ public class HyunHwiService {
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
-					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="+mapo.get("bsd_date")+"'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="
+							+ mapo.get("bsd_date") + "'>");
 					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
