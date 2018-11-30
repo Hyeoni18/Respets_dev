@@ -1,25 +1,15 @@
 package com.teamx.respets;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.stream.JsonToken;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.service.HyeonService;
@@ -223,13 +213,15 @@ public class HyeonController {
 	}
 	
 	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String AllPaging(HttpServletRequest request, Integer pageNum) {
+	public @ResponseBody String AllPaging(HttpServletRequest request, Integer pageNum) {
 		String text = hy.AllPaging(request, pageNum);
+	/*@ResponseBody public String AllPaging(String search, Integer pageNum) {
+		String text = hy.AllPaging(search, pageNum);*/
 		return text;
 	}
 	
 	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
+	public @ResponseBody String bctAllPaging(HttpServletRequest request, Integer pageNum) {
 		String text = hy.bctAllPaging(request, pageNum);
 		return text;
 	}
