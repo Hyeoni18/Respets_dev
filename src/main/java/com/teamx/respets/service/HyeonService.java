@@ -262,27 +262,27 @@ public class HyeonService {
 		if (result != 0) {
 			int update = hyDao.bk_chkUpdate(bk_no);
 			if (update != 0) {
-				HashMap<String, Object> hmap = new HashMap<>();
-				String no = (String) session.getAttribute("no");
-				StringBuilder sb = new StringBuilder();
-				hmap.put("no", no);
-				hList = jDao.recentMyBookingList(hmap);
-				System.out.println(hList);
-				for (int i = 0; i < hList.size(); i++) {
-					sb.append("<tr><td><a href='./myBookingDetail?" + hList.get(i).get("BK_NO") + "'>"
-							+ hList.get(i).get("BK_NO") + "</a></td>");
-					sb.append("<td>" + hList.get(i).get("BUS_NAME") + "</td>");
-					sb.append("<td>" + hList.get(i).get("PTY_NAME") + "</td>");
-					sb.append("<td>" + hList.get(i).get("PET_NAME") + "</td>");
-					sb.append("<td>" + hList.get(i).get("PER_NAME") + "</td>");
-					sb.append("<td>" + hList.get(i).get("BK_TIME") + "</td>");
-					sb.append("<td>" + hList.get(i).get("VS_START") + "</td>");
-					sb.append("<td name='chk'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
-				} // for End
-				mav.addObject("hList", sb);
+//				HashMap<String, Object> hmap = new HashMap<>();
+//				String no = (String) session.getAttribute("no");
+//				StringBuilder sb = new StringBuilder();
+//				hmap.put("no", no);
+//				hList = jDao.recentMyBookingList(hmap);
+//				System.out.println(hList);
+//				for (int i = 0; i < hList.size(); i++) {
+//					sb.append("<tr><td><a href='./myBookingDetail?" + hList.get(i).get("BK_NO") + "'>"
+//							+ hList.get(i).get("BK_NO") + "</a></td>");
+//					sb.append("<td>" + hList.get(i).get("BUS_NAME") + "</td>");
+//					sb.append("<td>" + hList.get(i).get("PTY_NAME") + "</td>");
+//					sb.append("<td>" + hList.get(i).get("PET_NAME") + "</td>");
+//					sb.append("<td>" + hList.get(i).get("PER_NAME") + "</td>");
+//					sb.append("<td>" + hList.get(i).get("BK_TIME") + "</td>");
+//					sb.append("<td>" + hList.get(i).get("VS_START") + "</td>");
+//					sb.append("<td name='chk'>" + hList.get(i).get("BK_CHK") + "</td></tr>");
+//				} // for End
+//				mav.addObject("hList", sb);
 				mav.addObject("cancInsertSucess", makeCancInsertSucess());
 				mav.addObject(session);
-				view = "recentMyBookingList";
+				view = "redirect:/recentMyBookingList";
 			} else {
 				mav.addObject("flas", makeFlasHtml());
 				view = "myBookingCancelPage";

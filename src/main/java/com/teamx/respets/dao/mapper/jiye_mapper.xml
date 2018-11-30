@@ -75,7 +75,7 @@
 	<!-- 개인 최근예약리스트 -->
 	<select id="recentMyBookingList" parameterType="HashMap" resultType="HashMap">
 		SELECT BK.BK_NO, BUS.BUS_NAME ,PTY.PTY_NAME, PET.PET_NO, 
-		PET.PET_NAME, PER.PER_NAME, BK.BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START, BK.BK_CHK
+		PET.PET_NAME, PER.PER_NAME, TO_CHAR(BK.BK_TIME, 'YYYY-MM-DD HH24:MI') AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START, BK.BK_CHK
 		FROM BK INNER JOIN PET
 		ON BK.PET_NO = PET.PET_NO
 		INNER JOIN PTY
