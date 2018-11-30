@@ -81,6 +81,8 @@ public interface IJiyeDao {
 
 	public int getRecentMyBookingList(String no);
 
+	public int recentMyBookingListCount(String no);
+
 
 
 

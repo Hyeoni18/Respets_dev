@@ -415,37 +415,77 @@ public class Paging {
 	}
 	
 	@SuppressWarnings("unused")
-	public String AllPaging(String no) {
+	public String AllPaging() {
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
 		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
 		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
-		return busAllPaging(currentGroup, totalPage, boardName, no);
+		return busAllPaging(currentGroup, totalPage, boardName);
 	}
 
-	private String busAllPaging(int currentGroup, int totalPage, String boardName, String no) {
+	private String busAllPaging(int currentGroup, int totalPage, String boardName) {
 		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
 		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
 		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
 
-		if (start != 1) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (start - 1) + "&no=" + no + "'>");
-			sb.append("이전</a></li>");
-		} // method End
+		sb.append("<div class='dataTables_paginate paging_simple_numbers'" + "id='selection-datatable_paginate'>"
+				+ "<ul class='pagination pagination-rounded'>");
+
+		if (pageNum <= 1) {
+			sb.append("<li class='paginate_button page-item previous disabled'"
+					+ "id='selection-datatable_previous'><a href='#'"
+					+ "aria-controls='selection-datatable' data-dt-idx='0' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-left'></i></a></li>");
+		} else {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (pageNum - 1) + "' "
+					+ "aria-controls='selection-datatable' data-dt-idx='0' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-left'></i></a></li>");
+		}
 
 		for (int i = start; i <= end; i++) {
 			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
-				sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&no=" + no + "'>");
-				sb.append("  " + i + "</a></li>");
+				sb.append("<li class='paginate_button page-item'>" + "<a href='" + boardName + "?pageNum=" + i
+						+ "' aria-controls='basic-datatable' " + "data-dt-idx='" + i
+						+ "' tabindex='0' class='page-link'>" + i + "</a></li>");
 			} else { // 현재 페이지인 경우 링크 해제
-				sb.append("<font style='color: red;'> " + i + "  </font>");
+				sb.append("<li class='paginate_button page-item active'>" + "<a href='" + boardName + "?pageNum=" + i
+						+ "' aria-controls='basic-datatable' " + "data-dt-idx='" + i
+						+ "' tabindex='0' class='page-link'>" + i + "</a></li>");
 			} // else End
 		} // for End
+		if (pageNum == totalPage) {
+			sb.append("<li class='paginate_button page-item previous disabled'"
+					+ "id='selection-datatable_previous'><a href='#'"
+					+ "aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		} else if (pageNum == end) {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (end + 1) + "' "
+					+ "aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		} else {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (pageNum + 1) + "' "
+					+ "aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		}
+		sb.append("</ul></div>");
 
-		if (end != totalPage) {
-			sb.append("<li><a href='" + boardName + "?pageNum=" + (end + 1) + "&no=" + no + "'>");
-			sb.append("다음</a></li>");
-		} // if End
-		return sb.toString();
+		/*
+		 * if (start != 1) { sb.append("<li><a href='" + boardName + "?pageNum=" +
+		 * (start - 1) + "'>"); sb.append("이전</a></li>"); } // method End
+		 * 
+		 * for (int i = start; i <= end; i++) { if (pageNum != i) { // 현재 페이지가 아닌 경우 링크
+		 * 처리 sb.append("<li><a href='" + boardName + "?pageNum=" + i + "'>");
+		 * sb.append("  "+ i +"</a></li>"); } else { // 현재 페이지인 경우 링크 해제
+		 * sb.append("<font style='color: red;'> " + i + "  </font>"); } // else End }
+		 * // for End
+		 * 
+		 * if (end != totalPage) { sb.append("<li><a href='" + boardName + "?pageNum=" +
+		 * (end + 1) + "'>"); sb.append("다음</a></li>"); } // if End
+		 */ return sb.toString();
 	}
 
 	private String businessListTag(int currentGroup, int totalPage, String boardName2, Map<String, Object> map) {

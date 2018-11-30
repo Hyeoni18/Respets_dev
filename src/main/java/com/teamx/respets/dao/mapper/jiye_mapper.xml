@@ -74,18 +74,16 @@
 	
 	<!-- 개인 최근예약리스트 -->
 	<select id="recentMyBookingList" parameterType="HashMap" resultType="HashMap">
-		SELECT BK.BK_NO, BUS.BUS_NAME ,PTY.PTY_NAME, PET.PET_NO, 
-		PET.PET_NAME, PER.PER_NAME, BK.BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START, BK.BK_CHK
-		FROM BK INNER JOIN PET
-		ON BK.PET_NO = PET.PET_NO
-		INNER JOIN PTY
-		ON PET.PTY_NO = PTY.PTY_NO
-		INNER JOIN PER
-		ON BK.PER_NO = PER.PER_NO
-		INNER JOIN BUS
-		ON BK.BUS_NO = BUS.BUS_NO
-		WHERE PER.PER_NO = #{no}
-		ORDER BY BK.BK_TIME DESC
+		<![CDATA[   SELECT X.RNUM, X.BK_NO, X.BUS_NAME, X.PTY_NAME, X.PET_NO, X.PET_NAME, X.PER_NAME, X.BK_TIME, X.VS_START, X.BK_CHK
+                    FROM (
+                    SELECT ROWNUM AS RNUM, RC.BK_NO, RC.BUS_NAME, RC.PTY_NAME, RC.PET_NO, RC.PET_NAME, RC.PER_NAME, RC.BK_TIME, RC.VS_START, RC.BK_CHK
+                        FROM (
+                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, BK_TIME, VS_START, BK_CHK
+                        FROM RECENTMYBOOKINGLIST_VIEW
+                        WHERE PER_NO=#{no}
+                        ORDER BY BK_TIME DESC)RC
+                    WHERE ROWNUM <= ${pageNum} * 10)X
+                    WHERE X.RNUM >= ${pageNum} * 10-9 ]]>
 	</select>
 	
 	<!-- 내 예약 디테일 -->
@@ -138,6 +136,10 @@
 	<!-- 기업 공지사항 갯수 확인 -->
 	<select id="getBusinessNoticeCount"  parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no}
+	</select>
+	
+	<select id="recentMyBookingListCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM RECENTMYBOOKINGLIST_VIEW WHERE PER_NO=#{no}
 	</select>
 	
 	<!-- 기업공지사항 디테일 -->

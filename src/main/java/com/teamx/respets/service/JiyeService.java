@@ -241,14 +241,16 @@ public class JiyeService {
 	} // logout End
 
 	// 지예 최근 예약 목록
-	public ModelAndView recentMyBookingList(HttpSession session) {
+	public ModelAndView recentMyBookingList(HttpSession session, Integer pageNum) {
 		this.session = session;
 		mav = new ModelAndView();
 		String view = null;
 		String no = (String) session.getAttribute("no");
+		int pNo = (pageNum == null) ? 1 : pageNum;
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> hList = new ArrayList<HashMap<String, Object>>();
 		StringBuilder sb = new StringBuilder();
+		hmap.put("pageNum", pNo);
 		hmap.put("no", no);
 		hList = jDao.recentMyBookingList(hmap);
 		System.out.println(hList);
@@ -272,9 +274,21 @@ public class JiyeService {
 			}
 		} // for End
 		mav.addObject("hList", sb);
+		mav.addObject("paging", getPagingRecent(pNo, session));
 		view = "recentMyBookingList";
 		return mav;
 	}// recentMyBookingList End
+	
+	private String getPagingRecent(int pageNum, HttpSession session) { // 현재 페이지 번호
+		String no = session.getAttribute("no").toString();
+		System.out.println("getPaging=" + no);
+		int maxNum = jDao.recentMyBookingListCount(no); // 전체 글의 개수
+		int listCount = 10; // 페이지당 글의 수
+		int pageCount = 5; // 그룹당 페이지 수 [1] [2] [3] [4] [5] ▶ [6] [7]....
+		String boardName = "recentMyBookingList"; // 게시판이 여러 개일 때 쓴다.
+		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
+		return paging.makeHtmlPaging();
+	} // method End
 
 	// 개인예약상세정보
 	public ModelAndView myBookingDetail(HttpServletRequest request) {

@@ -96,7 +96,9 @@
 											</tbody>
 										</table>
 									</div>
-
+									<br/>
+									<br/>
+									${paging}
 								</div>
 								<!-- end card body-->
 							</div>

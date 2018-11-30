@@ -47,17 +47,16 @@
 							<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
 							<br /> <input type='radio' name='radio' class='radio' value="전체" />전체
 							${bctList}
-							<div class="table-responsive-sm">
-								<table class="table table-centered mb-0"
-									style='text-align: center;'>
-									<thead>
-										<div class="No" style="border: 1px solid red"></div>
-										<div id="Ok" style="border: 1px solid yellow"></div>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
+						
+									
+										<div id="No" style="border: 1px solid red" class="table-responsive-sm">
+										
+										</div>
+										<div id="Ok" style="border: 1px solid yellow">
+										
+										</div>
+											
+								
 
 								</div>
 								<!-- end card body-->
@@ -81,7 +80,7 @@
 					type : "post",
 					dataType : "text",
 					success : function(data) {
-						$('.No').html(data);
+						$('#No').html(data);
 						$('.unNoshow').hide();
 						$.ajax({
 							url : "todayAllScheduleListOk?no=${no}",
@@ -106,7 +105,7 @@
 					type : 'post',
 					dataType : "text",
 					success : function(data) {
-						$('.No').html(data);
+						$('#No').html(data);
 						$('.unNoshow').hide();
 						$.ajax({
 							url : "bctBookingListOk?no=${no}&bct_name="+ radio,
@@ -138,7 +137,7 @@
 			type : "post",
 			dataType : "text",
 			success : function(data) {
-				$('.No').html(data);
+				$('#No').html(data);
 				$('.unNoshow').hide();
 				$.ajax({
 					url : "todayAllScheduleListOk?no=${no}",
@@ -171,7 +170,7 @@
 			type : "post",
 			dataType : "text",
 			success : function(data) {
-				$('.No').html(data);
+				$('#No').html(data);
 				$('.unNoshow').hide();
 				$.ajax({
 					url : "bctBookingListOk?no=${no}&bct_name=" + bct_name,
@@ -201,7 +200,7 @@
 			type : "post",
 			dataType : "text",
 			success : function(data) {
-				$('.No').html(data);
+				$('#No').html(data);
 				$('.unNoshow').hide();
 
 				$.ajax({
@@ -232,7 +231,7 @@
 			type : "post",
 			dataType : "text",
 			success : function(data) {
-				$('.No').html(data);
+				$('#No').html(data);
 				$('.unNoshow').hide();
 				$.ajax({
 					url : "bctBookingListOk?no=${no}&bct_name=" + radio,
