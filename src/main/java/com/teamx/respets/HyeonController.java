@@ -225,6 +225,8 @@ public class HyeonController {
 	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String AllPaging(HttpServletRequest request, Integer pageNum) {
 		String text = hy.AllPaging(request, pageNum);
+	/*@ResponseBody public String AllPaging(String search, Integer pageNum) {
+		String text = hy.AllPaging(search, pageNum);*/
 		return text;
 	}
 	

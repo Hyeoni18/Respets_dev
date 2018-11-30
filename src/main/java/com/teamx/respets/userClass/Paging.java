@@ -413,8 +413,19 @@ public class Paging {
 		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
 		return businessListTag(currentGroup, totalPage, boardName, map);
 	}
-	
-	@SuppressWarnings("unused")
+
+	public String bctAllPaging(Map<String, Object> map) {
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return bctAllPaging(currentGroup, totalPage, boardName, map);
+	}
+
+	private String bctAllPaging(int currentGroup, int totalPage, String boardName2, Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public String AllPaging(String no) {
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
 		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
