@@ -120,7 +120,7 @@ public class JinService {
 			sb.append("<div class='card-body'>");
 			sb.append("<h3 class='card-title'>"+list.get(i).get("BUS_NAME")+"</h3><br/>");
 			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no="
-					+ list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+					+ list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
 			sb.append("</div></div>");
 		} // for End
 		return sb.toString();
