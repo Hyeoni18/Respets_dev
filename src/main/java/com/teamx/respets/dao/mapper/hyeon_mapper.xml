@@ -22,7 +22,8 @@
 
 	<!-- 혜연 -->
 	<update id="myInfoUpdate" parameterType="personal">
-		UPDATE PER SET PER_NAME=#{per_name}, PER_PHONE=#{per_phone} 
+		UPDATE PER SET
+		PER_NAME=#{per_name}, PER_PHONE=#{per_phone}
 		WHERE PER_NO = #{per_no}
 	</update>
 
@@ -92,10 +93,11 @@
 		INNER JOIN BCT
 		ON BK.BCT_CODE =
 		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{no} AND BK.VS_START = TO_DATE(#{timeS},'yy/MM/dd') AND
+		WHERE BK.BUS_NO = #{no} AND BK.VS_START =
+		TO_DATE(#{timeS},'yy/MM/dd') AND
 		BK.VS_CHK = 'X'
 	</select>
-	
+
 	<select id="todayScheduleListOk" resultType="Hashmap"
 		parameterType="Hashmap">
 		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi')AS VS_START,
@@ -113,7 +115,8 @@
 		INNER JOIN BCT
 		ON BK.BCT_CODE =
 		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{no} AND BK.VS_START = TO_DATE(#{timeS},'yy/MM/dd') AND
+		WHERE BK.BUS_NO = #{no} AND BK.VS_START =
+		TO_DATE(#{timeS},'yy/MM/dd') AND
 		BK.VS_CHK = 'O'
 	</select>
 
@@ -148,7 +151,7 @@
 		AND
 		BK.VS_START = TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK = 'X'
 	</select>
-	
+
 	<select id="bctBookingListOk" resultType="HashMap"
 		parameterType="HashMap">
 		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START,
@@ -292,7 +295,7 @@
 		INNER JOIN PER ON BK.PER_NO = PER.PER_NO 
 		INNER JOIN PTY ON PET.PTY_NO = PTY.PTY_NO 
 		INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE 
-		WHERE BK.BUS_NO = #{no}) SEL 
+		WHERE BK.BUS_NO = #{no} ORDER BY BK_NO DESC) SEL 
 		WHERE ROWNUM <= ${page_no} * 10) X 
 		WHERE X.RNUM >= ${page_no}*10-9
 		]]>
@@ -308,6 +311,12 @@
 		BK
 		WHERE
 		BUS_NO = #{no}
+	</select>
+
+	<select id="getBctListCount" resultType="int">
+		SELECT COUNT(*) FROM BK INNER JOIN BCT ON BK BCT_CODE =
+		BCT.BCT_CODE WHERE
+		BUS_NO = #{no} AND BCT_NAME = #{bct_name}
 	</select>
 
 	<!-- 서비스 관리 -->
@@ -407,7 +416,7 @@
 		UPDATE BK SET
 		VS_CHK = 'O' WHERE BK_NO = #{bk_no}
 	</update>
-	
+
 	<update id="todayScheduleListCancel" parameterType="String">
 		UPDATE BK SET
 		VS_CHK = 'X' WHERE BK_NO = #{bk_no}
@@ -430,7 +439,8 @@
 		INNER JOIN BCT
 		ON BK.BCT_CODE =
 		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{bus_no} AND BK.VS_START = TO_DATE(#{timeS},'yy/MM/dd') AND
+		WHERE BK.BUS_NO = #{bus_no} AND BK.VS_START =
+		TO_DATE(#{timeS},'yy/MM/dd') AND
 		BK.VS_CHK='O' AND BK.BK_NO = #{bk_no}
 	</select>
 
@@ -457,6 +467,7 @@
 
 	<delete id="todayScheduleListUnNoShow" parameterType="String">
 		DELETE BLK
-		WHERE PER_NO = #{per_no} AND OUT_NO = 1 AND BLK_TIME = TO_DATE(#{timeS},'yy/MM/dd')
+		WHERE PER_NO = #{per_no} AND OUT_NO = 1 AND BLK_TIME =
+		TO_DATE(#{timeS},'yy/MM/dd')
 	</delete>
 </mapper>

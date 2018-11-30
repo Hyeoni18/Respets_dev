@@ -31,7 +31,7 @@
 						<div class="card-header pt-4 pb-4 text-center bg-success">
 							<a href="./"> <span><img
 									src="resources/dist/assets/images/logo-white.png" alt="리스펫츠 로고"
-									height="30"></span>
+									height="50" width="250"></span>
 							</a>
 						</div>
 

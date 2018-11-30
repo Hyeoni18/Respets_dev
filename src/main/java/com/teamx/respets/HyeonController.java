@@ -123,8 +123,15 @@ public class HyeonController {
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessBookingList")
-	public ModelAndView businessBookingList(HttpSession session) {
-		mav = hy.businessBookingList(session);
+	public ModelAndView businessBookingList(HttpSession session, Integer pageNum) {
+		mav = hy.businessBookingList(session, pageNum);
+		return mav;
+	}
+	
+	/* 혜연 */
+	@RequestMapping(value = "/businessAllBctBookingList")
+	public ModelAndView businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
+		mav = hy.businessAllBctBookingList(request, pageNum);
 		return mav;
 	}
 
@@ -211,6 +218,15 @@ public class HyeonController {
 		int result = hy.todayScheduleListUnNoShow(request);
 		return result;
 	}
+<<<<<<< HEAD
+=======
+	
+	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String AllPaging(HttpSession session,Integer pageNum) {
+		String text = hy.AllPaging(session ,pageNum);
+		return text;
+	}
+>>>>>>> hyeon
 
 	@RequestMapping(value = "/todayAllScheduleList", produces = "application/text; charset=utf8")
 	public @ResponseBody String todayAllScheduleList(HttpServletRequest request) {
@@ -273,15 +289,4 @@ public class HyeonController {
 		return text;
 	}
 
-	@RequestMapping(value = "/businessAllBctBookingList", produces = "application/text; charset=utf8")
-	public @ResponseBody String businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.businessAllBctBookingList(request, pageNum);
-		return text;
-	}
-
-	@RequestMapping(value = "/searchBctAllsList", produces = "application/text; charset=utf8")
-	public @ResponseBody String searchBctAllsList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.searchBctAllsList(request, pageNum);
-		return text;
-	}
 }

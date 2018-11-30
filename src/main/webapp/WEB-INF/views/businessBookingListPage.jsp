@@ -29,76 +29,42 @@
 	<div class="content-page">
 		<%@ include file="topbar-dashboard.jsp"%>
 		<h1>전체 예약 목록</h1>
+		${no}
 		<form name="businessBookingListPage" class="form-inline">
-			<input type='button' name='button' class='button' value="전체" />
-			${bctList}
+			<input type='button' name='button' class='button'
+				onclick="allListPaging()" value="전체" /> ${bctList}
 			<div class="form-group mb-3">
 				<label for="status-select" class="mr-2"> 검색&nbsp; 보호자<input
 					type="search" class="form-control form-control-sm"
-					placeholder="search" aria-controls="basic-datatable"
-					name="search" id="per_name" />
+					placeholder="search" aria-controls="basic-datatable" name="search"
+					id="per_name" />
 					<button type="submit" class="btn">검색</button>
 				</label>
 			</div>
 		</form>
+<<<<<<< HEAD
 		<div id="list"></div>
 		<div id="page_navi"> </div>
+=======
+		<div id="list">${bokList}</div>
+		<div id="page_navi">${paging}</div>
+>>>>>>> hyeon
 		<!-- <input type="hidden" id="page_index" class="page_index" /> -->
 		<%@ include file="footer.html"%>
 	</div>
 </body>
 <script>
 	var radio = $("input[name='button']").val();
-	function butListPaging(no, pno) {
+	var frm = document.businessBookingListPage;
+	function butListPaging() {
+		console.log(radio);
 		if (radio == '전체') {
-			$.ajax({
-				url : "businessAllBookingList?no=${no}",
-				type : "post",
-				dataType : "text",
-				success : function(data) {
-					$('#list').html(data);
-					$.ajax({
-						url : "AllPaging?bus_no=${no}",
-						type : "post",
-						dataType : "text",
-						success : function(data) {
-							$('#page_navi').html(data);
-						}
-					});
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		}
+			frm.action = "redirect:businessBookingList";
+		}/*  else {
+			frm.action = "businessAllBctBookingList?bct_name" + radio;
+		} */
 	}
-	function bctListPaging(bct_name, no, pno) {
-		if (radio == '병원' || radio == '미용' || radio == '호텔') {
-			$.ajax({
-				url : "businessAllBctBookingList?no=${no}&bct_name=" + radio,
-				type : "post",
-				dataType : "text",
-				success : function(data) {
-					$('#list').html(data);
-					$.ajax({
-						url : "bctAllPaging?bus_no=" + no + "&bct_name="
-								+ bct_name,
-						type : "post",
-						dataType : "text",
-						success : function(data) {
-							$('#page_navi').html(data);
-						}
-					});
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		}
-	}
-
 	function opList() {
-		var radio = $("input[name='radio']:checked").val();
 		console.log(radio);
 		var per = $('#per_name').val();
 		console.log(per);
