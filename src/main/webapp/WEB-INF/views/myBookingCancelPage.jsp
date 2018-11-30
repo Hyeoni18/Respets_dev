@@ -4,16 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Respets :: 예약 취소</title>
-<!-- App favicon -->
-<link rel="shortcut icon"
-	href="resources/dist/assets/images/logo-sm.png">
-
-<!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
-	type="text/css" />
+<title>Insert title here</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -90,12 +81,6 @@
 		<!-- end Footer -->
 
 	</div>
-
-	<!-- ============================================================== -->
-	<!-- End Page content -->
-	<!-- ============================================================== -->
-
-
 </body>
 <script>
 	function check() {

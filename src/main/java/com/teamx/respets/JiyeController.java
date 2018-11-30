@@ -132,13 +132,13 @@ public class JiyeController {
 		return mav;
 	}
 
-//	// 개인예약디테일
-//	@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
-//	public ModelAndView recentMyBookingList(HttpServletRequest request) {
-//		mav = new ModelAndView();
-//		mav = js.myBookingDetail(request);
-//		return mav;
-//	}
+	// 개인예약디테일
+	/*@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
+	public ModelAndView recentMyBookingList(HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav = js.myBookingDetail(request);
+		return mav;
+	}*/
 	
 	//기업 공지사항 리스트
 	@RequestMapping (value="/businessNoticeList", method=RequestMethod.GET)
@@ -199,23 +199,17 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping  (value="/businessBasicInfo", method=RequestMethod.POST)
+	@RequestMapping (value="/businessBasicInfo", method=RequestMethod.GET)
 	public ModelAndView businessBasicInfo(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessBasicInfo(request);
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessGallery", method=RequestMethod.POST)
+	@RequestMapping (value="/businessGallery", method=RequestMethod.GET)
 	public ModelAndView businessGallery(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessGallery(request);
-		return mav;
-	}
-	@RequestMapping (value="/businessDetailNoticeList", method=RequestMethod.POST)
-	public ModelAndView businessDetailNoticeList(HttpServletRequest request) {
-		mav = new ModelAndView();
-		mav = js.businessDetailNoticeList(request);
 		return mav;
 	}
 	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)

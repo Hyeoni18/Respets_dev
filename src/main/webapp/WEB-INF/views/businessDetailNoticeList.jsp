@@ -29,7 +29,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="table-responsive-sm">
-						<table class="table table-striped table-centered mb-0">
+						<table class="table table-striped table-centered mb-0" style='text-align:center;'>
 							<thead>
 								<tr>
 									<th>게시글 번호</th>

@@ -141,12 +141,6 @@
 			<exclude-mapping path="/emailConfirmSuccess" />
 			<exclude-mapping path="/admin" />
 			<exclude-mapping path="/adminLogin" />
-			<exclude-mapping path="/businessBasicInfo" />
-			<exclude-mapping path="/businessGallery" />
-			<exclude-mapping path="/businessNoticeList" />
-			<exclude-mapping path="/businessDetailNoticeList"/>
-			<exclude-mapping path="/businessNoticeDetail"/>
-			
 
 			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
@@ -221,6 +215,7 @@
 			<exclude-mapping path="/businessInfoUpdateForm"/>
 			<exclude-mapping path="/businessBookingListPage"/>
 			<exclude-mapping path="/businessButtonPage"/>
+			<exclude-mapping path="/todayScheduleListCancel"/>
 			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
 			<beans:bean
 				class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>
