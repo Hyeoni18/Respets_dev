@@ -59,13 +59,11 @@
 									<span class="text-muted font-14 mb-4">취소 및 환불 규정</span> <br />
 									<br /> - 방문일 기준 3일 전 : 100%<br> - 방문일 기준 2일 전 : 80%<br>
 									- 방문일 기준 1일 전 : 50%<br> - 방문일 당일 및 No-Show : 환불 불가<br>
-									- 취소, 환불 시 수수료가 발생할 수 있습니다. <br />
-									<br />
+									- 취소, 환불 시 수수료가 발생할 수 있습니다. <br /> <br />
 									<div>
 										<input type="button"
 											class='btn btn-outline-danger btn-rounded' id="cenc"
-											value="예약 취소"
-											onclick="location.href='myBookingCancel?bk_no=${bk_no}'" />
+											value="예약 취소" onclick="return check();" />
 									</div>
 									${flas}
 
@@ -99,4 +97,13 @@
 
 
 </body>
+<script>
+	function check() {
+		var result = confirm("예약 취소하시겠습니까?");
+		if (result === true) {
+			location.href = 'myBookingCancel?bk_no=${bk_no}'
+		} // if End
+		return false;
+	}
+</script>
 </html>
