@@ -22,7 +22,6 @@
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-	
 </script>
 <body data-layout="topnav">
 	<!-- Begin page -->
@@ -218,6 +217,7 @@
 			<td>${bus_name}(${bct_name})</td>
 		</tr>
 		<tr>
+<<<<<<< HEAD
 			<!-- Center modal -->
 			<c:if test="${bsd_date==null}">
 				<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}"
@@ -234,6 +234,19 @@
 		<tr>
 			<td>
 				${rev_avg} <c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
+=======
+			<td>
+				<!-- Center modal -->
+				<c:if test="${bsd_date}">
+				
+				</c:if>
+				<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=18/11/15" 
+				class="btn btn-block btn-sm btn-success">예약하기</a>
+			</td>
+		</tr>
+		<tr>
+			<td>${rev_avg} <c:if test="${rev_avg == null}">아직 평점이 없습니다</c:if>
+>>>>>>> origin/master
 				(${rev_count})
 				<div id="favorite">
 					<button type="button" id="fav-button">
@@ -251,6 +264,7 @@
 		</tr>
 	</table>
 
+<<<<<<< HEAD
 	<div class="col-xl-6">
 		<div class="card">
 			<div class="card-body">
@@ -287,6 +301,39 @@
 		<!-- end card-->
 	</div> --%>
 
+=======
+	<!-- Center modal content 
+	
+	<a class="btn btn-block btn-sm btn-success"
+					data-toggle="modal" data-target="#centermodal">예약하기</a>
+	
+	<div class="modal fade" id="centermodal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content" style="height: 500px;">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myCenterModalLabel">예약할 동물을 선택해주세요</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body" style="text-align:center;">
+					<div class="form-control" style="position: relative; width: auto; height: 350px;">
+						<div class="slimscroll"	style="max-height: 350px; width: auto; height: 350px;">
+							동물리스트 부분
+						</div>
+						<div class="slimScrollBar"
+							style="background: rgb(158, 165, 171); width: 8px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 115.576px;"></div>
+						<div class="slimScrollRail"
+							style="width: 8px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+					</div>
+					<button type="button" class="btn btn-success"
+					style="margin-top:20px;">선택완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	-->
+>>>>>>> origin/master
 
 
 	<!-- App js -->
@@ -297,8 +344,11 @@
 	<!-- end demo js-->
 
 </body>
+<<<<<<< HEAD
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01f5de4fda83eccb6c481552ba87be63&libraries=services"></script>
+=======
+>>>>>>> origin/master
 <script>
 	$(document).ready(function() {
 		var no = "${no}";

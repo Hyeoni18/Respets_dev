@@ -23,6 +23,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+<div class="row justify-content-center">
+<div class="col-7">
+<div class="card">
+	<div class="card-body">
+<div id=wrapper>
+>>>>>>> origin/master
 	<div id="workingTime">
 		<div id="workingTime">
 			<h5 class="text-success">영업 시간</h5>
@@ -167,7 +175,6 @@
 	$('#lchTime').html(
 			lchAmHr + ':' + lchAmMin + '~' + lchPmHr + ':' + lchPmMin);
 </script>
-
 
 <script>
 	/* 다음 지도 api */

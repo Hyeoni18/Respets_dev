@@ -234,13 +234,6 @@
 		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</select>
 	
-	<select id="businessDetailNoticeList" parameterType="HashMap" resultType="HashMap">
-		SELECT BBO.BBO_NO, BBC.BBC_NAME, BBO.BBO_TITLE, TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd') AS BBO_DATE
-        FROM BBO INNER JOIN BBC 
-        ON BBO.BBC_NO = BBC.BBC_NO
-        WHERE BBO.BUS_NO =#{bus_no} AND BBO.BCT_CODE=#{bct_code}
-	</select>
-	
 	<select id="getBusinessList" resultType="HashMap">
 		SELECT BUS.BUS_NO, BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL, 
 		BUS.BUS_NAME, BUS.BUS_CEO, BUS.BUS_LCNO, BUS.BUS_PHONE, 

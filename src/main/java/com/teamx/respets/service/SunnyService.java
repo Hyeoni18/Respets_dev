@@ -657,7 +657,7 @@ public class SunnyService {
 		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
 
 		String bus_no = request.getParameter("bus_no");
-		String bct_code = request.getParameter("bct_code");
+		String bct_code = request.getParameter("bus_no");
 		String bsd_date = request.getParameter("bsd_date");
 
 		System.out.println("bus_no=" + bus_no);
@@ -704,7 +704,6 @@ public class SunnyService {
 		 * // '기업+업종'의 리뷰평점 평균값을 가져온다 String rev_avg = sDao.getReviewAvg(hmap);
 		 * System.out.println("rev_avg=" + rev_avg);
 		 */
-
 		// 기업대표이미지를 가져온다
 		hmap = sDao.getBusinessImage(hmap);
 		String bus_img = hmap.get("GLR_LOC").toString() + hmap.get("GLR_FILE").toString();
@@ -713,7 +712,6 @@ public class SunnyService {
 		// 기업이 제공하는 모든 서비스를 가져온다
 		serviceList = sDao.getHaveService(bus_no);
 		System.out.println("serviceList=" + serviceList);
-
 		mav.addObject("bus_no", bus_no);
 		mav.addObject("bsd_date", bsd_date);
 		mav.addObject("bct_code", bct_code);
@@ -721,7 +719,6 @@ public class SunnyService {
 		mav.addObject("bus_name", bus_name);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("rev_count", rev_count);
-		// mav.addObject("rev_avg", rev_avg);
 		mav.addObject("serviceList", serviceList);
 		view = "businessDetailPage";
 		mav.setViewName(view);

@@ -29,15 +29,15 @@
 	<div class="content-page">
 		<%@ include file="topbar-dashboard.jsp"%>
 		<h1>전체 예약 목록</h1>
-		<form name="noticeListForm" class="form-inline">
-			<input type='radio' name='radio' class='radio' value="전체" />전체
+		<form name="businessBookingListPage" class="form-inline">
+			<input type='button' name='button' class='button' value="전체" />
 			${bctList}
 			<div class="form-group mb-3">
 				<label for="status-select" class="mr-2"> 검색&nbsp; 보호자<input
 					type="search" class="form-control form-control-sm"
 					placeholder="search" aria-controls="basic-datatable"
-					name="per_name" id="per_name" /> <input type="button"
-					onClick="opList();" class="btn" value="검색" />
+					name="search" id="per_name" />
+					<button type="submit" class="btn">검색</button>
 				</label>
 			</div>
 		</form>
@@ -48,10 +48,9 @@
 	</div>
 </body>
 <script>
-	$('input[type="radio"]').click(function() {
-		var radio = $("input[name='radio']:checked").val();
+	var radio = $("input[name='button']").val();
+	function butListPaging(no, pno) {
 		if (radio == '전체') {
-			//if (per == "" || per == null) {
 			$.ajax({
 				url : "businessAllBookingList?no=${no}",
 				type : "post",
@@ -71,8 +70,10 @@
 					console.log(error);
 				}
 			});
-			//}
-		} else if (radio == '병원' || radio == '미용' || radio == '호텔') {
+		}
+	}
+	function bctListPaging(bct_name, no, pno) {
+		if (radio == '병원' || radio == '미용' || radio == '호텔') {
 			$.ajax({
 				url : "businessAllBctBookingList?no=${no}&bct_name=" + radio,
 				type : "post",
@@ -80,7 +81,8 @@
 				success : function(data) {
 					$('#list').html(data);
 					$.ajax({
-						url : "bctAllPaging?bus_no=${no}&bct_name=" + radio,
+						url : "bctAllPaging?bus_no=" + no + "&bct_name="
+								+ bct_name,
 						type : "post",
 						dataType : "text",
 						success : function(data) {
@@ -93,7 +95,7 @@
 				}
 			});
 		}
-	})
+	}
 
 	function opList() {
 		var radio = $("input[name='radio']:checked").val();
