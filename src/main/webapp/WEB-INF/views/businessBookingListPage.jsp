@@ -42,13 +42,9 @@
 				</label>
 			</div>
 		</form>
-<<<<<<< HEAD
-		<div id="list"></div>
-		<div id="page_navi"> </div>
-=======
+
 		<div id="list">${bokList}</div>
 		<div id="page_navi">${paging}</div>
->>>>>>> hyeon
 		<!-- <input type="hidden" id="page_index" class="page_index" /> -->
 		<%@ include file="footer.html"%>
 	</div>

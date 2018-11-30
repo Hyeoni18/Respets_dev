@@ -558,14 +558,6 @@ public class HyeonService {
 		return mav;
 	}
 
-<<<<<<< HEAD
-	/*
-	 * private String businessBookingList(int pNo, String no) { int maxNum =
-	 * hyDao.getListCount(no); int listCount = 9; int pageCount = 5; String
-	 * boardName = "businessBookingList"; Paging paging = new Paging(maxNum, pNo,
-	 * listCount, pageCount, boardName); return paging.BookingListButton(no); }
-	 */
-=======
 	private String businessBookingList(int pNo, String no) {
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
@@ -574,7 +566,6 @@ public class HyeonService {
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.BookingListButton(no);
 	}
->>>>>>> hyeon
 
 	public ModelAndView businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -797,12 +788,11 @@ public class HyeonService {
 		map.put("no", no);
 		map.put("timeS", timeS);
 		bList = hyDao.todayScheduleList(map);
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 		sb.append("<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
-=======
+=======*/
 		sb.append(
 				"<tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr>");
->>>>>>> hyeon
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			String pno = (String) bList.get(i).get("PER_NO");
@@ -831,13 +821,12 @@ public class HyeonService {
 		okList = hyDao.todayScheduleListOk(map);
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			
 			sb.append("<table class='table table-centered mb-0' style='text-align:center;'><tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
-=======
+=======*/
 
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
->>>>>>> hyeon
 			sb.append("<td>" + okList.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("PER_NAME") + "</td>");
@@ -916,38 +905,16 @@ public class HyeonService {
 		return sb.toString();
 	}
 
-<<<<<<< HEAD
-	public String AllPaging(HttpServletRequest request, Integer pageNum) {
-	/*public String AllPaging(String searcht, Integer pageNum) {*/
-		String no = request.getParameter("bus_no");
-=======
 	public String AllPaging(HttpSession session, Integer pageNum) {
 		String no = session.getAttribute("no").toString();
 		System.out.println("session!!!!!!!!!!!" + no);
 		int pNo = (pageNum == null) ? 1 : pageNum;
->>>>>>> hyeon
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
 		int pageCount = 5;
 		String boardName = "businessBookingList";
-<<<<<<< HEAD
-		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
-		return paging.AllPaging();
-	}
-
-	public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
-		String no= request.getParameter("bus_no");
-		String bct_name = request.getParameter("bct_name");
-		int pNo = (pageNum == null) ? 1 : pageNum;
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("bct_name", bct_name);
-		int maxNum = hyDao.bctAllPaging(map);
-		return null;
-=======
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.AllPaging(no, pNo);
->>>>>>> hyeon
 	}
 
 }
