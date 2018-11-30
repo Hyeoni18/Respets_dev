@@ -10,6 +10,8 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
 <!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
@@ -248,7 +250,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+			<%@ include file="footer.html"%>
 			<!-- end Footer -->
 
 		</div>
