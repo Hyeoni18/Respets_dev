@@ -499,7 +499,7 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("  <input type='button' name='button' class='bct' onclick='bctListPaging()' value='" + svc + "'>");
+				sb.append("&nbsp;  <input type='button' name='button' class='button' onclick='bctListPaging()' value='" + svc + "'>");
 			}
 			mav.addObject("bctList", sb);
 		}
@@ -803,10 +803,8 @@ public class HyeonService {
 		return sb.toString();
 	}
 
-	public String AllPaging(HttpServletRequest request) {
+	public String AllPaging(String searcht, Integer pageNum) {
 		String no = request.getParameter("bus_no");
-		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		System.out.println(pageNum);
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		int maxNum = hyDao.getListCount(no);
 		int listCount = 9;
@@ -816,8 +814,7 @@ public class HyeonService {
 		return paging.AllPaging(no);
 	}
 
-	public String bctAllPaging(HttpServletRequest request) {
-		Integer pageNum = Integer.parseInt(request.getParameter("pageNum"));
+	public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
 		String no= request.getParameter("bus_no");
 		String bct_name = request.getParameter("bct_name");
 		int pNo = (pageNum == null) ? 1 : pageNum;

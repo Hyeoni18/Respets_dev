@@ -421,7 +421,6 @@ public class Paging {
 		return bctAllPaging(currentGroup, totalPage, boardName, map);
 	}
 
-	@SuppressWarnings("unused")
 	public String AllPaging(String no) {
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
 		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
