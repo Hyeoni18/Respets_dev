@@ -20,14 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.dao.HyeonDao;
-import com.teamx.respets.dao.IJiyeDao;
 import com.teamx.respets.userClass.Paging;
 
 @Service
@@ -35,8 +32,6 @@ public class HyeonService {
 	private ModelAndView mav;
 	@Autowired
 	private HyeonDao hyDao;
-	@Autowired
-	private IJiyeDao jDao;
 	@Autowired
 	HttpSession session;
 

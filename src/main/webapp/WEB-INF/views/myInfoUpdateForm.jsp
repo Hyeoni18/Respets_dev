@@ -1,10 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Respets :: 나의 회원 정보</title>
+<!-- App favicon -->
+<link rel="shortcut icon" href="resources/images/logo-sm.png">
+<!-- App css -->
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<h1>개인 정보 수정</h1>
