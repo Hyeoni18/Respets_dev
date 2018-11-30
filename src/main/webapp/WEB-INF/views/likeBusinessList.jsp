@@ -109,9 +109,9 @@
 	function check() {
 		var result = confirm('즐겨찾기를 삭제하시겠습니까?');
 			if (result === true) {
-				
-			}
+				return true;
+			} // if End
 		return false;
-	}
+	} // fct End
 </script>
 </html>
