@@ -1360,7 +1360,7 @@ public class HyunHwiService {
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
 				sb.append("<div class='card d-block'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
-				sb.append("<img class='card-img-top' src='" + emp_loc + emp_photo + "'/></br>");
+				sb.append("<img class='card-img-top img-fluid' src='" + emp_loc + emp_photo + "'/></br>");
 				sb.append("<div class='card-body'>");
 				sb.append("<h5 class='card-title'> 이름: " + emp_name + "</h1>");
 				sb.append("<h5 class='card-title'> 직급: " + emp_pos + "</h1>");
@@ -2471,7 +2471,7 @@ public class HyunHwiService {
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="+mapo.get("bsd_date")+"'>");
-					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
 					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
@@ -2580,7 +2580,7 @@ public class HyunHwiService {
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
 					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
@@ -2649,7 +2649,7 @@ public class HyunHwiService {
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
 					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
@@ -2753,7 +2753,7 @@ public class HyunHwiService {
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
 					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
 					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");

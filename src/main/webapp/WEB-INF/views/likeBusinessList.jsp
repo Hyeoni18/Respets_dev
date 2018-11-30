@@ -4,49 +4,95 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리스펫츠 :: 즐겨찾기</title>
+<title>Respets :: 즐겨찾기</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
 	name="description" />
 <meta content="Coderthemes" name="author" />
 <!-- App favicon -->
-<link rel="shortcut icon"
-	href="resources/dist/assets/images/logo-sm.png">
+<link rel="shortcut icon" href="resources/images/logo-sm.png">
+
+<!-- third party css -->
+<link
+	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
+	rel="stylesheet" type="text/css" />
+<!-- third party css end -->
 
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-.card-deck {
- 	max-width: 70%;
-	width: 70%;
-	height: 50%;
-	margin: 1.5px;
-}
-.card-body{
-text-align:center;
+<style type="text/css">
+#petProfile {
+	width: 150px;
+	height: 150px;
+	margin-top: 20px;
 }
 </style>
 </head>
 <body>
-	<div class="row justify-content-center">
-		<div class="col-7">
-			<h5 class="text-success">내 즐겨찾기 목록</h5>
-			<br/>
-			<div class="card-deck-wrapper">
-				<div class="card-deck">${list}</div>
+	<!-- Begin page -->
+	<div class="wrapper">
+
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="page-title-box">
+						<h4 class="page-title">나의 즐겨찾기 목록</h4>
+					</div>
+					<!-- end page title -->
+<div class="row">
+						<div class="col-12">
+							<div class="card-deck-wrapper">
+								<div class="card-deck">
+${list}
+
+
 				<!-- end card-deck-->
 			</div>
 			<!-- end card-deck-wrapper-->
 		</div>
 		<!-- end col-->
 	</div>
+</div>
+				<!-- container -->
 
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
+		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
+	</div>
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>
 
