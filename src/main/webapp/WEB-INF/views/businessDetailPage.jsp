@@ -301,7 +301,6 @@
 		<!-- end card-->
 	</div> --%>
 
-=======
 	<!-- Center modal content 
 	
 	<a class="btn btn-block btn-sm btn-success"
@@ -333,7 +332,6 @@
 		</div>
 	</div>
 	-->
->>>>>>> origin/master
 
 
 	<!-- App js -->
@@ -344,11 +342,8 @@
 	<!-- end demo js-->
 
 </body>
-<<<<<<< HEAD
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01f5de4fda83eccb6c481552ba87be63&libraries=services"></script>
-=======
->>>>>>> origin/master
 <script>
 	$(document).ready(function() {
 		var no = "${no}";
@@ -430,12 +425,12 @@
 <script>
 	var bus_no = '${bus_no}';
 	var bct_code = '${bct_code}';
+	console.log(bct_code);
 	$(document).ready(
 			function() {
 				$.ajax({
 					type : 'post',
-					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code='
-							+ bct_code,
+					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code=' + bct_code,
 					dataType : 'html',
 					async : false,
 					success : function(data) {
@@ -472,8 +467,7 @@
 	function businessDetailNoticeList() {
 		$.ajax({
 			type : 'post',
-			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code='
-					+ bct_code,
+			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code=' + bct_code,
 			dataType : 'html',
 			success : function(data) {
 				$('#businessDetailNoticeList').html(data);

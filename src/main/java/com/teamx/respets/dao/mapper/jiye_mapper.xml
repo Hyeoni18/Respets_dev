@@ -78,7 +78,7 @@
                     FROM (
                     SELECT ROWNUM AS RNUM, RC.BK_NO, RC.BUS_NAME, RC.PTY_NAME, RC.PET_NO, RC.PET_NAME, RC.PER_NAME, RC.BK_TIME, RC.VS_START, RC.BK_CHK
                         FROM (
-                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, BK_TIME, VS_START, BK_CHK
+                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, TO_CHAR(BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, VS_START, BK_CHK
                         FROM RECENTMYBOOKINGLIST_VIEW
                         WHERE PER_NO=#{no}
                         ORDER BY BK_TIME DESC)RC

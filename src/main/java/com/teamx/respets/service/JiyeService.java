@@ -9,15 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamx.respets.dao.IJiyeDao;
@@ -30,7 +26,7 @@ public class JiyeService {
 	private ModelAndView mav;
 	HttpServletRequest request;
 	@Autowired
-	HttpSession session;
+	HttpSession session; //세션 Autowired 하지 말기
 	@Autowired
 	private HyunHwiService hhs;
 
@@ -92,6 +88,7 @@ public class JiyeService {
 
 	// 지예 로그인 (개인, 기업 통합)
 	public ModelAndView loginProcess(String email, String pw) { // loginForm에 email, pw를 String 으로 받아옴 (빈 없음)
+		
 		mav = new ModelAndView();
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
 		String view = null;
@@ -669,7 +666,7 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		String bus_no = request.getParameter("bk_no");
+		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
 		//String bus_no = "B1000097";
 		//String bct_code = "M";
