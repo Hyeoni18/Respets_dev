@@ -330,4 +330,8 @@
 	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
 		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
 	</select>
+	
+	<select id="selectBus_name" parameterType="String" resultType="String">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
+	</select>
 </mapper>
