@@ -116,11 +116,12 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<div class='col-lg-4' style='padding:0;'>");
 			sb.append("<div class='card d-block' style='text-align: center;margin-bottom:20px;'>");
-			sb.append("<img class='rounded-circle img-thumbnail' id='petProfile' src='" + list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "'>");
+			sb.append("<img class='rounded-circle img-thumbnail' id='petProfile' src='" + list.get(i).get("GLR_LOC")
+					+ list.get(i).get("GLR_FILE") + "'>");
 			sb.append("<div class='card-body'>");
-			sb.append("<h3 class='card-title'>"+list.get(i).get("BUS_NAME")+"</h3><br/>");
+			sb.append("<h5 class='card-title'>" + list.get(i).get("BUS_NAME") + "</h5><br/>");
 			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no="
-					+ list.get(i).get("BUS_NO") + "'>삭제</a></div>");
+					+ list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
 			sb.append("</div></div>");
 		} // for End
 		return sb.toString();
@@ -132,17 +133,6 @@ public class JinService {
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		hMap.put("bus_no", request.getParameter("bus_no"));
 		jinDao.likeBusinessDelete(hMap);
-	} // method End
-
-	// 서진 : 메인 페이지 서비스 Select
-	public String indexBusCategory() {
-		List<HashMap<String, String>> list = jinDao.selectBusCategory();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
-			sb.append(list.get(i).get("BCT_NAME") + "</option>");
-		} // for End
-		return sb.toString();
 	} // method End
 
 	// 서진 : 예약 페이지
@@ -418,14 +408,19 @@ public class JinService {
 		mav.addObject("list", sb.toString());
 		return mav;
 	} // method End
-
+	
 	// 서진 : index
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
-		String bct = indexBusCategory();
-		mav.addObject("bct", bct);
-		List<AdminBoard> list = jinDao.selectBoardList();
-		mav.addObject("list", list);
+		List<HashMap<String, String>> list = jinDao.selectBusCategory();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
+			sb.append(list.get(i).get("BCT_NAME") + "</option>");
+		} // for End
+		mav.addObject("bct", sb);
+		List<AdminBoard> aboList = jinDao.selectBoardList();
+		mav.addObject("list", aboList);
 		return mav;
 	} // method End
 

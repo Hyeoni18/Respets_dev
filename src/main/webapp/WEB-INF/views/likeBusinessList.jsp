@@ -1,10 +1,11 @@
 <!-- 서진 : 개인 즐겨찾기 페이지 -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Respets :: 즐겨찾기</title>
+<title>Respets :: 즐겨찾기 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -62,46 +63,55 @@
 						<h4 class="page-title">나의 즐겨찾기 목록</h4>
 					</div>
 					<!-- end page title -->
-<div class="row">
+					<div class="row">
 						<div class="col-12">
 							<div class="card-deck-wrapper">
 								<div class="card-deck">
-${list}
+									${list}
 
 
-				<!-- end card-deck-->
+									<!-- end card-deck-->
+								</div>
+								<!-- end card-deck-wrapper-->
+							</div>
+							<!-- end col-->
+						</div>
+					</div>
+					<!-- container -->
+
+				</div>
+				<!-- content -->
+
+				<!-- Footer Start -->
+				<%@ include file="footer.html"%>
+				<!-- end Footer -->
+
 			</div>
-			<!-- end card-deck-wrapper-->
-		</div>
-		<!-- end col-->
-	</div>
-</div>
-				<!-- container -->
 
-			</div>
-			<!-- content -->
+			<!-- ============================================================== -->
+			<!-- End Page content -->
+			<!-- ============================================================== -->
 
-			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
-			<!-- end Footer -->
 
 		</div>
+		<!-- App js -->
+		<script src="/resources/dist/assets/js/app.min.js"></script>
 
-		<!-- ============================================================== -->
-		<!-- End Page content -->
-		<!-- ============================================================== -->
+		<!-- third party js -->
+		<script src="/resources/dist/assets/js/vendor/Chart.bundle.min.js"></script>
 
-
-	</div>
-	<!-- App js -->
-	<script src="/resources/dist/assets/js/app.min.js"></script>
-
-	<!-- third party js -->
-	<script src="/resources/dist/assets/js/vendor/Chart.bundle.min.js"></script>
-
-	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
-	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
+		<!-- demo app -->
+		<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
+		<!-- demo app -->
+		<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
 </body>
+<script>
+	function check() {
+		var result = confirm('즐겨찾기를 삭제하시겠습니까?');
+			if (result === true) {
+				return true;
+			} // if End
+		return false;
+	} // fct End
+</script>
 </html>

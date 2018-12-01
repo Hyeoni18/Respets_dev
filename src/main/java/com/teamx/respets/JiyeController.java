@@ -80,7 +80,7 @@ public class JiyeController {
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) {
 		mav = new ModelAndView();
-		mav = js.loginProcess(email, pw);
+		mav = js.loginProcess(email, pw, request);
 		return mav;
 	}
 
@@ -111,8 +111,8 @@ public class JiyeController {
 
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public ModelAndView logout() {
-		mav = js.logout();
+	public ModelAndView logout(HttpServletRequest request) {
+		mav = js.logout(request);
 		return mav;
 	} // method End
 

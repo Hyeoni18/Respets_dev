@@ -56,20 +56,20 @@
 
 							<div class="collapse navbar-collapse" id="topnav-menu-content">
 								<ul class="navbar-nav">
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./recentMyBookingList" class="nav-link">
 											<i class="mdi mdi-clipboard-check mr-1"></i>최근 예약 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./personalAllBookingList" class="nav-link">
 											<i class="mdi mdi-clipboard-text mr-1"></i>전체 예약 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
-											<i class="mdi mdi-paw mr-1"></i>나의 동물 목록
-									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./likeBusinessList" class="nav-link">
 											<i class="mdi mdi-heart mr-1"></i>즐겨찾기 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
-											<i class="mdi mdi-account-circle mr-1"></i>개인 정보 확인
+									<li class="nav-item"><a href="./petList" class="nav-link">
+											<i class="mdi mdi-paw mr-1"></i>나의 반려동물 정보
+									</a></li>
+									<li class="nav-item"><a href="./myInfo" class="nav-link">
+											<i class="mdi mdi-account-circle mr-1"></i>나의 회원 정보
 									</a></li>
 								</ul>
 							</div>
@@ -699,7 +699,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
+			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 			<!-- end Footer -->
 
 		</div>

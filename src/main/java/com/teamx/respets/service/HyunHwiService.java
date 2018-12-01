@@ -868,14 +868,14 @@ public class HyunHwiService {
 		if (bct_code.equals("H")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='H'></div>");
-			mav.addObject("cat_price", "<div id='H_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='H'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='H_price'></div></div></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='B'></div>");
-			mav.addObject("cat_price", "<div id='B_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='B'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='B_price'></div></div></div>");
 			bct_name = "미용";
 		} else if (bct_code.equals("M")) {
 			mav.addObject("medi_submit", "<button class='btn btn-outline-secondary'>수정하기</button>");
@@ -900,8 +900,14 @@ public class HyunHwiService {
 		String name = (String) map.get("BUS_NAME");
 		String phone = (String) map.get("BUS_PHONE");
 		StringBuilder sb = new StringBuilder();
-		sb.append("-업체명: <input type='text' name='bus_name' value='" + name + "' readonly/><br/>");
-		sb.append("-연락처: <input type='text' name='bus_phone' value='" + phone + "' readonly/><br/>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>업체명</label>");
+		sb.append("<input type='text' name='bus_name' value='" + name + "' class='form-control' readonly/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>연락처</label>");
+		sb.append("<input type='text' name='bus_phone' value='" + phone + "' class='form-control' readonly/><br/>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 
@@ -920,7 +926,7 @@ public class HyunHwiService {
 		int pm_las = Integer.parseInt(pm_close.substring(2, 4)); // 마감시간 min
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("<select name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = 0; i < 48; i++) {\n" + // 반복문을
+		sb.append("<select class=\"form-control\" name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = 0; i < 48; i++) {\n" + // 반복문을
 																														// 48번
 																														// 도는
 																														// 이유는
@@ -957,7 +963,7 @@ public class HyunHwiService {
 				// 나머지는 그냥 가져온다.
 				"	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
 				+ "	}\n" + "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"pm_close\" id=\"close_time\">\n" + "<script>\n"
+		sb.append("<select class=\"form-control\" name=\"pm_close\" id=\"close_time\">\n" + "<script>\n"
 				+ "	for (var i = 0; i < 48; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
 				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
@@ -1017,46 +1023,62 @@ public class HyunHwiService {
 		map = hDao.searchBFX(map);
 		// 기업의 고정 스케줄을 검색
 		if (map != null) {
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='월요일' checked /> 월요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' checked /> <label class='custom-control-label' for='월요일'>월요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("화요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='화요일' checked /> 화요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' checked /> <label class='custom-control-label' for='화요일'>화요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일'/> <label class='custom-control-label' for='화요일'>화요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("수요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='수요일' checked /> 수요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' checked /> <label class='custom-control-label' for='수요일'>수요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일'/> <label class='custom-control-label' for='수요일'>수요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("목요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='목요일' checked /> 목요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' checked /> <label class='custom-control-label' for='목요일'>목요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일'/> <label class='custom-control-label' for='목요일'>목요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("금요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='금요일' checked /> 금요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' checked /> <label class='custom-control-label' for='금요일'>금요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일'/> <label class='custom-control-label' for='금요일'>금요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("토요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='토요일' checked /> 토요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' checked /> <label class='custom-control-label' for='토요일'>토요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일'/> <label class='custom-control-label' for='토요일'>토요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("일요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='일요일' checked /> 일요일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' checked /> <label class='custom-control-label' for='일요일'>일요일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일'/> <label class='custom-control-label' for='일요일'>일요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("공휴일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked /> 공휴일"); // checked 옵션을 // 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' checked /> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // checked 옵션을 // 준다.
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
 		}
 		return sb.toString();
 	}
@@ -1077,7 +1099,6 @@ public class HyunHwiService {
 		String menu_name = null; // 모든 메뉴의 이름을 담을 변수
 		String select_menu_no = null; // 기업이 제공하는 메뉴의 번호를 담을 변수
 		StringBuilder sb = new StringBuilder();
-		sb.append("제공서비스: ");
 		for (int i = 0; i < allList.size(); i++) { // 모든 메뉴들 개수만큼 반복
 			menu_no = String.valueOf(allList.get(i).get("MENU_NO")); // 해당 메뉴의 번호를 변수에 저장
 			menu_name = (String) allList.get(i).get("MENU_NAME"); // 해당 메뉴의 이름을 변수에 저장
@@ -1087,37 +1108,33 @@ public class HyunHwiService {
 					flag = false; // 기업이 제공한다면 깃발을 false로 바꿔준다.
 				}
 			}
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 기업이 제공하지 않는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'/>" + menu_name); // 그냥
-																												// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'/>" + menu_name); // 그냥
-																												// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'/>" + menu_name); // 그냥
-																													// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				}
 			} else { // 기업이 제공하는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' name='dog_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥
-																														// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' name='cat_tag' value='" + menu_name + "'checked/>" + menu_name); // 그냥
-																														// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' name='tag_name' value='" + menu_name + "'checked/>" + menu_name); // 그냥
-																														// 만들어주고
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} // 만들어준다.
 			}
+			sb.append("</div>");
 			flag = true; // 깃발은 다시 true로 바꿔준다.
 		}
-
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>서비스 가능한 동물종류</label><br/>");
 		// 밑에 과정을 거치는 이유는 모든 동물 종류 테이블에는 햄스터 같은 종류도 들어있기에, 1차적으로 각 업종에서 제공되는 동물들의 코드만
 		// 검색해서 가져와야 한다.
 		// 2차적으로는 기업에서 제공하기로 했던 동물종류들은 checked 옵션을 줘야하기에 1차로 검색됐던 결과와 다시 비교를 해줘야 한다.
-		sb.append("<br/>");
-		sb.append("-서비스 가능한 동물종류: ");
 		List<String> allAimlList = new ArrayList<String>(); // 동물의 종류를 담아줄 리스트 선언
 		if (bct_code.equals("M")) { // 병원에서 제공될 수 있는 동물 종류
 			allAimlList.add("소형견");
@@ -1170,28 +1187,22 @@ public class HyunHwiService {
 					flag = false; // 깃발을 false 로 바꿔준다.
 				}
 			}
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 제공하지 않던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' name='cat_code' value='" + name + "'/>" + name); // cat_code를 붙여서
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code를 붙여서
 																										// 그냥 가져온다.
 				} else { // 둘다 아니라면 animal_code로 그냥 가져온다.
-					sb.append("<input type='checkbox' name='animal_code' value='" + name + "'/>" + name);
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>");
 				}
 			} else { // 제공하던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' name='cat_code' value='" + name + "' checked/>" + name); // cat_code에
-																												// checked
-																												// 옵션을
-																												// 주고
-																												// 가져온다.
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code에
 				} else { // 고양이가 아니라면
-					sb.append("<input type='checkbox' name='animal_code' value='" + name + "' checked/>" + name); // 그냥
-																													// animal_code로
-																													// checked
-																													// 옵션으로
-																													// 가져온다.
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // 그냥
 				}
 			}
+			sb.append("</div>");
 			flag = true; // 깃발은 다시 true로 바꿔준다.
 		}
 		sb.append("<br/>");

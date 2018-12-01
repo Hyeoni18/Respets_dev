@@ -87,8 +87,8 @@ public class JiyeService {
 	} // personalJoin End
 
 	// 지예 로그인 (개인, 기업 통합)
-	public ModelAndView loginProcess(String email, String pw) { // loginForm에 email, pw를 String 으로 받아옴 (빈 없음)
 		
+	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) { // loginForm에 email, pw를 String 으로 받아옴 (빈 없음)
 		mav = new ModelAndView();
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
 		String view = null;
@@ -106,8 +106,8 @@ public class JiyeService {
 				String name = hmap.get("NAME").toString();
 				String leave = hmap.get("LEAVE").toString();
 				// request.getSession().setAttribute("no", no);
-				session.setAttribute("no", no); // 세션에 회원번호를 담는다.
-				session.setAttribute("name", name);
+				request.getSession().setAttribute("no", no); // 세션에 회원번호를 담는다.
+				request.getSession().setAttribute("name", name);
 
 				HashMap<String, Object> bmap = new HashMap<String, Object>();
 				bmap.put("no", no); // bmap에 회원 번호를 담는다.
@@ -117,7 +117,7 @@ public class JiyeService {
 				if(leave.equals("O")) {
 					String alert = "alert('탈퇴한 회원의 이메일 입니다. 로그인 할 수 없습니다.');";
 					mav.addObject("leave", alert);
-					session.invalidate();
+					request.getSession().invalidate();
 					view="loginForm";
 				}else {
 					if(bmap != null) {
@@ -128,7 +128,7 @@ public class JiyeService {
 						if(out_no == 1 || out_no== 2) { // 블랙리스트 테이블 경고 번호 확인
 							String alert = "alert('이용이 정지된 계정입니다. 로그인 할 수 없습니다.');";
 							mav.addObject("alert", alert); // 경고창을 띄우고
-							session.invalidate(); // 세션을 만료시킨다.
+							request.getSession().invalidate(); // 세션을 만료시킨다.
 							view = "loginForm";
 						}
 					} else { // 블랙리스트 테이블에서 회원번호가 select되지 안을 때
@@ -137,8 +137,8 @@ public class JiyeService {
 							String perEmChk = (String) hmap.get("PER_EMCHK");
 							String loc = hmap.get("PER_LOC").toString();
 							String photo = hmap.get("PER_PHOTO").toString();
-							session.setAttribute("loc", loc);
-							session.setAttribute("photo", photo);
+							request.getSession().setAttribute("loc", loc);
+							request.getSession().setAttribute("photo", photo);
 							System.out.println("개인회원: " + hmap);
 
 							if (perEmChk.equals("O")) {// 개인회원 인증 여부 확인
@@ -152,7 +152,7 @@ public class JiyeService {
 								String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email=" + sendEmail;
 								hhs.mailSending(tomail, title, content);
 								mav.addObject("email", sendEmail);
-								session.invalidate();
+								request.getSession().invalidate();
 								System.out.println(session);
 								view = "emailConfirmOffer";
 							} // 개인회원 if end
@@ -175,7 +175,7 @@ public class JiyeService {
 								String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email=" + sendEmail;
 								hhs.mailSending(tomail, title, content);
 								mav.addObject("email", sendEmail);
-								session.invalidate(); // 세션 만
+								request.getSession().invalidate(); // 세션 만
 								view = "emailConfirmOffer";
 						}
 					} // 기업회원 if end
@@ -230,10 +230,10 @@ public class JiyeService {
 	} // adminLogin End
 
 	// 지예 로그아웃
-	public ModelAndView logout() {
+	public ModelAndView logout(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav.setViewName("redirect:/");
-		session.invalidate();
+		request.getSession().invalidate();
 		return mav;
 	} // logout End
 
