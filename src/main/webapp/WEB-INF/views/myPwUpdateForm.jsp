@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,33 +10,25 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
-	type="text/css" />
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<!-- Begin page -->
 	<div class="wrapper">
-
 		<!-- ========== Left Sidebar Start ========== -->
 		<%@ include file="left-sidebar.jsp"%>
 		<!-- Left Sidebar End -->
-
 		<!-- ============================================================== -->
 		<!-- Start Page Content here -->
 		<!-- ============================================================== -->
-
 		<div class="content-page">
 			<div class="content">
-
 				<!-- Topbar Start -->
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
-
 				<!-- Start Content-->
 				<div class="container-fluid">
-
 					<!-- start page title -->
 					<div class="row">
 						<div class="col-12">
@@ -68,7 +59,7 @@
 														onkeyup="pw_check();" class="form-control" />
 												</div>
 												<div class="form-group mb-3">
-													<label>새로운 비밀번호 확인<span style="color: red">*</span></label>
+													<label>새로운 비밀번호 확인 <span style="color: red">*</span></label>
 													<input type="password" name="newChkPw" id="newChkPw"
 														class="form-control" onkeyup="pw_check();" />
 														<div class="registrationFormAlert" id="same"></div>
@@ -92,22 +83,15 @@
 				<!-- container -->
 			</div>
 			<!-- content -->
-
 			<!-- Footer Start -->
 			<%@ include file="footer.html"%>
 			<!-- end Footer -->
-
 		</div>
-
 		<!-- ============================================================== -->
 		<!-- End Page content -->
 		<!-- ============================================================== -->
-
-
 	</div>
 	<!-- END wrapper -->
-
-
 	<!-- App js -->
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
