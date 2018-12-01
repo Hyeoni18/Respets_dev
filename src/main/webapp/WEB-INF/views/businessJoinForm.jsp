@@ -103,11 +103,8 @@
 								<div class="form-group">
 									<label for="service">주력 서비스 <span style="color: red">*</span></label>
 									<br />
-									<div class="btn-group" data-toggle="buttons">
 									${input}
-  									</div>
 								</div>
-								
 								<div class="form-group">
 									<label for="mainPhoto">대표 사진</label>
 									<input type="file" class="form-control" name="mainPhoto" onchange="fileChk(this)" /> 

@@ -38,7 +38,6 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBusCategory();
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append(" <label class=\"btn btn-secondary active\">");
 			sb.append("<input type='radio' name='bct_code' class='주력 서비스' value='");
 			sb.append(list.get(i).get("BCT_CODE"));
 			sb.append("'/>" + list.get(i).get("BCT_NAME") + "</label>");
