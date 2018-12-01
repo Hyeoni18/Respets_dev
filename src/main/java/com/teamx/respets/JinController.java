@@ -88,7 +88,7 @@ public class JinController {
 		mav.setViewName("bookingSuccess");
 		return mav;
 	} // method End
-	
+
 	// 서진 : 기업 새로운 예약
 	@RequestMapping(value = "/newScheduleList", method = RequestMethod.GET)
 	public ModelAndView newScheduleList(HttpServletRequest request) {
@@ -96,5 +96,17 @@ public class JinController {
 		mav.setViewName("newScheduleList");
 		return mav;
 	} // method End
-	
+
+	// 서진 : 마이페이지
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public ModelAndView myPage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		if (request.getSession().getAttribute("no").toString().substring(0, 1).equals("P")) {
+			mav.setViewName("newScheduleList");
+		} else {
+			mav.setViewName("redirect:/todayScheduleList");
+		} // else End
+		return mav;
+	} // method End
+
 } // class End
