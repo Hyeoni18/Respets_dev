@@ -757,10 +757,9 @@
             var l = this,
                 i = e("<form></form>");
             i.append("<label>"+t.title+"</label>"),
-                i.append("<div class='input-group m-b-15'><p><br/> 업체명: " + t.bus_name 
-                		+ "<br/> 예약 시간: " + t.start._i 
-                		+ "<br/> 업체 주소: " + t.bus_addr + " " + t.bus_addr2 + "</p>"
-                  		+ "</div>"),
+                i.append("<p><br/> 업체명: " + t.bus_name 
+                		+ "<br/><br/> 예약 시간: " + t.start._i 
+                		+ "<br/><br/> 업체 주소: " + t.bus_addr + " " + t.bus_addr2 + "</p>"),
                 l.$modal.modal({
                     backdrop: "static"
                 }), l.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().

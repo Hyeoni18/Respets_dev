@@ -103,11 +103,9 @@ public class JiyeService {
 			String no = (String) hmap.get("NO"); // hmap에 담아 온 회원번호를 가져온다.
 			if (no != null) { // 회원 번호가 null이 아니라면
 				hmap.put("no", no); // 회원 번호를 다시 hmap에 담는다
-				String name = hmap.get("NAME").toString();
 				String leave = hmap.get("LEAVE").toString();
 				// request.getSession().setAttribute("no", no);
 				request.getSession().setAttribute("no", no); // 세션에 회원번호를 담는다.
-				request.getSession().setAttribute("name", name);
 
 				HashMap<String, Object> bmap = new HashMap<String, Object>();
 				bmap.put("no", no); // bmap에 회원 번호를 담는다.
@@ -137,6 +135,8 @@ public class JiyeService {
 							String perEmChk = (String) hmap.get("PER_EMCHK");
 							String loc = hmap.get("PER_LOC").toString();
 							String photo = hmap.get("PER_PHOTO").toString();
+							String name = hmap.get("NAME").toString();
+							request.getSession().setAttribute("name", name);
 							request.getSession().setAttribute("loc", loc);
 							request.getSession().setAttribute("photo", photo);
 							System.out.println("개인회원: " + hmap);
@@ -168,10 +168,10 @@ public class JiyeService {
 								System.out.println("----------------" + pMap);
 								String loc = pMap.get("GLR_LOC").toString();
 								String photo = pMap.get("GLR_FILE").toString();
+								String bus_name = jDao.selectBus_name(no);
+								request.getSession().setAttribute("name", bus_name);
 								request.getSession().setAttribute("loc", loc);
 								request.getSession().setAttribute("photo", photo);
-								//String name = (String) hmap.get("BUS_NAME");
-								//mav.addObject("name", name);
 								
 								System.out.println("기업회원 인증");
 								view = "redirect:/";
