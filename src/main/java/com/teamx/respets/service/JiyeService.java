@@ -101,6 +101,7 @@ public class JiyeService {
 
 		if (hmap != null) {
 			String no = (String) hmap.get("NO"); // hmap에 담아 온 회원번호를 가져온다.
+			String name = hmap.get("NAME").toString();
 			if (no != null) { // 회원 번호가 null이 아니라면
 				hmap.put("no", no); // 회원 번호를 다시 hmap에 담는다
 				String leave = hmap.get("LEAVE").toString();
@@ -135,7 +136,6 @@ public class JiyeService {
 							String perEmChk = (String) hmap.get("PER_EMCHK");
 							String loc = hmap.get("PER_LOC").toString();
 							String photo = hmap.get("PER_PHOTO").toString();
-							String name = hmap.get("NAME").toString();
 							request.getSession().setAttribute("name", name);
 							request.getSession().setAttribute("loc", loc);
 							request.getSession().setAttribute("photo", photo);
