@@ -19,7 +19,7 @@ public interface HyeonDao {
 	public boolean myInfoUpdate(Personal mb);
 	public boolean personalPartDelete(String no);
 	public int myPwUpdate(Personal mb);
-	public Personal myPwCheck(String no);
+	public int myPwCheck(Personal mb);
 	public Date getBkStart(String bk_no);
 	public int cancelInsert(HashMap<String, Object> map);
 	public int bk_chkUpdate(String bk_no);
