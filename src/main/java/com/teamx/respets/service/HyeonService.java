@@ -142,67 +142,63 @@ public class HyeonService {
 	}
 
 	/* 혜연 개인정보 수정 */
-	public ModelAndView myInfoUpdate(Personal mb, HttpSession session) {
-		this.session = session;
+	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
+		// 파일은 request에 담겨서 온다.
 		mav = new ModelAndView();
-		Map<String, Object> map = new HashMap<String, Object>();
-		String view = null;
-		String no = session.getAttribute("no").toString();
-		/*
-		 * int fileCheck =
-		 * Integer.parseInt(session.getAttribute("fileCheck").toString());
-		 */
-		System.out.println(no);
-		if (mb != null) {
-			mb.setPer_no(no);
-			mb.setPer_email(mb.getPer_email());
-			mb.setPer_name(mb.getPer_name());
-			mb.setPer_phone(mb.getPer_phone());
-			mb.setPer_photo(mb.getPer_photo());
-			// 담은 정보로 update
-			boolean update = hyDao.myInfoUpdate(mb);
-			if (update) {
-				if (session.getAttribute("fileCheck").equals('1')) {
-					MultipartFile mainPhoto = ((MultipartRequest) session).getFile("mainPhoto");
-					map = saveFile((MultipartHttpServletRequest) session, mainPhoto, map);
-					map.put("no", no);
-					hyDao.perPhotoUpdate(map);
-				} else {
-					hyDao.PothoUpdate(no);
-				}
-				mav.addObject("mb", mb);
-				mav.addObject("infoSuccess", makeInfoSuccessHtml(mb));
-				view = "myInfo";
-			} else {
-				mav.addObject("flas", makeFlasHtml());
-				view = "myInfoUpdate";
-			}
+		Personal p = new Personal();
+		p.setPer_no(request.getSession().getAttribute("no").toString());
+		p.setPer_phone(request.getParameter("per_phone")); // 폼에서 받은 연락처
+		System.out.println("연락처 수정 확인:" + request.getParameter("per_phone"));
+		// MultipartFile을 선언해서 request.getFile에서 받은 파일을 담아준다.
+		// request를 * Multipart * Request로 선언한다.
+		if (request.getParameter("fileCheck").equals("1")) {
+			MultipartFile photo = request.getFile("mainPhoto");
+			// saveFile 메소드에서 해시맵을 사용하고 받기 위해 생성하고 파라미터로 보내준다.
+			Map<String, Object> hMap = new HashMap<String, Object>();
+			// request는 path 주소를 위해, photo는 실제 저장할 파일, hMap은 주소와 파일 이름 반환을 위
+			hMap = saveFile(request, photo, hMap); // 파일 저장 메소드 소환
+			p.setPer_loc(hMap.get("location").toString());
+			p.setPer_photo(hMap.get("file").toString());
+			hyDao.perPhotoUpdate(p);
+		} else {
+			hyDao.perNoPhotoUpdate(p);
 		}
-		mav.setViewName(view);
 		return mav;
 	}
 
 	private Map<String, Object> saveFile(MultipartHttpServletRequest request, MultipartFile mainPhoto,
 			Map<String, Object> map) {
+		// 프로젝트가 실제 존재하는 주소(RealPath)를 가져온다. (언제든지 리퀘스트만 있다면 뽑을 수 있음)
 		String root = request.getSession().getServletContext().getRealPath("/");
+		// DB에 저장할 값. 위의 root는 상시로 뽑을 수 있기 때문에 저장 X.
 		String location = "resources/upload/";
+		// 그래서 주소는 파일을 저장할 실제 주소는 root + location
 		String path = root + location;
-		File dir = new File(path);
-		if (!dir.isDirectory()) {
-			dir.mkdir();
+
+		File dir = new File(path); // File이라는 객체를 선언. 주소값을 가지고.
+		if (!dir.isDirectory()) { // 파일(폴더)이 존재하지 않으면
+			dir.mkdir(); // 폴더 생성
 		} // if End
+			// 파일 이름을 바꾸기 위한 것들 (파일이 같은 이름일 때 덮어씌어지지않기 위해 서버파일이름을 따로 지정)
 		String date = new SimpleDateFormat("yyMMdd").format(Calendar.getInstance().getTime());
-		String extension = mainPhoto.getOriginalFilename()
+		// 혹시 모를 이름 중복을 위해서 오늘 날짜를 181201..이런 식으로 생성
+		String extension = mainPhoto.getOriginalFilename() // hyeon.jpg
 				.substring(mainPhoto.getOriginalFilename().lastIndexOf(".") + 1);
+		// 확장자 갖고 오기 jpg, png, jpeg
+		// 업로드된 사진의 원래 이름에서 .을 기준으로 한글자 뒤부터 끝까지 저장
 		String saveName = "Respets_" + date + "_" + UUID.randomUUID() + "." + extension;
+		// db에 저장할 파일의 서버 이름
 		try {
 			mainPhoto.transferTo(new File(path, saveName));
+			// 이게 실제로 파일 저장하는 소스
+			// new File로 주소와, 이름을 가진 빈 껍데기 파일을 생성해줌.
+			// 실제 파일.transferTo 메소드를 이용해 빈 껍데기 파일에 실제 파일을 넣어준다.
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		} // catch End
-		map.put("location", location);
-		map.put("file", saveName);
-		return map;
+		map.put("location", location); // 디비에 저장할 경로 담기
+		map.put("file", saveName); // 디비에 저장할 파일 이름 담기
+		return map; // 경로와 이름 리턴
 	}
 
 	/* 혜연 개인 회원탈퇴 이메일,예약내역, 동물종류남기고 지우기 */
@@ -378,7 +374,8 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("&emsp;&emsp; <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>" + svc);
+				sb.append("&emsp;&emsp; <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>"
+						+ svc);
 			}
 			mav.addObject("bctList", sb);
 			view = "todayScheduleList";
@@ -788,9 +785,11 @@ public class HyeonService {
 		map.put("no", no);
 		map.put("timeS", timeS);
 		bList = hyDao.todayScheduleList(map);
-/*<<<<<<< HEAD
-		sb.append("<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
-=======*/
+		/*
+		 * <<<<<<< HEAD sb.
+		 * append("<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>"
+		 * ); =======
+		 */
 		sb.append(
 				"<tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr>");
 		for (int i = 0; i < bList.size(); i++) {
@@ -804,7 +803,8 @@ public class HyeonService {
 			sb.append("<td>" + bList.get(i).get("BCT_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("VS_START") + "</td>");
-			sb.append("<td><input type='button' class='btn btn-outline-success' value='방문' onclick=\"com(\'" + bk_no + "')\" /></td></tr>");
+			sb.append("<td><input type='button' class='btn btn-outline-success' value='방문' onclick=\"com(\'" + bk_no
+					+ "')\" /></td></tr>");
 		}
 		sb.append("</table>");
 		return sb.toString();
@@ -821,10 +821,13 @@ public class HyeonService {
 		okList = hyDao.todayScheduleListOk(map);
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
-/*<<<<<<< HEAD
-			
-			sb.append("<table class='table table-centered mb-0' style='text-align:center;'><tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
-=======*/
+			/*
+			 * <<<<<<< HEAD
+			 * 
+			 * sb.
+			 * append("<table class='table table-centered mb-0' style='text-align:center;'><tr><td><a href='myBookingDetail?"
+			 * + bk_no + "'>" + bk_no + "</a></td>"); =======
+			 */
 
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
 			sb.append("<td>" + okList.get(i).get("PTY_NAME") + "</td>");
@@ -833,7 +836,8 @@ public class HyeonService {
 			sb.append("<td>" + okList.get(i).get("BCT_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("VS_START") + "</td>");
-			sb.append("<td><button type='button' class='btn btn-outline-danger' onclick='cancelCheck(\\\"\"+bk_no+\"\\\")'> 취소 </button></td></tr>");
+			sb.append(
+					"<td><button type='button' class='btn btn-outline-danger' onclick='cancelCheck(\\\"\"+bk_no+\"\\\")'> 취소 </button></td></tr>");
 		}
 		sb.append("</table>");
 		return sb.toString();

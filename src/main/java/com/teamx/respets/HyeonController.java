@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.teamx.respets.bean.Business;
@@ -16,6 +17,7 @@ import com.teamx.respets.service.HyeonService;
 
 @Controller
 public class HyeonController {
+
 	@Autowired
 	private HyeonService hy;
 
@@ -53,8 +55,8 @@ public class HyeonController {
 
 	/* 혜연 */
 	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
-	public ModelAndView myInfoUpdate(Personal mb, HttpSession session) {
-		mav = hy.myInfoUpdate(mb, session);
+	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
+		mav = hy.myInfoUpdate(request);
 		return mav;
 	}
 
@@ -127,7 +129,7 @@ public class HyeonController {
 		mav = hy.businessBookingList(session, pageNum);
 		return mav;
 	}
-	
+
 	/* 혜연 */
 	@RequestMapping(value = "/businessAllBctBookingList")
 	public ModelAndView businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
@@ -218,9 +220,11 @@ public class HyeonController {
 		int result = hy.todayScheduleListUnNoShow(request);
 		return result;
 	}
-	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String AllPaging(HttpSession session,Integer pageNum) {
-		String text = hy.AllPaging(session ,pageNum);
+
+	@RequestMapping(value = "/AllPaging", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String AllPaging(HttpSession session, Integer pageNum) {
+		String text = hy.AllPaging(session, pageNum);
 		return text;
 	}
 
@@ -229,7 +233,7 @@ public class HyeonController {
 		String text = hy.todayAllScheduleList(request);
 		return text;
 	}
-	
+
 	@RequestMapping(value = "/todayAllScheduleListOk", produces = "application/text; charset=utf8")
 	public @ResponseBody String todayAllScheduleListOk(HttpServletRequest request) {
 		String text = hy.todayAllScheduleListOk(request);
@@ -240,44 +244,44 @@ public class HyeonController {
 	public @ResponseBody String bctBookingList(HttpServletRequest request) {
 		String text = hy.bctBookingList(request);
 		return text;
-	} 
+	}
 
 	@RequestMapping(value = "/bctBookingListOk", produces = "application/text; charset=utf8")
 	public @ResponseBody String bctBookingListOk(HttpServletRequest request) {
 		String text = hy.bctBookingListOk(request);
 		return text;
 	}
-	
+
 	@RequestMapping(value = "/bctBookingListCheck", produces = "application/text; charset=utf8")
 	public @ResponseBody String bctBookingListCheck(HttpServletRequest request) {
 		String result = hy.bctBookingListCheck(request);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/bctBookingListCancel", produces = "application/text; charset=utf8")
 	public @ResponseBody String bctBookingListCancel(HttpServletRequest request) {
 		String text = hy.bctBookingListCancel(request);
 		return text;
 	}
-	
-	@RequestMapping(value = "/businessAllBookingList", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+
+	@RequestMapping(value = "/businessAllBookingList", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
 		String text = hy.businessAllBookingList(request, pageNum);
 		return text;
 	}
-/*	
-	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	public @ResponseBody String AllPaging(HttpServletRequest request ,Integer pageNum) {
-		String text = hy.AllPaging(request, pageNum);
-		System.out.println("확인@@@@@@@" + text);
-		return text;
-	}
-	
-	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.bctAllPaging(request, pageNum);
-		return text;
-	}*/
+	/*
+	 * @RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces =
+	 * "application/text; charset=utf8") public @ResponseBody String
+	 * AllPaging(HttpServletRequest request ,Integer pageNum) { String text =
+	 * hy.AllPaging(request, pageNum); System.out.println("확인@@@@@@@" + text);
+	 * return text; }
+	 * 
+	 * @RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces =
+	 * "application/text; charset=utf8")
+	 * 
+	 * @ResponseBody public String bctAllPaging(HttpServletRequest request, Integer
+	 * pageNum) { String text = hy.bctAllPaging(request, pageNum); return text; }
+	 */
 
 	@RequestMapping(value = "/searchAllList", produces = "application/text; charset=utf8")
 	public @ResponseBody String searchAllList(HttpServletRequest request, Integer pageNum) {

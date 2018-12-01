@@ -45,7 +45,8 @@
 						<div class="col-6">
 							<div class="card">
 								<div class="card-body">
-									<form action="myInfoUpdate" method="post">
+								<!-- form으로 파일을 업로드할 땐 꼭 enctype을 적어줘야 한다. -->
+									<form action="myInfoUpdate" method="post" enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group mb-3">

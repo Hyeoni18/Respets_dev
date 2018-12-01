@@ -135,17 +135,6 @@ public class JinService {
 		jinDao.likeBusinessDelete(hMap);
 	} // method End
 
-	// 서진 : 메인 페이지 서비스 Select
-	public String indexBusCategory() {
-		List<HashMap<String, String>> list = jinDao.selectBusCategory();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
-			sb.append(list.get(i).get("BCT_NAME") + "</option>");
-		} // for End
-		return sb.toString();
-	} // method End
-
 	// 서진 : 예약 페이지
 	public ModelAndView bookingForm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -419,14 +408,19 @@ public class JinService {
 		mav.addObject("list", sb.toString());
 		return mav;
 	} // method End
-
+	
 	// 서진 : index
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
-		String bct = indexBusCategory();
-		mav.addObject("bct", bct);
-		List<AdminBoard> list = jinDao.selectBoardList();
-		mav.addObject("list", list);
+		List<HashMap<String, String>> list = jinDao.selectBusCategory();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
+			sb.append(list.get(i).get("BCT_NAME") + "</option>");
+		} // for End
+		mav.addObject("bct", sb);
+		List<AdminBoard> aboList = jinDao.selectBoardList();
+		mav.addObject("list", aboList);
 		return mav;
 	} // method End
 
