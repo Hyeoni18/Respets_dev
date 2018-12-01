@@ -25,24 +25,39 @@ public class HyeonController {
 
 	/* 혜연 */
 	@RequestMapping(value = "/myInfo")
-	public ModelAndView myInfo(Personal mb, HttpSession session) {
+	public ModelAndView myInfo(HttpSession session) {
 		System.out.println("회원번호" + session.getAttribute("no"));
-		mav = hy.myInfo(mb, session);
+		mav = hy.myInfo(session);
 		return mav;
 	}
 
 	/* 혜연 */
 	@RequestMapping(value = "/myPwUpdateForm")
-	public ModelAndView myPwUpdateForm(Personal mb, HttpSession session) {
-		mav = hy.findPw(mb, session);
+	public ModelAndView myPwUpdateForm(Personal mb) {
+		mav = new ModelAndView();
+		mav.addObject("mb", mb);
+		mav.setViewName("myPwUpdateForm");
 		return mav;
 	}
 
 	/* 혜연 */
 	@RequestMapping(value = "/myPwCheck", method = RequestMethod.POST)
-	public ModelAndView myPwCheck(HttpSession session, HttpServletRequest request) {
+	public @ResponseBody int myPwCheck(String now, HttpServletRequest request) {
+		System.out.println("컨트롤러 확인");
+		int result = hy.myPwCheck(now, request);
+		return result;
+	}
+
+	@RequestMapping(value = "/myPwUpdate", produces = "application/text; charset=utf8", method = RequestMethod.POST)
+	public ModelAndView myPwUpdate(String newPw) {
 		mav = new ModelAndView();
-		mav = hy.myPwCheck(session, request);
+		int update = hy.myPwUpdate(newPw);
+		if (update == 1) {
+			mav.setViewName("redirect:/myInfo");
+		} else {
+			mav.addObject("fail", "alert('비밀번호 변경에 실패했습니다.')");
+			mav.setViewName("myPwUpdateForm");
+		}
 		return mav;
 	}
 

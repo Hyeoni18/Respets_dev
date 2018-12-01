@@ -9,9 +9,10 @@
 	</select>
 
 	<!-- 혜연 -->
-	<select id="myPwCheck" resultType="Personal"
-		parameterType="String">
-		SELECT PER_PW, PER_EMAIL FROM PER WHERE PER_NO = #{no}
+	<select id="myPwCheck" resultType="int"
+		parameterType="personal">
+		SELECT COUNT(*) FROM PER WHERE PER_NO = #{per_no} AND PER_PW
+		= #{per_pw}
 	</select>
 
 	<!-- 혜연 -->
@@ -78,44 +79,58 @@
 	<!-- 오늘 예약 목록 -->
 	<select id="todayScheduleList" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi')AS VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
+		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
+		'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi')AS VS_START,
+		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME
 		FROM BK INNER JOIN BUS
-		ON BK.BUS_NO = BUS.BUS_NO
+		ON BK.BUS_NO =
+		BUS.BUS_NO
 		INNER JOIN PET
 		ON
 		BK.PET_NO = PET.PET_NO
 		INNER JOIN PER
-		ON BK.PER_NO = PER.PER_NO
+		ON
+		BK.PER_NO = PER.PER_NO
 		INNER
 		JOIN PTY
 		ON PET.PTY_NO = PTY.PTY_NO
-		INNER JOIN BCT
+		INNER
+		JOIN BCT
 		ON BK.BCT_CODE =
 		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{no} AND BK.VS_START =
+		WHERE BK.BUS_NO = #{no} AND
+		BK.VS_START =
 		TO_DATE(#{timeS},'yy/MM/dd') AND
 		BK.VS_CHK = 'X'
 	</select>
 
 	<select id="todayScheduleListOk" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi')AS VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
+		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
+		'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi')AS VS_START,
+		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME
 		FROM BK INNER JOIN BUS
-		ON BK.BUS_NO = BUS.BUS_NO
+		ON BK.BUS_NO =
+		BUS.BUS_NO
 		INNER JOIN PET
 		ON
 		BK.PET_NO = PET.PET_NO
 		INNER JOIN PER
-		ON BK.PER_NO = PER.PER_NO
+		ON
+		BK.PER_NO = PER.PER_NO
 		INNER
 		JOIN PTY
 		ON PET.PTY_NO = PTY.PTY_NO
-		INNER JOIN BCT
+		INNER
+		JOIN BCT
 		ON BK.BCT_CODE =
 		BCT.BCT_CODE
-		WHERE BK.BUS_NO = #{no} AND BK.VS_START =
+		WHERE BK.BUS_NO = #{no} AND
+		BK.VS_START =
 		TO_DATE(#{timeS},'yy/MM/dd') AND
 		BK.VS_CHK = 'O'
 	</select>
@@ -254,23 +269,29 @@
 		parameterType="String">
 		SELECT BK.BK_NO, BK.VS_CHK, BUS.BUS_NAME, BUS.BUS_PHONE,
 		BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
-		TO_CHAR(BK.VS_START, 'YYYY-MM-DD HH24:MI') AS VS_START, EMP.EMP_NAME,
-		PET.PET_NAME, PTY.PTY_NAME,
+		TO_CHAR(BK.VS_START,
+		'YYYY-MM-DD HH24:MI') AS VS_START, EMP.EMP_NAME,
+		PET.PET_NAME,
+		PTY.PTY_NAME,
 		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT,
 		PET.PET_NO
-		FROM BUS INNER JOIN BK
+		FROM BUS
+		INNER JOIN BK
 		ON BUS.BUS_NO = BK.BUS_NO
 		INNER JOIN
 		EMP
-		ON EMP.EMP_NO = BK.EMP_NO
+		ON EMP.EMP_NO =
+		BK.EMP_NO
 		INNER JOIN PER
 		ON BK.PER_NO = PER.PER_NO
 		INNER JOIN PET
-		ON BK.PET_NO = PET.PET_NO
+		ON
+		BK.PET_NO = PET.PET_NO
 		INNER JOIN PTY
 		ON PTY.PTY_NO =
 		PET.PTY_NO
-		WHERE BK.BK_NO = #{bk_no}
+		WHERE
+		BK.BK_NO = #{bk_no}
 	</select>
 
 	<!-- 노쇼 -->
@@ -314,9 +335,11 @@
 	</select>
 
 	<select id="getBctListCount" resultType="int">
-		SELECT COUNT(*) FROM BK INNER JOIN BCT ON BK BCT_CODE =
+		SELECT COUNT(*) FROM BK
+		INNER JOIN BCT ON BK.BCT_CODE =
 		BCT.BCT_CODE WHERE
-		BUS_NO = #{no} AND BCT_NAME = #{bct_name}
+		BUS_NO = #{no} AND
+		BCT_NAME = #{bct_name}
 	</select>
 
 	<!-- 서비스 관리 -->

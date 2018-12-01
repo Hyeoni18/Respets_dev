@@ -6,6 +6,7 @@
 <title>Respets :: 비밀번호 수정</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	
 </script>
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
@@ -45,12 +46,12 @@
 						<div class="col-6">
 							<div class="card">
 								<div class="card-body">
-									<form action="myPwUpdateForm" method="post">
+									<form name="myPwUpdateForm" action="myPwUpdate" method="post">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group mb-3">
 													<label>현재 비밀번호 <span style="color: red">*</span></label> <input
-														type="password" name="nowPw" id="nowPw"
+														type="password" id="nowPw" onchange="nowPwCheck();"
 														class="form-control" />
 												</div>
 												<div class="form-group mb-3">
@@ -59,10 +60,10 @@
 														onkeyup="pw_check();" class="form-control" />
 												</div>
 												<div class="form-group mb-3">
-													<label>새로운 비밀번호 확인 <span style="color: red">*</span></label>
-													<input type="password" name="newChkPw" id="newChkPw"
-														class="form-control" onkeyup="pw_check();" />
-														<div class="registrationFormAlert" id="same"></div>
+													<label>새로운 비밀번호 확인<span style="color: red">*</span></label>
+													<input type="password" id="newChkPw" class="form-control"
+														onkeyup="pw_check();" />
+													<div class="registrationFormAlert" id="same"></div>
 												</div>
 												<div>
 													<input type="submit" class="btn btn-success" id="pwOk"
@@ -96,19 +97,29 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
-	$('#nowPw').focusout(function() {
-		var pw = ${mb.per_pw}
+	function nowPwCheck() {
 		var nowPw = $("#nowPw").val();
-		if (pw != nowPw) {
-			alert("현재 비밀번호가 틀립니다.");
-			$('#pwOk').attr('disabled', 'disabled');
-		} else if (nowPw == '') {
-			alert("현재 비밀번호를 입력해주세요.");
-			$('#pwOk').attr('disabled', 'disabled');
-		} else {
-			$('#pwOk').removeAttr("disabled");
-		}
-	});
+		$.ajax({
+			url : "myPwCheck",
+			data : {
+				"now" : nowPw
+			},
+			type : "post",
+			success : function(result) {
+				console.log("성공");
+				if (result == 1) {
+					alert("비밀번호 확인 성공");
+					$('#pwOk').removeAttr("disabled");
+				} else {
+					alert("비밀번호가 틀립니다.")
+					$('#pwOk').attr('disabled', 'disabled');
+				}
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
 	function pw_check() {
 		var newPw = $("#newPw").val();
 		var newChkPw = $('#newChkPw').val();
@@ -124,14 +135,9 @@
 			$('#pwOk').removeAttr("disabled");
 		}
 	}
-	function forward(button) {
-		var frm = document.myPwUpdateForm;
-		var newPw = $('#newPw').val();
-		console.log(newPw);
-		if (button.value == "수정 완료") {
-			frm.action = "myPwCheck?newPw=" + newPw;
-		}
-		frm.submit();
+	function forward() {
+		alert("비밀번호 수정 성공했습니다.");
 	}
+	${fail}
 </script>
 </html>
