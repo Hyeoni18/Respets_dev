@@ -6,9 +6,10 @@
 	<select id="myInfo" resultType="personal"
 		parameterType="personal"> SELECT * FROM PER WHERE PER_NO = #{no} </select>
 	<!-- 혜연 -->
-	<select id="myPwCheck" resultType="Personal"
-		parameterType="String">
-		SELECT PER_PW, PER_EMAIL FROM PER WHERE PER_NO = #{no}
+	<select id="myPwCheck" resultType="int"
+		parameterType="personal">
+		SELECT COUNT(*) FROM PER WHERE PER_NO = #{per_no} AND PER_PW
+		= #{per_pw}
 	</select>
 	<!-- 혜연 -->
 	<update id="myPwUpdate" parameterType="personal">
@@ -18,8 +19,8 @@
 	<!-- 혜연 -->
 	<update id="myInfoUpdate" parameterType="personal">
 		UPDATE PER SET
-		PER_NAME=#{per_name}, PER_PHONE=#{per_phone} WHERE PER_NO =
-		#{per_no}
+		PER_NAME=#{per_name}, PER_PHONE=#{per_phone}
+		WHERE PER_NO = #{per_no}
 	</update>
 	<!-- 혜연 -->
 	<update id="personalPartDelete" parameterType="String">
@@ -53,38 +54,59 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BK_NO, BUS.BUS_NAM
 	<select id="todayScheduleList" resultType="Hashmap"
 		parameterType="Hashmap">
 		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
-		'yyyy-mm-dd hh24:mi')AS
-		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
 		hh24:mi')AS VS_START,
 		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
 		PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS ON BK.BUS_NO =
-		BUS.BUS_NO INNER JOIN PET ON
-		BK.PET_NO = PET.PET_NO INNER JOIN PER ON
-		BK.PER_NO = PER.PER_NO INNER
-		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
-		JOIN BCT ON BK.BCT_CODE =
-		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
+		FROM BK INNER JOIN BUS
+		ON BK.BUS_NO =
+		BUS.BUS_NO
+		INNER JOIN PET
+		ON
+		BK.PET_NO = PET.PET_NO
+		INNER JOIN PER
+		ON
+		BK.PER_NO = PER.PER_NO
+		INNER
+		JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO
+		INNER
+		JOIN BCT
+		ON BK.BCT_CODE =
+		BCT.BCT_CODE
+		WHERE BK.BUS_NO = #{no} AND
 		BK.VS_START =
-		TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK = 'X'
+		TO_DATE(#{timeS},'yy/MM/dd') AND
+		BK.VS_CHK = 'X'
 	</select>
+
 	<select id="todayScheduleListOk" resultType="Hashmap"
 		parameterType="Hashmap">
 		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
-		'yyyy-mm-dd hh24:mi')AS
-		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		'yyyy-mm-dd hh24:mi')AS BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
 		hh24:mi')AS VS_START,
 		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
 		PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS ON BK.BUS_NO =
-		BUS.BUS_NO INNER JOIN PET ON
-		BK.PET_NO = PET.PET_NO INNER JOIN PER ON
-		BK.PER_NO = PER.PER_NO INNER
-		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
-		JOIN BCT ON BK.BCT_CODE =
-		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
+		FROM BK INNER JOIN BUS
+		ON BK.BUS_NO =
+		BUS.BUS_NO
+		INNER JOIN PET
+		ON
+		BK.PET_NO = PET.PET_NO
+		INNER JOIN PER
+		ON
+		BK.PER_NO = PER.PER_NO
+		INNER
+		JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO
+		INNER
+		JOIN BCT
+		ON BK.BCT_CODE =
+		BCT.BCT_CODE
+		WHERE BK.BUS_NO = #{no} AND
 		BK.VS_START =
-		TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK = 'O'
+		TO_DATE(#{timeS},'yy/MM/dd') AND
+		BK.VS_CHK = 'O'
 	</select>
 	<select id="getSvcPri" resultType="Hashmap"
 		parameterType="String">
@@ -143,20 +165,30 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<select id="myBookingDetail" resultType="Hashmap"
 		parameterType="String">
 		SELECT BK.BK_NO, BK.VS_CHK, BUS.BUS_NAME, BUS.BUS_PHONE,
-		BUS.BUS_POST,
-		BUS.BUS_ADDR, BUS.BUS_ADDR2, TO_CHAR(BK.VS_START,
-		'YYYY-MM-DD
-		HH24:MI') AS VS_START, EMP.EMP_NAME, PET.PET_NAME,
+		BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		TO_CHAR(BK.VS_START,
+		'YYYY-MM-DD HH24:MI') AS VS_START, EMP.EMP_NAME,
+		PET.PET_NAME,
 		PTY.PTY_NAME,
-		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT, PET.PET_NO FROM
-		BUS INNER JOIN
-		BK ON BUS.BUS_NO = BK.BUS_NO INNER JOIN EMP ON
-		EMP.EMP_NO = BK.EMP_NO
-		INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER
-		JOIN PET ON BK.PET_NO =
-		PET.PET_NO INNER JOIN PTY ON PTY.PTY_NO =
-		PET.PTY_NO WHERE BK.BK_NO =
-		#{bk_no}
+		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT,
+		PET.PET_NO
+		FROM BUS
+		INNER JOIN BK
+		ON BUS.BUS_NO = BK.BUS_NO
+		INNER JOIN
+		EMP
+		ON EMP.EMP_NO =
+		BK.EMP_NO
+		INNER JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		INNER JOIN PET
+		ON
+		BK.PET_NO = PET.PET_NO
+		INNER JOIN PTY
+		ON PTY.PTY_NO =
+		PET.PTY_NO
+		WHERE
+		BK.BK_NO = #{bk_no}
 	</select>
 	<!-- 노쇼 -->
 	<update id="todayScheduleListNoShow" parameterType="String">
@@ -197,6 +229,14 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		INNER JOIN BCT ON BK.BCT_CODE=BCT.BCT_CODE WHERE
 		BUS_NO = #{no} AND
 		BCT_NAME=#{bct_name}
+	</select>
+
+	<select id="getBctListCount" resultType="int">
+		SELECT COUNT(*) FROM BK
+		INNER JOIN BCT ON BK.BCT_CODE =
+		BCT.BCT_CODE WHERE
+		BUS_NO = #{no} AND
+		BCT_NAME = #{bct_name}
 	</select>
 	<!-- 서비스 관리 -->
 	<select id="serviceManagement" resultType="Hashmap"
@@ -285,15 +325,23 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<select id="vs_chkOkList" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START,
-		PET.PET_NAME,
-		PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME FROM
-		BK INNER
-		JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON BK.PET_NO
-		=
-		PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PTY ON
-		PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE
+		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
+		FROM BK INNER JOIN BUS
+		ON BK.BUS_NO = BUS.BUS_NO
+		INNER JOIN PET
+		ON
+		BK.PET_NO = PET.PET_NO
+		INNER JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		INNER
+		JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO
+		INNER JOIN BCT
+		ON BK.BCT_CODE =
+		BCT.BCT_CODE
 		WHERE BK.BUS_NO = #{bus_no} AND BK.VS_START =
-		TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK='O' AND BK.BK_NO = #{bk_no}
+		TO_DATE(#{timeS},'yy/MM/dd') AND
+		BK.VS_CHK='O' AND BK.BK_NO = #{bk_no}
 	</select>
 	<select id="getnoshowCount" resultType="int"
 		parameterType="String">

@@ -118,4 +118,16 @@
 		<!-- End Page content -->
 		<!-- ============================================================== -->
 </body>
+
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url : "personalAllBookingList",
+			type : "get",
+			success : function() {
+				console.log("성공");
+			}
+		});
+	})
+</script>
 </html>
