@@ -126,7 +126,7 @@ public class HyeonService {
 				map.put("no", no);
 				hyDao.mainPhotoUpdate(map);
 			} else {
-				hyDao.PothoUpdate(no);
+				// hyDao.PothoUpdate(no);
 			}
 			sb.append("<script>alert('" + bi.getBus_email() + "님의 정보가 수정되었습니다.')</script>");
 		}
