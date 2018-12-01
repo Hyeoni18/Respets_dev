@@ -9,15 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamx.respets.dao.IJiyeDao;
@@ -30,7 +26,7 @@ public class JiyeService {
 	private ModelAndView mav;
 	HttpServletRequest request;
 	@Autowired
-	HttpSession session;
+	HttpSession session; //세션 Autowired 하지 말기
 	@Autowired
 	private HyunHwiService hhs;
 
@@ -91,6 +87,7 @@ public class JiyeService {
 	} // personalJoin End
 
 	// 지예 로그인 (개인, 기업 통합)
+		
 	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) { // loginForm에 email, pw를 String 으로 받아옴 (빈 없음)
 		mav = new ModelAndView();
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
@@ -166,8 +163,16 @@ public class JiyeService {
 							System.out.println("기업회원: " + hmap);
 
 							if (busEmChk.equals("O")) {
+								HashMap<String, Object> pMap = new HashMap<>();
+								pMap = jDao.getBusinessPhoto(no);
+								System.out.println("----------------" + pMap);
+								String loc = pMap.get("GLR_LOC").toString();
+								String photo = pMap.get("GLR_FILE").toString();
+								request.getSession().setAttribute("loc", loc);
+								request.getSession().setAttribute("photo", photo);
 								//String name = (String) hmap.get("BUS_NAME");
 								//mav.addObject("name", name);
+								
 								System.out.println("기업회원 인증");
 								view = "redirect:/";
 							} else {
@@ -669,7 +674,7 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		String bus_no = request.getParameter("bk_no");
+		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
 		//String bus_no = "B1000097";
 		//String bct_code = "M";
@@ -765,5 +770,48 @@ public class JiyeService {
 		mav.setViewName(view);
 		return mav;
 	} // confirmLicense end
+
+	public ModelAndView businessDetailNoticeList(HttpServletRequest request, Integer pageNum) {
+		this.request=request;
+		mav = new ModelAndView();
+		String view = null;
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		HashMap<String, Object> hmap = new HashMap<>();
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+		hmap.put("pageNum", pNo);
+		List<HashMap<String, Object>> nList = new ArrayList<HashMap<String, Object>>();
+		StringBuilder sb = new StringBuilder();
+		nList = jDao.businessDetailNoticeList(hmap);
+		System.out.println(nList);
+		for (int i = 0; i < nList.size(); i++) {
+			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
+			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
+			sb.append("<td><a href='businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
+					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
+			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td></tr>");
+		}
+		mav.addObject("nList", sb);
+		mav.addObject("paging", getDetailPaging(pNo, request));
+		view = "businessDetailNoticeList";
+		mav.setViewName(view);
+		return mav;
+	}
+	private String getDetailPaging(int pageNum, HttpServletRequest request) { // 현재 페이지 번호
+		this.request=request;
+		HashMap<String, Object> hmap = new HashMap<>();
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+		int maxNum = jDao.getBusinessNoticeDetailCount(hmap); // 전체 글의 개수
+		int listCount = 10; // 페이지당 글의 수
+		int pageCount = 5; // 그룹당 페이지 수 [1] [2] [3] [4] [5] ▶ [6] [7]....
+		String boardName = "businessDetailNoticeList"; // 게시판이 여러 개일 때 쓴다.
+		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
+		return paging.makeHtmlPaging();
+	} // method End
 
 }// Class End
