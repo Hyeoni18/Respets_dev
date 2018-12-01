@@ -148,6 +148,11 @@ public class JinService {
 				hMap.put(name, value);
 			} // for End
 		} // if End
+		
+		/*삭제*/
+		hMap.put("bus_no", "B1000121");
+		hMap.put("bct_code", "B");
+		
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
 		if (hMap.get("pet_no") == null) {
@@ -161,7 +166,7 @@ public class JinService {
 		} // if End
 		StringBuilder pet = new StringBuilder();
 		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
-		pet.append(" style='height:300px; weight:300px;' />");
+		pet.append("' style='height:300px; weight:300px;' />");
 		pet.append("<div class='card-body'><br/><br/>");
 		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
