@@ -38,9 +38,10 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBusCategory();
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
+			sb.append(" <label class=\"btn btn-secondary active\">");
 			sb.append("<input type='radio' name='bct_code' class='주력 서비스' value='");
 			sb.append(list.get(i).get("BCT_CODE"));
-			sb.append("'/>" + list.get(i).get("BCT_NAME") + " ");
+			sb.append("'/>" + list.get(i).get("BCT_NAME") + "</label>");
 		} // for End
 		return sb.toString();
 	} // method End
@@ -398,7 +399,8 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
-			sb.append("<td>" + list.get(i).get("VS_START") + "</td><td><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
+			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
 			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO")
 					+ "' />&nbsp;");
 			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO")

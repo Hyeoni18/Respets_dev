@@ -23,51 +23,92 @@
 	type="text/css" />
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-	<div class="page-content">
-		<div class="card">
-			<div class="card-body">
-				<div class="p-lg-1">
-					<div class="example-container">
-						<div class="row">
-							<div class="col-xl-12">
-								<div class="card mb-0">
-									<div class="card-body">
-										<h3 class="header-title">새로운 예약 목록</h3>
+	<!-- Begin page -->
+	<div class="wrapper">
 
-										<div class="table-responsive-sm">
-											<table class="table table-centered mb-0">
-												<thead>
-													<tr>
-														<th>예약번호</th>
-														<th>동물종류</th>
-														<th>동물이름</th>
-														<th>예약자명</th>
-														<th>방문일시</th>
-														<th>예약상태</th>
-													</tr>
-													${list}
-												</thead>
-												<tbody>
-												</tbody>
-											</table>
-										</div>
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
 
-									</div>
-									<!-- end card body-->
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
 								</div>
-								<!-- end card -->
+								<h4 class="page-title">새로운 예약 목록</h4>
 							</div>
 						</div>
 					</div>
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card mb-0">
+								<div class="card-body">
+									<span class="text-muted font-14 mb-4">확인되지 않은 새로운 예약입니다.</span> <br/><br/>
+                                        <br/>
+
+									<div class="table-responsive-sm">
+										<table class="table table-centered mb-0" style='text-align: center;'>
+											<thead>
+												<tr>
+													<th>예약 번호</th>
+													<th>동물 종류</th>
+													<th>동물 이름</th>
+													<th>예약자명</th>
+													<th>서비스 종류</th>
+													<th>방문 일시</th>
+													<th>예약 상태</th>
+												</tr>
+												${list}
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!-- end card body-->
+							</div>
+							<!-- end card -->
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
 
 				</div>
+				<!-- container -->
+
 			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
 		</div>
-	</div>
-			<%@ include file="footer.html"%></div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
