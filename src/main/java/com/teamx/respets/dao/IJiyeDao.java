@@ -83,6 +83,10 @@ public interface IJiyeDao {
 
 	public int recentMyBookingListCount(String no);
 
+	public List<HashMap<String, Object>> businessDetailNoticeList(HashMap<String, Object> hmap);
+
+	public int getBusinessNoticeDetailCount(HashMap<String, Object> hmap);
+
 
 
 

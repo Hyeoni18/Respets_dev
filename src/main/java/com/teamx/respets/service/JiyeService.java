@@ -763,4 +763,47 @@ public class JiyeService {
 		return mav;
 	} // confirmLicense end
 
+	public ModelAndView businessDetailNoticeList(HttpServletRequest request, Integer pageNum) {
+		this.request=request;
+		mav = new ModelAndView();
+		String view = null;
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		HashMap<String, Object> hmap = new HashMap<>();
+		int pNo = (pageNum == null) ? 1 : pageNum;
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+		hmap.put("pageNum", pNo);
+		List<HashMap<String, Object>> nList = new ArrayList<HashMap<String, Object>>();
+		StringBuilder sb = new StringBuilder();
+		nList = jDao.businessDetailNoticeList(hmap);
+		System.out.println(nList);
+		for (int i = 0; i < nList.size(); i++) {
+			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
+			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
+			sb.append("<td><a href='businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
+					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
+			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td></tr>");
+		}
+		mav.addObject("nList", sb);
+		mav.addObject("paging", getDetailPaging(pNo, request));
+		view = "businessDetailNoticeList";
+		mav.setViewName(view);
+		return mav;
+	}
+	private String getDetailPaging(int pageNum, HttpServletRequest request) { // 현재 페이지 번호
+		this.request=request;
+		HashMap<String, Object> hmap = new HashMap<>();
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+		int maxNum = jDao.getBusinessNoticeDetailCount(hmap); // 전체 글의 개수
+		int listCount = 10; // 페이지당 글의 수
+		int pageCount = 5; // 그룹당 페이지 수 [1] [2] [3] [4] [5] ▶ [6] [7]....
+		String boardName = "businessDetailNoticeList"; // 게시판이 여러 개일 때 쓴다.
+		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
+		return paging.makeHtmlPaging();
+	} // method End
+
 }// Class End
