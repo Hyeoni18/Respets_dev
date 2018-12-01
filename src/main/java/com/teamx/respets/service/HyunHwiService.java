@@ -868,14 +868,14 @@ public class HyunHwiService {
 		if (bct_code.equals("H")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='H'></div>");
-			mav.addObject("cat_price", "<div id='H_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='H'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='H_price'></div></div></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='B'></div>");
-			mav.addObject("cat_price", "<div id='B_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='B'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='B_price'></div></div></div>");
 			bct_name = "미용";
 		} else if (bct_code.equals("M")) {
 			mav.addObject("medi_submit", "<button class='btn btn-outline-secondary'>수정하기</button>");
@@ -1111,19 +1111,19 @@ public class HyunHwiService {
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 기업이 제공하지 않는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"'/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"'/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				}
 			} else { // 기업이 제공하는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"' checked/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'checked/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"' checked/>" + "<label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
 				} // 만들어준다.
 			}
 			sb.append("</div>");
@@ -1190,16 +1190,16 @@ public class HyunHwiService {
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 제공하지 않던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"'/>" + "<label class='custom-control-label' for='"+name+"'>"+name+" </label>"); // cat_code를 붙여서
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code를 붙여서
 																										// 그냥 가져온다.
 				} else { // 둘다 아니라면 animal_code로 그냥 가져온다.
-					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"'/>" + "<label class='custom-control-label' for='"+name+"'>"+name+" </label>");
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>");
 				}
 			} else { // 제공하던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"' checked/>" + "<label class='custom-control-label' for='"+name+"'>"+name+" </label>"); // cat_code에
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code에
 				} else { // 고양이가 아니라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"' checked/>" + "<label class='custom-control-label' for='"+name+"'>"+name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // 그냥
 				}
 			}
 			sb.append("</div>");

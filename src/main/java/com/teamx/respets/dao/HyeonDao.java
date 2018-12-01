@@ -60,4 +60,6 @@ public interface HyeonDao {
 	public ArrayList<HashMap<String, Object>> todayScheduleListOk(Map<String, Object> map);
 	public int todayScheduleListCancel(String bk_no);
 	public ArrayList<HashMap<String, Object>> bctBookingListOk(Map<String, Object> map);
+	public int searchAllListPaging(Map<String, Object> map);
+	public int searchBctAllsListPaging(Map<String, Object> map);
 }

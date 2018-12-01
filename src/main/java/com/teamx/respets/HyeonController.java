@@ -249,39 +249,52 @@ public class HyeonController {
 	}
 	
 	@RequestMapping(value = "/businessAllBookingList", method=RequestMethod.POST, produces = "application/text; charset=utf8")
-	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.businessAllBookingList(request, pageNum);
+	public @ResponseBody String businessAllBookingList(HttpServletRequest request) {
+		String text = hy.businessAllBookingList(request);
 		return text;
 	}
 	
 	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	public @ResponseBody String AllPaging(HttpServletRequest request ,Integer pageNum) {
-		String text = hy.AllPaging(request, pageNum);
+	public @ResponseBody String AllPaging(HttpServletRequest request) {
+		String text = hy.AllPaging(request);
 		System.out.println("확인@@@@@@@" + text);
 		return text;
 	}
 	
 	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
-	@ResponseBody public String bctAllPaging(HttpServletRequest request, Integer pageNum) {
-		String text = hy.bctAllPaging(request, pageNum);
+	@ResponseBody public String bctAllPaging(HttpServletRequest request) {
+		String text = hy.bctAllPaging(request);
 		return text;
 	}
 
 	@RequestMapping(value = "/searchAllList", produces = "application/text; charset=utf8")
-	public @ResponseBody String searchAllList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.searchAllList(request, pageNum);
+	public @ResponseBody String searchAllList(HttpServletRequest request) {
+		String text = hy.searchAllList(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/searchAllListPaging", produces = "application/text; charset=utf8")
+	public @ResponseBody String searchAllListPaging(HttpServletRequest request) {
+		String text = hy.searchAllListPaging(request);
 		return text;
 	}
 
 	@RequestMapping(value = "/businessAllBctBookingList", produces = "application/text; charset=utf8")
-	public @ResponseBody String businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.businessAllBctBookingList(request, pageNum);
+	public @ResponseBody String businessAllBctBookingList(HttpServletRequest request) {
+		String text = hy.businessAllBctBookingList(request);
 		return text;
 	}
 
 	@RequestMapping(value = "/searchBctAllsList", produces = "application/text; charset=utf8")
-	public @ResponseBody String searchBctAllsList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.searchBctAllsList(request, pageNum);
+	public @ResponseBody String searchBctAllsList(HttpServletRequest request) {
+		String text = hy.searchBctAllsList(request);
 		return text;
 	}
+	
+	@RequestMapping(value = "/searchBctAllsListPaging", produces = "application/text; charset=utf8")
+	public @ResponseBody String searchBctAllsListPaging(HttpServletRequest request) {
+		String text = hy.searchBctAllsListPaging(request);
+		return text;
+	}
+	
 }

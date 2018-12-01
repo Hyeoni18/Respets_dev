@@ -93,8 +93,11 @@
 										<div class="form-group mb-3">
 										<label for="simpleinput">제공서비스</label><br/>
 										${menu} </div> 
-										
-										${animal} 사업장사진 : <input type="file" name="bgl_ori" multiple />
+										${animal}
+										<div class="form-group mb-3">
+										<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
+										<input type="file" name="bgl_ori" multiple />
+										</div>
 										<br /> &nbsp; <br /> ${medi_submit} ${price} <br />
 										<br /> ${bct_price} ${cat_price} <br />
 										<div id="but"></div>
@@ -229,6 +232,7 @@
 						x = document.createElement("input");
 						x.setAttribute("type", "text");
 						x.setAttribute("name", "price");
+						x.setAttribute("class", "col-sm-4");
 						var price;
 						var url = "searchPrice?tag_name=" + box[j - 1]
 								+ "&ani_name=" + aniName[i - 1] + "&bct_code="
@@ -291,6 +295,7 @@
 						x = document.createElement("input");
 						x.setAttribute("type", "text");
 						x.setAttribute("name", "price");
+						x.setAttribute("class", "col-sm-4");
 						var price;
 						var url = "searchPrice?tag_name=" + catBox[j - 1]
 								+ "&ani_name=" + catName[i - 1] + "&bct_code="
