@@ -87,6 +87,8 @@ public interface IJiyeDao {
 
 	public int getBusinessNoticeDetailCount(HashMap<String, Object> hmap);
 
+	public HashMap<String, Object> getBusinessPhoto(String bus_no);
+
 
 
 

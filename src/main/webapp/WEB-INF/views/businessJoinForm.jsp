@@ -14,6 +14,7 @@
         <!-- App css -->
         <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        
 </head>
  <body class="authentication-bg">
          <div class="account-pages mt-5 mb-5">

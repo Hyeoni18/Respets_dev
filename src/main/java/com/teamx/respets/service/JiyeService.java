@@ -163,8 +163,16 @@ public class JiyeService {
 							System.out.println("기업회원: " + hmap);
 
 							if (busEmChk.equals("O")) {
+								HashMap<String, Object> pMap = new HashMap<>();
+								pMap = jDao.getBusinessPhoto(no);
+								System.out.println("----------------" + pMap);
+								String loc = pMap.get("GLR_LOC").toString();
+								String photo = pMap.get("GLR_FILE").toString();
+								request.getSession().setAttribute("loc", loc);
+								request.getSession().setAttribute("photo", photo);
 								//String name = (String) hmap.get("BUS_NAME");
 								//mav.addObject("name", name);
+								
 								System.out.println("기업회원 인증");
 								view = "redirect:/";
 							} else {

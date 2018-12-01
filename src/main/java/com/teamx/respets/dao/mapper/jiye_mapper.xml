@@ -326,4 +326,8 @@
 	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</select>
+	
+	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
+		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
+	</select>
 </mapper>
