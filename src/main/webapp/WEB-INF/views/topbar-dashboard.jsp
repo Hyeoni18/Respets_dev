@@ -33,7 +33,7 @@
 					</div>
 
 					<!-- item-->
-					<a href="recentMyBookingList" class="dropdown-item notify-item">
+					<a href="myPage" class="dropdown-item notify-item">
 						<i class="mdi mdi-account-circle"></i> <span>마이페이지</span>
 					</a>
 

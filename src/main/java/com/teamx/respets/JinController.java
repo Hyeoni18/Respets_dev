@@ -102,7 +102,7 @@ public class JinController {
 	public ModelAndView myPage(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		if (request.getSession().getAttribute("no").toString().substring(0, 1).equals("P")) {
-			mav.setViewName("newScheduleList");
+			mav.setViewName("redirect:/recentMyBookingList");
 		} else {
 			mav.setViewName("redirect:/todayScheduleList");
 		} // else End
