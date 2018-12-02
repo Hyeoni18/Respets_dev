@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
+import com.teamx.respets.dao.JinDao;
 import com.teamx.respets.service.JinService;
 
 @Controller
@@ -106,6 +107,21 @@ public class JinController {
 		} else {
 			mav.setViewName("redirect:/todayScheduleList");
 		} // else End
+		return mav;
+	} // method End
+
+	@RequestMapping(value = "/businessPwUpdateForm", method = RequestMethod.GET)
+	public ModelAndView businessPwUpdateForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("businessPwUpdateForm");
+		return mav;
+	} // method End
+	
+	@RequestMapping(value = "/businessPwUpdate", method = RequestMethod.POST)
+	public ModelAndView businessPwUpdate(Business b, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		jinSvc.businessPwUpdate(b, request);
+		mav.setViewName("redirect:/businessInfoDetail");
 		return mav;
 	} // method End
 

@@ -82,4 +82,8 @@ public interface JinDao {
 	// 서진 : 메인 페이지 공지사항
 	public List<AdminBoard> selectBoardList();
 
+	public int nowPwCheck(Business b);
+
+	public void businessPwUpdate(Business b);
+
 } // interface End

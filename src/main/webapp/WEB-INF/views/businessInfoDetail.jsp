@@ -69,14 +69,14 @@
 													<span id="BUS_ADDR"></span>&nbsp;<span id="BUS_ADDR2"></span>
 												</h5>
 												<br /> <br />
-												<button type="button" class="btn btn-light"
-													onclick="location.href='businessInfoUpdateForm'" id="edit">
-													<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정
-												</button>
+												<button type="button" class="btn btn-light" onclick="location.href='./businessPwUpdateForm'">
+												<i class=" mdi mdi-lock"></i> 비밀번호 수정</button>
 												&nbsp;&nbsp;
-												<button type="button" class="btn btn-light"
-													onclick="javascript:forward(this)" id="delete">
-													<i class="mdi mdi-delete-empty mr-1"></i> 회원 탈퇴
+												<button type="button" class="btn btn-light" onclick="javascript:forward(this)" id="edit">
+												<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정</button>
+												&nbsp;&nbsp;
+												<button type="button" class="btn btn-light" onclick="javascript:forward(this)" id="delete">
+												<i class="mdi mdi-delete-empty mr-1"></i> 회원 탈퇴
 												</button>
 											</div>
 											<!-- end media-body-->

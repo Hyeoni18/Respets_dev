@@ -432,4 +432,15 @@ public class JinService {
 		return mav;
 	} // method End
 
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = jinDao.nowPwCheck(b);
+		return result;
+	}
+
+	public void businessPwUpdate(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		jinDao.businessPwUpdate(b);
+	}
+
 } // class End

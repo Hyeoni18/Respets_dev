@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamx.respets.bean.Business;
 import com.teamx.respets.dao.JinDao;
 import com.teamx.respets.service.JinService;
 
@@ -51,5 +52,11 @@ public class JinAjaxController {
 	public void bookingReject(String bk_no) {
 		jinDao.bookingReject(bk_no);
 	} // method End
+	
+	@RequestMapping(value = "/nowPwCheck", method = RequestMethod.POST)
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		int result = jinSvc.nowPwCheck(b, request);
+		return result;
+	}
 
 } // class End

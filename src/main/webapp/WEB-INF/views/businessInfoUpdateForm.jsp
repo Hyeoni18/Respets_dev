@@ -1,37 +1,104 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 기본 정보 수정</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Respets :: 회원 정보 수정</title>
 <!-- App favicon -->
-<link rel="shortcut icon"
-	href="resources/dist/assets/images/logo-sm.png">
-
+<link rel="shortcut icon" href="resources/dist/assets/images/logo-sm.png">
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
-	type="text/css" />
-
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-		<h1>기본 정보 수정</h1>
-		<hr />
-		<form action="businessInfoUpdate" method="post" enctype="multipart/form-data">
-			<table>
+	<!-- Begin page -->
+	<div class="wrapper">
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<div class="content">
+				<!-- Topbar Start -->
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+				<!-- Start Content-->
+				<div class="container-fluid">
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
+								</div>
+								<h4 class="page-title">회원 정보 수정</h4>
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-6">
+							<div class="card">
+								<div class="card-body">
+									<form action="businessInfoUpdate" method="post" enctype="multipart/form-data">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="form-group mb-3">
+													<label style="margin-right: 15px;">대표 사진</label>
+													<input type="file" name="mainPhoto" onchange="fileChk(this)" />
+													<input type="hidden" name="fileCheck" id="fileCheck" value="0" />
+												</div>
+												<div class="form-group mb-3">
+													<label>이메일 <span style="color: red">*</span></label> <input
+														type="text" class="form-control" value="${mb.per_email}"
+														disabled="disabled" />
+												</div>
+												<div class="form-group mb-3">
+													<label>이름 <span style="color: red">*</span></label> <input
+														type="text" class="form-control" value="${mb.per_name}"
+														disabled="disabled" />
+												</div>
+												<div class="form-group mb-3">
+													<label>연락처 <span style="color: red">*</span></label> <input
+														type="text" class="form-control" name="per_phone"
+														value="${mb.per_phone}" />
+													<div class="registrationFormAlert" id="same"></div>
+												</div>
+												<div>
+													<input type="submit" class="btn btn-success"
+														onclick="return check();" value="수정 완료" />
+												</div>
+											</div>
+										</div>
+										<!-- end row-->
+									</form>
+								</div>
+								<!-- end card-body -->
+							</div>
+							<!-- end card -->
+						</div>
+						<!-- end col -->
+					</div>
+				</div>
+				<!-- container -->
+			</div>
+			<!-- content -->
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+		</div>
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- END wrapper -->
+	<!-- App js -->
+	<script src="resources/dist/assets/js/app.min.js"></script>
+	
+	
 				<tr>
 					<td>사업자 번호 :</td>
 					<td id="BUS_LCNO"></td>
@@ -60,11 +127,6 @@
 					<td id="BCT_NAME"></td>
 				</tr>
 				<tr>
-					<td>대표사진 :</td>
-					<td><input type="file" name="mainPhoto"
-						onchange="fileChk(this)" /> <input type="hidden" name="fileCheck"
-						id="fileCheck" value="0" /></td>
-				</tr>
 			</table>
 			<br />
 			<button class="btn btn-outline-secondary">수정하기</button>
