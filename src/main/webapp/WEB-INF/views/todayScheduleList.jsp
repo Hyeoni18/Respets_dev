@@ -40,6 +40,7 @@
 				</div>
 			</div>
 
+<<<<<<< HEAD
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="card mb-0">
@@ -58,7 +59,6 @@
 											</tbody>
 										</table>
 									</div>
-
 								</div>
 								<!-- end card body-->
 							</div>
@@ -127,6 +127,7 @@
 			}
 		});
 	});
+
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');
