@@ -29,7 +29,7 @@
 						</div>
 					</div>
 				</div>
-
+			</div>
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="card mb-0">
@@ -57,11 +57,10 @@
 					</div>
 					<!-- end col -->
 				</div>
-			</div>
-		</div>
 		<%@ include file="footer.html"%>
+		</div>
 		<script src="/resources/dist/assets/js/app.min.js"></script>
-	</div>
+	
 </body>
 <script>
 	function test() { /* 사용 */
