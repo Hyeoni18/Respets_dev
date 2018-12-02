@@ -32,6 +32,16 @@
 <body>
 	<!-- Begin page -->
 	<div class="wrapper">
+			<%@ include file="left-sidebar.jsp"%>
+		
+				<div class="content-page">
+					<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
 
 		<!-- ========== Left Sidebar Start ========== -->
 
@@ -117,6 +127,8 @@
 			</div>
 			<!-- end row -->
 
+		</div>
+		</div>
 		</div>
 		<!-- content -->
 
