@@ -33,8 +33,6 @@
 					</div>
 				</div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="card mb-0">
@@ -55,34 +53,6 @@
 									</div>
 								</div>
 								<!-- end card body-->
-=======
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card mb-0">
-							<div class="card-body">
-								<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
-								<br /> <input type='radio' name='radio' class='radio'
-									value="전체" checked="checked"/>전체 ${bctList}
-
-
-								<div id="No" style="border: 1px solid red"
-									class="table-responsive-sm"></div>
-								<div id="Ok" style="border: 1px solid yellow"></div>
-
-							</div>
-							<!-- end card body-->
-						</div>
-						<!-- end card -->
-					</div>
-					<!-- end col -->
-				</div>
-				<br /><br />
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card mb-0">
-							<div class="card-body">
-
->>>>>>> master
 							</div>
 							<!-- end card body-->
 						</div>
