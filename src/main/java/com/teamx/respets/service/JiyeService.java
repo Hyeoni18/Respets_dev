@@ -87,7 +87,6 @@ public class JiyeService {
 	} // personalJoin End
 
 	// 지예 로그인 (개인, 기업 통합)
-		
 	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) { // loginForm에 email, pw를 String 으로 받아옴 (빈 없음)
 		mav = new ModelAndView();
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
@@ -165,18 +164,14 @@ public class JiyeService {
 							if (busEmChk.equals("O")) {
 								HashMap<String, Object> pMap = new HashMap<>();
 								pMap = jDao.getBusinessPhoto(no);
-								System.out.println("----------------" + pMap);
 								String loc = pMap.get("GLR_LOC").toString();
 								String photo = pMap.get("GLR_FILE").toString();
 								String bus_name = jDao.selectBus_name(no);
 								request.getSession().setAttribute("name", bus_name);
 								request.getSession().setAttribute("loc", loc);
 								request.getSession().setAttribute("photo", photo);
-								
-								System.out.println("기업회원 인증");
 								view = "redirect:/";
 							} else {
-								System.out.println("기업회원 인증X");
 								String sendEmail = (String) hmap.get("BUS_EMAIL");
 								String tomail = sendEmail;
 								String title = "[Respets] 계정 인증 메일";
@@ -229,7 +224,7 @@ public class JiyeService {
 		if (hmap != null) {
 			String no = (String) hmap.get("ADM_NO");
 			session.setAttribute("no", no);
-			view = "adminPage";
+			view = "redirect:/unconfirmBusiness";
 		} else {
 			view = "adminLoginForm";
 		}
@@ -281,6 +276,7 @@ public class JiyeService {
 		mav.addObject("hList", sb);
 		mav.addObject("paging", getPagingRecent(pNo, session));
 		view = "recentMyBookingList";
+		mav.setViewName(view);
 		return mav;
 	}// recentMyBookingList End
 	
@@ -519,7 +515,6 @@ public class JiyeService {
 		System.out.println(no);
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap = jDao.businessNoticeUpdateForm(no);
-		System.out.println("잘 가져 오니? " + hmap);
 		if (hmap == null) {
 			view = "businessNoticeDetail";
 		} else {
@@ -574,20 +569,15 @@ public class JiyeService {
 		if (request.getParameter("bbo_no") != null) {
 			Integer bbo_no = Integer.parseInt(request.getParameter("bbo_no"));
 			result = jDao.businessNoticeDelete(bbo_no);
-			System.out.println("삭제 결과는? " + result);
 			if (result != 0) {
-				System.out.println("두구두구두구두");
 				view = "redirect:businessNoticeList";
 			} else {
-				System.out.println("삭제 실패~ ");
 				view = "redirect:businessNoticeDetail?" + bbo_no;
-				alert = "alert(삭제를 실패하였습니다.);";
 				mav.addObject("alert", alert);
 			}
 
 		} else {
 			Integer bbo_no = Integer.parseInt(request.getQueryString());
-			System.out.println("확인=" + bbo_no);
 			result = jDao.businessNoticeDelete(bbo_no);
 			if (result != 0) {
 				view = "redirect:businessNoticeList";
@@ -606,10 +596,8 @@ public class JiyeService {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
-		String bus_no = request.getParameter("bus_no");
-		String bct_code = request.getParameter("bct_code");
-		//String bus_no = "B1000001";
-		//String bct_code = "B";
+		String bus_no = request.getParameter("bus_no"); //쿼리 스트링으로 받아 온 기업회원 번호
+		String bct_code = request.getParameter("bct_code"); //쿼리 스트링으로 받아 온 업종 코드
 		HashMap<String, Object> hmap = new HashMap<>();
 		HashMap<String, Object> tMap = new HashMap<>(); // 태그 셀렉트
 		List<HashMap<String, Object>> tList = new ArrayList<>();
@@ -617,7 +605,6 @@ public class JiyeService {
 		hmap.put("bus_no", bus_no);
 		hmap.put("bct_code", bct_code);
 		hmap = jDao.businessBasiceInfo(hmap);
-		System.out.println("Do i get the " + hmap + "?");
 
 		// 기본정보
 		String bus_name = hmap.get("BUS_NAME").toString();
@@ -650,12 +637,12 @@ public class JiyeService {
 		mav.addObject("sun", sun);
 		mav.addObject("hld", hld);
 		mav.addObject("lch", lch);
-
+		
+		//태그 샐렉트
 		if (hmap != null) {
 			tMap.put("bus_no", bus_no);
 			tMap.put("bct_code", bct_code);
 			tList = jDao.selectTag(tMap);
-			System.out.println("show me the tag's List=" + tList);
 			for (int i = 0; i < tList.size(); i++) {
 				if (tList.size() - i == 1) {
 					sb.append("<span>" + tList.get(i).get("TAG_NAME") + "</span>");
@@ -670,23 +657,26 @@ public class JiyeService {
 		return mav;
 	}// businessBasicInfo End
 
+	//기업 상세 페이지 갤러리
 	public ModelAndView businessGallery(HttpServletRequest request) {
 		this.request = request;
 		mav = new ModelAndView();
 		String view = null;
 		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
-		//String bus_no = "B1000097";
-		//String bct_code = "M";
 		HashMap<String, Object> hmap = new HashMap<>();
 		List<HashMap<String, Object>> gList = new ArrayList<HashMap<String, Object>>();
 		hmap.put("bus_no", bus_no);
 		hmap.put("bct_code", bct_code);
 		gList = jDao.businessGallery(hmap);
 		StringBuilder sb = new StringBuilder();
-		System.out.println("gList=" + gList);
-		for (int i = 0; i < gList.size(); i++) {
-			sb.append("<div class='photo' float:left;'><img style='height:200px; weight:200px;' class='card-img-top' src='" + gList.get(i).get("GLR_LOC") + gList.get(i).get("GLR_FILE") + "' /></div>");
+		if(gList.size() > 0) {
+			System.out.println("gList=" + gList);
+			for (int i = 0; i < gList.size(); i++) {
+				sb.append("<div class='photo' float:left;'><img style='height:200px; weight:200px;' class='card-img-top' src='" + gList.get(i).get("GLR_LOC") + gList.get(i).get("GLR_FILE") + "' /></div>");
+			}
+		}else {
+			sb.append("<p> 상세사진이 없습니다. </p>");
 		}
 		mav.addObject("gList", sb);
 		view = "businessGallery";
@@ -694,6 +684,7 @@ public class JiyeService {
 		return mav;
 	}// businessGallery
 
+	//미인증 기업 목록
 	public ModelAndView unconfirmBusiness(HttpSession session) {
 		this.session = session;
 		mav = new ModelAndView();
@@ -708,10 +699,6 @@ public class JiyeService {
 			sb.append("<td>" + bList.get(i).get("BCT_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BUS_EMAIL") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BUS_NAME") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BUS_CEO") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BUS_LCNO") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BUS_PHONE") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BUS_ADDR") + " " + bList.get(i).get("BUS_ADDR2") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BUS_TIME") + "</td>");
 
 			mav.addObject("bList", sb);
@@ -721,6 +708,7 @@ public class JiyeService {
 		return mav;
 	} // unconfirmBusiness end
 
+	//미인증기업정보 확인
 	public ModelAndView chkLicense(HttpServletRequest request) {
 		this.request = request;
 		mav = new ModelAndView();
@@ -728,7 +716,6 @@ public class JiyeService {
 		String bus_no = request.getParameter("bus_no");
 		String bct_code = request.getParameter("bct_code");
 		HashMap<String, Object> bMap = new HashMap<>();
-		StringBuilder sb = new StringBuilder();
 		bMap.put("bus_no", bus_no);
 		bMap.put("bct_code", bct_code);
 		if (bus_no != null && bct_code != null) {
@@ -736,10 +723,15 @@ public class JiyeService {
 			System.out.println(bMap);
 			String bct_name = bMap.get("BCT_NAME").toString();
 			String bus_name = bMap.get("BUS_NAME").toString();
+			String bus_ceo = bMap.get("BUS_CEO").toString();
 			String bus_phone = bMap.get("BUS_PHONE").toString();
 			String bus_email = bMap.get("BUS_EMAIL").toString();
+			String bus_addr = bMap.get("BUS_ADDR").toString();
+			String bus_addr2 = bMap.get("BUS_ADDR2").toString();
+			String bus_lcno = bMap.get("BUS_LCNO").toString();
 			String glr_loc = bMap.get("GLR_LOC").toString();
 			String glr_file = bMap.get("GLR_FILE").toString();
+			
 			mav.addObject("bus_no", bus_no);
 			mav.addObject("bct_name", bct_name);
 			mav.addObject("bus_name", bus_name);
@@ -747,12 +739,17 @@ public class JiyeService {
 			mav.addObject("bus_email", bus_email);
 			mav.addObject("glr_loc", glr_loc);
 			mav.addObject("glr_file", glr_file);
+			mav.addObject("bus_ceo", bus_ceo);
+			mav.addObject("bus_addr", bus_addr);
+			mav.addObject("bus_addr2", bus_addr2);
+			mav.addObject("bus_lcno", bus_lcno);
 		}
 		view = "chkLicense";
 		mav.setViewName(view);
 		return mav;
 	} // chkLicense end
 
+	//미인증 기업 인증
 	public ModelAndView confirmLicense(HttpServletRequest request) {
 		this.request = request;
 		mav = new ModelAndView();
@@ -770,7 +767,8 @@ public class JiyeService {
 		mav.setViewName(view);
 		return mav;
 	} // confirmLicense end
-
+	
+	//기업상세페이지 기업 공지
 	public ModelAndView businessDetailNoticeList(HttpServletRequest request, Integer pageNum) {
 		this.request=request;
 		mav = new ModelAndView();
@@ -798,7 +796,9 @@ public class JiyeService {
 		view = "businessDetailNoticeList";
 		mav.setViewName(view);
 		return mav;
-	}
+	} //businessDetailNoticeList end
+	
+	//기업상세페이지 공지사항 페이징
 	private String getDetailPaging(int pageNum, HttpServletRequest request) { // 현재 페이지 번호
 		this.request=request;
 		HashMap<String, Object> hmap = new HashMap<>();
@@ -812,6 +812,6 @@ public class JiyeService {
 		String boardName = "businessDetailNoticeList"; // 게시판이 여러 개일 때 쓴다.
 		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
 		return paging.makeHtmlPaging();
-	} // method End
+	} // getDetailPaging End
 
 }// Class End

@@ -16,31 +16,26 @@
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 </head>
-<body>
-	<div class="wrapper">
-		<%@ include file="left-sidebar.jsp"%>
-		<div class="content-page">
-			<%@ include file="topbar-dashboard.jsp"%>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12">
-						<div class="page-title-box">
-							<div class="page-title-right">
-								<form class="form-inline"></form>
-							</div>
-							<h4 class="page-title">오늘 일정 목록</h4>
+<body onload="test()">
+	<%@ include file="left-sidebar.jsp"%>
+	<div class="content-page">
+		<%@ include file="topbar-dashboard.jsp"%>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<div class="page-title-right">
+							<form class="form-inline"></form>
 						</div>
 					</div>
 				</div>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
+			</div>
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="card mb-0">
 						<div class="card-body">
 							<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
-							<br /> <input type='radio' name='radio' class='radio' value="전체" />전체
+							<br /> <input type='radio' name='radio' class='radio' value="전체" onchange='test();' checked="checked"/>전체
 							${bctList}
 							<div class="table-responsive-sm">
 								<table class="table table-centered mb-0"
@@ -55,20 +50,6 @@
 									</div>
 								</div>
 								<!-- end card body-->
-=======
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card mb-0">
-							<div class="card-body">
-								<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
-								<br /> <input type='radio' name='radio' class='radio'
-									value="전체" checked="checked"/>전체 ${bctList}
-
-
-								<div id="No" style="border: 1px solid red"
-									class="table-responsive-sm"></div>
-								<div id="Ok" style="border: 1px solid yellow"></div>
-
 							</div>
 							<!-- end card body-->
 						</div>
@@ -76,33 +57,14 @@
 					</div>
 					<!-- end col -->
 				</div>
-				<br /><br />
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card mb-0">
-							<div class="card-body">
-
->>>>>>> master
-							</div>
-							<!-- end card body-->
-						</div>
-						<!-- end card -->
-					</div>
-					<!-- end col -->
-				</div>
-			</div>
-		</div>
 		<%@ include file="footer.html"%>
+		</div>
 		<script src="/resources/dist/assets/js/app.min.js"></script>
-	</div>
+	
 </body>
 <script>
-	$(document).ready(function() {
-	}
-	
-	function radio() {
-		if($('input[type="radio"]:checked').val() ) {
-			
+	function test() { /* 사용 */
+		//$('input[type="radio"]').click( function() {
 			var radio = $('input[type="radio"]:checked').val();
 			var no = "${no}";
 
@@ -158,9 +120,7 @@
 					}
 				});
 			}
-		});
-	});
-
+	}
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');
