@@ -24,7 +24,7 @@
 	type="text/css" />
 
 </head>
-<body>
+<body onload="butListPaging(1,'','')">
 	<div class="wrapper">
 		<%@ include file="left-sidebar.jsp"%>
 		<div class="content-page">
@@ -122,6 +122,9 @@
 		console.log(pNo);
 		var search = $("input[name='search']").val();
 		var select = $("select").val();
+		if(select.length == 0) {
+			select = "전체";
+		}
 		console.log(search);
 		console.log(select);
 		if (code.length != 0) {
