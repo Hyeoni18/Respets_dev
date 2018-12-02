@@ -51,12 +51,14 @@
 
 	<!-- 서진 : 개인 즐겨찾기 기업 SELECT -->
 	<select id="likeBusinessSelect" parameterType="String" resultType="HashMap">
-		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC
-		FROM FAV INNER JOIN BUS
+		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC, SVC.BCT_CODE
+        FROM FAV INNER JOIN BUS
 		ON FAV.BUS_NO = BUS.BUS_NO
 		INNER JOIN GLR
 		ON BUS.BUS_NO = GLR.BUS_NO
-		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2
+		INNER JOIN SVC
+		ON FAV.BUS_NO = SVC.BUS_NO
+		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2 AND SVC.SVC_PRI = 1
 	</select>
 
 	<!-- 서진 : 개인 즐겨찾기 삭제 -->

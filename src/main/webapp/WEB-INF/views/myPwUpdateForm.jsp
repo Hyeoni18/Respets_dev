@@ -53,6 +53,7 @@
 													<label>현재 비밀번호 <span style="color: red">*</span></label> <input
 														type="password" id="nowPw" onchange="nowPwCheck();"
 														class="form-control" />
+														<div id="success"></div>
 												</div>
 												<div class="form-group mb-3">
 													<label>새로운 비밀번호 <span style="color: red">*</span></label> <input
@@ -108,10 +109,10 @@
 			success : function(result) {
 				console.log("성공");
 				if (result == 1) {
-					alert("비밀번호 확인 성공");
+					$('#success').html("비밀번호 확인 성공").css('color', 'blue');
 					$('#pwOk').removeAttr("disabled");
 				} else {
-					alert("비밀번호가 틀립니다.")
+					$("#same").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
 					$('#pwOk').attr('disabled', 'disabled');
 				}
 			},

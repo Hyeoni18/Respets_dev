@@ -45,8 +45,9 @@
 						<div class="col-6">
 							<div class="card">
 								<div class="card-body">
-								<!-- form으로 파일을 업로드할 땐 꼭 enctype을 적어줘야 한다. -->
-									<form action="myInfoUpdate" method="post" enctype="multipart/form-data">
+									<!-- form으로 파일을 업로드할 땐 꼭 enctype을 적어줘야 한다. -->
+									<form action="myInfoUpdate" method="post"
+										enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group mb-3">
@@ -72,7 +73,8 @@
 													<div class="registrationFormAlert" id="same"></div>
 												</div>
 												<div>
-													<input type="submit" class="btn btn-success" value="수정 완료" />
+													<input type="submit" class="btn btn-success"
+														onclick="return check();" value="수정 완료" />
 												</div>
 											</div>
 										</div>
@@ -102,6 +104,14 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
+	function check() {
+		var result = confirm('회원 정보를 수정하시겠습니까?');
+		if (result) {
+			alert('수정이 완료되었습니다.');
+			return true;
+		}
+		return false;
+	}
 	function fileChk(file) {
 		if (file.value == "") {
 			$("#fileCheck").val(0);
