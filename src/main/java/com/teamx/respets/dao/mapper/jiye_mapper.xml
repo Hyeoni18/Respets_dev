@@ -168,7 +168,7 @@
 	<!-- 기업공지사항 디테일 -->
 	<select id="noticeDetailPage" parameterType="HashMap"
 		resultMap="noticeDetail">
-		SELECT BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
+		SELECT BBO.BUS_NO, BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
 		BBO.BBO_TITLE, BBO.BBO_CTT,
 		TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd hh24:mi')
 		AS BBO_DATE

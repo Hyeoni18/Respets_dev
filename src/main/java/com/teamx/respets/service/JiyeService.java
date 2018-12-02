@@ -411,16 +411,23 @@ public class JiyeService {
 		mav = new ModelAndView();
 		String view = null;
 		String no = request.getQueryString(); // 리스트에서 클릭하여 받아 온 게시글 번호
+		String session = null;
+		if(request.getSession().getAttribute("no")!=null) {
+			session = request.getSession().getAttribute("no").toString(); 
+			mav.addObject("session", session);
+		}
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap.put("bbo_no", no);
 		System.out.println(hmap);
 		hmap = jDao.noticeDetailPage(hmap);
 		System.out.println("hmap=" + hmap);
+		String bus_no = hmap.get("BUS_NO").toString();
 		String bct_name = hmap.get("BCT_NAME").toString();
 		String bbc_name = hmap.get("BBC_NAME").toString();
 		String bbo_title = hmap.get("BBO_TITLE").toString();
 		String bbo_ctt = hmap.get("BBO_CTT").toString();
 		String bbo_date = hmap.get("BBO_DATE").toString();
+		mav.addObject("bus_no", bus_no);
 		mav.addObject("bbo_no", no);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("bbc_name", bbc_name);
@@ -787,7 +794,7 @@ public class JiyeService {
 		for (int i = 0; i < nList.size(); i++) {
 			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
 			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
-			sb.append("<td><a href='businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
+			sb.append("<td><a href='./businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
 					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
 			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td></tr>");
 		}
