@@ -62,6 +62,6 @@ public interface HyeonDao {
 	public int searchAllListPaging(Map<String, Object> map);
 	public int searchBctAllsListPaging(Map<String, Object> map);
 	public int getBctListCount(String no, String bct_name);
-	public void PhotoUpdate(Gallery gy);
+	//public void PhotoUpdate(Gallery gy);
 	public HashMap<String, Object> businessGallery(String no);
 }

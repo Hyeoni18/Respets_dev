@@ -96,6 +96,7 @@
 											</tbody>
 										</table>
 									</div>
+									<br />
 									<div class="row mb-2" style="">
 										<div class="col-lg-8">${paging}</div>
 									</div>
