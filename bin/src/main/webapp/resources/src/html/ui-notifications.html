@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Hyper - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- App css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div class="wrapper">
+
+            @@include('./partials/left-sidebar.html')
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    @@include('./partials/topbar.html')
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UI Kit</a></li>
+                                            <li class="breadcrumb-item active">Notifications</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Notifications</h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title">Jquery Toast</h4>
+                                        <p class="text-muted font-14">Toasts based notifications can be used to to show important alerts or information to users.</p>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Info Example</p>
+                                                    <button type="button" class="btn btn-info btn-sm" id="toastr-one">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Warning Example</p>
+                                                    <button type="button" class="btn btn-warning btn-sm" id="toastr-two">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Success Example</p>
+                                                    <button type="button" class="btn btn-success btn-sm" id="toastr-three">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Danger Example</p>
+                                                    <button type="button" class="btn btn-danger btn-sm" id="toastr-four">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                        </div>
+                                        <!-- end row-->
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>The text can be an array</p>
+                                                    <button type="button" class="btn btn-light btn-sm" id="toastr-five">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Put some HTML in the text</p>
+                                                    <button type="button" class="btn btn-light btn-sm" id="toastr-six">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Making them sticky</p>
+                                                    <button type="button" class="btn btn-light btn-sm" id="toastr-seven">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3">
+                                                    <p>Fade transitions</p>
+                                                    <button type="button" class="btn btn-light btn-sm" id="toastr-eight">Click me</button>
+                                                </div>
+                                            </div> <!-- end col-->
+                                        </div>
+                                        <!-- end row-->
+
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div> 
+                        <!-- end row-->
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Default Alert</h4>
+                                        <p class="text-muted font-14 mb-3">
+                                            Alerts are available for any length of text, as well as an optional dismiss button. For proper styling, use one of the eight
+                                            <strong>required</strong> contextual classes (e.g., <code>.alert-success</code>). For background color use class
+                                            <code>.bg-* </code>, <code>.text-white </code>
+                                        </p>
+
+                                        <div class="alert alert-primary" role="alert">
+                                            <strong>Primary - </strong> A simple primary alert—check it out!
+                                        </div>
+                                        <div class="alert alert-secondary" role="alert">
+                                            <strong>Secondary - </strong> A simple secondary alert—check it out!
+                                        </div>
+                                        <div class="alert alert-success" role="alert">
+                                            <strong>Success - </strong> A simple success alert—check it out!
+                                        </div>
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>Error - </strong> A simple danger alert—check it out!
+                                        </div>
+                                        <div class="alert alert-warning bg-warning text-white border-0" role="alert">
+                                            <strong>Warning - </strong> A simple warning alert—check it out!
+                                        </div>
+                                        <div class="alert alert-info bg-info text-white border-0" role="alert">
+                                            <strong>Info - </strong> A simple info alert—check it out!
+                                        </div>
+                                        <div class="alert alert-light bg-light text-dark border-0" role="alert">
+                                            <strong>Light - </strong> A simple light alert—check it out!
+                                        </div>
+                                        <div class="alert alert-dark bg-dark text-white border-0 mb-0" role="alert">
+                                            <strong>Dark - </strong> A simple dark alert—check it out!
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Dismissing Alerts</h4>
+                                        <p class="text-muted font-14 mb-3">
+                                            Add a dismiss button and the <code>.alert-dismissible</code> class, which adds extra padding to the right of the alert
+                                            and positions the <code>.close</code> button.
+                                        </p>
+
+                                        <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Primary - </strong> A simple primary alert—check it out!
+                                        </div>
+                                        <div class="alert alert-secondary alert-dismissible bg-secondary text-white border-0 fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Secondary - </strong> A simple secondary alert—check it out!
+                                        </div>
+                                        <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Success - </strong> A simple success alert—check it out!
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Error - </strong> A simple danger alert—check it out!
+                                        </div>
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Warning - </strong> A simple warning alert—check it out!
+                                        </div>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Info - </strong> A simple info alert—check it out!
+                                        </div>
+                                        <div class="alert alert-light alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Light - </strong> A simple light alert—check it out!
+                                        </div>
+                                        <div class="alert alert-dark alert-dismissible fade show mb-0" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Dark - </strong> A simple dark alert—check it out!
+                                        </div>
+                                        
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Custom Alerts</h4>
+                                        <p class="text-muted font-14 mb-3">
+                                            Display alert with transparent background and with contextual text color. Use classes
+                                            <code>.bg-white</code>, and <code>.text-*</code>. E.g. <code>bg-white text-primary</code>.
+                                        </p>
+
+                                        <div class="alert alert-primary bg-white text-primary" role="alert">
+                                            This is a <strong>primary</strong> alert—check it out!
+                                        </div>
+
+                                        <p class="text-muted font-14 mb-2 mt-3">
+                                            Display alert with filled background. Use classes
+                                                <code>.bg-*</code>, and <code>.text-white</code>. E.g. <code>bg-success text-white</code>.
+                                        </p>
+
+                                        <div class="alert alert-success" role="alert">
+                                            <i class="dripicons-checkmark mr-2"></i> This is a <strong>success</strong> alert - check it out!
+                                        </div>
+                                        <div class="alert alert-danger" role="alert">
+                                            <i class="dripicons-wrong mr-2"></i> This is a <strong>danger</strong> alert - check it out!
+                                        </div>
+                                        <div class="alert alert-warning" role="alert">
+                                            <i class="dripicons-warning mr-2"></i> This is a <strong>warning</strong> alert - check it out!
+                                        </div>
+                                        <div class="alert alert-info" role="alert">
+                                            <i class="dripicons-information mr-2"></i> This is a <strong>info</strong> alert - check it out!
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Additional content</h4>
+                                        <p class="text-muted font-14 mb-3">
+                                            Alerts can also contain additional HTML elements like headings, paragraphs and dividers.
+                                        </p>
+
+                                        <div class="alert alert-success" role="alert">
+                                            <h4 class="alert-heading">Well done!</h4>
+                                            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                                            <hr>
+                                            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                                        </div>
+                                        
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                @@include('./partials/footer.html')
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        @@include('./partials/right-sidebar.html')
+
+
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>
+
+        <!-- demo js -->
+        <script src="assets/js/pages/demo.toastr.js"></script>
+        <!-- -->
+
+    </body>
+</html>

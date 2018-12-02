@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<context:component-scan
+		base-package="com.teamx.respets" />
+
+	<!-- JDBC : Connection 1개만 존재 // IP 주소, 사용자 아이디, 비밀번호 적어주는 -->
+	<beans:bean id="dataSourceSpied"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName"
+			value="net.sf.log4jdbc.DriverSpy" />
+		<beans:property name="url"
+			value="jdbc:log4jdbc:oracle:thin:@106.243.194.226:3000:XE" />
+		<beans:property name="username" value="TeamX" />
+		<beans:property name="password" value="respets" />
+	</beans:bean>
+
+	<!-- 쿼리문 로그 출력을 위해 추가 -->
+	<beans:bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<beans:constructor-arg ref="dataSourceSpied" />
+		<beans:property name="logFormatter">
+			<beans:bean
+				class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<beans:property name="loggingType" value="MULTI_LINE" />
+				<beans:property name="sqlPrefix" value="SQL : " />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<!-- sqlSessionFactory :: mybatis가 사용 -->
+	<beans:bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation"
+			value="classpath:com/teamx/respets/dao/mybatis-conf.xml" />
+		<beans:property name="mapperLocations"
+			value="classpath:com/**/mapper/*.xml" />
+	</beans:bean>
+
+	<!-- 트랜잭션 -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- HyunHwi Dao -->
+	<beans:bean id="hDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.HyunHwiDao" />
+	</beans:bean>
+
+	<!-- Jinseon Dao -->
+	<beans:bean id="sDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.SunnyDao" />
+	</beans:bean>
+
+	<!-- Jiye Dao -->
+	<beans:bean id="jDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.IJiyeDao" />
+	</beans:bean>
+
+	<!-- Hyeon Dao -->
+	<beans:bean id="hyDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.HyeonDao" />
+	</beans:bean>
+
+	<!-- Jin Dao -->
+	<beans:bean id="jinDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.JinDao" />
+	</beans:bean>
+
+	<!-- MultipartResolver 설정 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</beans:bean>
+
+	<!-- Session Interceptor -->
+	<interceptors>
+		<interceptor>
+			<!-- mapping의 모든 요청은 Controller에 도착하기 전에 가로챈다. -->
+			<mapping path="/*" />
+			<!-- exclude-mapping의 요청은 가로채지 않는다. -->
+			<!-- "/" 추가하지 않으면 무한 루프 -->
+			<exclude-mapping path="/" />
+			<exclude-mapping path="/loginProcess" />
+			<exclude-mapping path="/loginForm" />
+			<exclude-mapping path="/joinChoiceForm" />
+			<exclude-mapping path="/personalJoinAgreement" />
+			<exclude-mapping path="/personalJoinForm" />
+			<exclude-mapping path="/personalJoin" />
+			<exclude-mapping path="/emailConfirmOffer" />
+			<exclude-mapping path="/emailConfirmSuccess" />
+			<exclude-mapping path="/admin" />
+			<exclude-mapping path="/adminLogin" />
+
+			<!-- Sunny start -->
+			<exclude-mapping path="/dashboard" />
+			<!-- pet -->
+			<!-- <exclude-mapping path="/petList" /> -->
+			<exclude-mapping path="/petInsertForm" />
+			<exclude-mapping path="/petInfoDetail" />
+			<exclude-mapping path="/petInsert" />
+			<exclude-mapping path="/petDelete" />
+			<exclude-mapping path="/petInfoUpdateForm" />
+			<exclude-mapping path="/petInfoUpdate" />
+			<!-- admin notice -->
+			<exclude-mapping path="/noticeList" />
+			<exclude-mapping path="/noticeListSearch" />
+			<exclude-mapping path="/noticeWriteForm" />
+			<exclude-mapping path="/noticeInsert" />
+			<exclude-mapping path="/noticeDetail" />
+			<exclude-mapping path="/noticeUpdateForm" />
+			<exclude-mapping path="/noticeUpdate" />
+			<exclude-mapping path="/noticeDelete" />
+			<!-- business Detail -->
+			<exclude-mapping path="/businessDetailPage" />
+			<exclude-mapping path="/favoriteChange" />
+			<exclude-mapping path="/personalCalendar" />
+			<!-- Sunny end -->
+			<exclude-mapping path="/serviceInsertForm" />
+			<exclude-mapping path="/serviceInsert" />
+			<exclude-mapping path="/stepList" />
+			<exclude-mapping path="/stepInsertForm" />
+			<exclude-mapping path="/stepInsert" />
+			<exclude-mapping path="/stepList" />
+			<exclude-mapping path="/stepDetail" />
+			<exclude-mapping path="/serviceDetail" />
+			<exclude-mapping path="/changeCode" />
+			<exclude-mapping path="/businessJoinAgreement" /> <!-- 서진 : 기업 회원 가입 동의 폼 -->
+			<exclude-mapping path="/businessJoinForm" /> <!-- 서진 : 기업 회원 가입 폼 -->
+			<exclude-mapping path="/emailCheck" /> <!-- 서진 : 기업 회원 가입 이메일 확인 -->
+			<exclude-mapping path="/taxIdCheck" /> <!-- 서진 : 기업 회원 가입 사업자 등록 번호 확인 -->
+			<exclude-mapping path="/businessJoin" /> <!-- 서진 : 기업 회원 가입 -->
+			<exclude-mapping path="/stepUpdate" />
+			<exclude-mapping path="/stepDelete" />
+			<exclude-mapping path="/personalBlacklist" />
+			<exclude-mapping path="/customerInfoDetail" />
+			<exclude-mapping path="/serviceUpdateForm" />
+			<exclude-mapping path="/serviceDelete" />
+			<exclude-mapping path="/serviceUpdate" />
+			<exclude-mapping path="/unconfirmBusiness" /> <!-- !!! 나중에 삭제할 것!!! 서진 : 관리자 -->
+			<exclude-mapping path="/businessList" />
+			<exclude-mapping path="/weekCal" />
+			<exclude-mapping path="/searchList" /> <!-- 서진 : index에서 검색 버튼 눌렀을 때 -->
+			<exclude-mapping path="/findMyIdForm" />
+			<exclude-mapping path="/findMyId" />
+			<exclude-mapping path="/findMyPw" />
+			<exclude-mapping path="/resetMyPwForm" />
+			<exclude-mapping path="/updateMyPw" />
+			<exclude-mapping path="/tagSelectList" />
+			<exclude-mapping path="/butTagSelectList" />
+			<exclude-mapping path="/tagSelectListAddr" />
+			<exclude-mapping path="/butTagSelectListPaging" />
+			<!-- 혜연 -->
+			<!-- <exclude-mapping path="/myPwCheck" /> -->
+			<exclude-mapping path="/myInfo" />
+			<exclude-mapping path="/myPwUpdateForm" />
+			<exclude-mapping path="/myInfoUpdateForm" />
+			<exclude-mapping path="/myInfoUpdate" />
+			<exclude-mapping path="/allBookingList" />
+			<exclude-mapping path="/todayScheduleList" />
+			<exclude-mapping path="/myBookingDetail" />
+			<exclude-mapping path="/myBookingCancelPage" />
+			<exclude-mapping path="/servicePage" />
+			<exclude-mapping path="/businessInfoDetail" />
+			<exclude-mapping path="/businessInfoUpdateForm"/>
+			<exclude-mapping path="/businessBookingListPage"/>
+			<exclude-mapping path="/businessButtonPage"/>
+			<exclude-mapping path="/todayScheduleListCancel"/>
+			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
+			<beans:bean
+				class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+
+</beans:beans>
