@@ -111,6 +111,7 @@
 	<!-- End Page content -->
 	<!-- ============================================================== -->
 </body>
+<script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	function test() { /* 사용 */
 		//$('input[type="radio"]').click( function() {
