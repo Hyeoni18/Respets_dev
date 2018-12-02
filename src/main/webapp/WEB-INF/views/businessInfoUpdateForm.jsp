@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 기본 정보 수정</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
@@ -27,45 +28,48 @@
 	<%@ include file="left-sidebar.jsp"%>
 	<div class="content-page">
 		<%@ include file="topbar-dashboard.jsp"%>
-	<h1>기본 정보 수정</h1>
-	<hr />
-	<form action="businessInfoUpdate" method="post">
-		<table>
-			<tr>
-				<td>사업자 번호 :</td>
-				<td id="BUS_LCNO"></td>
-			</tr>
-			<tr>
-				<td>업체명 :</td>
-				<td><input type="text" name="bus_name" value="${bmap.BUS_NAME}"/></td>
-			</tr>
-			<tr>
-				<td>대표자명 :</td>
-				<td id="BUS_CEO"><%-- <input type="text" value="${bmap.BUS_CEO}" /> --%></td>
-			</tr>
-			<tr>
-				<td>업체 연락처 :</td>
-				<td><input type="text" name="bus_phone" value="${bmap.BUS_PHONE}" /></td>
-			</tr>
-			<tr>
-				<td>사업장 주소 :</td>
-				<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
+		<h1>기본 정보 수정</h1>
+		<hr />
+		<form action="businessInfoUpdate" method="post" enctype="multipart/form-data">
+			<table>
+				<tr>
+					<td>사업자 번호 :</td>
+					<td id="BUS_LCNO"></td>
+				</tr>
+				<tr>
+					<td>업체명 :</td>
+					<td><input type="text" name="bus_name"
+						value="${bmap.BUS_NAME}" /></td>
+				</tr>
+				<tr>
+					<td>대표자명 :</td>
+					<td id="BUS_CEO"></td>
+				</tr>
+				<tr>
+					<td>업체 연락처 :</td>
+					<td><input type="text" name="bus_phone"
+						value="${bmap.BUS_PHONE}" /></td>
+				</tr>
+				<tr>
+					<td>사업장 주소 :</td>
+					<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
 						id="BUS_ADDR2"></span></td>
-			</tr>
-			<tr>
-				<td>주력서비스 :</td>
-				<td id="BCT_NAME"></td>
-			</tr>
-			<tr>
-				<td>대표사진 :</td>
-				<td><input type="file" name="mainPhoto"
-					onchange="fileChk(this)" /><br /> <input type="hidden"
-					name="fileCheck" id="fileCheck" value="0" /></td>
-			</tr>
-		</table> <br/>
-		<button class="btn btn-outline-secondary">수정하기</button>
-	</form>
-<%@ include file="footer.html"%>
+				</tr>
+				<tr>
+					<td>주력서비스 :</td>
+					<td id="BCT_NAME"></td>
+				</tr>
+				<tr>
+					<td>대표사진 :</td>
+					<td><input type="file" name="mainPhoto"
+						onchange="fileChk(this)" /> <input type="hidden" name="fileCheck"
+						id="fileCheck" value="0" /></td>
+				</tr>
+			</table>
+			<br />
+			<button class="btn btn-outline-secondary">수정하기</button>
+		</form>
+		<%@ include file="footer.html"%>
 	</div>
 </body>
 <script>

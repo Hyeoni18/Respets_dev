@@ -56,7 +56,7 @@
 				<div class="col-12">
 					<div class="card d-block">
 						<div class="card-body">
-							<div class="dropdown card-widgets">
+							<div class="dropdown card-widgets" id='dot'>
 								<a href="javascript:void(0);" class="dropdown-toggle arrow-none"
 									data-toggle="dropdown" aria-expanded="false"> <i
 									class="dripicons-dots-3"></i>
@@ -156,5 +156,15 @@
 			return false;
 		}
 	}
+
+$('#dot').hide();
+if('${session}'!=null) {
+	if('${session}'=='${bus_no}') {
+		$('#dot').show();
+	}else {
+		$('#dot').hide();
+	}
+}
+	
 </script>
 </html>

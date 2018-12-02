@@ -1438,15 +1438,15 @@ public class HyunHwiService {
 		String bus_no = (String) session.getAttribute("no");
 		list = hDao.selectSVC(bus_no);
 		System.out.println(list);
-		sb.append("<ul class='nav nav-pills bg-light nav-justified mb-3'>");
+		sb.append("<ul class=\"nav nav-pills bg-light nav-justified mb-3\">");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
 			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\"" + bct_code
-					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>" + bct_name
+					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'><i class='mdi mdi-account-circle font-18'></i>" + bct_name
 					+ "&nbsp;</a></li>");
 		}
-		sb.append("</ul>");
+		sb.append("</div>");
 		mav.addObject("code", sb.toString());
 		mav.setViewName("stepList");
 		return mav;
