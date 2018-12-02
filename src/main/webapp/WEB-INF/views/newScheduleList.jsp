@@ -3,7 +3,8 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 새로운 예약 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
@@ -64,11 +65,12 @@
 						<div class="col-xl-12">
 							<div class="card mb-0">
 								<div class="card-body">
-									<span class="text-muted font-14 mb-4">확인되지 않은 새로운 예약입니다.</span> <br/><br/>
-                                        <br/>
+									<span class="text-muted font-14 mb-4">확인되지 않은 새로운 예약입니다.</span>
+									<br /> <br /> <br />
 
 									<div class="table-responsive-sm">
-										<table class="table table-centered mb-0" style='text-align: center;'>
+										<table class="table table-centered mb-0"
+											style='text-align: center;'>
 											<thead>
 												<tr>
 													<th>예약 번호</th>
@@ -109,6 +111,7 @@
 		<!-- ============================================================== -->
 		<!-- End Page content -->
 		<!-- ============================================================== -->
+	</div>
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
@@ -124,20 +127,22 @@
 	});
 
 	function accept(bk_no) {
-		$.ajax({
-			url : 'bookingAccept',
-			type : 'post',
-			data : {
-				'bk_no' : bk_no
-			},
-			success : function() {
-				alert("예약이 확정되었습니다.");
-				$('#' + bk_no).html("<span class='text-success'>확정된 예약</span>");
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
+		$
+				.ajax({
+					url : 'bookingAccept',
+					type : 'post',
+					data : {
+						'bk_no' : bk_no
+					},
+					success : function() {
+						alert("예약이 확정되었습니다.");
+						$('#' + bk_no).html(
+								"<span class='text-success'>확정된 예약</span>");
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
 	}
 
 	function reject(bk_no) {

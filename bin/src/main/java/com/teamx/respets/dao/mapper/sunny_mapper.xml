@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamx.respets.dao.SunnyDao">
+	<!-- PER -->
+	<select id="getPerNo" resultType="String" parameterType="String">
+		SELECT
+		PER_NO FROM PER WHERE PER_EMAIL=#{value}
+	</select>
+
+	<!-- PTY -->
+	<select id="getPetTypeNo" resultType="String"
+		parameterType="String">
+		SELECT PTY_NO FROM PTY WHERE PTY_NAME=#{value}
+	</select>
+	<select id="getPetTypeName" resultType="String"
+		parameterType="String">
+		SELECT PTY_NAME FROM PTY WHERE PTY_NO=#{value}
+	</select>
+	<insert id="petTypeInsert" parameterType="String">
+		INSERT INTO PTY VALUES
+		(PTY_SEQ.NEXTVAL,#{value})
+	</insert>
+
+	<!-- PET -->
+	<select id="getPetList" resultType="pet" parameterType="String">
+		SELECT *
+		FROM PET WHERE PER_NO=#{value}
+	</select>
+	<select id="getPetInfoDetail" resultType="pet"
+		parameterType="String">
+		SELECT * FROM PET WHERE PET_NO=#{value}
+	</select>
+	<insert id="petInsert" parameterType="pet">
+		INSERT INTO PET
+		VALUES('A'||PET_SEQ.NEXTVAL,#{per_no},#{pty_no},#{pet_vrt},
+		#{pet_name},#{pet_age},#{pet_sex},#{pet_ntr},default,default)
+	</insert>
+	<insert id="petAndPhotoInsert" parameterType="pet">
+		INSERT INTO PET
+		VALUES('A'||PET_SEQ.NEXTVAL,#{per_no},#{pty_no},#{pet_vrt},
+		#{pet_name},#{pet_age},#{pet_sex},#{pet_ntr},#{pet_photo},#{pet_loc})
+	</insert>
+	<update id="petUpdate" parameterType="pet">
+		UPDATE PET SET
+		PTY_NO=#{pty_no},PET_VRT=#{pet_vrt},PET_NAME=#{pet_name},
+		PET_AGE=#{pet_age},PET_SEX=#{pet_sex},PET_NTR=#{pet_ntr} WHERE
+		PET_NO=#{pet_no}
+	</update>
+	<update id="petAndPhotoUpdate" parameterType="pet">
+		UPDATE PET SET
+		PTY_NO=#{pty_no},PET_VRT=#{pet_vrt},PET_NAME=#{pet_name},
+		PET_AGE=#{pet_age},PET_SEX=#{pet_sex},PET_NTR=#{pet_ntr},
+		PET_PHOTO=#{pet_photo},PET_LOC=#{pet_loc} WHERE PET_NO=#{pet_no}
+	</update>
+	<delete id="petDelete" parameterType="String">
+		DELETE PET WHERE
+		PET_NO=#{value}
+	</delete>
+
+	<!-- PDT -->
+	<insert id="pdtInsert" parameterType="pet"
+		useGeneratedKeys="true" keyProperty="pet_no">
+		INSERT INTO PDT VALUES(#{pet_no},#{pcl_no},#{pdt_ctt})
+		<selectKey keyProperty="pet_no" resultType="String"
+			order="BEFORE">
+			SELECT PET_NO FROM PET WHERE PER_NO=#{per_no} and
+			PET_NAME=#{pet_name}
+		</selectKey>
+	</insert>
+	<update id="pdtUpdate" parameterType="pet">
+		UPDATE PDT SET
+		PDT_CTT=#{pdt_ctt} WHERE PET_NO=#{pet_no} AND
+		PCL_NO=#{pcl_no}
+	</update>
+	<select id="getPdtCtt" resultType="String" parameterType="pet">
+		SELECT
+		PDT_CTT FROM PDT WHERE PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
+	</select>
+	<delete id="pdtDelete" parameterType="pet">
+		DELETE FROM PDT WHERE
+		PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
+	</delete>
+	<delete id="pdtAllDelete" parameterType="String">
+		DELETE FROM PDT WHERE PET_NO=#{value}
+	</delete>
+	<select id="getPdt" resultType="HashMap" parameterType="String">
+		SELECT * FROM PDT WHERE PET_NO=#{value}
+	</select>
+
+
+	<!-- ABO -->
+	<select id="getNoticeList" resultType="abo"
+		parameterType="Integer">
+		<![CDATA[
+		SELECT * FROM ABOLIST_PAGING WHERE RONUM>=#{pageNum}*10-9
+		AND RONUM<=#{pageNum}*10
+		]]>
+	</select>
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*) FROM
+		ABOLIST_PAGING
+	</select>
+	<select id="getNoticeListAllSearch" parameterType="abo" resultType="abo">
+		<![CDATA[
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				WHERE ABO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
+		]]>
+	</select>
+	<select id="getBoardCountAllSearch" parameterType="abo"
+		resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE ABO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="getNoticeListCategoriSearch" parameterType="abo" resultType="abo">
+		<![CDATA[
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				WHERE ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
+		]]>
+	</select>
+	<select id="getBoardCountCategoriSearch" parameterType="abo"
+		resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE
+		ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="getBoardDetail" resultType="abo"
+		parameterType="String">
+		SELECT * FROM ABO WHERE ABO_NO=#{value}
+	</select>
+	<insert id="boardInsert" parameterType="abo">
+		INSERT INTO ABO
+		VALUES(ABO_SEQ.NEXTVAL,#{abc_no},#{abo_title},#{abo_ctt},default)
+	</insert>
+	<delete id="boardDelete" parameterType="String">
+		DELETE FROM ABO WHERE
+		ABO_NO=#{value}
+	</delete>
+	<update id="boardUpdate" parameterType="abo">
+		UPDATE ABO SET
+		ABC_NO=#{abc_no},ABO_TITLE=#{abo_title},ABO_CTT=#{abo_ctt}
+		WHERE ABO_NO=#{abo_no}
+	</update>
+
+
+	<!-- Business Detail Page -->
+	<select id="getBusinessImage" resultType="HashMap"
+		parameterType="HashMap">
+		SELECT * FROM GLR WHERE BUS_NO=#{bus_no}
+		AND GCT_NO=2
+	</select>
+	<select id="getBusName" resultType="String"
+		parameterType="HashMap">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{bus_no}
+	</select>
+	<select id="getBctName" resultType="String"
+		parameterType="HashMap">
+		SELECT BCT_NAME FROM BCT WHERE BCT_CODE=#{bct_code}
+	</select>
+	<select id="getReviewCount" resultType="String"
+		parameterType="HashMap">
+		SELECT COUNT(*) REV_COUNT FROM REV WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="getReviewAvg" resultType="String"
+		parameterType="HashMap">
+		SELECT AVG(REV_STAR) REV_AVG FROM REV WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="getHaveService" resultType="HashMap"
+		parameterType="String">
+		SELECT SVC.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM SVC
+		INNER JOIN BCT
+		on SVC.BCT_CODE=BCT.BCT_CODE
+		WHERE BUS_NO=#{value}
+		order
+		by SVC_PRI
+	</select>
+	<select id="getFavorite" resultType="String"
+		parameterType="String">
+		SELECT BUS_NO FROM FAV WHERE PER_NO=#{no} AND
+		BUS_NO=#{bus_no}
+	</select>
+	<insert id="favoriteInsert" parameterType="HashMap">
+		INSERT INTO FAV VALUES
+		(#{per_no},#{bus_no})
+	</insert>
+	<delete id="favoriteDelete" parameterType="HashMap">
+		DELETE FROM FAV WHERE
+		PER_NO=#{per_no} AND BUS_NO=#{bus_no}
+	</delete>
+
+	<!-- BK : 개인 캘린더 -->
+	<select id="getPerCalendar" resultType="HashMap"
+		parameterType="String">
+		SELECT PER_NAME, BK_NO, PET_NAME, BUS_NAME, BCT_NAME, EMP_NAME,
+		TO_CHAR(VS_START, 'yyyy-mm-dd hh24:mi') VS_START, BUS_ADDR, BUS_ADDR2,
+		TO_CHAR(VS_END, 'yyyy-mm-dd hh24:mi') VS_END
+		FROM BK JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		JOIN PET
+		ON BK.PET_NO = PET.PET_NO
+		JOIN BUS
+		ON BK.BUS_NO = BUS.BUS_NO
+		JOIN BCT
+		ON BK.BCT_CODE = BCT.BCT_CODE
+		JOIN EMP
+		ON BK.EMP_NO = EMP.EMP_NO
+		WHERE BK.PER_NO=#{value}
+	</select>
+
+
+</mapper>

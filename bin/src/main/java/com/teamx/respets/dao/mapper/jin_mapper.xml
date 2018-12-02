@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Jin Mapper -->
+<mapper namespace="com.teamx.respets.dao.JinDao">
+
+	<!-- 서진 : 기업 회원 가입 시 업종 라디오 버튼 -->
+	<select id="selectBusCategory" resultType="HashMap">
+		SELECT * FROM BCT
+	</select>
+
+	<!-- 서진 : 기업 회원 가입 시 이메일 확인 -->
+	<select id="emailCheck" parameterType="String" resultType="int">
+		SELECT COUNT(EMAIL) FROM FIND_VIEW WHERE EMAIL = #{email}
+	</select>
+
+	<!-- 서진 : 기업 회원 가입 시 사업자 등록 번호 확인 -->
+	<select id="taxIdCheck" parameterType="String" resultType="int">
+		SELECT COUNT(BUS_LCNO) FROM BUS WHERE BUS_LCNO = #{taxId}
+	</select>
+
+	<!-- 서진 : 기업 회원 가입 BUSINESS_TB INSERT -->
+	<insert id="businessInsert" parameterType="Business">
+		<selectKey keyProperty="bus_seq" resultType="int" order="BEFORE">
+			SELECT BUS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BUS VALUES('B'||#{bus_seq}, #{bus_email}, #{bus_pw},
+		#{bus_name}, #{bus_ceo}, #{bus_lcno}, #{bus_phone}, #{bus_post},
+		#{bus_addr}, #{bus_addr2}, 'O', DEFAULT, DEFAULT, DEFAULT, NULL)
+	</insert>
+
+	<!-- 서진 : 기업 회원 가입 SERVICE_TB INSERT -->
+	<insert id="busJoinSvcInsert" parameterType="Business">
+		INSERT INTO SVC VALUES(#{bus_no}, #{bct_code}, 1)
+	</insert>
+
+	<!-- 서진 : 기업 회원 가입 사업자등록증 GALLERY_TB INSERT -->
+	<insert id="licenseInsert" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 1, #{file}, #{location})
+	</insert>
+
+	<!-- 서진 : 기업 회원 가입 기업대표사진 GALLERY_TB INSERT -->
+	<insert id="mainPhotoInsert" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, #{file}, #{location})
+	</insert>
+
+	<!-- 서진 : 기업 회원 가입 기업대표사진 없을 때 -->
+	<insert id="mainPhotoDefault" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, DEFAULT, DEFAULT)
+	</insert>
+
+	<!-- 서진 : 개인 즐겨찾기 기업 SELECT -->
+	<select id="likeBusinessSelect" parameterType="String" resultType="HashMap">
+		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC
+		FROM FAV INNER JOIN BUS
+		ON FAV.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR
+		ON BUS.BUS_NO = GLR.BUS_NO
+		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2
+	</select>
+
+	<!-- 서진 : 개인 즐겨찾기 삭제 -->
+	<delete id="likeBusinessDelete" parameterType="HashMap">
+		DELETE FROM FAV WHERE PER_NO = #{per_no} AND BUS_NO = #{bus_no}
+	</delete>
+
+	<!-- 서진 : 동물 번호 없을 때 동물 정보 갖고 오기 -->
+	<select id="selectFirstPet" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM PET WHERE PET_NO = (
+		SELECT MIN(PET_NO) FROM PET WHERE PER_NO = #{per_no})
+	</select>
+
+	<!-- 서진 : 동물 번호 있을 때 첫 번째 동물 정보 갖고 오기 -->
+	<select id="firstPet" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM PET WHERE PET_NO = #{pet_no}
+	</select>
+
+	<!-- 서진 : 사진 없는 동물 리스트 SELECT -->
+	<select id="selectPetList" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM PET WHERE PER_NO = #{PER_NO} AND PET_NO !=
+		#{PET_NO}
+	</select>
+
+	<!-- 서진 : 직원 리스트 SELECT -->
+	<select id="selectEmpList" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM EMP WHERE BUS_NO = #{bus_no} AND BCT_CODE = #{bct_code}
+	</select>
+
+	<!-- 서진 : 서비스 리스트 SELECT -->
+	<select id="selectSvcList" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT PTY.PTY_NAME, PRC.MENU_NO, MENU.MENU_NAME, PRC.PRICE
+		FROM PET INNER JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO
+		INNER JOIN PRC
+		ON PRC.PTY_NO = PET.PTY_NO
+		INNER JOIN MENU
+		ON MENU.MENU_NO = PRC.MENU_NO
+		WHERE PET.PET_NO = #{pet_no} AND PRC.BUS_NO = #{bus_no} AND PRC.BCT_CODE = #{bct_code}
+	</select>
+
+	<!-- 서진 : 직원 시간 SELECT -->
+	<select id="selectEmpTime" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT TO_CHAR(ESD_DATE, 'YYMMDD') AS ESD_DATE, AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE
+		FROM ESD WHERE EMP_NO = #{emp_no} AND ESD_DATE = TO_DATE(#{date}, 'YYMMDD')
+	</select>
+
+	<!-- 서진 : 직원 안 되는 시간 SELECT -->
+	<select id="selectNoTime" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT TO_CHAR(VS_START, 'HH24MI') AS VS_START
+		FROM BK WHERE
+		EMP_NO = #{emp_no} AND VS_START LIKE TO_DATE(#{date}, 'YYMMDD') AND BK_CHK IN('신청', '승인')
+	</select>
+
+	<!-- 예약 테이블에 예약 넣기 -->
+	<insert id="insertBooking" parameterType="Booking">
+		<selectKey keyProperty="bk_seq" resultType="int" order="BEFORE">
+			SELECT BK_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BK VALUES('K'||#{bk_seq}, #{per_no}, #{pet_no}, #{bus_no},
+		#{bct_code}, #{emp_no}, SYSDATE, ${bk_pay}, TO_DATE(#{vs_start}, 'YYMMDDHH24MI'),
+		TO_DATE(#{vs_start}, 'YYMMDDHH24MI') + (INTERVAL '30' MINUTE), #{bk_cmt}, DEFAULT, DEFAULT, NULL)
+	</insert>
+
+	<!-- 서진 : 예약 메뉴 테이블에 반복문으로 INSERT -->
+	<insert id="insertBkMenu" parameterType="Booking">
+		INSERT INTO BKM VALUES(#{bk_no}, ${menu_no})
+	</insert>
+
+	<!-- 서진 : 예약 완료 정보 SELECT -->
+	<select id="bookingSuccess" parameterType="Booking" resultType="HashMap">
+		SELECT BUS.BUS_NAME, TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START, BCT.BCT_NAME
+		FROM BK INNER JOIN BUS
+		ON BK.BUS_NO = BUS.BUS_NO
+		INNER JOIN BCT
+		ON BK.BCT_CODE = BCT.BCT_CODE
+		WHERE BK.BK_NO = #{bk_no}
+	</select>
+
+	<!-- 서진 : 기업 새로운 예약 -->
+	<select id="selectBooking" parameterType="String" resultType="HashMap">
+		SELECT BK.BK_NO, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME, BCT.BCT_NAME,
+		TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START
+		FROM BK INNER JOIN PET
+		ON BK.PET_NO = PET.PET_NO
+		INNER JOIN PTY
+		ON PET.PTY_NO = PTY.PTY_NO
+		INNER JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		INNER JOIN BCT
+		ON BK.BCT_CODE = BCT.BCT_CODE
+		WHERE BK.BUS_NO = #{bus_no} AND BK.BK_CHK = '신청'
+		ORDER BY BK.BK_NO DESC
+	</select>
+
+	<!-- 서진 : 기업 새로운 예약 수락 -->
+	<update id="bookingAccept" parameterType="String">
+		UPDATE BK SET BK_CHK = '승인' WHERE BK_NO = #{bk_no}
+	</update>
+
+	<!-- 서진 : 기업 새로운 예약 거절 -->
+	<update id="bookingReject" parameterType="String">
+		UPDATE BK SET BK_CHK = '거절' WHERE BK_NO = #{bk_no}
+	</update>
+
+	<!-- 서진 : 메인 공지사항 -->
+	<select id="selectBoardList" resultType="abo">
+		<![CDATA[
+		SELECT ABO.*
+		FROM (SELECT ABO.ABO_NO, ABC.ABC_NAME, ABO.ABO_TITLE, ABO.ABO_CTT,
+		TO_CHAR(ABO.ABO_DATE, 'YYYY-MM-DD') AS ABO_DATE_STRING
+		FROM ABO INNER JOIN ABC
+		ON ABO.ABC_NO = ABC.ABC_NO
+		ORDER BY ABO.ABO_NO DESC) ABO
+		WHERE ROWNUM <= 3]]>
+	</select>
+
+</mapper>
