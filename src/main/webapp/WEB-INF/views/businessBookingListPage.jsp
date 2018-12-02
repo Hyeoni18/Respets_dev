@@ -67,16 +67,16 @@
 									</div>
 								</div>
 								<div class="table-responsive-sm">
-									<table class="table table-striped table-centered mb-0">
+									<table class="table table-centered mb-0"
+											style='text-align: center;'>
 										<thead>
 											<tr>
-												<th>예약번호</th>
-												<th>동물종류</th>
-												<th>동물이름</th>
-												<th>보호자이름</th>
-												<th>서비스종류</th>
-												<th>예약날짜</th>
-												<th>방문날짜</th>
+												<th>예약 번호</th>
+												<th>동물 종류</th>
+												<th>동물 이름</th>
+												<th>예약자명</th>
+												<th>서비스 종류</th>
+												<th>방문 날짜</th>
 											</tr>
 										</thead>
 										<tbody id="list"></tbody>

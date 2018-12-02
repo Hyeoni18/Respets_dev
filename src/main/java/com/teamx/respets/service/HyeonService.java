@@ -325,8 +325,8 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("&emsp;&emsp; <input type='radio' name='radio' onchange='test();' class='" + code + "' value='" + svc + "'>"
-						+ svc);
+				sb.append("&emsp;&emsp; <input type='radio' name='radio' onchange='test();' class='" + code
+						+ "' value='" + svc + "'>" + svc);
 			}
 			mav.addObject("bctList", sb);
 			view = "todayScheduleList";
@@ -696,7 +696,7 @@ public class HyeonService {
 		map.put("bct_name", bct_name);
 		bList = hyDao.bctBookingList(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			String pno = (String) bList.get(i).get("PER_NO");
@@ -706,7 +706,6 @@ public class HyeonService {
 			sb.append("<td>" + bList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BCT_NAME") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("VS_START") + "</td>");
 			sb.append("<td><input type='button' class='btn btn-outline-success' value='방문' onclick=\"com(\'" + bk_no
 					+ "')\" /></td></tr>");
@@ -727,7 +726,7 @@ public class HyeonService {
 		map.put("bct_name", bct_name);
 		okList = hyDao.bctBookingListOk(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -735,7 +734,6 @@ public class HyeonService {
 			sb.append("<td>" + okList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("BCT_NAME") + "</td>");
-			sb.append("<td>" + okList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("VS_START") + "</td>");
 			sb.append("<td><button type='button' class='btn btn-outline-danger' onclick='cancelCheck(\"" + bk_no
 					+ "\")'> 취소 </button></td></tr>");
@@ -754,7 +752,7 @@ public class HyeonService {
 		map.put("timeS", timeS);
 		bList = hyDao.todayScheduleList(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th>예약 번호</th><th>동물 종류</th><th>동물 이름</th><th>예약자명</th><th>서비스 종류</th><th>방문 일시</th><th>방문 상태</th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			String pno = (String) bList.get(i).get("PER_NO");
@@ -782,7 +780,7 @@ public class HyeonService {
 		map.put("timeS", timeS);
 		okList = hyDao.todayScheduleListOk(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -790,7 +788,6 @@ public class HyeonService {
 			sb.append("<td>" + okList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("BCT_NAME") + "</td>");
-			sb.append("<td>" + okList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + okList.get(i).get("VS_START") + "</td>");
 			sb.append("<td><button type='button' class='btn btn-outline-danger' onclick='cancelCheck(\"" + bk_no
 					+ "\")'> 취소 </button></td></tr>");
@@ -815,7 +812,7 @@ public class HyeonService {
 			sb.append("<tr><td><a href='myBookingDetail?no=" + bk_no + "'>" + bk_no + "</a></td><td>"
 					+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
 					+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
-					+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
+					+ bList.get(i).get("VS_START") + "</td></tr>");
 		}
 		return sb.toString();
 	}
@@ -837,7 +834,7 @@ public class HyeonService {
 				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
 						+ bPerList.get(i).get("PTY_NAME") + "</td><td>" + bPerList.get(i).get("PET_NAME") + "</td><td>"
 						+ bPerList.get(i).get("PER_NAME") + "</td><td>" + bPerList.get(i).get("BCT_NAME") + "</td><td>"
-						+ bPerList.get(i).get("BK_TIME") + "</td><td>" + bPerList.get(i).get("VS_START")
+						+ bPerList.get(i).get("VS_START")
 						+ "</td></tr>");
 			}
 		}
@@ -878,7 +875,7 @@ public class HyeonService {
 				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
 						+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
 						+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
-						+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
+						+ bList.get(i).get("VS_START") + "</td></tr>");
 
 			}
 		}
@@ -904,7 +901,7 @@ public class HyeonService {
 				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
 						+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
 						+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
-						+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
+						+ bList.get(i).get("VS_START") + "</td></tr>");
 			}
 		}
 		return sb.toString();
