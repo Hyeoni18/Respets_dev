@@ -43,105 +43,106 @@
 				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 
-		<!-- ========== Left Sidebar Start ========== -->
-
 		<!-- Left Sidebar End -->
 
 		<!-- ============================================================== -->
 		<!-- Start Page Content here -->
 		<!-- ============================================================== -->
+				<!-- end Topbar -->
 
-		<div class="container-fluid">
-			<!-- start page title -->
-			<div class="row">
-				<div class="col-12">
-					<div class="page-title-box">
-						<h4 class="page-title">게시글 내용</h4>
-					</div>
-				</div>
-			</div>
-			<!-- end page title -->
-
-			<div class="row">
-				<div class="col-12">
-					<div class="card d-block">
-						<div class="card-body">
-							<div class="dropdown card-widgets" id='dot'>
-								<a href="javascript:void(0);" class="dropdown-toggle arrow-none"
-									data-toggle="dropdown" aria-expanded="false"> <i
-									class="dripicons-dots-3"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right"
-									x-placement="bottom-end"
-									style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-142px, 20px, 0px);">
-									<!-- item-->
-									<a href="businessNoticeUpdateForm?${bbo_no}"
-										class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
-									<!-- item-->
-									<a href="businessNoticeDelete?${bbo_no}"
-										onclick="return deleteChk(this)" class="dropdown-item"><i
-										class="mdi mdi-delete mr-1"></i> Delete</a>
-								</div>
+				<div class="container-fluid">
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<h4 class="page-title">게시글 내용</h4>
 							</div>
-
-							<!-- badge-->
-							<div class="badge badge-primary mb-2"
-								style="margin-bottom: 0.5rem">
-								<c:if test="${'병원' == bct_name}">병원</c:if>
-								<c:if test="${'미용' == bct_name}">미용</c:if>
-								<c:if test="${'호텔' == bct_name}">호텔</c:if>
-							</div>
-							<div class="badge badge-secondary mb-2"
-								style="margin-bottom: 0.5rem">
-								<c:if test="${'공지사항' == bbc_name}">공지사항</c:if>
-								<c:if test="${'이벤트' == bbc_name}">이벤트</c:if>
-							</div>
-							<!-- title-->
-							<h3 class="mt-0 mb-3">${bbo_title}</h3>
-
-							<h5>내용</h5>
-							<p class="text-muted mb-2">${bbo_ctt}</p>
-
-							<div class="row">
-								<div class="col-md-4">
-									<div class="mb-4">
-										<h5>작성일</h5>
-										<p>${bbo_date}</p>
-									</div>
-								</div>
-							</div>
-							<div style="text-align: right">
-								<input type="hidden" value="${bbo_no}" name="bbo_no" /> <input
-								type="button" class="btn btn-warning"
-								onclick="javascript:history.back();" value="목록" />								
-							</div>
-							
 						</div>
-						<!-- end card-body-->
-
 					</div>
-					<!-- end card -->
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card d-block">
+								<div class="card-body">
+									<div class="dropdown card-widgets" id='dot'>
+										<a href="javascript:void(0);"
+											class="dropdown-toggle arrow-none" data-toggle="dropdown"
+											aria-expanded="false"> <i class="dripicons-dots-3"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right"
+											x-placement="bottom-end"
+											style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-142px, 20px, 0px);">
+											<!-- item-->
+											<a href="businessNoticeUpdateForm?${bbo_no}"
+												class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
+											<!-- item-->
+											<a href="businessNoticeDelete?${bbo_no}"
+												onclick="return deleteChk(this)" class="dropdown-item"><i
+												class="mdi mdi-delete mr-1"></i> Delete</a>
+										</div>
+									</div>
+
+									<!-- badge-->
+									<div class="badge badge-primary mb-2"
+										style="margin-bottom: 0.5rem">
+										<c:if test="${'병원' == bct_name}">병원</c:if>
+										<c:if test="${'미용' == bct_name}">미용</c:if>
+										<c:if test="${'호텔' == bct_name}">호텔</c:if>
+									</div>
+									<div class="badge badge-secondary mb-2"
+										style="margin-bottom: 0.5rem">
+										<c:if test="${'공지사항' == bbc_name}">공지사항</c:if>
+										<c:if test="${'이벤트' == bbc_name}">이벤트</c:if>
+									</div>
+									<!-- title-->
+									<h3 class="mt-0 mb-3">${bbo_title}</h3>
+
+									<h5>내용</h5>
+									<p class="text-muted mb-2">${bbo_ctt}</p>
+
+									<div class="row">
+										<div class="col-md-4">
+											<div class="mb-4">
+												<h5>작성일</h5>
+												<p>${bbo_date}</p>
+											</div>
+										</div>
+									</div>
+									<div style="text-align: right">
+										<input type="hidden" value="${bbo_no}" name="bbo_no" /> <input
+											type="button" class="btn btn-warning"
+											onclick="javascript:history.back();" value="목록" />
+									</div>
+
+								</div>
+								<!-- end card-body-->
+
+							</div>
+							<!-- end card -->
+
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
 
 				</div>
-				<!-- end col -->
-			</div>
-			<!-- end row -->
+				<!-- content -->
 
-		</div>
+			</div>
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
 		</div>
 		</div>
 		<!-- content -->
 
-		<!-- Footer Start -->
-
-		<!-- end Footer -->
 
 		<!-- ============================================================== -->
 		<!-- End Page content -->
 		<!-- ============================================================== -->
 
 
-	</div>
 	<!-- END wrapper -->
 
 
@@ -158,7 +159,6 @@
 	<script src="resources/dist/assets/js/pages/demo.project-detail.js"></script>
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
-
 </body>
 <script>
 	function deleteChk(a) {
@@ -169,14 +169,13 @@
 		}
 	}
 
-$('#dot').hide();
-if('${session}'!=null) {
-	if('${session}'=='${bus_no}') {
-		$('#dot').show();
-	}else {
-		$('#dot').hide();
+	$('#dot').hide();
+	if ('${session}' != null) {
+		if ('${session}' == '${bus_no}') {
+			$('#dot').show();
+		} else {
+			$('#dot').hide();
+		}
 	}
-}
-	
 </script>
 </html>

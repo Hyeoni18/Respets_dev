@@ -32,11 +32,12 @@
 </head>
 <body>
 	<div class="row justify-content-center">
-		<div class="col-7">
+		<div class="col-12">
 			<h5 class="text-success">상세 사진</h5>
-			<br/>
+			<!-- <br/> -->
 			<div class="card-deck-wrapper">
-				<div class="card-deck">${gList}</div>
+				${gList}
+				<!-- <div class="card-deck"></div> -->
 				<!-- end card-deck-->
 			</div>
 			<!-- end card-deck-wrapper-->
