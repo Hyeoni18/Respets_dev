@@ -402,7 +402,8 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
+			sb.append("<tr><td><a href='myBookingDetail?" + list.get(i).get("BK_NO") + "'>" + list.get(i).get("BK_NO"));
+			sb.append("</a></td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
 			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
