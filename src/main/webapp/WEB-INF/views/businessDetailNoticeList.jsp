@@ -41,6 +41,7 @@
 							${nList}
 						</table>
 					</div>
+					${paging}
 				</div>
 			</div>
 		</div>
