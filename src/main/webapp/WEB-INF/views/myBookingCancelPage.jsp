@@ -95,7 +95,7 @@
 	<!-- End Page content -->
 	<!-- ============================================================== -->
 
-
+<script src="/resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
 	function check() {
