@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<td>대표자명 :</td>
-				<td><input type="text" name="bus_ceo" value="${bmap.BUS_CEO}" /></td>
+				<td id="BUS_CEO"><%-- <input type="text" value="${bmap.BUS_CEO}" /> --%></td>
 			</tr>
 			<tr>
 				<td>업체 연락처 :</td>

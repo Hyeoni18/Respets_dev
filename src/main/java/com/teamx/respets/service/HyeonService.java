@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamx.respets.bean.Business;
+import com.teamx.respets.bean.Gallery;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.dao.HyeonDao;
 import com.teamx.respets.userClass.Paging;
@@ -51,15 +52,6 @@ public class HyeonService {
 		mav.setViewName(view);
 		return mav;
 	}
-
-	/* 혜연 개인 비밀전호 확인 */
-	/*
-	 * public ModelAndView findPw(Personal mb, HttpSession session) { this.session =
-	 * session; mav = new ModelAndView(); String view = null; String no =
-	 * session.getAttribute("no").toString(); // 비밀번호 select mb =
-	 * hyDao.myPwCheck(no); if (mb != null) { mav.addObject("mb", mb); view =
-	 * "myPwUpdateForm"; } mav.setViewName(view); return mav; }
-	 */
 
 	/* 혜연 개인 비밀번호 수정 */
 	public int myPwCheck(String now, HttpServletRequest request) {
@@ -99,36 +91,6 @@ public class HyeonService {
 		return mav;
 	}
 
-	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
-		mav = new ModelAndView();
-		Map<String, Object> map = new HashMap<String, Object>();
-		StringBuilder sb = new StringBuilder();
-		HashMap<String, Object> bmap = new HashMap<>();
-		String no = session.getAttribute("no").toString();
-		bi.setBus_no(no);
-		boolean update = hyDao.businessInfoUpdate(bi);
-		if (update) {
-			if (request.getParameter("fileCheck").equals("1")) {
-				MultipartFile mainPhoto = ((MultipartRequest) request).getFile("mainPhoto");
-				map = saveFile((MultipartHttpServletRequest) request, mainPhoto, map);
-				map.put("no", no);
-				hyDao.mainPhotoUpdate(map);
-			} else {
-				// hyDao.PothoUpdate(no);
-			}
-			sb.append("<script>alert('" + bi.getBus_email() + "님의 정보가 수정되었습니다.')</script>");
-		}
-		bmap = hyDao.businessInfo(no);
-		System.out.println(bmap.get("BUS_NAME"));
-		Gson gson = new GsonBuilder().create();
-		String json = gson.toJson(bmap);
-		System.out.println(json);
-		mav.addObject("result", json);
-		mav.addObject("success", sb);
-		mav.setViewName("businessInfoDetail");
-		return mav;
-	}
-
 	/* 혜연 개인정보 수정 */
 	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
 		// 파일은 request에 담겨서 온다.
@@ -147,6 +109,8 @@ public class HyeonService {
 			hMap = saveFile(request, photo, hMap); // 파일 저장 메소드 소환
 			p.setPer_loc(hMap.get("location").toString());
 			p.setPer_photo(hMap.get("file").toString());
+			System.out.println(p.getPer_no());
+			System.out.println(p.getPer_photo());
 			hyDao.perPhotoUpdate(p);
 		} else {
 			hyDao.perNoPhotoUpdate(p);
@@ -207,13 +171,6 @@ public class HyeonService {
 		return mav;
 	}
 
-	/* 혜연 성공 alert 띄우기 */
-	private Object makeInfoSuccessHtml(Personal mb) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<script>alert('" + mb.getPer_email() + "님의 정보가 수정되었습니다.')</script>");
-		return sb.toString();
-	}
-
 	/* 혜연 실패 alert 띄우기 */
 	private Object makeFlasHtml() {
 		StringBuffer sb = new StringBuffer();
@@ -226,7 +183,7 @@ public class HyeonService {
 		this.session = session;
 		mav = new ModelAndView();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<HashMap<String, Object>> hList = new ArrayList<HashMap<String, Object>>();
+		//List<HashMap<String, Object>> hList = new ArrayList<HashMap<String, Object>>();
 		String view = null;
 		String bk_no = request.getParameter("bk_no");
 		System.out.println("예약번호=" + bk_no);
@@ -693,6 +650,47 @@ public class HyeonService {
 		String json = gson.toJson(jsonData);
 		mav.addObject("jsonData", json);
 		mav.setViewName("businessInfoUpdateForm");
+		return mav;
+	}
+	
+	public ModelAndView businessInfoUpdate(MultipartHttpServletRequest request) {
+		mav = new ModelAndView();
+		HashMap<String, Object> bmap = new HashMap<String, Object>();
+		Business bi = new Business();
+		String no = request.getSession().getAttribute("no").toString();
+		bi.setBus_no(no);
+		bi.setBus_name(request.getParameter("bus_name"));
+		bi.setBus_phone(request.getParameter("bus_phone"));
+		System.out.println("기업이름=" + request.getParameter("bus_name"));
+		Gallery gy = new Gallery();
+
+		if (request.getParameter("fileCheck").equals("1")) {
+			hyDao.businessInfoUpdate(bi);
+			MultipartFile photo = request.getFile("mainPhoto");
+			// saveFile 메소드에서 해시맵을 사용하고 받기 위해 생성하고 파라미터로 보내준다.
+			Map<String, Object> hMap = new HashMap<String, Object>();
+			// request는 path 주소를 위해, photo는 실제 저장할 파일, hMap은 주소와 파일 이름 반환을 위
+			hMap = saveFile(request, photo, hMap); // 파일 저장 메소드 소환
+			gy.setBus_no(request.getSession().getAttribute("no").toString());
+			gy.setGlr_loc(hMap.get("location").toString());
+			gy.setGlr_file(hMap.get("file").toString());
+			hyDao.mainPhotoUpdate(gy);
+		} else {
+			hyDao.PhotoUpdate(gy);
+		}
+		bmap = hyDao.businessInfo(no);
+		System.out.println(bmap.get("BUS_NAME"));
+		String glr_file = (String) bmap.get("GLR_FILE");
+		String glr_loc = (String) bmap.get("GLR_LOC");
+		StringBuilder sb = new StringBuilder();
+		sb.append("<img class='card-img-top' height='25' src='" + glr_loc + glr_file + "'/>");
+		mav.addObject("bmap", bmap);
+		mav.addObject("img", sb);
+		Gson gson = new GsonBuilder().create();
+		String json = gson.toJson(bmap);
+		System.out.println(json);
+		mav.addObject("result", json);
+		mav.setViewName("businessInfoDetail");
 		return mav;
 	}
 
