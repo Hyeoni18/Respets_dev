@@ -47,14 +47,14 @@
 									<small>이메일/비번 찾기</small></a> 
 																		
 									<label for="email">이메일 주소</label> 
-									<input class="form-control" type="text" id="email" name="email" placeholder="Enter your email">
+									<input class="form-control" type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">
 								</div>
 
 								<div class="form-group">
 									
 									<label for="pw">비밀번호</label> <input
 										class="form-control" type="password" id="pw" name="pw"
-										placeholder="Enter your password">
+										placeholder="비밀번호를 입력해주세요.">
 								</div>
 								
 								<div class="form-group mb-0 text-center">
