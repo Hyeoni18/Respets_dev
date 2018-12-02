@@ -570,13 +570,13 @@ public class HyeonService {
 			String glr_file = (String) bmap.get("GLR_FILE");
 			String glr_loc = (String) bmap.get("GLR_LOC");
 			StringBuilder sb = new StringBuilder();
-			sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
 			Gson gson = new GsonBuilder().create();
 			String json = gson.toJson(bmap);
 			System.out.println(json);
 			mav.addObject("result", json);
 			mav.addObject("bmap", bmap);
-			mav.addObject("img", sb);
+			mav.addObject("glr_loc", glr_loc);
+			mav.addObject("glr_file", glr_file);
 			view = "businessInfoDetail";
 		}
 		mav.setViewName(view);
