@@ -17,9 +17,7 @@
 				data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 				aria-expanded="false"> <span class="account-user-avatar">
 						<img src="${loc}${photo}" alt="user-image" class="rounded-circle">
-				</span> <span> <span class="account-user-name"><c:if
-										test="${fn:substring(no,0,1) == 'P' || fn:substring(no,0,1) == '1'}">${name}</c:if>
-									<c:if test="${fn:substring(no,0,1) == 'B'}">${bus_name}</c:if>
+				</span> <span> <span class="account-user-name">${name}
 							</span> <span class="account-position"> <c:if
 										test="${fn:substring(no,0,1) == 'P'}">개인회원</c:if> <c:if
 										test="${fn:substring(no,0,1) == 'B'}">기업회원</c:if> <c:if
@@ -35,13 +33,13 @@
 					</div>
 
 					<!-- item-->
-					<a href="myPage" class="dropdown-item notify-item">
+					<a href="./myPage" class="dropdown-item notify-item">
 						<i class="mdi mdi-account-circle"></i> <span>마이페이지</span>
 					</a>
 
 					<c:if test="${fn:substring(no,0,1) == 'P'}">
 						<!-- item-->
-						<a href="personalCalendar" class="dropdown-item notify-item">
+						<a href="./personalCalendar" class="dropdown-item notify-item">
 							<i class="mdi mdi-calendar"></i> <span>캘린더</span>
 						</a>
 					</c:if>

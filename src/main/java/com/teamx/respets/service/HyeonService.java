@@ -323,7 +323,7 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("&emsp;&emsp; <input type='radio' name='radio' class='" + code + "' value='" + svc + "'>"
+				sb.append("&emsp;&emsp; <input type='radio' name='radio' onchange='test();' class='" + code + "' value='" + svc + "'>"
 						+ svc);
 			}
 			mav.addObject("bctList", sb);
