@@ -52,13 +52,13 @@
 							</div>
 
 							<!-- item-->
-							<a href="myPage" class="dropdown-item notify-item">
+							<a href="./myPage" class="dropdown-item notify-item">
 								<i class="mdi mdi-account-circle"></i> <span>마이페이지</span>
 							</a>
 
 							<c:if test="${fn:substring(no,0,1) == 'P'}">
 								<!-- item-->
-								<a href="personalCalendar" class="dropdown-item notify-item">
+								<a href="./personalCalendar" class="dropdown-item notify-item">
 									<i class="mdi mdi-calendar"></i> <span>캘린더</span>
 								</a>
 							</c:if>

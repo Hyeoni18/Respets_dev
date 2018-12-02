@@ -418,16 +418,23 @@ public class JiyeService {
 		mav = new ModelAndView();
 		String view = null;
 		String no = request.getQueryString(); // 리스트에서 클릭하여 받아 온 게시글 번호
+		String session = null;
+		if(request.getSession().getAttribute("no")!=null) {
+			session = request.getSession().getAttribute("no").toString(); 
+			mav.addObject("session", session);
+		}
 		HashMap<String, Object> hmap = new HashMap<>();
 		hmap.put("bbo_no", no);
 		System.out.println(hmap);
 		hmap = jDao.noticeDetailPage(hmap);
 		System.out.println("hmap=" + hmap);
+		String bus_no = hmap.get("BUS_NO").toString();
 		String bct_name = hmap.get("BCT_NAME").toString();
 		String bbc_name = hmap.get("BBC_NAME").toString();
 		String bbo_title = hmap.get("BBO_TITLE").toString();
 		String bbo_ctt = hmap.get("BBO_CTT").toString();
 		String bbo_date = hmap.get("BBO_DATE").toString();
+		mav.addObject("bus_no", bus_no);
 		mav.addObject("bbo_no", no);
 		mav.addObject("bct_name", bct_name);
 		mav.addObject("bbc_name", bbc_name);
@@ -788,14 +795,45 @@ public class JiyeService {
 		int pNo = (pageNum == null) ? 1 : pageNum;
 		hmap.put("bus_no", bus_no);
 		hmap.put("bct_code", bct_code);
-		hmap.put("pageNum", pNo);		
-		List<BusinessBoard> bboList = new ArrayList<BusinessBoard>();		
-		bboList = jDao.businessDetailNoticeList(hmap);
-		System.out.println(bboList);
-		if(bboList!=null) {
-			mav.addObject("bboList", bboList);
-			mav.addObject("paging", getDetailPaging(pNo, request));			
+		hmap.put("pageNum", pNo);
+		List<HashMap<String, Object>> nList = new ArrayList<HashMap<String, Object>>();
+		StringBuilder sb = new StringBuilder();
+		nList = jDao.businessDetailNoticeList(hmap);
+		System.out.println(nList);
+		for (int i = 0; i < nList.size(); i++) {
+			sb.append("<tr><td>" + nList.get(i).get("BBO_NO") + "</td>");
+			sb.append("<td>" + nList.get(i).get("BBC_NAME") + "</td>");
+			/*sb.append("<td><a href='./businessNoticeDetail?" + nList.get(i).get("BBO_NO") + "'>"
+					+ nList.get(i).get("BBO_TITLE") + "</a></td>");*/
+			sb.append("<td><a href='#' data-toggle='modal' data-target='#B" + nList.get(i).get("BBO_NO") + "'>"
+					+ nList.get(i).get("BBO_TITLE") + "</a></td>");
+			sb.append("<div id=\"B"+nList.get(i).get("BBO_NO")+"\" class=\"modal fade\" tabindex=\"-1\"\r\n" + 
+					"															role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n" + 
+					"															aria-hidden=\"true\">\r\n" + 
+					"															<div class=\"modal-dialog modal-dialog-centered\">\r\n" + 
+					"																<div class=\"modal-content\">\r\n" + 
+					"																	<div class=\"modal-header\">\r\n" + 
+					"																		\r\n" + 
+					"																		<h4 class=\"modal-title\" id=\"myModalLabel\">"+nList.get(i).get("BBO_TITLE")+"</h4>\r\n" + 
+					"																		<div class=\"badge badge-secondary\" style=\"margin-top:5px;margin-left:10px\">\r\n");
+			
+			if(nList.get(i).get("BBC_NAME").equals("공지사항")) sb.append("공지사항");
+			if(nList.get(i).get("BBC_NAME").equals("이벤트")) sb.append("이벤트");
+			
+			sb.append("																			</div>\r\n" + 
+					"																		<button type=\"button\" class=\"close\"\r\n" + 
+					"																			data-dismiss=\"modal\" aria-hidden=\"true\">×</button>\r\n" + 
+					"																	</div>\r\n" + 
+					"																	<div class=\"modal-body\">\r\n" + 
+					"																		<p>"+nList.get(i).get("BBO_CTT")+"</p>\r\n" + 
+					"																	</div>\r\n" + 
+					"																</div>\r\n" + 
+					"															</div>\r\n" +  
+					"														</div>");
+			sb.append("<td>" + nList.get(i).get("BBO_DATE") + "</td></tr>");
 		}
+		mav.addObject("nList", sb);
+		mav.addObject("paging", getDetailPaging(pNo, request));
 		view = "businessDetailNoticeList";
 		mav.setViewName(view);
 		return mav;

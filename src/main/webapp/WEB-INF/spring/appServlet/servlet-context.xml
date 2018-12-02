@@ -144,6 +144,7 @@
 			<exclude-mapping path="/businessBasicInfo" />
 			<exclude-mapping path="/businessGallery" />
 			<exclude-mapping path="/businessDetailNoticeList" />
+			<exclude-mapping path="/businessNoticeDetail"/>
 
 			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
