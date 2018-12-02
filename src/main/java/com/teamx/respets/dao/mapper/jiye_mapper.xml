@@ -78,19 +78,17 @@
 	</select>
 
 	<!-- 블랙리스트확인 -->
-	<select id="blackChk" parameterType="HashMap"
-		resultType="HashMap">
-		SELECT * FROM blk WHERE PER_NO=#{no}
+	<select id="blackChk" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM BLK WHERE PER_NO=#{no}
 	</select>
-
 	<!-- 개인 최근예약리스트 -->
 	<select id="recentMyBookingList" parameterType="HashMap"
 		resultType="HashMap">
-		<![CDATA[   SELECT X.RNUM, X.BK_NO, X.BUS_NAME, X.PTY_NAME, X.PET_NO, X.PET_NAME, X.PER_NAME, X.BK_TIME, X.VS_START, X.BK_CHK
+		<![CDATA[SELECT X.RNUM, X.BK_NO, X.BUS_NAME, X.PTY_NAME, X.PET_NO, X.PET_NAME, X.PER_NAME, X.BK_TIME, X.VS_START, X.BK_CHK
                     FROM (
                     SELECT ROWNUM AS RNUM, RC.BK_NO, RC.BUS_NAME, RC.PTY_NAME, RC.PET_NO, RC.PET_NAME, RC.PER_NAME, RC.BK_TIME, RC.VS_START, RC.BK_CHK
                         FROM (
-                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, BK_TIME, VS_START, BK_CHK
+                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, TO_CHAR(BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, VS_START, BK_CHK
                         FROM RECENTMYBOOKINGLIST_VIEW
                         WHERE PER_NO=#{no}
                         ORDER BY BK_TIME DESC)RC
@@ -310,12 +308,30 @@
 		UPDATE BUS SET
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
-
-	<!-- <select id="getPerCalendar" resultType="HashMap" parameterType="String"> 
-		SELECT PER_NAME,BK_NO,PET_NAME,BUS_NAME,BCT_NAME, TO_CHAR(VS_START, 'yyyy-mm-dd 
-		hh24:mi') VS_START, TO_CHAR(VS_END, 'yyyy-mm-dd hh24:mi') VS_END FROM BK 
-		JOIN PER ON BK.PER_NO = PER.PER_NO JOIN PET ON BK.PET_NO = PET.PET_NO JOIN 
-		BUS ON BK.BUS_NO = BUS.BUS_NO JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE 
-		BK.PER_NO=#{value} </select> -->
-
+	
+	<select id="businessDetailNoticeList" parameterType="HashMap" resultType="HashMap">
+	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE, X.BCT_CODE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE, BBV.BCT_CODE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
+				FROM BUS_DETAIL_NOTICE_VIEW
+				WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9	
+			]]>
+	</select>
+	
+	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	
+	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
+		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
+	</select>
+	
+	<select id="selectBus_name" parameterType="String" resultType="String">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
+	</select>
 </mapper>

@@ -475,76 +475,12 @@ public class HyeonService {
 			for (int i = 0; i < sMap.size(); i++) {
 				String svc = (String) sMap.get(i).get("BCT_NAME");
 				String code = (String) sMap.get(i).get("BCT_CODE");
-				sb.append("&nbsp;  <input type='button' name='button' class='" + svc + "'value='" + svc
-						+ "' onclick='location.href='businessAllBctBookingList?bct_name=" + svc + "'>");
+				sb.append("<option>" + svc + "</option>");
 			}
 			mav.addObject("bctList", sb);
 		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("page_no", pNo);
-		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		bList = hyDao.businessBookingList(map);
-		StringBuilder sb2 = new StringBuilder();
-		for (int i = 0; i < bList.size(); i++) {
-			String bk_no = (String) bList.get(i).get("BK_NO");
-			sb2.append("<a href='myBookingDetail?no=" + bk_no + "'>" + bk_no + "</a> | " + bList.get(i).get("PTY_NAME")
-					+ " | " + bList.get(i).get("PET_NAME") + " | " + bList.get(i).get("PER_NAME") + " | "
-					+ bList.get(i).get("BCT_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
-					+ bList.get(i).get("VS_START") + "<br>");
-		}
-		mav.addObject("bokList", sb2);
-		String paging = businessBookingList(pNo, no);
-		mav.addObject("paging", paging);
 		mav.setViewName("businessBookingListPage");
 		return mav;
-	}
-
-	private String businessBookingList(int pNo, String no) {
-		int maxNum = hyDao.getListCount(no);
-		int listCount = 9;
-		int pageCount = 5;
-		String boardName = "businessBookingList";
-		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
-		return paging.BookingListButton(no);
-	}
-
-	public ModelAndView businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		StringBuilder sb = new StringBuilder();
-		int pNo = (pageNum == null) ? 1 : pageNum;
-		String no = request.getParameter("no");
-		String bct_name = request.getParameter("bct_name");
-		System.out.println("bct_name=" + bct_name);
-		map.put("no", no);
-		map.put("bct_name", bct_name);
-		map.put("page_no", pNo);
-		bList = hyDao.AllbctBookingList(map);
-		if (bList != null) {
-			for (int i = 0; i < bList.size(); i++) {
-				String bk_no = (String) bList.get(i).get("BK_NO");
-				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
-						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
-						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
-						+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START"));
-
-			}
-		}
-		mav.addObject("bokList", sb);
-		String paging = businessBctBookingList(pNo, no, bct_name);
-		mav.addObject("paging", paging);
-		mav.setViewName("businessBookingListPage");
-		return mav;
-	}
-
-	private String businessBctBookingList(int pNo, String no, String bct_name) {
-		int maxNum = hyDao.getBctListCount(no, bct_name);
-		int listCount = 9;
-		int pageCount = 5;
-		String boardName = "businessBookingList";
-		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
-		return paging.businessBctBookingList(bct_name);
 	}
 
 	/* 혜연 서비스 관리 */
@@ -776,7 +712,7 @@ public class HyeonService {
 		map.put("timeS", timeS);
 		bList = hyDao.todayScheduleList(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th>예약 번호</th><th>동물 종류</th><th>동물 이름</th><th>예약자명</th><th>서비스 종류</th><th>방문 일시</th><th>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			String pno = (String) bList.get(i).get("PER_NO");
@@ -786,7 +722,6 @@ public class HyeonService {
 			sb.append("<td>" + bList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BCT_NAME") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("VS_START") + "</td>");
 			sb.append("<td><input type='button' class='btn btn-outline-success' value='방문' onclick=\"com(\'" + bk_no
 					+ "')\" /></td></tr>");
@@ -822,82 +757,159 @@ public class HyeonService {
 		return sb.toString();
 	}
 
-	public String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
-		mav = new ModelAndView();
+	public String businessAllBookingList(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int pNo = (pageNum == null) ? 1 : pageNum;
-		String no = request.getParameter("no");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String no = (String) session.getAttribute("no");
+		System.out.println(no);
+		System.out.println(pNo);
 		map.put("no", no);
-		map.put("page_no", pNo);
+		map.put("pageNum", pNo);
 		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
 		bList = hyDao.businessBookingList(map);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
-			sb.append("<a href='myBookingDetail?no=" + bk_no + "'>" + bk_no + "</a> | " + bList.get(i).get("PTY_NAME")
-					+ " | " + bList.get(i).get("PET_NAME") + " | " + bList.get(i).get("PER_NAME") + " | "
-					+ bList.get(i).get("BCT_NAME") + " | " + bList.get(i).get("BK_TIME") + " | "
-					+ bList.get(i).get("VS_START") + "<br>");
+			sb.append("<tr><td><a href='myBookingDetail?no=" + bk_no + "'>" + bk_no + "</a></td><td>"
+					+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
+					+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
+					+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
 		}
 		return sb.toString();
 	}
 
-	public String searchAllList(HttpServletRequest request, Integer pageNum) {
+	public String searchAllList(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<HashMap<String, Object>> bPerList = new ArrayList<HashMap<String, Object>>();
-		int pNo = (pageNum == null) ? 1 : pageNum;
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String no = (String) session.getAttribute("no");
+		String search = request.getParameter("search");
 		StringBuilder sb = new StringBuilder();
-		String no = request.getParameter("no");
 		map.put("no", no);
-		map.put("per_name", request.getParameter("per_name"));
-		map.put("page_no", pNo);
+		map.put("per_name", search);
+		map.put("pageNum", pNo);
 		bPerList = hyDao.searchAllList(map);
 		if (bPerList.size() != 0) {
 			for (int i = 0; i < bPerList.size(); i++) {
 				String bk_no = (String) bPerList.get(i).get("BK_NO");
-				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
-						+ bPerList.get(i).get("PTY_NAME") + " | " + bPerList.get(i).get("PET_NAME") + " | "
-						+ bPerList.get(i).get("PER_NAME") + " | " + bPerList.get(i).get("BCT_NAME") + " | "
-						+ bPerList.get(i).get("BK_TIME") + " | " + bPerList.get(i).get("VS_START"));
+				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
+						+ bPerList.get(i).get("PTY_NAME") + "</td><td>" + bPerList.get(i).get("PET_NAME") + "</td><td>"
+						+ bPerList.get(i).get("PER_NAME") + "</td><td>" + bPerList.get(i).get("BCT_NAME") + "</td><td>"
+						+ bPerList.get(i).get("BK_TIME") + "</td><td>" + bPerList.get(i).get("VS_START")
+						+ "</td></tr>");
 			}
 		}
 		return sb.toString();
 	}
 
-	public String searchBctAllsList(HttpServletRequest request, Integer pageNum) {
+	public String searchAllListPaging(HttpServletRequest request) {
+		String no = (String) session.getAttribute("no");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String search = request.getParameter("search");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("per_name", search);
+		System.out.println(no);
+		System.out.println(search);
+		int maxNum = hyDao.searchAllListPaging(map);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessBookingList"; // 사용안함
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.searchAllList(search);
+	}
+
+	public String businessAllBctBookingList(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		int pNo = (pageNum == null) ? 1 : pageNum;
 		StringBuilder sb = new StringBuilder();
-		String no = request.getParameter("no");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String no = (String) session.getAttribute("no");
 		String bct_name = request.getParameter("bct_name");
 		map.put("no", no);
 		map.put("bct_name", bct_name);
-		map.put("per_name", request.getParameter("per_name"));
-		map.put("page_no", pNo);
+		map.put("pageNum", pNo);
+		bList = hyDao.AllbctBookingList(map);
+		if (bList != null) {
+			for (int i = 0; i < bList.size(); i++) {
+				String bk_no = (String) bList.get(i).get("BK_NO");
+				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
+						+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
+						+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
+						+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
+
+			}
+		}
+		return sb.toString();
+	}
+
+	public String searchBctAllsList(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String search = request.getParameter("search");
+		String bct_name = request.getParameter("bct_name");
+		StringBuilder sb = new StringBuilder();
+		String no = (String) session.getAttribute("no");
+		map.put("no", no);
+		map.put("bct_name", bct_name);
+		map.put("per_name", search);
+		map.put("pageNum", pNo);
 		bList = hyDao.searchBctAllsList(map);
 		if (bList != null) {
 			for (int i = 0; i < bList.size(); i++) {
 				String bk_no = (String) bList.get(i).get("BK_NO");
-				sb.append("<div name='list'><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a> | "
-						+ bList.get(i).get("PTY_NAME") + " | " + bList.get(i).get("PET_NAME") + " | "
-						+ bList.get(i).get("PER_NAME") + " | " + bList.get(i).get("BCT_NAME") + " | "
-						+ bList.get(i).get("BK_TIME") + " | " + bList.get(i).get("VS_START"));
+				sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td><td>"
+						+ bList.get(i).get("PTY_NAME") + "</td><td>" + bList.get(i).get("PET_NAME") + "</td><td>"
+						+ bList.get(i).get("PER_NAME") + "</td><td>" + bList.get(i).get("BCT_NAME") + "</td><td>"
+						+ bList.get(i).get("BK_TIME") + "</td><td>" + bList.get(i).get("VS_START") + "</td></tr>");
 			}
 		}
 		return sb.toString();
 	}
 
-	public String AllPaging(HttpSession session, Integer pageNum) {
-		String no = session.getAttribute("no").toString();
-		System.out.println("session!!!!!!!!!!!" + no);
-		int pNo = (pageNum == null) ? 1 : pageNum;
-		int maxNum = hyDao.getListCount(no);
-		int listCount = 9;
+	public String searchBctAllsListPaging(HttpServletRequest request) {
+		String no = (String) session.getAttribute("no");
+		String bct_name = request.getParameter("bct_name");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		String search = request.getParameter("search");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("bct_name", bct_name);
+		map.put("per_name", search);
+		int maxNum = hyDao.searchBctAllsListPaging(map);
+		int listCount = 10;
 		int pageCount = 5;
-		String boardName = "businessBookingList";
+		String boardName = "businessBookingList"; // 사용안함
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
-		return paging.AllPaging(no, pNo);
+		return paging.searchBctAllsList(bct_name, search);
+	}
+
+	public String AllPaging(HttpServletRequest request) {
+		/* public String AllPaging(String searcht, Integer pageNum) { */
+		String no = (String) session.getAttribute("no");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		int maxNum = hyDao.getListCount(no);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessBookingList"; // 사용안함
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.AllPaging();
+	}
+
+	public String bctAllPaging(HttpServletRequest request) {
+		String no = (String) session.getAttribute("no");
+		String bct_name = request.getParameter("bct_name");
+		int pNo = Integer.parseInt(request.getParameter("pageNum"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("bct_name", bct_name);
+		int maxNum = hyDao.bctAllPaging(map);
+		int listCount = 10;
+		int pageCount = 5;
+		String boardName = "businessBookingList"; // 사용안함
+		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
+		return paging.bctAllPaging(bct_name);
 	}
 
 }

@@ -146,13 +146,6 @@ public class HyeonController {
 	}
 
 	/* 혜연 */
-	@RequestMapping(value = "/businessAllBctBookingList")
-	public ModelAndView businessAllBctBookingList(HttpServletRequest request, Integer pageNum) {
-		mav = hy.businessAllBctBookingList(request, pageNum);
-		return mav;
-	}
-
-	/* 혜연 */
 	@RequestMapping(value = "/serviceManagement")
 	public ModelAndView serviceManagement(HttpSession session) {
 		mav = hy.serviceManagement(session);
@@ -236,13 +229,6 @@ public class HyeonController {
 		return result;
 	}
 
-	@RequestMapping(value = "/AllPaging", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String AllPaging(HttpSession session, Integer pageNum) {
-		String text = hy.AllPaging(session, pageNum);
-		return text;
-	}
-
 	@RequestMapping(value = "/todayAllScheduleList", produces = "application/text; charset=utf8")
 	public @ResponseBody String todayAllScheduleList(HttpServletRequest request) {
 		String text = hy.todayAllScheduleList(request);
@@ -279,29 +265,52 @@ public class HyeonController {
 		return text;
 	}
 
-	@RequestMapping(value = "/businessAllBookingList", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public @ResponseBody String businessAllBookingList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.businessAllBookingList(request, pageNum);
+	@RequestMapping(value = "/businessAllBookingList", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public @ResponseBody String businessAllBookingList(HttpServletRequest request) {
+		String text = hy.businessAllBookingList(request);
 		return text;
 	}
-	/*
-	 * @RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces =
-	 * "application/text; charset=utf8") public @ResponseBody String
-	 * AllPaging(HttpServletRequest request ,Integer pageNum) { String text =
-	 * hy.AllPaging(request, pageNum); System.out.println("확인@@@@@@@" + text);
-	 * return text; }
-	 * 
-	 * @RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces =
-	 * "application/text; charset=utf8")
-	 * 
-	 * @ResponseBody public String bctAllPaging(HttpServletRequest request, Integer
-	 * pageNum) { String text = hy.bctAllPaging(request, pageNum); return text; }
-	 */
+	
+	@RequestMapping(value = "/AllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	public @ResponseBody String AllPaging(HttpServletRequest request) {
+		String text = hy.AllPaging(request);
+		System.out.println("확인@@@@@@@" + text);
+		return text;
+	}
+	
+	@RequestMapping(value = "/bctAllPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
+	@ResponseBody public String bctAllPaging(HttpServletRequest request) {
+		String text = hy.bctAllPaging(request);
+		return text;
+	}
 
 	@RequestMapping(value = "/searchAllList", produces = "application/text; charset=utf8")
-	public @ResponseBody String searchAllList(HttpServletRequest request, Integer pageNum) {
-		String text = hy.searchAllList(request, pageNum);
+	public @ResponseBody String searchAllList(HttpServletRequest request) {
+		String text = hy.searchAllList(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/searchAllListPaging", produces = "application/text; charset=utf8")
+	public @ResponseBody String searchAllListPaging(HttpServletRequest request) {
+		String text = hy.searchAllListPaging(request);
 		return text;
 	}
 
+	@RequestMapping(value = "/businessAllBctBookingList", produces = "application/text; charset=utf8")
+	public @ResponseBody String businessAllBctBookingList(HttpServletRequest request) {
+		String text = hy.businessAllBctBookingList(request);
+		return text;
+	}
+
+	@RequestMapping(value = "/searchBctAllsList", produces = "application/text; charset=utf8")
+	public @ResponseBody String searchBctAllsList(HttpServletRequest request) {
+		String text = hy.searchBctAllsList(request);
+		return text;
+	}
+	
+	@RequestMapping(value = "/searchBctAllsListPaging", produces = "application/text; charset=utf8")
+	public @ResponseBody String searchBctAllsListPaging(HttpServletRequest request) {
+		String text = hy.searchBctAllsListPaging(request);
+		return text;
+	}
 }

@@ -40,7 +40,7 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<input type='radio' name='bct_code' class='주력 서비스' value='");
 			sb.append(list.get(i).get("BCT_CODE"));
-			sb.append("'/>" + list.get(i).get("BCT_NAME") + " ");
+			sb.append("'/>" + list.get(i).get("BCT_NAME") + "</label>");
 		} // for End
 		return sb.toString();
 	} // method End
@@ -148,6 +148,11 @@ public class JinService {
 				hMap.put(name, value);
 			} // for End
 		} // if End
+		
+		/*삭제*/
+		hMap.put("bus_no", "B1000121");
+		hMap.put("bct_code", "B");
+		
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
 		if (hMap.get("pet_no") == null) {
@@ -161,7 +166,7 @@ public class JinService {
 		} // if End
 		StringBuilder pet = new StringBuilder();
 		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
-		pet.append(" style='height:300px; weight:300px;' />");
+		pet.append("' style='height:300px; weight:300px;' />");
 		pet.append("<div class='card-body'><br/><br/>");
 		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
@@ -398,7 +403,8 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
-			sb.append("<td>" + list.get(i).get("VS_START") + "</td><td><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
+			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
 			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO")
 					+ "' />&nbsp;");
 			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO")

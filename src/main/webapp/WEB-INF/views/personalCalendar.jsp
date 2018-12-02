@@ -56,20 +56,20 @@
 
 							<div class="collapse navbar-collapse" id="topnav-menu-content">
 								<ul class="navbar-nav">
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./recentMyBookingList" class="nav-link">
 											<i class="mdi mdi-clipboard-check mr-1"></i>최근 예약 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./personalAllBookingList" class="nav-link">
 											<i class="mdi mdi-clipboard-text mr-1"></i>전체 예약 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
-											<i class="mdi mdi-paw mr-1"></i>나의 동물 목록
-									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
+									<li class="nav-item"><a href="./likeBusinessList" class="nav-link">
 											<i class="mdi mdi-heart mr-1"></i>즐겨찾기 목록
 									</a></li>
-									<li class="nav-item"><a href="index.html" class="nav-link">
-											<i class="mdi mdi-account-circle mr-1"></i>개인 정보 확인
+									<li class="nav-item"><a href="./petList" class="nav-link">
+											<i class="mdi mdi-paw mr-1"></i>나의 반려동물 정보
+									</a></li>
+									<li class="nav-item"><a href="./myInfo" class="nav-link">
+											<i class="mdi mdi-account-circle mr-1"></i>나의 회원 정보
 									</a></li>
 								</ul>
 							</div>
@@ -699,7 +699,7 @@
 			<!-- content -->
 
 			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
+			<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 			<!-- end Footer -->
 
 		</div>
@@ -746,17 +746,20 @@
                 this.$calendar.fullCalendar("renderEvent", i, !0),
                 e("#drop-remove").is(":checked") && t.remove()
         }, t.prototype.onEventClick = function (t, n, a) {
+        	
         	var jsonData = ${e};
         	console.log(jsonData);
         	for(var i=0; i<jsonData.length; i++) {
         		console.log(jsonData[i].bk_no);
-        	}
+        		console.log(t.start);
+        		console.log(t.start._i)
+        	
             var l = this,
                 i = e("<form></form>");
-            i.append("<label>정보 확인</label>"),
-                i.append("<div class='input-group m-b-15'><input class='form-control' type=text value='" + t.title + "' />" +
-                    "<span class='input-group-append'>" +
-                    "</div>"),
+            i.append("<label>"+t.title+"</label>"),
+                i.append("<p><br/> 업체명: " + t.bus_name 
+                		+ "<br/><br/> 예약 시간: " + t.start._i 
+                		+ "<br/><br/> 업체 주소: " + t.bus_addr + " " + t.bus_addr2 + "</p>"),
                 l.$modal.modal({
                     backdrop: "static"
                 }), l.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().
@@ -769,6 +772,7 @@
                 return t.title = i.find("input[type=text]").val(),
                     l.$calendarObj.fullCalendar("updateEvent", t), l.$modal.modal("hide"), !1
             })
+        }
         },
         t.prototype.onSelect = function (t, n, a) {
             var l = this;
@@ -810,7 +814,7 @@
             })
         }, t.prototype.init = function () {
             this.enableDrag();
-            var data = ${e};
+            var data = ${e}; //json으로 받아 온 데이터
             var t = new Date,
                 n = (
                     t.getDate(), t.getMonth(), t.getFullYear(),

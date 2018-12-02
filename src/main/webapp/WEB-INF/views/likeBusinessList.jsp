@@ -104,13 +104,14 @@
 		<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
 		<!-- demo app -->
 		<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
+	</div>
 </body>
 <script>
 	function check() {
 		var result = confirm('즐겨찾기를 삭제하시겠습니까?');
-			if (result === true) {
-				return true;
-			} // if End
+		if (result === true) {
+			return true;
+		} // if End
 		return false;
 	} // fct End
 </script>

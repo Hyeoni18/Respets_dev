@@ -53,7 +53,7 @@
 				</c:if>
 
 				<c:if test="${fn:substring(no,0,1) eq 'B'}">
-					<li class="side-nav-title side-nav-item"><h5>${name} 마이페이지</h5></li>
+					<li class="side-nav-title side-nav-item"><h5>${bus_name} 마이페이지</h5></li>
 	
 					<li class="side-nav-item"><a href="todayScheduleList" class="side-nav-link">
 							<i class="dripicons-to-do"></i> <!-- <span class="badge badge-success float-right">
@@ -82,7 +82,7 @@
 				
 				</c:if>
 
-				<c:if test="${fn:substring(no,0,1) eq '9'}">
+				<c:if test="${fn:substring(no,0,1) eq '1'}">
 					<li class="side-nav-title side-nav-item"><h5>관리자 마이페이지</h5></li>
 	
 					<li class="side-nav-item"><a href="unconfirmBusiness" class="side-nav-link">

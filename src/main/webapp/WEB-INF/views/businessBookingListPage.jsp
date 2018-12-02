@@ -25,75 +25,207 @@
 
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-		<h1>전체 예약 목록</h1>
-		${no}
-		<form name="businessBookingListPage" class="form-inline">
-			<input type='button' name='button' class='button'
-				onclick="allListPaging()" value="전체" /> ${bctList}
-			<div class="form-group mb-3">
-				<label for="status-select" class="mr-2"> 검색&nbsp; 보호자<input
-					type="search" class="form-control form-control-sm"
-					placeholder="search" aria-controls="basic-datatable" name="search"
-					id="per_name" />
-					<button type="submit" class="btn">검색</button>
-				</label>
-			</div>
-		</form>
+	<div class="wrapper">
+		<%@ include file="left-sidebar.jsp"%>
+		<div class="content-page">
+			<%@ include file="topbar-dashboard.jsp"%>
+			<div class="container-fluid">
 
-		<div id="list">${bokList}</div>
-		<div id="page_navi">${paging}</div>
-		<!-- <input type="hidden" id="page_index" class="page_index" /> -->
-		<%@ include file="footer.html"%>
+				<!-- start page title -->
+				<div class="row">
+					<div class="col-12">
+						<div class="page-title-box">
+							<h4 class="page-title">전체 예약 목록</h4>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row mb-2">
+									<div class="col-lg-6">
+
+										<form name="businessBookingListPage" class="form-inline">
+											<div class="form-group mb-3">
+												<label for="status-select" class="mr-2"> <!-- 카테고리&nbsp; -->
+													<select class="custom-select" name="select" id="select">
+														<option>전체</option> ${bctList}
+												</select>
+												</label>
+											</div>
+											<div class="form-group mb-3">
+												<label for="status-select" class="mr-2"> <!-- 검색&nbsp; -->
+													<input type="search" class="form-control form-control-sm"
+													placeholder="보호자 이름" aria-controls="basic-datatable"
+													name="search">
+													<button type="button" class="btn btn-success btn-sm"
+														onclick="butListPaging(1,'','')">검색</button>
+												</label>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="table-responsive-sm">
+									<table class="table table-striped table-centered mb-0">
+										<thead>
+											<tr>
+												<th>예약번호</th>
+												<th>동물종류</th>
+												<th>동물이름</th>
+												<th>보호자이름</th>
+												<th>서비스종류</th>
+												<th>예약날짜</th>
+												<th>방문날짜</th>
+											</tr>
+										</thead>
+										<tbody id="list"></tbody>
+									</table>
+								</div>
+							</div>
+							<!-- end card-body-->
+						</div>
+						<!-- end card-->
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+				<div class="row mb-2" style="">
+					<div class="col-lg-8" id="page_navi"></div>
+				</div>
+				<!-- end row -->
+			</div>
+			<%@ include file="footer.html"%>
+		</div>
+
 	</div>
+	<!-- END wrapper -->
+
+	<!-- App js -->
+	<script src="resources/dist/assets/js/app.min.js"></script>
+
+	<!-- third party js -->
+	<script src="resources/dist/assets/js/vendor/jquery.dataTables.js"></script>
+	<script src="resources/dist/assets/js/vendor/dataTables.bootstrap4.js"></script>
+	<script
+		src="resources/dist/assets/js/vendor/dataTables.responsive.min.js"></script>
+	<script
+		src="resources/dist/assets/js/vendor/responsive.bootstrap4.min.js"></script>
+	<!-- third party js ends -->
+
+	<!-- demo app -->
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<!-- end demo js-->
 </body>
 <script>
-	var radio = $("input[name='button']").val();
-	var frm = document.businessBookingListPage;
-	function butListPaging() {
-		console.log(radio);
-		if (radio == '전체') {
-			frm.action = "redirect:businessBookingList";
-		}/*  else {
-			frm.action = "businessAllBctBookingList?bct_name" + radio;
-		} */
-	}
-	function opList() {
-		console.log(radio);
-		var per = $('#per_name').val();
-		console.log(per);
-		if (radio == '전체') {
-			$.ajax({
-				url : "searchAllList?no=${no}&per_name=" + per,
-				type : 'post',
-				dataType : "text",
-				success : function(data) {
-					console.log("성공");
-					console.log(data);
-					$('#list').html(data);
-				},
-				error : function(error) {
-					console.log("실패");
-				}
-			});
-		} else {
-			$.ajax({
-				url : "searchBctAllsList?no=${no}&bct_name=" + radio
-						+ "&per_name=" + per,
-				type : 'post',
-				dataType : "text",
-				success : function(data) {
-					console.log("성공");
-					console.log(data);
-					$('#list').html(data);
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			}); //ajax end
+	function butListPaging(pNo, code, wordd) { /* 전체만 들어올거야. */
+		console.log(pNo);
+		var search = $("input[name='search']").val();
+		var select = $("select").val();
+		console.log(search);
+		console.log(select);
+		if (code.length != 0) {
+			console.log(code);
+			select = code;
 		}
-	} //function end
+		if (wordd.length != 0) {
+			console.log(wordd);
+			search = wordd;
+		}
+		if (search.length != 0) {
+			console.log("검색할 문자 존재,");
+			if (select == "전체") {
+				console.log("업종상관없이, 전체리스트 ");
+				$.ajax({
+					url : "searchAllList?pageNum="+pNo+"&search="+search,
+					type : 'post',
+					dataType : "text",
+					success : function(data) {
+						$('#list').html(data);
+						$.ajax({
+							url : "searchAllListPaging?pageNum="+pNo+"&search="+search,
+							type : "post",
+							dataType : "text",
+							success : function(data) {
+								$('#page_navi').html(data);
+							}
+						});
+					},
+					error : function(error) {
+						console.log("실패");
+					}
+				});
+			} else {
+				console.log("업종상관있어");
+				$.ajax({
+					url : "searchBctAllsList?pageNum="+pNo+"&search="+search+"&bct_name="+select,
+					type : 'post',
+					dataType : "text",
+					success : function(data) {
+						$('#list').html(data);
+						$.ajax({
+							url : "searchBctAllsListPaging?pageNum="+pNo+"&search="+search+"&bct_name="+select,
+							type : "post",
+							dataType : "text",
+							success : function(data) {
+								$('#page_navi').html(data);
+							}
+						});
+					},
+					error : function(error) {
+						console.log("실패");
+					}
+				});
+			}
+		} else {
+			console.log("검색할 문자 없이 업종으로만 ");
+			if (select == "전체") {
+				console.log("그냥 전체리스트 ");
+				$.ajax({
+					url : "businessAllBookingList?pageNum=" + pNo,
+					type : "post",
+					dataType : "text",
+					success : function(data) {
+						$('#list').html(data);
+						$.ajax({
+							url : "AllPaging?pageNum=" + pNo,
+							type : "post",
+							dataType : "text",
+							success : function(data) {
+								$('#page_navi').html(data);
+							}
+						});
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+			} else {
+				console.log("업종에 따른 리스트 ");
+				$.ajax({
+					url : "businessAllBctBookingList?bct_name=" + select
+							+ "&pageNum=" + pNo,
+					type : "post",
+					dataType : "text",
+					success : function(data) {
+						$('#list').html(data);
+						$.ajax({
+							url : "bctAllPaging?bct_name=" + select
+									+ "&pageNum=" + pNo,
+							type : "post",
+							dataType : "text",
+							success : function(data) {
+								$('#page_navi').html(data);
+							}
+						});
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+			}
+		}
+	}
+
 </script>
 </html>

@@ -118,7 +118,7 @@
 		<!-- End Page content -->
 		<!-- ============================================================== -->
 </body>
-
+<script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$.ajax({

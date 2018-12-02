@@ -14,6 +14,7 @@
         <!-- App css -->
         <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        
 </head>
  <body class="authentication-bg">
          <div class="account-pages mt-5 mb-5">
@@ -82,11 +83,9 @@
 								<div class="form-row">								
 									<div class="form-group col-md-12" style="margin-bottom:0;">										
 										<label for="bus_address">업체 주소 <span style="color: red">*</span></label>
-										
-										<!-- <br/> -->									
 									</div>
 									<div class="form-group col-md-6">
-										<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" />
+										<input type="text" class="form-control" name="bus_post" id="우편번호" placeholder="우편번호" readonly="readonly" />
 									</div>
 									<div class="form-group col-md-6">
 										<input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-outline-success"/>
@@ -94,7 +93,7 @@
 								</div>
 								
 								<div class="form-group">
-									<input type="text" class="form-control" name="bus_addr" id="주소" placeholder="주소" /> 
+									<input type="text" class="form-control" name="bus_addr" id="주소" placeholder="주소" readonly="readonly" /> 
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="bus_addr2" id="상세주소" placeholder="상세주소" />
@@ -106,7 +105,6 @@
 									<br />
 									${input}
 								</div>
-								
 								<div class="form-group">
 									<label for="mainPhoto">대표 사진</label>
 									<input type="file" class="form-control" name="mainPhoto" onchange="fileChk(this)" /> 
