@@ -24,7 +24,7 @@
 	type="text/css" />
 
 </head>
-<body>
+<body onload="test()">
 	<%@ include file="left-sidebar.jsp"%>
 	<div class="content-page">
 		<%@ include file="topbar-dashboard.jsp"%>
@@ -45,7 +45,7 @@
 					<div class="card mb-0">
 						<div class="card-body">
 							<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
-							<br /> <input type='radio' name='radio' class='radio' value="전체" />전체
+							<br /> <input type='radio' name='radio' class='radio' value="전체" onchange='test();' checked="checked"/>전체
 							${bctList}
 						
 									
@@ -70,8 +70,8 @@
 			<%@ include file="footer.html"%>
 </body>
 <script>
-	$(document).ready(function() { /* 사용 */
-		$('input[type="radio"]').click( function() {
+	function test() { /* 사용 */
+		//$('input[type="radio"]').click( function() {
 			var radio = $('input[type="radio"]:checked').val();
 			//전체리스트 불러오기
 			if (radio == '전체') {
@@ -124,8 +124,8 @@
 					}
 				});
 			}
-		});
-	});
+	//	});
+	}
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');

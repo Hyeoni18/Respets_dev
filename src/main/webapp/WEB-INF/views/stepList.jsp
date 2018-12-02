@@ -52,7 +52,7 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<form class="form-inline">
-								<a href="stepInsertFormBut" class="btn btn-success">직원
+								<a href="stepInsertFormBut" class="btn btn-outline-success">직원
 									등록</a>
 							</form>
 						</div>
