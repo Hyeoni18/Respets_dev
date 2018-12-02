@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,13 +24,10 @@
 	type="text/css" />
 
 </head>
-</head>
 <body>
-	<div class="row">
+	<div class="row" style="text-align:center;">
 		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<div class="table-responsive-sm">
+			<div class="table-responsive-sm">
 						<table class="table table-striped table-centered mb-0" style='text-align:center;'>
 							<thead>
 								<tr>
@@ -41,22 +40,20 @@
 							${nList}
 						</table>
 					</div>
-					${paging}
-				</div>
-			</div>
+					<div style="text-align:center;margin-top:15px;">${paging}</div>
+					
 		</div>
 	</div>
 	<!-- App js -->
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
-	<!-- third party js -->
+	
 	<script src="resources/dist/assets/js/vendor/jquery.dataTables.js"></script>
 	<script src="resources/dist/assets/js/vendor/dataTables.bootstrap4.js"></script>
 	<script
 		src="resources/dist/assets/js/vendor/dataTables.responsive.min.js"></script>
 	<script
 		src="resources/dist/assets/js/vendor/responsive.bootstrap4.min.js"></script>
-	<!-- third party js ends -->
 
 	<!-- demo app -->
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>

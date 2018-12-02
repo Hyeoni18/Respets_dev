@@ -60,7 +60,7 @@
 											<!-- business profile image -->
 											<%-- <img src="${bus_img}" alt="business profile image"> --%>
 											<img src="${bus_img}" alt="business profile image"
-												style="width: 100%; height: 300px;">
+												style="width: 100%; height: 100%;">
 
 										</div>
 										<div class="badge badge-secondary"
@@ -173,7 +173,8 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<!-- <script src="resources/dist/assets/js/pages/demo.project-detail.js"></script> -->
 	<!-- end demo js-->
 
 </body>
