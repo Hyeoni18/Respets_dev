@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teamx.respets.dao.IJiyeDao">
+	<!-- NCLOB 을 해시맵으로 가져올 땐 resultMap을 설정해주어야 스트링형으로 가져올 수 있다. -->
 	<resultMap type="HashMap" id="noticeDetail">
 		<result property="BBO_NO" column="BBO_NO" />
 		<result property="BCT_NAME" column="BCT_NAME" />
@@ -167,7 +168,7 @@
 	<!-- 기업공지사항 디테일 -->
 	<select id="noticeDetailPage" parameterType="HashMap"
 		resultMap="noticeDetail">
-		SELECT BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
+		SELECT BBO.BUS_NO, BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
 		BBO.BBO_TITLE, BBO.BBO_CTT,
 		TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd hh24:mi')
 		AS BBO_DATE
@@ -293,8 +294,8 @@
 
 	<select id="getBusinessInfo" parameterType="HashMap"
 		resultType="HashMap">
-		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE,
-		BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE, GLR.GLR_LOC
+		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE, GLR.GLR_LOC, BUS.BUS_LCNO, BUS.BUS_CEO
 		FROM BUS INNER JOIN SVC
 		ON SVC.BUS_NO = BUS.BUS_NO
 		INNER JOIN BCT

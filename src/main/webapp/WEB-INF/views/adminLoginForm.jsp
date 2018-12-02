@@ -45,12 +45,12 @@
 							<form action="adminLogin" method="post">
 								<div class="form-group">
 									<label for="adm_no">관리자 번호</label>
-									<input class="form-control" type="text" id="adm_no" name="adm_no" placeholder="Enter your id" />
+									<input class="form-control" type="text" id="adm_no" name="adm_no" placeholder="관리자 아이디를 입력하세요." />
 								</div>
 								
 								<div class="form-group">
 									<label for="adm_pw">비밀번호</label> <br /> <input type="password" class="form-control"
-										id="adm_pw" name="adm_pw" placeholder="Enter your password" />
+										id="adm_pw" name="adm_pw" placeholder="비밀번호를 입력하세요." />
 								</div>
 								
 								<div class="form-group mb-0 text-center">
