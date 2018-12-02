@@ -72,7 +72,7 @@ public class HyeonController {
 	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
 	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
 		mav = hy.myInfoUpdate(request);
-		mav.setViewName("myInfo");
+		mav.setViewName("redirect:/myInfo");
 		return mav;
 	}
 

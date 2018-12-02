@@ -113,6 +113,8 @@ public class HyeonService {
 			System.out.println(p.getPer_no());
 			System.out.println(p.getPer_photo());
 			hyDao.perPhotoUpdate(p);
+			request.getSession().setAttribute("loc", p.getPer_loc());
+			request.getSession().setAttribute("photo", p.getPer_photo());
 		} else {
 			hyDao.perNoPhotoUpdate(p);
 		}

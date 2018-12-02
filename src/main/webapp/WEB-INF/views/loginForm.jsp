@@ -44,7 +44,7 @@
 							<form action="loginProcess" method="post">
 								<div class="form-group">
 									<a href="./findMyIdForm" class="text-muted float-right">
-									<small>이메일/비번 찾기</small></a> 
+									<small>이메일/비밀번호 찾기</small></a> 
 																		
 									<label for="email">이메일 주소</label> 
 									<input class="form-control" type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">

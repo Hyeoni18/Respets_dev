@@ -116,12 +116,13 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<div class='col-lg-4' style='padding:0;'>");
 			sb.append("<div class='card d-block' style='text-align: center;margin-bottom:20px;'>");
-			sb.append("<img class='rounded-circle img-thumbnail' id='petProfile' src='" + list.get(i).get("GLR_LOC")
-					+ list.get(i).get("GLR_FILE") + "'>");
-			sb.append("<div class='card-body'>");
-			sb.append("<h5 class='card-title'>" + list.get(i).get("BUS_NAME") + "</h5><br/>");
-			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no="
-					+ list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
+			sb.append("<a href='businessDetailPage?bus_no=" + list.get(i).get("BUS_NO") + "&bct_code=");
+			sb.append(list.get(i).get("BCT_CODE") + "'><img class='rounded-circle img-thumbnail' id='petProfile' src='");
+			sb.append(list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "'>");
+			sb.append("</a><div class='card-body'><h5 class='card-title'>");
+			sb.append(list.get(i).get("BUS_NAME") + "</h5><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=");
+			sb.append(list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
 			sb.append("</div></div>");
 		} // for End
 		return sb.toString();
