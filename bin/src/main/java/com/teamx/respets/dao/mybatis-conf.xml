@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+	<!-- 	<package name="com.teamx.respets.bean"/> -->
+	<typeAlias alias="personal" type="com.teamx.respets.bean.Personal"/>
+	<typeAlias alias="randomtb" type="com.teamx.respets.bean.RandomTB"/>
+	<typeAlias alias="Business" type="com.teamx.respets.bean.Business"/>
+	<typeAlias alias="Admin" 	type="com.teamx.respets.bean.Admin"/>
+	<typeAlias alias="abo" 	type="com.teamx.respets.bean.AdminBoard"/>
+	<typeAlias alias="pet" type="com.teamx.respets.bean.Pet"/>
+	<typeAlias alias="Booking" type="com.teamx.respets.bean.Booking"/>
+	<typeAlias alias="Gallery" type="com.teamx.respets.bean.Gallery"/>
+	</typeAliases>
+</configuration>

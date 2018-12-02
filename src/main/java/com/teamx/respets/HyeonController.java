@@ -77,8 +77,8 @@ public class HyeonController {
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessInfoUpdate")
-	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
-		mav = hy.businessInfoUpdate(bi, request);
+	public ModelAndView businessInfoUpdate(MultipartHttpServletRequest request) {
+		mav = hy.businessInfoUpdate(request);
 		return mav;
 	}
 

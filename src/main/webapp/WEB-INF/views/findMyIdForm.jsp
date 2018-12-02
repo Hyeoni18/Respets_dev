@@ -37,15 +37,34 @@
 
 						<div class="card-body p-4">
 							<div class="text-center w-75 m-auto">
-								<h4 class="text-dark-50 text-center mt-0 font-weight-bold">계정(email) 찾기</h4>
+								<h4 class="text-dark-50 text-center mt-0 font-weight-bold">계정(email)
+									찾기</h4>
 								<p class="text-muted mb-4"></p>
 							</div>
 							<!--현휘; 아이디 찾는 메소드로 이동 ,
 		  					기업을 클릭해도 Personal bean을 이용하기 위해 name을 per_로 설정 -->
 							<form action="findMyId" method="POST">
+
 								<div class="form-group">
-									<input type="radio" name="type" value="P" /> 개인 &nbsp;&nbsp; <input
-										type="radio" name="type" value="B" /> 기업 <br />
+									<div class="row">
+										<div class="col-6">
+												<div class="custom-control custom-checkbox" style="text-align:right;">
+													<input type="checkbox" class="custom-control-input"
+														id="customCheck1" name="type" value="P"> <label
+														class="custom-control-label" for="customCheck1">개인</label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" class="custom-control-input"
+														id="customCheck1" name="type" value="B"> <label
+														class="custom-control-label" for="customCheck1">기업</label>
+												</div>
+											</div>
+
+									</div>
+
+
 								</div>
 
 								<div class="form-group">
@@ -78,7 +97,8 @@
 
 	${none}
 	<!-- 찾는 아이디가 없을 경우 alert창이 뜬다. -->
-	<footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
+	<footer class="footer footer-alt"> Copyright Respets Corp. All
+		rights reserved. </footer>
 </body>
 <script>
 	/* 개인,기업 선택 하지 않으면 넘어가지 않도록. */
