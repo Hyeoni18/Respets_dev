@@ -1352,7 +1352,7 @@ public class HyunHwiService {
 				String emp_no = (String) list.get(i).get("EMP_NO");
 				String emp_name = (String) list.get(i).get("EMP_NAME");
 				String emp_pos = (String) list.get(i).get("EMP_POS");
-				String emp_part = (String) list.get(i).get("EMP_PART");
+				//String emp_part = (String) list.get(i).get("EMP_PART");
 				String emp_photo = (String) list.get(i).get("EMP_PHOTO");
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
 				/*sb.append("<div class=\"col-lg-4\""
@@ -1370,15 +1370,14 @@ public class HyunHwiService {
 						+ "</div>"
 						+ "</div>");*/
 				sb.append("<div class='col-lg-4'>");
-				sb.append("<div class='card d-block' style='text-align: center; margin-bottom: 20px;'>");
+				sb.append("<div class='card d-block' style='text-align: center; margin: 0 0 20px 0;'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
 				sb.append("<img class='rounded-circle img-thumbnail' src='" + emp_loc + emp_photo + "' style='width: 150px;height: 150px;margin-top: 20px;'/>");
 				sb.append("</a>");
 				sb.append("<div class='card-body'>");
 				sb.append("<h5 class='card-title'>" + emp_name + "</h5>");
 				sb.append("<p class='card-text'> 직급: " + emp_pos + "</p>");
-				sb.append("</div>");
-				
+				sb.append("</div>");				
 				sb.append("</div>");
 				sb.append("</div>");
 			}
@@ -1389,7 +1388,7 @@ public class HyunHwiService {
 		} else {
 			sb.append("<script>alert('직원을 등록해주세요');</script>");
 		}
-		if (count % 3 < 3 && count % 3 != 0) {
+		/*if (count % 3 < 3 && count % 3 != 0) {
 			for (int i = 0; i < 3 - count % 3; i++) {
 				sb.append("<div class='card d-block'>");
 				sb.append("<div class='card-body'>");
@@ -1401,7 +1400,7 @@ public class HyunHwiService {
 			sb.append("</div>");
 			sb.append("</div>");
 			sb.append("</div>");
-		}
+		}*/
 		return sb.toString();
 	}
 
@@ -2639,6 +2638,10 @@ public class HyunHwiService {
 		list = hDao.selectSVCcode(map);
 		if (list.size() != 0) {
 			int count = 0;
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-12'>");
+			sb.append("<div class='card-deck-wrapper'>");
+			sb.append("<div class='card-deck'>");
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
 				String bus_name = (String) list.get(i).get("BUS_NAME");
@@ -2648,7 +2651,7 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
-					if (count == 0 || count % 3 == 0) {
+					/*if (count == 0 || count % 3 == 0) {
 						sb.append("<div class='row'>");
 						sb.append("<div class='col-12'>");
 						sb.append("<div class='card-deck-wrapper'>");
@@ -2666,6 +2669,7 @@ public class HyunHwiService {
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					
 					if (count % 3 == 2) {
 						sb.append("</div>");
 						sb.append("</div>");
@@ -2673,11 +2677,26 @@ public class HyunHwiService {
 						sb.append("</div>");
 						flag = true;
 					}
-					count++;
-				}
+					count++;*/
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					
+					sb.append("<div class='col-lg-4'>");
+					sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "' style='width:100%;height:13rem;'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					sb.append("</div>");
+					
+				}				
 
-			}
-			if (count % 3 < 3 && count % 3 != 0) {
+			}//end for
+			/*if (count % 3 < 3 && count % 3 != 0) {
 				for (int i = 0; i < 3 - count % 3; i++) {
 					sb.append("<div class='card d-block'>");
 					sb.append("<div class='card-body'>");
@@ -2689,7 +2708,11 @@ public class HyunHwiService {
 				sb.append("</div>");
 				sb.append("</div>");
 				sb.append("</div>");
-			}
+			}*/
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 			mav.addObject("busiList", sb.toString());
 		}
 		String tag = butTagList(bct_code, 1);
@@ -2720,8 +2743,10 @@ public class HyunHwiService {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
 			sb.append(
-					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
-							+ bct_code + "','" + tag_no + "','" + pNo + "')\">" + tag_name + "</a>");
+					/*"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
+							+ bct_code + "','" + tag_no + "','" + pNo + "')\">" + tag_name + "</a>"
+					+*/"<a href='javascript:void(0)' onclick=\"butTagSelectList('" + 
+							bct_code + "','" + tag_no + "','" + pNo + "')\" class='btn btn-outline-light btn-rounded' style='margin-right:10px;'>"+tag_name+"</a>");
 		}
 		return sb.toString();
 	}
@@ -2742,9 +2767,12 @@ public class HyunHwiService {
 		if (list.size() != 0) {
 			int count = 0;
 			boolean flag = true;
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-12'>");
+			sb.append("<div class='card-deck-wrapper'>");
+			sb.append("<div class='card-deck'>");
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
-				System.out.println(bus_no);
 				String bus_name = (String) list.get(i).get("BUS_NAME");
 				String bus_addr = (String) list.get(i).get("BUS_ADDR");
 				map = new HashMap<String, Object>();
@@ -2752,7 +2780,7 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
-					if (count == 0 || count % 3 == 0) {
+					/*if (count == 0 || count % 3 == 0) {
 						sb.append("<div class='row'>");
 						sb.append("<div class='col-12'>");
 						sb.append("<div class='card-deck-wrapper'>");
@@ -2770,6 +2798,7 @@ public class HyunHwiService {
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					
 					if (count % 3 == 2) {
 						sb.append("</div>");
 						sb.append("</div>");
@@ -2777,11 +2806,26 @@ public class HyunHwiService {
 						sb.append("</div>");
 						flag = true;
 					}
-					count++;
-				}
+					count++;*/
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					
+					sb.append("<div class='col-lg-4'>");
+					sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "' style='width:100%;height:13rem;'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					sb.append("</div>");
+					
+				}				
 
-			}
-			if (count % 3 < 3 && count % 3 != 0) {
+			}//end for
+			/*if (count % 3 < 3 && count % 3 != 0) {
 				for (int i = 0; i < 3 - count % 3; i++) {
 					sb.append("<div class='card d-block'>");
 					sb.append("<div class='card-body'>");
@@ -2793,7 +2837,11 @@ public class HyunHwiService {
 				sb.append("</div>");
 				sb.append("</div>");
 				sb.append("</div>");
-			}
+			}*/
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 		}
 		return sb.toString();
 	}

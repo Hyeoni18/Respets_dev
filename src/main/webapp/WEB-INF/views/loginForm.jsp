@@ -43,13 +43,14 @@
 
 							<form action="loginProcess" method="post">
 								<div class="form-group">
+									<a href="./findMyIdForm" class="text-muted float-right">
+									<small>이메일/비번 찾기</small></a> 
+																		
 									<label for="email">이메일 주소</label> 
 									<input class="form-control" type="text" id="email" name="email" placeholder="Enter your email">
 								</div>
 
 								<div class="form-group">
-									<a href="./findMyIdForm" class="text-muted float-right">
-									<small>아이디 찾기</small></a> 
 									
 									<label for="pw">비밀번호</label> <input
 										class="form-control" type="password" id="pw" name="pw"

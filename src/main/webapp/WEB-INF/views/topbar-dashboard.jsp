@@ -17,12 +17,14 @@
 				data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 				aria-expanded="false"> <span class="account-user-avatar">
 						<img src="${loc}${photo}" alt="user-image" class="rounded-circle">
-				</span> <span> <span class="account-user-name">${name}</span> <span
-						class="account-position"> <c:if
-								test="${fn:substring(no,0,1) == 'P'}">개인회원</c:if> <c:if
-								test="${fn:substring(no,0,1) == 'B'}">기업회원</c:if> <c:if
-								test="${fn:substring(no,0,1) == '9'}">관리자</c:if>
-					</span>
+				</span> <span> <span class="account-user-name"><c:if
+										test="${fn:substring(no,0,1) == 'P' || fn:substring(no,0,1) == '1'}">${name}</c:if>
+									<c:if test="${fn:substring(no,0,1) == 'B'}">${bus_name}</c:if>
+							</span> <span class="account-position"> <c:if
+										test="${fn:substring(no,0,1) == 'P'}">개인회원</c:if> <c:if
+										test="${fn:substring(no,0,1) == 'B'}">기업회원</c:if> <c:if
+										test="${fn:substring(no,0,1) == '1'}">관리자</c:if>
+							</span>
 				</span>
 			</a>
 				<div
