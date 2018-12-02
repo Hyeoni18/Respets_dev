@@ -39,7 +39,7 @@
 							<div class="card-body">
 								<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
 								<br /> <input type='radio' name='radio' class='radio'
-									value="전체" />전체 ${bctList}
+									value="전체" checked="checked"/>전체 ${bctList}
 
 
 								<div id="No" style="border: 1px solid red"
@@ -73,11 +73,12 @@
 	</div>
 </body>
 <script>
-	$('#No').hide();
-	$('#Ok').hide();
-
 	$(document).ready(function() {
-		$('input[type="radio"]').click(function() {
+	}
+	
+	function radio() {
+		if($('input[type="radio"]:checked').val() ) {
+			
 			var radio = $('input[type="radio"]:checked').val();
 			var no = "${no}";
 
@@ -149,7 +150,7 @@
 															}
 														});
 											}
-										});
+										}
 					});
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');

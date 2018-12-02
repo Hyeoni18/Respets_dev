@@ -714,7 +714,7 @@ public class HyeonService {
 		map.put("timeS", timeS);
 		bList = hyDao.todayScheduleList(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th> 예약번호 </th><th> 동물종류 </th><th> 동물이름 </th><th> 예약자명 </th><th> 서비스종류 </th><th> 예약일시 </th><th> 방문일시 </th><th> 방문표시 </th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th>예약 번호</th><th>동물 종류</th><th>동물 이름</th><th>예약자명</th><th>서비스 종류</th><th>방문 일시</th><th>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			String pno = (String) bList.get(i).get("PER_NO");
@@ -724,7 +724,6 @@ public class HyeonService {
 			sb.append("<td>" + bList.get(i).get("PET_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("BCT_NAME") + "</td>");
-			sb.append("<td>" + bList.get(i).get("BK_TIME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("VS_START") + "</td>");
 			sb.append("<td><input type='button' class='btn btn-outline-success' value='방문' onclick=\"com(\'" + bk_no
 					+ "')\" /></td></tr>");
