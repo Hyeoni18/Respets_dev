@@ -80,7 +80,7 @@ public class JiyeController {
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) {
 		mav = new ModelAndView();
-		mav = js.loginProcess(email, pw);
+		mav = js.loginProcess(email, pw, request);
 		return mav;
 	}
 
@@ -111,8 +111,8 @@ public class JiyeController {
 
 	// 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public ModelAndView logout() {
-		mav = js.logout();
+	public ModelAndView logout(HttpServletRequest request) {
+		mav = js.logout(request);
 		return mav;
 	} // method End
 
@@ -126,9 +126,9 @@ public class JiyeController {
 
 	// 최근 예약 목록
 	@RequestMapping(value = "/recentMyBookingList", method = RequestMethod.GET)
-	public ModelAndView recentMyBookingList(HttpSession session) {
+	public ModelAndView recentMyBookingList(HttpSession session, Integer pageNum) {
 		mav = new ModelAndView();
-		mav = js.recentMyBookingList(session);
+		mav = js.recentMyBookingList(session, pageNum);
 		return mav;
 	}
 
@@ -199,17 +199,24 @@ public class JiyeController {
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessBasicInfo", method=RequestMethod.GET)
+	@RequestMapping (value="/businessBasicInfo", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView businessBasicInfo(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessBasicInfo(request);
 		return mav;
 	}
 	
-	@RequestMapping (value="/businessGallery", method=RequestMethod.GET)
+	@RequestMapping (value="/businessGallery", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView businessGallery(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessGallery(request);
+		return mav;
+	}
+	
+	@RequestMapping (value="/businessDetailNoticeList", method={RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView businessDetailNoticeList(HttpServletRequest request, Integer pageNum) {
+		mav = new ModelAndView();
+		mav = js.businessDetailNoticeList(request, pageNum);
 		return mav;
 	}
 	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
@@ -239,6 +246,5 @@ public class JiyeController {
 		mav = js.confirmLicense(request);
 		return mav;
 	}
-	
 
 }

@@ -28,7 +28,7 @@
 			<!--- Sidemenu -->
 			<ul class="metismenu side-nav">
 				<c:if test="${fn:substring(no,0,1) eq 'P'}">
-					<li class="side-nav-title side-nav-item"><h5>${name}님의 마이페이지</h5></li>
+					<li class="side-nav-title side-nav-item"><h5>${name} 님의 마이페이지</h5></li>
 	
 					<li class="side-nav-item"><a href="recentMyBookingList" class="side-nav-link">
 							<i class="dripicons-to-do"></i> <!-- <span class="badge badge-success float-right">

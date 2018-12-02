@@ -202,9 +202,9 @@
 												<tr>
 													<td style="text-align: center;">${list.abc_name}</td>
 													<td><a href="#" data-toggle="modal"
-														data-target="#board0">${list.abo_title}</a></td>
+														data-target="#B${list.abo_no}">${list.abo_title}</a></td>
 													<!-- Standard modal content -->
-													<div id="board0" class="modal fade" tabindex="-1"
+													<div id="B${list.abo_no}" class="modal fade" tabindex="-1"
 														role="dialog" aria-labelledby="myModalLabel"
 														aria-hidden="true">
 														<div class="modal-dialog">

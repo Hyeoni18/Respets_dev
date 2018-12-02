@@ -19,13 +19,14 @@ public interface HyeonDao {
 	public boolean myInfoUpdate(Personal mb);
 	public boolean personalPartDelete(String no);
 	public int myPwUpdate(Personal mb);
-	public Personal myPwCheck(String no);
+	public int myPwCheck(Personal mb);
 	public Date getBkStart(String bk_no);
 	public int cancelInsert(HashMap<String, Object> map);
 	public int bk_chkUpdate(String bk_no);
 	public ArrayList<HashMap<String, Object>> allBookingList(HashMap<String, Object> map);
 	public int contPerBkList(String no);
-	public void perPhotoUpdate(Map<String, Object> map);
+	public void perPhotoUpdate(Personal p);
+	public void perNoPhotoUpdate(Personal p);
 
 	/* 혜연 기업 */
 	public ArrayList<HashMap<String, Object>> todayScheduleList(Map<String, Object> map);
@@ -49,7 +50,6 @@ public interface HyeonDao {
 	public void mainPhotoUpdate(Map<String, Object> map);
 	public ArrayList<HashMap<String, Object>> searchAllList(Map<String, Object> map);
 	public ArrayList<HashMap<String, Object>> searchBctAllsList(Map<String, Object> map);
-	public void PothoUpdate(String no);
 	public int noshowInsert(String per_no);
 	public int getnoshowCount(String per_no);
 	public int noshowDelete(String per_no);
@@ -60,4 +60,7 @@ public interface HyeonDao {
 	public ArrayList<HashMap<String, Object>> todayScheduleListOk(Map<String, Object> map);
 	public int todayScheduleListCancel(String bk_no);
 	public ArrayList<HashMap<String, Object>> bctBookingListOk(Map<String, Object> map);
+	public int searchAllListPaging(Map<String, Object> map);
+	public int searchBctAllsListPaging(Map<String, Object> map);
+	public int getBctListCount(String no, String bct_name);
 }

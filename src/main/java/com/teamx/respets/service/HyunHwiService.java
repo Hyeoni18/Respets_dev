@@ -868,14 +868,14 @@ public class HyunHwiService {
 		if (bct_code.equals("H")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='H'></div>");
-			mav.addObject("cat_price", "<div id='H_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='H'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='H_price'></div></div></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
-			mav.addObject("bct_price", "<div id='B'></div>");
-			mav.addObject("cat_price", "<div id='B_price'></div>");
+			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='B'></div></div></div>");
+			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='B_price'></div></div></div>");
 			bct_name = "미용";
 		} else if (bct_code.equals("M")) {
 			mav.addObject("medi_submit", "<button class='btn btn-outline-secondary'>수정하기</button>");
@@ -900,8 +900,14 @@ public class HyunHwiService {
 		String name = (String) map.get("BUS_NAME");
 		String phone = (String) map.get("BUS_PHONE");
 		StringBuilder sb = new StringBuilder();
-		sb.append("-업체명: <input type='text' name='bus_name' value='" + name + "' readonly/><br/>");
-		sb.append("-연락처: <input type='text' name='bus_phone' value='" + phone + "' readonly/><br/>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>업체명</label>");
+		sb.append("<input type='text' name='bus_name' value='" + name + "' class='form-control' readonly/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>연락처</label>");
+		sb.append("<input type='text' name='bus_phone' value='" + phone + "' class='form-control' readonly/><br/>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 
@@ -920,7 +926,7 @@ public class HyunHwiService {
 		int pm_las = Integer.parseInt(pm_close.substring(2, 4)); // 마감시간 min
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("<select name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = 0; i < 48; i++) {\n" + // 반복문을
+		sb.append("<select class=\"form-control\" name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = 0; i < 48; i++) {\n" + // 반복문을
 																														// 48번
 																														// 도는
 																														// 이유는
@@ -957,7 +963,7 @@ public class HyunHwiService {
 				// 나머지는 그냥 가져온다.
 				"	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
 				+ "	}\n" + "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"pm_close\" id=\"close_time\">\n" + "<script>\n"
+		sb.append("<select class=\"form-control\" name=\"pm_close\" id=\"close_time\">\n" + "<script>\n"
 				+ "	for (var i = 0; i < 48; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
 				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
 				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
@@ -1008,7 +1014,6 @@ public class HyunHwiService {
 		return sb.toString();
 	}
 
-	// 현휘; 기업의 수정페이지에서 휴일을 보여주는 메소드
 	private String serviceHolidayUpdateForm(String bus_no, String bct_code) {
 		StringBuilder sb = new StringBuilder();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -1197,6 +1202,8 @@ public class HyunHwiService {
 		sb.append("<br/>");
 		return sb.toString();
 	}
+
+
 
 	// 현휘; 기업의 상세정보 수정
 	@Transactional
