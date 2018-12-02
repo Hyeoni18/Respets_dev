@@ -198,38 +198,43 @@
 												</tr>
 											</thead>
 											<tbody>
-											<c:forEach var="list" items="${list}">
-												<tr>
-													<td style="text-align: center;">${list.abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#B${list.abo_no}">${list.abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="B${list.abo_no}" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
+												<c:forEach var="list" items="${list}">
+													<tr>
+														<td style="text-align: center;">${list.abc_name}</td>
+														<td><a href="#" data-toggle="modal"
+															data-target="#B${list.abo_no}">${list.abo_title}</a></td>
+														<!-- Standard modal content -->
+														<div id="B${list.abo_no}" class="modal fade" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		
+																		<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
+																		<div class="badge badge-secondary" style="margin-top:5px;margin-left:10px">
+																				<c:if test="${'개인' == list.abc_name}">개인</c:if>
+																				<c:if test="${'기업' == list.abc_name}">기업</c:if>
+																			</div>
+																		<button type="button" class="close"
+																			data-dismiss="modal" aria-hidden="true">×</button>
+																	</div>
+																	<div class="modal-body">
+																		<p>${list.abo_ctt}</p>
+																	</div>
+																	<!-- <div class="modal-footer">
+																		<button type="button" class="btn btn-light"
+																			data-dismiss="modal">Close</button>
+																	</div> -->
 																</div>
-																<div class="modal-body">
-																	<p>${list.abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
+																<!-- /.modal-content -->
 															</div>
-															<!-- /.modal-content -->
+															<!-- /.modal-dialog -->
 														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list.abo_date_string}</td>
-												</tr> 
-											</c:forEach>
+														<!-- /.modal -->
+														<td style="text-align: center;">${list.abo_date_string}</td>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -269,8 +274,7 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script
-		src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 
 </body>

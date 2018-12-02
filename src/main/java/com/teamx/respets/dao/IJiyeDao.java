@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.teamx.respets.bean.BusinessBoard;
+
 public interface IJiyeDao {
 	
 	// 개인 이메일 중복 확인
@@ -104,7 +106,7 @@ public interface IJiyeDao {
 
 	public int recentMyBookingListCount(String no);
 
-	public List<HashMap<String, Object>> businessDetailNoticeList(HashMap<String, Object> hmap);
+	public List<BusinessBoard> businessDetailNoticeList(HashMap<String, Object> hmap);
 
 	public int getBusinessNoticeDetailCount(HashMap<String, Object> hmap);
 

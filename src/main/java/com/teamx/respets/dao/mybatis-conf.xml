@@ -10,6 +10,7 @@
 	<typeAlias alias="Business" type="com.teamx.respets.bean.Business"/>
 	<typeAlias alias="Admin" 	type="com.teamx.respets.bean.Admin"/>
 	<typeAlias alias="abo" 		type="com.teamx.respets.bean.AdminBoard"/>
+	<typeAlias alias="bbo" 		type="com.teamx.respets.bean.BusinessBoard"/>
 	<typeAlias alias="pet"		type="com.teamx.respets.bean.Pet"/>
 	<typeAlias alias="Booking" 	type="com.teamx.respets.bean.Booking"/>
 	<typeAlias alias="Gallery"	type="com.teamx.respets.bean.Gallery" />
