@@ -38,8 +38,7 @@
 				</tr>
 				<tr>
 					<td>업체명 :</td>
-					<td><input type="text" name="bus_name"
-						value="${bmap.BUS_NAME}" /></td>
+					<td id="BUS_NAME"></td>
 				</tr>
 				<tr>
 					<td>대표자명 :</td>
