@@ -69,11 +69,11 @@
 					</a></li>
 	
 					<li class="side-nav-item"><a href="serviceManagement" class="side-nav-link">
-							<i class=" dripicons-store"></i> <span> 서비스 관리 </span>
+							<i class="dripicons-gear"></i> <span> 서비스 관리 </span>
 					</a></li>
 	
 					<li class="side-nav-item"><a href="stepListBut" class="side-nav-link">
-							<i class="dripicons-user-id"></i> <span> 직원 관리 </span>
+							<i class="dripicons-user-group"></i> <span> 직원 관리 </span>
 					</a></li>
 					
 					<li class="side-nav-item"><a href="businessInfoDetail" class="side-nav-link">

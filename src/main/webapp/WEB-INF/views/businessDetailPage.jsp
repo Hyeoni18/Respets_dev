@@ -86,22 +86,21 @@
 													<i class="mdi mdi-heart mr-1" id="fav-icon"></i> <span>즐겨찾기</span>
 												</button>
 											</div>
-
 										</div>
-
 									</div>
 
 									<c:if test="${bsd_date == null}">
+
 										<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}"
-											class="btn btn-block btn-xs btn-success"  style="margin: 0 0 15px 0;">예약하기</a>
+											class="btn btn-block btn-xs btn-success" id="bookingBtn"
+											style="margin: 0 0 15px 0;">예약하기</a>
 									</c:if>
 									<c:if test="${bsd_date != null}">
 										<a
 											href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=${bsd_date}"
-											class="btn btn-block btn-xs btn-success"  style="margin: 0 0 15px 0;">예약하기</a>
+											class="btn btn-block btn-xs btn-success" id="bookingBtn"
+											style="margin: 0 0 15px 0;">예약하기</a>
 									</c:if>
-
-
 
 									<ul class="nav nav-pills bg-light nav-justified mb-3">
 										<li class="nav-item"><a href="#businessBasicInfo"
@@ -199,6 +198,21 @@
 		}
 	});
 
+	$("#bookingBtn").click(function() {
+		var no = "${no}";
+		if (no == null || no == "") {
+			var con = confirm("예약서비스는 로그인 후 이용이 가능합니다. 로그인 하시겠습니까?");
+			con;
+			if (con == false) {
+				return false;
+			} else {
+				$("#bookingBtn").attr('href', 'loginForm');
+				$("#bookingBtn").submit();
+			}
+			;
+		}
+	});
+
 	$("#fav-button").click(function() {
 		var no = "${no}";
 		var bus_no = "${bus_no}";
@@ -266,7 +280,8 @@
 			function() {
 				$.ajax({
 					type : 'post',
-					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code=' + bct_code,
+					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code='
+							+ bct_code,
 					dataType : 'html',
 					async : false,
 					success : function(data) {
@@ -303,7 +318,8 @@
 	function businessDetailNoticeList() {
 		$.ajax({
 			type : 'post',
-			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code=' + bct_code,
+			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code='
+					+ bct_code,
 			dataType : 'html',
 			success : function(data) {
 				$('#businessDetailNoticeList').html(data);
