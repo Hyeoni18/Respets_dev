@@ -56,7 +56,7 @@
 											<span class="float-left mr-4"> <img id="perProfile"
 												src="${glr_loc}${glr_file}"
 												style="width: 150px; height: 150px; margin-top: 15px; margin-left: 20px;"
-												class="rounded-circle img-thumbnail"></span>
+												class="rounded-circle img-thumbnail"> <!-- ${img} --></span>
 											<div class="media-body">
 												<br />
 												<h3 class="mt-1 mb-1 text-white">
