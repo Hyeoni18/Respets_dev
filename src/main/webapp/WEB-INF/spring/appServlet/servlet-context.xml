@@ -187,6 +187,7 @@
 			<exclude-mapping path="/stepUpdate" />
 			<exclude-mapping path="/stepDelete" />
 			<exclude-mapping path="/personalBlacklist" />
+			<exclude-mapping path="/personalBlackListPage" />
 			<exclude-mapping path="/customerInfoDetail" />
 			<exclude-mapping path="/serviceUpdateForm" />
 			<exclude-mapping path="/serviceDelete" />

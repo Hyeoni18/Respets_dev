@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 직원 관리 </title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Respets :: 직원 관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -59,9 +60,9 @@
 						<h4 class="page-title">직원 관리</h4>
 					</div>
 					<!-- end page title -->
-
 					${code}
-					<div id="List"></div>
+									<div id="List"></div>
+
 
 				</div>
 				<!-- container -->
@@ -87,32 +88,30 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script	src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
 <script>
-
-
-function chk(val) {
-	console.log(val);
-	$("#List *").remove();
-	var code = val;
-	var url = "stepList?bct_code="+code;
-	Aj(url,"#List");
-	function Aj(url, position) {
-		$.ajax({
-			url: url,
-			type: "post",
-			dataType: "text",
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				$(position).append(data);
-			},
-			error: function(error) {
-				console.log("error");
-			}
-		}); //ajax End
-	} 
-}
+	function chk(val) {
+		console.log(val);
+		$("#List *").remove();
+		var code = val;
+		var url = "stepList?bct_code=" + code;
+		Aj(url, "#List");
+		function Aj(url, position) {
+			$.ajax({
+				url : url,
+				type : "post",
+				dataType : "text",
+				contentType : 'application/json; charset=utf-8',
+				success : function(data) {
+					$(position).append(data);
+				},
+				error : function(error) {
+					console.log("error");
+				}
+			}); //ajax End
+		}
+	}
 </script>
 </html>

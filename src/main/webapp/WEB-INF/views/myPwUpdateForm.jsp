@@ -58,12 +58,12 @@
 												<div class="form-group mb-3">
 													<label>새로운 비밀번호 <span style="color: red">*</span></label> <input
 														type="password" name="newPw" id="newPw"
-														onkeyup="pw_check();" class="form-control" />
+														onchange="pw_check();" class="form-control" />
 												</div>
 												<div class="form-group mb-3">
 													<label>새로운 비밀번호 확인<span style="color: red">*</span></label>
 													<input type="password" id="newChkPw" class="form-control"
-														onkeyup="pw_check();" />
+														onchange="pw_check();" />
 													<div class="registrationFormAlert" id="same"></div>
 												</div>
 												<div>
@@ -98,6 +98,8 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
+$('#success').hide();
+$('#same').hide();
 	function nowPwCheck() {
 		var nowPw = $("#nowPw").val();
 		$.ajax({
@@ -110,9 +112,11 @@
 				console.log("성공");
 				if (result == 1) {
 					$('#success').html("비밀번호 확인 성공").css('color', 'blue');
+					$('#success').show();
 					$('#pwOk').removeAttr("disabled");
 				} else {
-					$("#same").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
+					$("#success").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
+					$('#success').show();
 					$('#pwOk').attr('disabled', 'disabled');
 				}
 			},
@@ -126,13 +130,17 @@
 		var newChkPw = $('#newChkPw').val();
 		if (newPw != newChkPw) {
 			$("#same").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
+			$('#same').show();
 			$('#pwOk').attr('disabled', 'disabled');
 		}
 		if (newPw == '' || newChkPw == '') {
 			$("#same").html("비밀번호를 입력해주세요.").css('color', 'red');
+			$('#same').show();
 			$('#pwOk').attr('disabled', 'disabled');
-		} else {
+		}
+		if (newPw == newChkPw) {
 			$("#same").html("비밀번호가 일치합니다.").css('color', 'blue');
+			$('#same').show();
 			$('#pwOk').removeAttr("disabled");
 		}
 	}

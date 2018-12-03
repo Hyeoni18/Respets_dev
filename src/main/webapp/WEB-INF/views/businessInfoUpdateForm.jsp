@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 회원 정보 수정</title>
 <!-- App favicon -->
 <link rel="shortcut icon"
@@ -98,10 +97,10 @@
 													</div>
 												</div>
 												<div class="form-group mb-3">
-													<input type="text" class="form-control" name="bus_addr" value="${b.bus_addr}" readonly="readonly" />
+													<input type="text" class="form-control" name="bus_addr" id="주소" value="${b.bus_addr}" readonly="readonly" />
 												</div>
 													<div class="form-group mb-3">
-													<input type="text" class="form-control" name="bus_addr2" value="${b.bus_addr2}" />
+													<input type="text" class="form-control" name="bus_addr2" id="상세주소" value="${b.bus_addr2}" />
 												</div>
 												<div>
 													<input type="submit" class="btn btn-success"
@@ -148,6 +147,7 @@
 		} // else End
 	} // fct End
 </script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 	// 다음 주소 API 함수
 	function findAddr() {
