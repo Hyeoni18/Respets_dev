@@ -72,7 +72,7 @@
 							<div class="card text-white bg-mint">
 								<div class="card-body">
 									<blockquote class="card-bodyquote">
-										<form action="searchList" method="get">
+										<form action="searchList" method="get" name="searchFrm">
 											<div class="col-lg-2" data-select2-id="276"
 												style="float: left;">
 												<h5>서비스 선택</h5>
@@ -141,7 +141,7 @@
 											</div>
 											<div class="col-lg-2"
 												style="float: left; margin-top: 26px; text-align: center;">
-												<input type="submit" class="btn btn-secondary btn-big"
+												<input type="submit" class="btn btn-secondary btn-big" id="searchBtn"
 													value="검색" />
 											</div>
 											<!-- end col -->
@@ -281,5 +281,28 @@
 <!-- 서진 : 서비스 종류를 추가하는 script -->
 <script>
 	document.getElementById('bct_code').innerHTML = "${bct}";
+	
+	$("#searchBtn").click(function(){
+		var frm = document.searchFrm;
+		for(var i = 0; i<frm.length; i++){
+			if(frm[i].value=="" || frm[i].value==null){
+				if(frm[i].name=="bct_code"){
+					alert("서비스를 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+				if(frm[i].name=="city"){
+					alert("지역을 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+				if(frm[i].name=="bk_date"){
+					alert("날짜를 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+			}
+		}
+	})
 </script>
 </html>

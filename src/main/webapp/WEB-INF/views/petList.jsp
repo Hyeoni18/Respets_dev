@@ -61,21 +61,27 @@
 				
 				<!-- Start Content-->
 				<div class="container-fluid">
-				${petEmpty}
+				
 					<!-- start page title -->
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<form class="form-inline">
-								<a href="petInsertForm?per_no=${per_no}" class="btn btn-success">반려동물
+								<a href="petInsertForm?per_no=${per_no}" class="btn btn-outline-success">반려동물
 									등록</a>
 							</form>
 						</div>
 						<h4 class="page-title">나의 반려동물 목록</h4>
+						<c:if test="${empty petList}">
+							<div class='alert alert-info' role='alert' style='margin-bottom:0;'>
+							<i class='dripicons-information mr-2'></i> 반려동물을 등록하셔야 <strong>예약 서비스</strong>
+						&nbsp;이용이 가능합니다!</div>
+						</c:if>
 					</div>
 					<!-- end page title -->
 
 					<div class="row">
 						<div class="col-12">
+						
 							<div class="card-deck-wrapper">
 								<div class="card-deck">
 									

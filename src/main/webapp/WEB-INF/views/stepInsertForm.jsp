@@ -65,8 +65,7 @@
 										<div class="row">
 										<div class="col-lg-6">
 										<div class="form-group mb-3">
-											<label for="example-fileinput" style="margin-right: 15px;">프로필
-												사진</label> <input type="file" name="emp_photo" />
+											<label for="example-fileinput" style="margin-right: 15px;">자격증</label> <input type="file" name="emp_photo" />
 										</div>
 										<div class="form-group mb-3">
 											<label for="simpleinput">이름</label> <input type="text"
@@ -81,7 +80,7 @@
 												class="form-control" name="emp_part" />
 										</div>
 										<div class="form-group mb-3">
-											<label for="example-fileinput" style="margin-right: 15px;">자격증</label>
+											<label for="example-fileinput" style="margin-right: 15px;">프로필 사진</label>
 											<input type="file" name="emp_license" />
 										</div>
 										</div>

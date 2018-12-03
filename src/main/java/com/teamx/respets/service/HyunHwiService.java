@@ -1445,7 +1445,7 @@ public class HyunHwiService {
 			sb.append("<li class='nav-item'><a href='javascript:void(0)' onclick='chk(\"" + bct_code
 					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>");
 			if(bct_code=="M") {sb.append("<i class=\"mdi mdi-hospital font-18\"></i>");}
-			if(bct_code=="B") {sb.append("<i class=\"mdi mdi-bow-tie font-18\"></i>");}
+			if(bct_code=="B") {sb.append("<i class=\"mdi mdi-content-cut font-18\"></i>");}
 			if(bct_code=="H") {sb.append("<i class=\"mdi mdi-home font-18\"></i>");}
 			sb.append("<span class=\"d-none d-lg-block\">"+bct_name+"</span>"
 					+ "</a></li>");
@@ -1511,8 +1511,11 @@ public class HyunHwiService {
 			sb.append("</div>");
 			sb.append("</div>");
 			sb.append("</div>");
-		} else {
-			sb.append("<script>alert('직원을 등록해주세요');</script>");
+		} else if(list==null) {
+			/*sb.append("<script>alert('직원을 등록해주세요');</script>");*/
+			sb.append("<div class=\"alert alert-info\" role=\"alert\" style='margin-top:2rem;margin-bottom:0;'>"
+						+ "<i class=\"dripicons-information mr-2\"></i> 직원을 등록해주셔야 <strong>예약</strong>"
+						+ "을&nbsp;받을 수 있습니다!</div>");
 		}
 		/*if (count % 3 < 3 && count % 3 != 0) {
 			for (int i = 0; i < 3 - count % 3; i++) {
@@ -2609,7 +2612,7 @@ public class HyunHwiService {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
 			sb.append(
-					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"businessList('"
+					"<span>&nbsp;&nbsp;</span><a class='btn btn-link btn-rounded' href='javascript:void(0)' onclick=\"businessList('"
 							+ bct_code + "','" + tag_no + "','" + outputDate + "','" + city + "','" + pNo + "')\">"
 							+ tag_name + "</a>");
 		}
