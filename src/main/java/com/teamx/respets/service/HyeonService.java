@@ -637,7 +637,7 @@ public class HyeonService {
 		mav.addObject("result", json);
 		request.getSession().setAttribute("loc", glr_loc);
 		request.getSession().setAttribute("photo", glr_file);
-		mav.setViewName("businessInfoDetail");
+		mav.setViewName("redirect:/businessInfoDetail");
 		return mav;
 	}
 
