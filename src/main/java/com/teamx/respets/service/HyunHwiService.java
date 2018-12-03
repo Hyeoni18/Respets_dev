@@ -1442,9 +1442,13 @@ public class HyunHwiService {
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\"" + bct_code
-					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'><i class='mdi mdi-account-circle font-18'></i>" + bct_name
-					+ "&nbsp;</a></li>");
+			sb.append("<li class='nav-item'><a href='javascript:void(0)' onclick='chk(\"" + bct_code
+					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>");
+			if(bct_code=="M") {sb.append("<i class=\"mdi mdi-hospital font-18\"></i>");}
+			if(bct_code=="B") {sb.append("<i class=\"mdi mdi-bow-tie font-18\"></i>");}
+			if(bct_code=="H") {sb.append("<i class=\"mdi mdi-home font-18\"></i>");}
+			sb.append("<span class=\"d-none d-lg-block\">"+bct_name+"</span>"
+					+ "</a></li>");
 		}
 		sb.append("</div>");
 		mav.addObject("code", sb.toString());
@@ -1491,7 +1495,7 @@ public class HyunHwiService {
 				 * "</div>");
 				 */
 				sb.append("<div class='col-lg-4'>");
-				sb.append("<div class='card d-block' style='text-align: center; margin: 0 0 20px 0;'>");
+				sb.append("<div class='card d-block' style='text-align: center; margin-bottom:20px;'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
 				sb.append("<img class='rounded-circle img-thumbnail' src='" + emp_loc + emp_photo
 						+ "' style='width: 150px;height: 150px;margin-top: 20px;'/>");

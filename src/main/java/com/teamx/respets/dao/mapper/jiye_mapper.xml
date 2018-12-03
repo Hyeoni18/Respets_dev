@@ -4,6 +4,17 @@
 
 <mapper namespace="com.teamx.respets.dao.IJiyeDao">
 	<!-- NCLOB 을 해시맵으로 가져올 땐 resultMap을 설정해주어야 스트링형으로 가져올 수 있다. -->
+	<resultMap type="HashMap" id="businessDetailNoticeList">
+		<result property="BBO_NO" column="BUS_NO" />
+		<result property="BBO_NO" column="BBO_NO" />
+		<result property="BCT_NAME" column="BCT_NAME" />
+		<result property="BBC_NAME" column="BBC_NAME" />
+		<result property="BBO_TITLE" column="BBO_TITLE" />
+		<result property="BBO_CTT" column="BBO_CTT" jdbcType="CLOB"
+			javaType="java.lang.String" />
+		<result property="BBO_DATE" column="BBO_DATE" />
+	</resultMap>
+	
 	<resultMap type="HashMap" id="noticeDetail">
 		<result property="BBO_NO" column="BBO_NO" />
 		<result property="BCT_NAME" column="BCT_NAME" />
@@ -284,7 +295,7 @@
 		SELECT BUS.BUS_NO,
 		BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL,
 		BUS.BUS_NAME, BUS.BUS_CEO, BUS.BUS_LCNO, BUS.BUS_PHONE,
-		BUS.BUS_ADDR, BUS.BUS_ADDR2, BUS.BUS_TIME, SVC.SVC_PRI
+		BUS.BUS_ADDR, BUS.BUS_ADDR2, TO_CHAR(BUS.BUS_TIME, 'YYYY-MM-DD HH24:MI') AS BUS_TIME, SVC.SVC_PRI
 		FROM BUS INNER JOIN SVC
 		ON SVC.BUS_NO = BUS.BUS_NO
 		INNER JOIN BCT
@@ -310,12 +321,12 @@
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
 	
-	<select id="businessDetailNoticeList" parameterType="HashMap" resultType="HashMap">
-	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE, X.BCT_CODE
+	<select id="businessDetailNoticeList" parameterType="HashMap" resultMap="businessDetailNoticeList">
+	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE
 		FROM (
-			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE, BBV.BCT_CODE
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_CTT, BBV.BBO_DATE, BBV.BCT_CODE
 			FROM(
-				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_CTT, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
 				FROM BUS_DETAIL_NOTICE_VIEW
 				WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 				ORDER BY BBO_DATE DESC)BBV

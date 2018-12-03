@@ -103,9 +103,33 @@ public class JinController {
 		ModelAndView mav = new ModelAndView();
 		if (request.getSession().getAttribute("no").toString().substring(0, 1).equals("P")) {
 			mav.setViewName("redirect:/recentMyBookingList");
-		} else {
+		} else if(request.getSession().getAttribute("no").toString().substring(0, 1).equals("B")) {
 			mav.setViewName("redirect:/todayScheduleList");
+		} else {
+			mav.setViewName("redirect:/unconfirmBusiness");
 		} // else End
+		return mav;
+	} // method End
+
+	@RequestMapping(value = "/businessPwUpdateForm", method = RequestMethod.GET)
+	public ModelAndView businessPwUpdateForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("businessPwUpdateForm");
+		return mav;
+	} // method End
+	
+	@RequestMapping(value = "/businessPwUpdate", method = RequestMethod.POST)
+	public ModelAndView businessPwUpdate(Business b, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		jinSvc.businessPwUpdate(b, request);
+		mav.setViewName("redirect:/businessInfoDetail");
+		return mav;
+	} // method End
+	
+	@RequestMapping(value = "/businessInfoUpdateForm", method = RequestMethod.GET)
+	public ModelAndView businessPwUpdate(HttpServletRequest request) {
+		ModelAndView mav = jinSvc.businessInfoUpdateForm(request);
+		mav.setViewName("businessInfoUpdateForm");
 		return mav;
 	} // method End
 

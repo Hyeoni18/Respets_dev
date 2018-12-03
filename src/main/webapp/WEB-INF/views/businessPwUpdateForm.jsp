@@ -4,10 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Respets :: 비밀번호 수정</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-	
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
 <!-- App css -->
@@ -46,29 +43,25 @@
 						<div class="col-6">
 							<div class="card">
 								<div class="card-body">
-									<form name="myPwUpdateForm" action="myPwUpdate" method="post">
+									<form action="businessPwUpdate" method="post">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group mb-3">
-													<label>현재 비밀번호 <span style="color: red">*</span></label> <input
-														type="password" id="nowPw" onchange="nowPwCheck();"
-														class="form-control" />
-														<div id="success"></div>
+													<label>현재 비밀번호 <span style="color: red">*</span></label>
+													<input type="password" id="nowPw" onchange="nowPwCheck();" class="form-control" />
+													<div id="result"></div>
 												</div>
 												<div class="form-group mb-3">
-													<label>새로운 비밀번호 <span style="color: red">*</span></label> <input
-														type="password" name="newPw" id="newPw"
-														onchange="pw_check();" class="form-control" />
+													<label>새로운 비밀번호 <span style="color: red">*</span></label>
+													<input type="password" name="bus_pw" id="newPw" onchange="newPwcheck();" class="form-control" />
 												</div>
 												<div class="form-group mb-3">
 													<label>새로운 비밀번호 확인<span style="color: red">*</span></label>
-													<input type="password" id="newChkPw" class="form-control"
-														onchange="pw_check();" />
-													<div class="registrationFormAlert" id="same"></div>
+													<input type="password" id="newPwChk" onkeyup="pwCheck();" class="form-control" />
+													<div id="pwCheck"></div>
 												</div>
 												<div>
-													<input type="submit" class="btn btn-success" id="pwOk"
-														onclick="forward(this)" value="수정 완료" disabled>
+													<input type="submit" class="btn btn-success" id="button" onclick="check();" value="수정 완료" disabled="disabled">
 												</div>
 											</div>
 										</div>
@@ -98,26 +91,20 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>
-$('#success').hide();
-$('#same').hide();
+	var newPw = null;
+	
 	function nowPwCheck() {
 		var nowPw = $("#nowPw").val();
 		$.ajax({
-			url : "myPwCheck",
-			data : {
-				"now" : nowPw
-			},
+			url : "nowPwCheck",
+			data : { "bus_pw" : nowPw },
 			type : "post",
 			success : function(result) {
-				console.log("성공");
 				if (result == 1) {
-					$('#success').html("비밀번호 확인 성공").css('color', 'blue');
-					$('#success').show();
-					$('#pwOk').removeAttr("disabled");
+					$('#result').html("비밀번호가 일치합니다.").css('color', 'blue');
+					$('#button').removeAttr("disabled");
 				} else {
-					$("#success").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
-					$('#success').show();
-					$('#pwOk').attr('disabled', 'disabled');
+					$("#result").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
 				}
 			},
 			error : function(error) {
@@ -125,28 +112,23 @@ $('#same').hide();
 			}
 		});
 	}
-	function pw_check() {
-		var newPw = $("#newPw").val();
-		var newChkPw = $('#newChkPw').val();
-		if (newPw != newChkPw) {
-			$("#same").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
-			$('#same').show();
-			$('#pwOk').attr('disabled', 'disabled');
-		}
-		if (newPw == '' || newChkPw == '') {
-			$("#same").html("비밀번호를 입력해주세요.").css('color', 'red');
-			$('#same').show();
-			$('#pwOk').attr('disabled', 'disabled');
-		}
-		if (newPw == newChkPw) {
-			$("#same").html("비밀번호가 일치합니다.").css('color', 'blue');
-			$('#same').show();
-			$('#pwOk').removeAttr("disabled");
+	
+	function newPwcheck() {
+		newPw = $("#newPw").val();
+	}
+	
+	function pwCheck() {
+		var newPwChk = $("#newPwChk").val();
+		if (newPw === newPwChk) {
+			$('#pwCheck').html("비밀번호가 일치합니다.").css('color', 'blue');
+			$('#button').removeAttr("disabled");
+		} else {
+			$("#pwCheck").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
 		}
 	}
-	function forward() {
-		alert("비밀번호 수정 성공했습니다.");
+	
+	function check() {
+		alert("비밀번호 수정이 성공했습니다.");
 	}
-	${fail}
 </script>
 </html>

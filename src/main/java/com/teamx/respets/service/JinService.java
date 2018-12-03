@@ -402,7 +402,8 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
+			sb.append("<tr><td><a href='myBookingDetail?" + list.get(i).get("BK_NO") + "'>" + list.get(i).get("BK_NO"));
+			sb.append("</a></td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
 			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
@@ -430,5 +431,25 @@ public class JinService {
 		mav.addObject("list", aboList);
 		return mav;
 	} // method End
+
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = jinDao.nowPwCheck(b);
+		return result;
+	}
+
+	public void businessPwUpdate(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		jinDao.businessPwUpdate(b);
+	}
+
+	public ModelAndView businessInfoUpdateForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Business b = new Business();
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		b = jinDao.businessInfoUpdateForm(b);
+		mav.addObject("b", b);
+		return mav;
+	}
 
 } // class End

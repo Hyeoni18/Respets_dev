@@ -178,5 +178,17 @@
 		ORDER BY ABO.ABO_NO DESC) ABO
 		WHERE ROWNUM <= 3]]>
 	</select>
+	
+	<select id="nowPwCheck" parameterType="Business" resultType="int">
+		SELECT COUNT(*) FROM BUS WHERE BUS_NO = #{bus_no} AND BUS_PW = #{bus_pw}
+	</select>
+	
+	<update id="businessPwUpdate" parameterType="Business">
+		UPDATE BUS SET BUS_PW = #{bus_pw} WHERE BUS_NO = #{bus_no}
+	</update>
+	
+	<select id="businessInfoUpdateForm" parameterType="Business" resultType="Business">
+		SELECT * FROM BUS WHERE BUS_NO = #{bus_no}
+	</select>
 
 </mapper>

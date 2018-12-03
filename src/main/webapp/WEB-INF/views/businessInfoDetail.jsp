@@ -6,76 +6,173 @@
 <meta charset="UTF-8">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 기본 정보 확인</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Respets :: 나의 회원 정보</title>
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
-
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
-
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
+	<!-- Begin page -->
+	<div class="wrapper">
 
-		<h1>기본 정보 확인</h1>
-		<hr />
-		<form action="businessInfoUpdateForm">
-			<div>
-				<table>
-					<tr>
-						<td>사업자 번호 :</td>
-						<td id="BUS_LCNO"></td>
-					</tr>
-					<tr>
-						<td>업체명 :</td>
-						<td id="BUS_NAME"></td>
-					</tr>
-					<tr>
-						<td>대표자명 :</td>
-						<td id="BUS_CEO"></td>
-					</tr>
-					<tr>
-						<td>업체 연락처 :</td>
-						<td id="BUS_PHONE"></td>
-					</tr>
-					<tr>
-						<td>사업장 주소 :</td>
-						<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
-							id="BUS_ADDR2"></span></td>
-					</tr>
-					<tr>
-						<td>주력서비스 :</td>
-						<td id="BCT_NAME"></td>
-					</tr>
-				</table>
-				<br>
-				<div style='width: 200px; height: 300px;'>${img}</div>
-			</div>
-			<h3>※ 업종 정보 및 직원 정보를 등록하셔야 예약서비스 제공이 가능합니다.</h3>
-			<div>
-				<button class="btn btn-outline-secondary">수정</button>
-			</div>
-		</form>
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
 
-		<%@ include file="footer.html"%>
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<h4 class="page-title">나의 회원 정보</h4>
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="card bg-primary">
+								<div class="card-body profile-user-box">
+									<div class="row">
+										<div class="media">
+											<span class="float-left mr-4"> <img id="perProfile"
+												src="${glr_loc}${glr_file}"
+												style="width: 150px; height: 150px; margin-top: 15px; margin-left: 20px;"
+												class="rounded-circle img-thumbnail"> <!-- ${img} --></span>
+											<div class="media-body">
+												<br />
+												<h3 class="mt-1 mb-1 text-white">
+													<p id="BUS_NAME"></p>
+												</h3>
+												<p class="mt-1 mb-1 text-white">
+													<span id="BUS_PHONE"></span>
+												</h5>
+												<p class="mt-1 mb-1 text-white">
+													<span id="BUS_ADDR"></span>&nbsp;<span id="BUS_ADDR2"></span>
+												</h5>
+												<br /> <br />
+												<button type="button" class="btn btn-light"
+													onclick="location.href='./businessPwUpdateForm'">
+													<i class=" mdi mdi-lock"></i> 비밀번호 수정
+												</button>
+												&nbsp;&nbsp;
+												<button type="button" class="btn btn-light"
+													onclick="location.href='./businessInfoUpdateForm'">
+													<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정
+												</button>
+												&nbsp;&nbsp;
+												<button type="button" class="btn btn-light"
+													onclick="businessDelete();" id="delete">
+													<i class="mdi mdi-delete-empty mr-1"></i> 회원 탈퇴
+												</button>
+											</div>
+											<!-- end media-body-->
+										</div>
+										<!-- end col-->
+									</div>
+									<!-- end row -->
+								</div>
+								<!-- end card-body/ profile-user-box-->
+							</div>
+							<!-- end card -->
+							<div class="card">
+								<div class="card-body">
+									<h4 class="header-title mt-0 mb-3">Detail Information</h4>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="text-left">
+												<table>
+													<tr>
+														<td><p class="text-muted" align="right">
+																<strong>주력 서비스 :&nbsp;&nbsp;</strong>
+															</p></td>
+														<td><p class="text-muted" id="BCT_NAME"></p></td>
+													</tr>
+													<tr>
+														<td><p class="text-muted" align="right">
+																<strong>대표자명 :&nbsp;&nbsp;</strong>
+															</p></td>
+														<td><p class="text-muted" id="BUS_CEO"></p></td>
+													</tr>
+													<tr>
+														<td><p class="text-muted" align="right">
+																<strong>사업자등록번호 :&nbsp;&nbsp;</strong>
+															</p></td>
+														<td><p class="text-muted" id="BUS_LCNO"></p></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<!-- end col -->
+
+
+									</div>
+									<!-- end row-->
+
+								</div>
+								<!-- end card-body -->
+							</div>
+							<!-- end card -->
+						</div>
+					</div>
+				</div>
+				<!-- container -->
+
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
+		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
 	</div>
+	<!-- END wrapper -->
+
+
+	<!-- 
+	<form action="businessInfoUpdateForm">
+		<div>
+		<div>
+			<button class="btn btn-outline-secondary">수정</button>
+		</div>
+	</form> -->
 </body>
+<script src="resources/dist/assets/js/app.min.js"></script>
 <script>
 	var jsonData = ${result};
 	$.each(jsonData, function(key, value) {
 		$('#' + key).html(value);
 	});
+
+	function name() {
+		var result = confirm("예약 내역을 제외한 모든 데이터가 삭제되고, 재가입 시 데이터 복구가 어렵습니다. 정말 탈퇴하시겠습니까?");
+		if (result) {
+			location.href = "businessPartDelete";
+		}
+	}
 </script>
 </html>

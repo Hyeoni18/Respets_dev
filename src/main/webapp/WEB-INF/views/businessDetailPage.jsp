@@ -60,7 +60,7 @@
 											<!-- business profile image -->
 											<%-- <img src="${bus_img}" alt="business profile image"> --%>
 											<img src="${bus_img}" alt="business profile image"
-												style="width: 100%; height: 300px;">
+												style="width: 100%; height: 100%;">
 
 										</div>
 										<div class="badge badge-secondary"
@@ -86,22 +86,21 @@
 													<i class="mdi mdi-heart mr-1" id="fav-icon"></i> <span>즐겨찾기</span>
 												</button>
 											</div>
-
 										</div>
-
 									</div>
 
 									<c:if test="${bsd_date == null}">
+
 										<a href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}"
-											class="btn btn-block btn-xs btn-success"  style="margin: 0 0 15px 0;">예약하기</a>
+											class="btn btn-block btn-xs btn-success" id="bookingBtn"
+											style="margin: 0 0 15px 0;">예약하기</a>
 									</c:if>
 									<c:if test="${bsd_date != null}">
 										<a
 											href="bookingForm?bus_no=${bus_no}&bct_code=${bct_code}&date=${bsd_date}"
-											class="btn btn-block btn-xs btn-success"  style="margin: 0 0 15px 0;">예약하기</a>
+											class="btn btn-block btn-xs btn-success" id="bookingBtn"
+											style="margin: 0 0 15px 0;">예약하기</a>
 									</c:if>
-
-
 
 									<ul class="nav nav-pills bg-light nav-justified mb-3">
 										<li class="nav-item"><a href="#businessBasicInfo"
@@ -173,7 +172,8 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<!-- <script src="resources/dist/assets/js/pages/demo.project-detail.js"></script> -->
 	<!-- end demo js-->
 
 </body>
@@ -195,6 +195,21 @@
 			}
 		} else {
 			$("#favorite").hide(); //즐겨찾기 숨기기
+		}
+	});
+
+	$("#bookingBtn").click(function() {
+		var no = "${no}";
+		if (no == null || no == "") {
+			var con = confirm("예약서비스는 로그인 후 이용이 가능합니다. 로그인 하시겠습니까?");
+			con;
+			if (con == false) {
+				return false;
+			} else {
+				$("#bookingBtn").attr('href', 'loginForm');
+				$("#bookingBtn").submit();
+			}
+			;
 		}
 	});
 
@@ -265,7 +280,8 @@
 			function() {
 				$.ajax({
 					type : 'post',
-					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code=' + bct_code,
+					url : 'businessBasicInfo?bus_no=' + bus_no + '&bct_code='
+							+ bct_code,
 					dataType : 'html',
 					async : false,
 					success : function(data) {
@@ -302,7 +318,8 @@
 	function businessDetailNoticeList() {
 		$.ajax({
 			type : 'post',
-			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code=' + bct_code,
+			url : 'businessDetailNoticeList?bus_no=' + bus_no + '&bct_code='
+					+ bct_code,
 			dataType : 'html',
 			success : function(data) {
 				$('#businessDetailNoticeList').html(data);
