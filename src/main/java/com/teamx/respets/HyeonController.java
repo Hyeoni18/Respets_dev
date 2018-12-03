@@ -72,7 +72,7 @@ public class HyeonController {
 	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
 	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
 		mav = hy.myInfoUpdate(request);
-		mav.setViewName("myInfo");
+		mav.setViewName("redirect:/myInfo");
 		return mav;
 	}
 
@@ -161,13 +161,13 @@ public class HyeonController {
 		return mav;
 	}
 
-	/* 혜연 */
-	@RequestMapping(value = "/businessInfoUpdateForm")
-	public ModelAndView businessInfoUpdateForm(HttpSession session) {
-		mav.addObject("no", session.getAttribute("no"));
-		mav.setViewName("businessInfoUpdateForm");
-		return mav;
-	}
+//	/* 혜연 */
+//	@RequestMapping(value = "/businessInfoUpdateForm")
+//	public ModelAndView businessInfoUpdateForm(HttpSession session) {
+//		mav.addObject("no", session.getAttribute("no"));
+//		mav.setViewName("businessInfoUpdateForm");
+//		return mav;
+//	}
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessPartDelete")

@@ -75,6 +75,10 @@
 					<li class="side-nav-item"><a href="stepListBut" class="side-nav-link">
 							<i class="dripicons-user-id"></i> <span> 직원 관리 </span>
 					</a></li>
+					
+					<li class="side-nav-item"><a href="businessInfoDetail" class="side-nav-link">
+							<i class="dripicons-user"></i> <span> 나의 회원 정보 </span>
+					</a></li>
 	
 					<li class="side-nav-item"><a href="businessNoticeList" class="side-nav-link">
 							<i class="dripicons-clipboard"></i> <span> 공지사항 관리 </span>

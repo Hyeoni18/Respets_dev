@@ -25,106 +25,149 @@
 
 </head>
 <body onload="test()">
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-12">
-					<div class="page-title-box">
-						<div class="page-title-right">
-							<form class="form-inline"></form>
-						</div>
-						<h4 class="page-title">오늘 일정 목록</h4>
-					</div>
-				</div>
-			</div>
+	<!-- Begin page -->
+	<div class="wrapper">
 
-			<div class="row">
-				<div class="col-xl-12">
-					<div class="card mb-0">
-						<div class="card-body">
-							<span class="text-muted font-14 mb-4"> 오늘의 예약을 확인하세요. </span> <br />
-							<br /> <input type='radio' name='radio' class='radio' value="전체" onchange='test();' checked="checked"/>전체
-							${bctList}
-						
-									
-										<div id="No" style="border: 1px solid red" class="table-responsive-sm">
-										
-										</div>
-										<div id="Ok" style="border: 1px solid yellow">
-										
-										</div>
-											
-								
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
 
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
 								</div>
-								<!-- end card body-->
+								<h4 class="page-title">오늘 일정 목록</h4>
 							</div>
-							<!-- end card -->
 						</div>
-						<!-- end col -->
 					</div>
+					<!-- end page title -->
+									<input type='radio' name='radio' class='radio' value="전체" onchange='test();' checked="checked" />전체 ${bctList}
+									<br /><br />
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card mb-0">
+								<div class="card-body">
+									<span class="text-muted font-14 mb-4">방문 확인 처리되지 않은 예약입니다.</span>
+									<br /> <br/>
+									<div id="No" class="table-responsive-sm"></div>
+								</div>
+							</div>
+							<!-- end card body-->
+						</div>
+						<!-- end card -->
+					</div>
+					<!-- end col -->
+					<br />
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card mb-0">
+								<div class="card-body">
+									<span class="text-muted font-14 mb-4">방문 확인 처리된 예약입니다.</span>
+									<br /> <br />
+									<div id="Ok" class="table-responsive-sm"></div>
+								</div>
+							</div>
+							<!-- end card body-->
+						</div>
+						<!-- end card -->
+					</div>
+					<!-- end col -->
+					
+					
 				</div>
+				<!-- end row -->
 			</div>
-			<%@ include file="footer.html"%>
+			<!-- container -->
+		</div>
+		<!-- content -->
+
+		<!-- Footer Start -->
+		<%@ include file="footer.html"%>
+		<!-- end Footer -->
+
+	</div>
+
+	<!-- ============================================================== -->
+	<!-- End Page content -->
+	<!-- ============================================================== -->
 </body>
+<script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	function test() { /* 사용 */
 		//$('input[type="radio"]').click( function() {
-			var radio = $('input[type="radio"]:checked').val();
-			//전체리스트 불러오기
-			if (radio == '전체') {
-				$.ajax({
-					url : "todayAllScheduleList?no=${no}",
-					type : "post",
-					dataType : "text",
-					success : function(data) {
-						$('#No').html(data);
-						$('.unNoshow').hide();
-						$.ajax({
-							url : "todayAllScheduleListOk?no=${no}",
-							type : "post",
-							dataType : "text",
-							success : function(data) {
-								$('#Ok').html(data);
-							},
-							error : function(error) {
-								console.log(error);
-							}
-						});
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-			}
-			if (radio == '병원' || radio == '미용' || radio == '호텔') { /* 수정 */
-				$.ajax({
-					url : 'bctBookingList?no=${no}&bct_name='+ radio,
-					type : 'post',
-					dataType : "text",
-					success : function(data) {
-						$('#No').html(data);
-						$('.unNoshow').hide();
-						$.ajax({
-							url : "bctBookingListOk?no=${no}&bct_name="+ radio,
-							type : "post",
-							dataType : "text",
-							success : function(data) {
-								$('#Ok').html(data);
-							},
-							error : function(error) {
-								console.log(error);
-							}
-						});
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
-			}
-	//	});
+		var radio = $('input[type="radio"]:checked').val();
+		//전체리스트 불러오기
+		if (radio == '전체') {
+			$.ajax({
+				url : "todayAllScheduleList?no=${no}",
+				type : "post",
+				dataType : "text",
+				success : function(data) {
+					$('#No').html(data);
+					$('.unNoshow').hide();
+					$.ajax({
+						url : "todayAllScheduleListOk?no=${no}",
+						type : "post",
+						dataType : "text",
+						success : function(data) {
+							$('#Ok').html(data);
+						},
+						error : function(error) {
+							console.log(error);
+						}
+					});
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			});
+		}
+		if (radio == '병원' || radio == '미용' || radio == '호텔') { /* 수정 */
+			$.ajax({
+				url : 'bctBookingList?no=${no}&bct_name=' + radio,
+				type : 'post',
+				dataType : "text",
+				success : function(data) {
+					$('#No').html(data);
+					$('.unNoshow').hide();
+					$.ajax({
+						url : "bctBookingListOk?no=${no}&bct_name=" + radio,
+						type : "post",
+						dataType : "text",
+						success : function(data) {
+							$('#Ok').html(data);
+						},
+						error : function(error) {
+							console.log(error);
+						}
+					});
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			});
+		}
+		//	});
 	}
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');
