@@ -6,13 +6,7 @@
 <meta charset="utf-8" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Respets :: 인증하기</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Respets :: 기업 인증</title>
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
@@ -38,9 +32,6 @@
 			<div class="content">
 
 				<!-- Topbar Start -->
-				<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
@@ -54,7 +45,7 @@
 								<div class="page-title-right">
 									<form class="form-inline"></form>
 								</div>
-								<h4 class="page-title">인증하기</h4>
+								<h4 class="page-title">기업 인증</h4>
 							</div>
 						</div>
 					</div>
@@ -64,7 +55,6 @@
 						<div class="col-xl-12">
 							<div class="card mb-0">
 								<div class="card-body">
-									<span class="text-muted font-14 mb-4">인증하세요.</span> <br />
 									<div class="table-responsive-sm">
 										<table class="table table-centered mb-0">
 											<tr>
@@ -72,7 +62,7 @@
 												<td>${bus_name}</td>
 											</tr>
 											<tr>
-												<th>서비스종류</th>
+												<th>서비스 종류</th>
 												<td>${bct_name}</td>
 											</tr>
 											<tr>
@@ -99,10 +89,11 @@
 												<td colspan='2'></td>
 											</tr>
 											<tr>
-												<th style='text-align:center;' colspan='2'>사업자등록증</th>
+												<th style='text-align: center;' colspan='2'>사업자등록증</th>
 											</tr>
 											<tr>
-												<td colspan='2' style='text-align: center;'><img style='width:80%; height:1000px;' alt="사업자등록증"
+												<td colspan='2' style='text-align: center;'><img
+													style='width: 80%; height: 1000px;' alt="사업자등록증"
 													src="${glr_loc}${glr_file}" /></td>
 											</tr>
 										</table>
@@ -150,7 +141,10 @@
 		if (con == false) {
 			return false;
 		} else {
-			${alert}
+			$
+			{
+				alert
+			}
 			location.href = './confirmLicense?${bus_no}';
 		}
 	}

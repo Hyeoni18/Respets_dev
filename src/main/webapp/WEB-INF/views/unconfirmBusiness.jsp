@@ -7,12 +7,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 미인증 기업 목록</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta
-	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
-	name="description" />
-<meta content="Coderthemes" name="author" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
@@ -25,67 +19,70 @@
 
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
+	<div class="wrapper">
+		<%@ include file="left-sidebar.jsp"%>
 
-	<!-- Left Sidebar End -->
+		<!-- Left Sidebar End -->
 
-	<!-- ============================================================== -->
-	<!-- Start Page Content here -->
-	<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
 
-	<div class="content-page">
-		<div class="content">
+		<div class="content-page">
+			<div class="content">
 
-			<!-- Topbar Start -->
-			<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
-			<%@ include file="topbar-dashboard.jsp"%>
-			<!-- end Topbar -->
+				<!-- Topbar Start -->
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
 
-			<!-- Start Content-->
-			<div class="container-fluid">
+				<!-- Start Content-->
+				<div class="container-fluid">
 
-				<!-- start page title -->
-				<div class="row">
-					<div class="col-12">
-						<div class="page-title-box">
-							<div class="page-title-right">
-								<form class="form-inline"></form>
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
+								</div>
+								<h4 class="page-title">미인증 기업 목록</h4>
 							</div>
-							<h4 class="page-title">미인증 기업 목록</h4>
 						</div>
 					</div>
-				</div>
-				<!-- end page title -->
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card mb-0">
-							<div class="card-body">
-								<span class="text-muted font-14 mb-4">인증 절차가 필요한 기업 목록입니다.</span> <br />
-								<div class="table-responsive-sm">
-									<table class="table table-centered mb-0"
-										style='text-align: center;'>
-										<thead>
-											<tr style="text-align: center;">
-												<th width='5%'>회원번호</th>
-												<th>업종</th>
-												<th>이메일</th>
-												<th>업체명</th>
-												<th>가입일</th>
-											</tr>
-											${bList}
-										</thead>
-									</table>
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card mb-0">
+								<div class="card-body">
+									<span class="text-muted font-14 mb-4">인증 절차가 필요한 기업
+										목록입니다.</span> <br /><br />
+									<div class="table-responsive-sm">
+										<table class="table table-centered mb-0"
+											style='text-align: center;'>
+											<thead>
+												<tr style="text-align: center;">
+													<th width='5%'>회원번호</th>
+													<th>업종</th>
+													<th>이메일</th>
+													<th>업체명</th>
+													<th>가입일</th>
+												</tr>
+												${bList}
+											</thead>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-			<!-- Footer Start -->
-			<%@ include file="footer.html"%>
-			<!-- end Footer -->
-				<script src="/resources/dist/assets/js/app.min.js"></script>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer Start -->
+	<%@ include file="footer.html"%>
+	<!-- end Footer -->
+	<script src="/resources/dist/assets/js/app.min.js"></script>
 </body>
 </html>
