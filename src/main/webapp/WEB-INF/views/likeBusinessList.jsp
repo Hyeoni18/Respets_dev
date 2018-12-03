@@ -1,4 +1,5 @@
 <!-- 서진 : 개인 즐겨찾기 페이지 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -61,6 +62,11 @@
 					<!-- start page title -->
 					<div class="page-title-box">
 						<h4 class="page-title">나의 즐겨찾기 목록</h4>
+						<c:if test="${empty list}">
+							<div class='alert alert-info' role='alert' style='margin-bottom:0;'>
+							<i class='dripicons-information mr-2'></i> 자주 이용하는 기업의 상세페이지를 <strong>즐겨찾기</strong>로 등록하고 간편하게 이용하세요!</div>
+						</c:if>
+						
 					</div>
 					<!-- end page title -->
 					<div class="row">

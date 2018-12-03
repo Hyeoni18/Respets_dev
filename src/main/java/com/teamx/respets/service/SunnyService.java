@@ -63,10 +63,6 @@ public class SunnyService {
 			mav.addObject("per_no", no);// 회원번호 담기
 			if (petList.size() > 0) {// 리스트가 존재하면
 				mav.addObject("petList", petList);// 반려동물 리스트 담기
-			} else {// 등록된 반려동물이 없으면
-				mav.addObject("petEmpty", "<div class=\"alert alert-info\" role=\"alert\" style='margin-top:2rem;margin-bottom:0;'>"
-						+ "<i class=\"dripicons-information mr-2\"></i> 반려동물을 등록하셔야 <strong>예약 서비스</strong>"
-						+ "&nbsp;이용이 가능합니다!</div>");
 			}
 			view = "petList";
 			mav.setViewName(view);

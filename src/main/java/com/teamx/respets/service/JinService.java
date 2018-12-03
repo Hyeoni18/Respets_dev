@@ -149,11 +149,6 @@ public class JinService {
 				hMap.put(name, value);
 			} // for End
 		} // if End
-		
-		/*삭제*/
-		hMap.put("bus_no", "B1000121");
-		hMap.put("bct_code", "B");
-		
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
 		if (hMap.get("pet_no") == null) {
