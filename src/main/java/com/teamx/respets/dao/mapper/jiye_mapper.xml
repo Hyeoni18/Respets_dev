@@ -288,11 +288,7 @@
 	<select id="businessGallery" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no}
-<<<<<<< HEAD
-        AND BCT_CODE=#{bct_code} AND GCT_NO=3
-=======
 		AND BCT_CODE=#{bct_code} AND GCT_NO=3
->>>>>>> 61bf233a9dc3c445d4bc34255efbeb3a87ab5cf7
 	</select>
 
 	<select id="getBusinessList" resultType="HashMap">
