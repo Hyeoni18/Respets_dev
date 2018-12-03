@@ -13,7 +13,6 @@
 <meta content="Coderthemes" name="author" />
 <!-- App favicon -->
 <link rel="shortcut icon" href="resources/images/logo-sm.png">
-
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
@@ -173,7 +172,7 @@
 
 	<!-- demo app -->
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
-	<!-- <script src="resources/dist/assets/js/pages/demo.project-detail.js"></script> -->
+	<!-- <script src="resources/dist/assets/js/pages/demo.project-detail.js"></script> --> 
 	<!-- end demo js-->
 
 </body>
@@ -209,7 +208,9 @@
 				$("#bookingBtn").attr('href', 'loginForm');
 				$("#bookingBtn").submit();
 			}
-			;
+		}else if(no.charAt(0)=='B' || no.charAt(0)=='1'){
+			alert("예약서비스는 개인회원만 이용이 가능합니다.");
+			return false;
 		}
 	});
 
