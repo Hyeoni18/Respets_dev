@@ -53,7 +53,7 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<form class="form-inline">
-								<a href="stepInsertFormBut" class="btn btn-outline-success">직원
+								<a href="stepInsertFormBut" class="btn btn-outline-info">직원
 									등록</a>
 							</form>
 						</div>
@@ -88,6 +88,7 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
+	<script src="resources/dist/assets/js/pages/demo.toastr.js"></script>
 	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
