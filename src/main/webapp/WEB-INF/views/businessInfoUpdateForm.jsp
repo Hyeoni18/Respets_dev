@@ -1,15 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 회원 정보 수정</title>
 <!-- App favicon -->
-<link rel="shortcut icon" href="resources/dist/assets/images/logo-sm.png">
+<link rel="shortcut icon"
+	href="resources/dist/assets/images/logo-sm.png">
 <!-- App css -->
-<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
 	<!-- Begin page -->
@@ -43,29 +48,60 @@
 						<div class="col-6">
 							<div class="card">
 								<div class="card-body">
-									<form action="businessInfoUpdate" method="post" enctype="multipart/form-data">
+									<form action="businessInfoUpdate" method="post"
+										enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="form-group mb-3">
-													<label style="margin-right: 15px;">대표 사진</label>
-													<input type="file" name="mainPhoto" onchange="fileChk(this)" />
-													<input type="hidden" name="fileCheck" id="fileCheck" value="0" />
+													<label style="margin-right: 15px;">대표 사진</label> <input
+														type="file" name="mainPhoto" onchange="fileChk(this)" />
+													<input type="hidden" name="fileCheck" id="fileCheck"
+														value="0" />
 												</div>
 												<div class="form-group mb-3">
-													<label>이메일 <span style="color: red">*</span></label> <input
-														type="text" class="form-control" value="${mb.per_email}"
+													<label>이메일</label> <input
+														type="text" class="form-control" value="${b.bus_email}"
 														disabled="disabled" />
 												</div>
 												<div class="form-group mb-3">
-													<label>이름 <span style="color: red">*</span></label> <input
-														type="text" class="form-control" value="${mb.per_name}"
+													<label>업체명</label> <input
+														type="text" class="form-control" value="${b.bus_name}"
 														disabled="disabled" />
 												</div>
 												<div class="form-group mb-3">
-													<label>연락처 <span style="color: red">*</span></label> <input
-														type="text" class="form-control" name="per_phone"
-														value="${mb.per_phone}" />
-													<div class="registrationFormAlert" id="same"></div>
+													<label>대표자명</label> <input
+														type="text" class="form-control" value="${b.bus_ceo}"
+														disabled="disabled" />
+												</div>
+												<div class="form-group mb-3">
+													<label>사업자등록번호</label> <input
+														type="text" class="form-control" value="${b.bus_lcno}"
+														disabled="disabled" />
+												</div>
+												<div class="form-group mb-3">
+													<label>업체 연락처 <span style="color: red">*</span></label> <input
+														type="text" class="form-control" name="bus_phone"
+														value="${b.bus_phone}" />
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-12" style="margin-bottom: 0;">
+														<label for="bus_address">업체 주소 <span
+															style="color: red">*</span></label>
+													</div>
+													<div class="form-group col-md-6">
+														<input type="text" class="form-control" name="bus_post"
+															id="우편번호" placeholder="우편번호" value="${b.bus_post}" readonly="readonly" />
+													</div>
+													<div class="form-group col-md-6">
+														<input type="button" onclick="findAddr()" value="우편번호 찾기"
+															class="btn btn-outline-success" />
+													</div>
+												</div>
+												<div class="form-group mb-3">
+													<input type="text" class="form-control" name="bus_addr" value="${b.bus_addr}" readonly="readonly" />
+												</div>
+													<div class="form-group mb-3">
+													<input type="text" class="form-control" name="bus_addr2" value="${b.bus_addr2}" />
 												</div>
 												<div>
 													<input type="submit" class="btn btn-success"
@@ -97,50 +133,13 @@
 	<!-- END wrapper -->
 	<!-- App js -->
 	<script src="resources/dist/assets/js/app.min.js"></script>
-	
-	
-				<tr>
-					<td>사업자 번호 :</td>
-					<td id="BUS_LCNO"></td>
-				</tr>
-				<tr>
-					<td>업체명 :</td>
-					<td><input type="text" name="bus_name"
-						value="${bmap.BUS_NAME}" /></td>
-				</tr>
-				<tr>
-					<td>대표자명 :</td>
-					<td id="BUS_CEO"></td>
-				</tr>
-				<tr>
-					<td>업체 연락처 :</td>
-					<td><input type="text" name="bus_phone"
-						value="${bmap.BUS_PHONE}" /></td>
-				</tr>
-				<tr>
-					<td>사업장 주소 :</td>
-					<td><span id="BUS_ADDR"></span>&nbsp;|&nbsp;<span
-						id="BUS_ADDR2"></span></td>
-				</tr>
-				<tr>
-					<td>주력서비스 :</td>
-					<td id="BCT_NAME"></td>
-				</tr>
-				<tr>
-			</table>
-			<br />
-			<button class="btn btn-outline-secondary">수정하기</button>
-		</form>
-		<%@ include file="footer.html"%>
-	</div>
+
 </body>
 <script>
-	var jsonData = ${result};
-	$.each(jsonData, function(key, value) {
-		$('#' + key).html(value);
-	});
-</script>
-<script>
+	function check() {
+		alert('회원 정보 수정이 완료되었습니다.');
+	}
+
 	function fileChk(file) {
 		if (file.value == "") {
 			$("#fileCheck").val(0);
@@ -149,7 +148,7 @@
 		} // else End
 	} // fct End
 </script>
-<!-- <script>
+<script>
 	// 다음 주소 API 함수
 	function findAddr() {
 		new daum.Postcode(
@@ -195,5 +194,5 @@
 					}
 				}).open();
 	}
-</script> -->
+</script>
 </html>

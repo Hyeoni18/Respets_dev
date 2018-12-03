@@ -72,7 +72,7 @@
 												<button type="button" class="btn btn-light" onclick="location.href='./businessPwUpdateForm'">
 												<i class=" mdi mdi-lock"></i> 비밀번호 수정</button>
 												&nbsp;&nbsp;
-												<button type="button" class="btn btn-light" onclick="javascript:forward(this)" id="edit">
+												<button type="button" class="btn btn-light" onclick="location.href='./businessInfoUpdateForm'">
 												<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정</button>
 												&nbsp;&nbsp;
 												<button type="button" class="btn btn-light" onclick="javascript:forward(this)" id="delete">

@@ -161,13 +161,13 @@ public class HyeonController {
 		return mav;
 	}
 
-	/* 혜연 */
-	@RequestMapping(value = "/businessInfoUpdateForm")
-	public ModelAndView businessInfoUpdateForm(HttpSession session) {
-		mav.addObject("no", session.getAttribute("no"));
-		mav.setViewName("businessInfoUpdateForm");
-		return mav;
-	}
+//	/* 혜연 */
+//	@RequestMapping(value = "/businessInfoUpdateForm")
+//	public ModelAndView businessInfoUpdateForm(HttpSession session) {
+//		mav.addObject("no", session.getAttribute("no"));
+//		mav.setViewName("businessInfoUpdateForm");
+//		return mav;
+//	}
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessPartDelete")

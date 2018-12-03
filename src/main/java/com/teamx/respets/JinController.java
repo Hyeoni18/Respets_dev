@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.teamx.respets.bean.Booking;
 import com.teamx.respets.bean.Business;
-import com.teamx.respets.dao.JinDao;
 import com.teamx.respets.service.JinService;
 
 @Controller
@@ -122,6 +121,13 @@ public class JinController {
 		ModelAndView mav = new ModelAndView();
 		jinSvc.businessPwUpdate(b, request);
 		mav.setViewName("redirect:/businessInfoDetail");
+		return mav;
+	} // method End
+	
+	@RequestMapping(value = "/businessInfoUpdateForm", method = RequestMethod.GET)
+	public ModelAndView businessPwUpdate(HttpServletRequest request) {
+		ModelAndView mav = jinSvc.businessInfoUpdateForm(request);
+		mav.setViewName("businessInfoUpdateForm");
 		return mav;
 	} // method End
 

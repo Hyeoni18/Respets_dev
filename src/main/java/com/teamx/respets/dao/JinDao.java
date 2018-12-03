@@ -86,4 +86,6 @@ public interface JinDao {
 
 	public void businessPwUpdate(Business b);
 
+	public Business businessInfoUpdateForm(Business b);
+
 } // interface End

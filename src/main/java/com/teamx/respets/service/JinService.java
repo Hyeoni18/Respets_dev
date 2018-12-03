@@ -443,4 +443,13 @@ public class JinService {
 		jinDao.businessPwUpdate(b);
 	}
 
+	public ModelAndView businessInfoUpdateForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Business b = new Business();
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		b = jinDao.businessInfoUpdateForm(b);
+		mav.addObject("b", b);
+		return mav;
+	}
+
 } // class End
