@@ -56,7 +56,7 @@
 											<span class="float-left mr-4"> <img id="perProfile"
 												src="${glr_loc}${glr_file}"
 												style="width: 150px; height: 150px; margin-top: 15px; margin-left: 20px;"
-												class="rounded-circle img-thumbnail"></span>
+												class="rounded-circle img-thumbnail"> <!-- ${img} --></span>
 											<div class="media-body">
 												<br />
 												<h3 class="mt-1 mb-1 text-white">
@@ -69,14 +69,19 @@
 													<span id="BUS_ADDR"></span>&nbsp;<span id="BUS_ADDR2"></span>
 												</h5>
 												<br /> <br />
-												<button type="button" class="btn btn-light" onclick="location.href='./businessPwUpdateForm'">
-												<i class=" mdi mdi-lock"></i> 비밀번호 수정</button>
+												<button type="button" class="btn btn-light"
+													onclick="location.href='./businessPwUpdateForm'">
+													<i class=" mdi mdi-lock"></i> 비밀번호 수정
+												</button>
 												&nbsp;&nbsp;
-												<button type="button" class="btn btn-light" onclick="location.href='./businessInfoUpdateForm'">
-												<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정</button>
+												<button type="button" class="btn btn-light"
+													onclick="location.href='./businessInfoUpdateForm'">
+													<i class="mdi mdi-pencil mr-1"></i> 회원 정보 수정
+												</button>
 												&nbsp;&nbsp;
-												<button type="button" class="btn btn-light" onclick="javascript:forward(this)" id="delete">
-												<i class="mdi mdi-delete-empty mr-1"></i> 회원 탈퇴
+												<button type="button" class="btn btn-light"
+													onclick="businessDelete();" id="delete">
+													<i class="mdi mdi-delete-empty mr-1"></i> 회원 탈퇴
 												</button>
 											</div>
 											<!-- end media-body-->
@@ -96,15 +101,21 @@
 											<div class="text-left">
 												<table>
 													<tr>
-														<td><p class="text-muted" align="right"><strong>주력 서비스 :&nbsp;&nbsp;</strong></p></td>
+														<td><p class="text-muted" align="right">
+																<strong>주력 서비스 :&nbsp;&nbsp;</strong>
+															</p></td>
 														<td><p class="text-muted" id="BCT_NAME"></p></td>
 													</tr>
 													<tr>
-														<td><p class="text-muted" align="right"><strong>대표자명 :&nbsp;&nbsp;</strong></p></td>
+														<td><p class="text-muted" align="right">
+																<strong>대표자명 :&nbsp;&nbsp;</strong>
+															</p></td>
 														<td><p class="text-muted" id="BUS_CEO"></p></td>
 													</tr>
 													<tr>
-														<td><p class="text-muted" align="right"><strong>사업자등록번호 :&nbsp;&nbsp;</strong></p></td>
+														<td><p class="text-muted" align="right">
+																<strong>사업자등록번호 :&nbsp;&nbsp;</strong>
+															</p></td>
 														<td><p class="text-muted" id="BUS_LCNO"></p></td>
 													</tr>
 												</table>
@@ -142,7 +153,7 @@
 	<!-- END wrapper -->
 
 
-<!-- 
+	<!-- 
 	<form action="businessInfoUpdateForm">
 		<div>
 		<div>
@@ -156,5 +167,12 @@
 	$.each(jsonData, function(key, value) {
 		$('#' + key).html(value);
 	});
+
+	function name() {
+		var result = confirm("예약 내역을 제외한 모든 데이터가 삭제되고, 재가입 시 데이터 복구가 어렵습니다. 정말 탈퇴하시겠습니까?");
+		if (result) {
+			location.href = "businessPartDelete";
+		}
+	}
 </script>
 </html>

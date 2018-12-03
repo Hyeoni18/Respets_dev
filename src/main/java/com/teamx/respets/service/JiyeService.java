@@ -219,7 +219,7 @@ public class JiyeService {
 	} // emailConfirmSuccess End
 
 	// 지예 관리자 로그인
-	public ModelAndView adminLogin(String adm_no, String adm_pw) {
+	public ModelAndView adminLogin(String adm_no, String adm_pw, HttpServletRequest request) {
 		mav = new ModelAndView();
 		String view = null;
 		HashMap<String, Object> hmap = new HashMap<>();
@@ -229,7 +229,7 @@ public class JiyeService {
 		System.out.println("확인!!!!!!!" + hmap);
 		if (hmap != null) {
 			String no = (String) hmap.get("ADM_NO");
-			session.setAttribute("no", no);
+			request.getSession().setAttribute("no", no);
 			view = "redirect:/unconfirmBusiness";
 		} else {
 			view = "adminLoginForm";

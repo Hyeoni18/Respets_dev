@@ -609,7 +609,6 @@ public class HyeonService {
 			b.setBus_post(request.getParameter("bus_post"));
 			b.setBus_addr(request.getParameter("bus_addr"));
 			b.setBus_addr2(request.getParameter("bus_addr2"));
-			System.out.println("기업이름=" + request.getParameter("bus_name"));
 			System.out.println("기업이름=" + request.getParameter("bus_phone"));
 			hyDao.businessInfoUpdate(b);
 			MultipartFile photo = request.getFile("mainPhoto");
@@ -629,7 +628,7 @@ public class HyeonService {
 		String glr_file = (String) bmap.get("GLR_FILE");
 		String glr_loc = (String) bmap.get("GLR_LOC");
 		StringBuilder sb = new StringBuilder();
-		sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
+		sb.append("<img id='perProfile' style='width: 150px; height: 150px; margin-top: 15px; margin-left: 20px;' class='rounded-circle img-thumbnail' src='" + glr_loc + glr_file + "'/>");
 		mav.addObject("bmap", bmap);
 		mav.addObject("img", sb);
 		Gson gson = new GsonBuilder().create();
@@ -638,7 +637,7 @@ public class HyeonService {
 		mav.addObject("result", json);
 		request.getSession().setAttribute("loc", glr_loc);
 		request.getSession().setAttribute("photo", glr_file);
-		mav.setViewName("businessInfoDetail");
+		mav.setViewName("redirect:/businessInfoDetail");
 		return mav;
 	}
 

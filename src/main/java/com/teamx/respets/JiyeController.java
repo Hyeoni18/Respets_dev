@@ -103,9 +103,9 @@ public class JiyeController {
 
 	// 관리자 로그인
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public ModelAndView adminLogin(String adm_no, String adm_pw) {
+	public ModelAndView adminLogin(String adm_no, String adm_pw, HttpServletRequest request) {
 		mav = new ModelAndView();
-		mav = js.adminLogin(adm_no, adm_pw);
+		mav = js.adminLogin(adm_no, adm_pw, request);
 		return mav;
 	}
 
