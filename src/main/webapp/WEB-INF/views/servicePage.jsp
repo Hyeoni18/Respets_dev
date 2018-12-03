@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>Respets :: 서비스 관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
@@ -24,31 +25,76 @@
 
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-<br/>
-${text} 
-	<form action="businessInfoDetail" name="servicePage">
-		<button class="btn btn-outline-success">기본 정보 확인</button>
-	</form>
-	<br/>
-	<!--현휘; 기업의 업종 등록 신청 페이지로 이동 (M,B,H)  -->
-	<form action="serviceInsertForm">
-		<input type="hidden" name="no" value="${no}" />
-		<button class="btn btn-outline-info">업종 등록 신청</button>
-	</form>
-	<hr>
-	<div class="row mt-sm-5 mt-3 mb-3">
-	${servList}
-	<!--현휘; 서비스단에서 가져온 서비스 리스트 // 삭제예정 -->
-	${add}
-	</div> <!-- end row mt-sm-5 mt-3 mb-3 -->
-	<div>
-		<input type="button" class="btn btn-outline-danger" value="회원탈퇴" onclick="forward(this)" />
+	<!-- Begin page -->
+	<div class="wrapper">
+
+		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
+		<!-- Left Sidebar End -->
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="page-title-box">
+						<div class="page-title-right">
+							<!--현휘; 기업의 업종 등록 신청 페이지로 이동 (M,B,H)  -->
+							<form action="serviceInsertForm">
+								<input type="hidden" name="no" value="${no}" />
+								<button class="btn btn-outline-info">업종 등록 신청</button>
+							</form>
+						</div>
+						<h4 class="page-title">서비스 관리</h4>
+					</div>
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-12">
+							<div class="row mb-3">
+								${servList}
+								<!--현휘; 서비스단에서 가져온 서비스 리스트 // 삭제예정 -->
+								${add}
+							</div>
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+
+				</div>
+				<!-- container -->
+
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
+		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
 	</div>
-<%@ include file="footer.html"%>
-	</div>
+	<!-- END wrapper -->
+
+
 </body>
 <script>
 	function forward(button) {

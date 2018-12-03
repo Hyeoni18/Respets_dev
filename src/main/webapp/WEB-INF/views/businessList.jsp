@@ -35,7 +35,7 @@
 				<jsp:include page="topbar-landing.jsp"></jsp:include>
 				<div class="container-fluid">				
 
-					<div class="card bg-primary text-white" style="margin: 30px 0 30px 0;">
+					<div class="card bg-mint text-white" style="margin: 30px 0 30px 0;">
 						<div class="card-body">
 							<h5 class="card-title mb-0"><span style="margin-right:20px;">키워드로 검색</span>${tagList}</h5>
 
