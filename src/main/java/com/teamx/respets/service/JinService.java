@@ -432,4 +432,24 @@ public class JinService {
 		return mav;
 	} // method End
 
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = jinDao.nowPwCheck(b);
+		return result;
+	}
+
+	public void businessPwUpdate(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		jinDao.businessPwUpdate(b);
+	}
+
+	public ModelAndView businessInfoUpdateForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Business b = new Business();
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		b = jinDao.businessInfoUpdateForm(b);
+		mav.addObject("b", b);
+		return mav;
+	}
+
 } // class End

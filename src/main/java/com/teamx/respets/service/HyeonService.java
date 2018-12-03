@@ -570,13 +570,13 @@ public class HyeonService {
 			String glr_file = (String) bmap.get("GLR_FILE");
 			String glr_loc = (String) bmap.get("GLR_LOC");
 			StringBuilder sb = new StringBuilder();
-			sb.append("<img class='card-img-top' src='" + glr_loc + glr_file + "'/>");
 			Gson gson = new GsonBuilder().create();
 			String json = gson.toJson(bmap);
 			System.out.println(json);
 			mav.addObject("result", json);
 			mav.addObject("bmap", bmap);
-			mav.addObject("img", sb);
+			mav.addObject("glr_loc", glr_loc);
+			mav.addObject("glr_file", glr_file);
 			view = "businessInfoDetail";
 		}
 		mav.setViewName(view);
@@ -599,17 +599,19 @@ public class HyeonService {
 		mav = new ModelAndView();
 		System.out.println("기업수정서비스확인");
 		HashMap<String, Object> bmap = new HashMap<String, Object>();
-		Business bi = new Business();
+		Business b = new Business();
 		String no = request.getSession().getAttribute("no").toString();
 		Gallery gy = new Gallery();
 
 		if (request.getParameter("fileCheck").equals("1")) {
-			bi.setBus_no(no);
-			bi.setBus_name(request.getParameter("bus_name"));
-			bi.setBus_phone(request.getParameter("bus_phone"));
+			b.setBus_no(no);
+			b.setBus_phone(request.getParameter("bus_phone"));
+			b.setBus_post(request.getParameter("bus_post"));
+			b.setBus_addr(request.getParameter("bus_addr"));
+			b.setBus_addr2(request.getParameter("bus_addr2"));
 			System.out.println("기업이름=" + request.getParameter("bus_name"));
 			System.out.println("기업이름=" + request.getParameter("bus_phone"));
-			hyDao.businessInfoUpdate(bi);
+			hyDao.businessInfoUpdate(b);
 			MultipartFile photo = request.getFile("mainPhoto");
 			// saveFile 메소드에서 해시맵을 사용하고 받기 위해 생성하고 파라미터로 보내준다.
 			Map<String, Object> hMap = new HashMap<String, Object>();
@@ -634,6 +636,8 @@ public class HyeonService {
 		String json = gson.toJson(bmap);
 		System.out.println(json);
 		mav.addObject("result", json);
+		request.getSession().setAttribute("loc", glr_loc);
+		request.getSession().setAttribute("photo", glr_file);
 		mav.setViewName("businessInfoDetail");
 		return mav;
 	}

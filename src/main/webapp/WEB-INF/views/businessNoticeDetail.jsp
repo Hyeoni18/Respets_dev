@@ -32,19 +32,22 @@
 <body>
 	<!-- Begin page -->
 	<div class="wrapper">
+			<%@ include file="left-sidebar.jsp"%>
+		
+				<div class="content-page">
+					<div class="content">
 
-		<!-- ========== Left Sidebar Start ========== -->
-		<%@ include file="left-sidebar.jsp"%>
+				<!-- Topbar Start -->
+				<%-- <jsp:include page="topbar-dashboard.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include> --%>
+				<%@ include file="topbar-dashboard.jsp"%>
+
 		<!-- Left Sidebar End -->
 
 		<!-- ============================================================== -->
 		<!-- Start Page Content here -->
 		<!-- ============================================================== -->
-		<div class="content-page">
-			<div class="content">
-
-				<!-- Topbar Start -->
-				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
 				<div class="container-fluid">
@@ -131,6 +134,8 @@
 			<%@ include file="footer.html"%>
 			<!-- end Footer -->
 		</div>
+		</div>
+		<!-- content -->
 
 
 		<!-- ============================================================== -->
@@ -138,7 +143,6 @@
 		<!-- ============================================================== -->
 
 
-	</div>
 	<!-- END wrapper -->
 
 

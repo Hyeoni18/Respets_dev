@@ -348,8 +348,8 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 
 	<update id="businessInfoUpdate" parameterType="Business">
 		UPDATE BUS SET
-		BUS_NAME = #{bus_name}, BUS_PHONE = #{bus_phone} WHERE BUS_NO =
-		#{bus_no}
+		BUS_PHONE = #{bus_phone}, BUS_POST = #{bus_post}, BUS_ADDR = #{bus_addr},
+		BUS_ADDR2 = #{bus_addr2} WHERE BUS_NO = #{bus_no}
 	</update>
 
 	<update id="mainPhotoUpdate" parameterType="Gallery">
