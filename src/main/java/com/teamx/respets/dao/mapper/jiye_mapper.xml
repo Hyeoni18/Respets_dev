@@ -75,6 +75,11 @@
 		resultType="HashMap">
 		SELECT * FROM BUS WHERE BUS_NO=#{no}
 	</select>
+	
+	<!-- 세션에 넣을 이름 가져오기 -->
+	<select id="selectBus_name" parameterType="String" resultType="String">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
+	</select>
 
 	<!-- 이메일인증성공 -->
 	<update id="emailConfirmSuccess" parameterType="String">
@@ -291,6 +296,7 @@
 		AND BCT_CODE=#{bct_code} AND GCT_NO=3
 	</select>
 
+	<!-- 미인증 기업리스트 -->
 	<select id="getBusinessList" resultType="HashMap">
 		SELECT BUS.BUS_NO,
 		BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL,
@@ -303,6 +309,7 @@
 		ORDER BY BUS_TIME ASC
 	</select>
 
+	<!-- 미인증 기업리스트 정보 가져오기 -->
 	<select id="getBusinessInfo" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2,
@@ -315,12 +322,14 @@
 		ON GLR.BUS_NO = BUS.BUS_NO
 		WHERE BUS.BUS_NO=#{bus_no} AND SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
 	</select>
-
+	
+	<!-- 기업인증 -->
 	<update id="confirmLicense" parameterType="String">
 		UPDATE BUS SET
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
 	
+	<!-- 기업상세페이지 공지사항 리스트 -->
 	<select id="businessDetailNoticeList" parameterType="HashMap" resultMap="businessDetailNoticeList">
 	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE
 		FROM (
@@ -335,15 +344,13 @@
 			]]>
 	</select>
 	
+	<!-- 기업상세페이지 공지사항 리스트 갯수 -->
 	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</select>
 	
+	<!-- 기업 상세페이지 갤러리 -->
 	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
 		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
-	</select>
-	
-	<select id="selectBus_name" parameterType="String" resultType="String">
-		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
 	</select>
 </mapper>

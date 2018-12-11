@@ -148,6 +148,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 공지사항 디테일
 	@RequestMapping (value="/businessNoticeDetail")
 	public ModelAndView businessNoticeDetail(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -155,6 +156,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 공지사항 리스트(검)
 	@RequestMapping (value="/searchBusinessNotice")
 	public ModelAndView searchBusinessNotice(HttpSession session, String select, String search, Integer pageNum) {
 		mav = new ModelAndView();
@@ -162,6 +164,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 공지사항 글쓰기
 	@RequestMapping (value="/businessNoticeWriteForm")
 	public ModelAndView businessNoticeWriteForm() {
 		mav = new ModelAndView();
@@ -169,6 +172,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 공지사항 글쓰기 등록
 	@RequestMapping (value="/businessNoticeInsert")
 	public ModelAndView businessNoticeInsert
 	(HttpSession session, String bct_code, int bbc_no, String bbo_title, String bbo_ctt) {
@@ -177,7 +181,7 @@ public class JiyeController {
 		return mav;
 	}
 
-	
+	//기업 공지사항 수정
 	@RequestMapping (value="/businessNoticeUpdate")
 	public ModelAndView businessNoticeUpdate(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -185,13 +189,15 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 공지사항 수정 폼(기존 정보 불러오기)
 	@RequestMapping (value="/businessNoticeUpdateForm", method=RequestMethod.GET)
 	public ModelAndView businessNoticeUpdateForm(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = js.businessNoticeUpdateForm(request);
 		return mav;
 	}
-
+	
+	//기업 공지사항 지우
 	@RequestMapping (value="/businessNoticeDelete", method=RequestMethod.GET)
 	public ModelAndView businessNoticeDelete(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -199,6 +205,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 상세페이지 기본정보
 	@RequestMapping (value="/businessBasicInfo", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView businessBasicInfo(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -206,6 +213,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 상세페이지 갤러리
 	@RequestMapping (value="/businessGallery", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView businessGallery(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -213,12 +221,15 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 상세페이지 공지사항 리스트
 	@RequestMapping (value="/businessDetailNoticeList", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView businessDetailNoticeList(HttpServletRequest request, Integer pageNum) {
 		mav = new ModelAndView();
 		mav = js.businessDetailNoticeList(request, pageNum);
 		return mav;
 	}
+	
+	//관리자 페이지
 	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
 		mav = new ModelAndView();
@@ -226,6 +237,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//미인증 기업리스트
 	@RequestMapping (value="/unconfirmBusiness", method=RequestMethod.GET)
 	public ModelAndView businessConfirm(HttpSession session) {
 		mav = new ModelAndView();
@@ -233,6 +245,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 미인증 정보 확인
 	@RequestMapping (value="/chkLicense", method=RequestMethod.GET)
 	public ModelAndView chkLicense(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -240,6 +253,7 @@ public class JiyeController {
 		return mav;
 	}
 	
+	//기업 미인증 기업 인증
 	@RequestMapping (value="/confirmLicense", method=RequestMethod.GET)
 	public ModelAndView confirmLicense(HttpServletRequest request) {
 		mav = new ModelAndView();

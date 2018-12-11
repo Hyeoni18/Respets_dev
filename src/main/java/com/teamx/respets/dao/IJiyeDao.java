@@ -91,21 +91,25 @@ public interface IJiyeDao {
 	//기업상세페이지 하단 갤러리
 	public List<HashMap<String, Object>> businessGallery(HashMap<String, Object> hmap);
 
-	
-	public int adminChk(String adm_no);
-
+	//미인증 기업목록 
 	public ArrayList<HashMap<String, Object>> getBusinessList();
-
+	
+	//미인증 기업정보
 	public HashMap<String, Object> getBusinessInfo(HashMap<String, Object> bMap);
 
+	//미인증 기업 인증
 	public int confirmLicense(String bus_no);
 
+	//개인 최근예약목록 리스트
 	public int getRecentMyBookingList(String no);
 
+	//개인 최근예약목록 카운트
 	public int recentMyBookingListCount(String no);
 
+	//기업 상세페이지 기업공지 리스트
 	public List<HashMap<String, Object>> businessDetailNoticeList(HashMap<String, Object> hmap);
-
+	
+	//기업 상세페이지 기업공지 리스트 카운트
 	public int getBusinessNoticeDetailCount(HashMap<String, Object> hmap);
 
 	//기업 로그인시 사진테이블의 대표사진 가져오기
