@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.teamx.respets.bean.BusinessBoard;
-
 public interface IJiyeDao {
 	
 	// 개인 이메일 중복 확인

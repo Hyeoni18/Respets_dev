@@ -23,15 +23,15 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
-.card d-block{
+.card d-block {
 	max-width: 400px;;
 	width: 400px;
 	height: 40%;
 	margin: 1.5px;
 }
 
-.row justify-content-center{
-	margin:auto;
+.row justify-content-center {
+	margin: auto;
 }
 </style>
 
@@ -48,45 +48,88 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div class="row justify-content-center">
-		<div class="col-7">
-		<h5 class="text-success">서비스 예약</h5>
-		<hr/><br/><br/>
-			<form action="booking" method="post">
-				<!-- <div id="wrap"> -->
-				<div class="card d-block" style= 'width: 40%; height: 50%; margin:1.5px; margin: auto;'>
-					<br />
-					<p class='text-success' style='text-align: center'>선택한 반려동물</p>
-					<hr />
-					${petList}
-					<br/>
+
+	<!-- Begin page -->
+	<div class="wrapper">
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Topbar Start -->
+				<jsp:include page="topbar-landing.jsp">
+					<jsp:param name="no" value="${no}" />
+				</jsp:include>
+				<!-- end Topbar -->
+
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+					<div class="row justify-content-center">
+						<div class="col-7">
+							<h5 class="text-success">서비스 예약</h5>
+							<hr />
+							<br />
+							<br />
+							<form action="booking" method="post">
+								<!-- <div id="wrap"> -->
+								<div class="card d-block"
+									style='width: 40%; height: 50%; margin: 1.5px; margin: auto;'>
+									<br />
+									<p class='text-success' style='text-align: center'>선택한 반려동물</p>
+									<hr />
+									${petList} <br />
+								</div>
+								<br />
+								<br />
+								<%-- <div id="petDiv">${petList}</div> --%>
+								<div id="bkDiv">
+									<div id="svcDiv">${svcList}</div>
+									<div id="empDiv">${empList}</div>
+									<div id="day">
+										<h5 class='text-success'>날짜 선택</h5>
+										<table id="dayTable">
+										</table>
+									</div>
+									<div id="time">
+										<h5 class='text-success'>시간 선택</h5>
+										<table id="timeTable">
+										</table>
+									</div>
+									<div id="comment">
+										<h5 class='text-success'>코멘트</h5>
+										<textarea id="comment" name="bk_cmt" row="10" cols="60"
+											onkeyup="lengthCheck();"></textarea>
+									</div>
+									<input class='btn btn-success' type="submit" id="submit"
+										value="예약하기" />
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
-				<br/><br/>
-				<%-- <div id="petDiv">${petList}</div> --%>
-				<div id="bkDiv">
-					<div id="svcDiv">${svcList}</div>
-					<div id="empDiv">${empList}</div>
-					<div id="day">
-						<h5 class='text-success'>날짜 선택</h5>
-						<table id="dayTable">
-						</table>
-					</div>
-					<div id="time">
-						<h5 class='text-success'>시간 선택</h5>
-						<table id="timeTable">
-						</table>
-					</div>
-					<div id="comment">
-						<h5 class='text-success'>코멘트</h5>
-						<textarea id="comment" name="bk_cmt" row="10" cols="60"
-							onkeyup="lengthCheck();"></textarea>
-					</div>
-					<input class='btn btn-success' type="submit" id="submit"
-						value="예약하기" />
-				</div>
-			</form>
+				<!-- container -->
+
+			</div>
+			<!-- content -->
+
+			<!-- Footer Start -->
+			<%@ include file="footer.html"%>
+			<!-- end Footer -->
+
 		</div>
+
+		<!-- ============================================================== -->
+		<!-- End Page content -->
+		<!-- ============================================================== -->
+
+
 	</div>
+	<!-- END wrapper -->
+
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>
 
