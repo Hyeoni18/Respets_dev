@@ -100,7 +100,7 @@
 													<option value="대전">대전</option>
 													<option value="울산">울산</option>
 													<option value="세종시">세종시</option>
-													<option value="경기도">경기도</option>
+													<option value="경기">경기도</option>
 													<option value="고양">고양</option>
 													<option value="부천">부천</option>
 													<option value="성남">성남</option>
