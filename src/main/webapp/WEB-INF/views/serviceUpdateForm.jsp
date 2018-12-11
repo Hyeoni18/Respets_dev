@@ -70,39 +70,52 @@
 										<input type="hidden" name="bct_code" value="${bct_code}" /> <br /> 
 										${top} 
 										<div class="form-group mb-3">
-										<label for="simpleinput">영업 오픈시간</label>
-										<input type="time" class="form-control" name="open_time" id="am_open" step="1800">
-										</div>
-										<div class="form-group mb-3">
-										<label for="simpleinput">영업 마감시간</label>
-										<input type="time" class="form-control" name="close_time" id="pm_close" step="1800">
-										</div>
-										<div class="form-group mb-3">
-										<label for="simpleinput">점심 시작시간</label>
-										<input type="time" class="form-control" name=open_time id="lunch_open" step="1800">
-										</div>
-										<div class="form-group mb-3">
-										<label for="simpleinput">점심 마감시간</label>
-										<input type="time" class="form-control" name="close_time" id="lunch_close" step="1800">
+										<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
+										<input type="file" name="bgl_ori" multiple />
 										</div>
 										</div>
 										<div class="col-lg-6">
 										<div class="form-group mb-3">
+										<label for="simpleinput">영업 오픈시간</label>
+										<input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">영업 마감시간</label>
+										<input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">점심 시작시간</label>
+										<input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">점심 마감시간</label>
+										<input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+										</div>
+										<div class="form-group mb-3">
 										<label for="simpleinput">고정휴무일</label><br/>
 										${holiday} </div> 
+										</div>
+										<div class="col-lg-12">
 										<div class="form-group mb-3">
 										<label for="simpleinput">제공서비스</label><br/>
 										${menu} </div> 
 										${animal}
-										<div class="form-group mb-3">
-										<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
-										<input type="file" name="bgl_ori" multiple />
 										</div>
+										<div class="col-lg-12">
 										<br /> &nbsp; <br /> ${medi_submit} ${price} <br />
 										<br /> ${bct_price} ${cat_price} <br />
 										<div id="but"></div>
+										</div>
+										</div>
 									</form>
-									<%@ include file="footer.html"%>
+								</div>
+								</div>
+								</div>
+								</div>
+								</div>
+								<%@ include file="footer.html"%>
+								</div>
+								</div>
 								</div>
 </body>
 <script>
@@ -232,7 +245,7 @@
 						x = document.createElement("input");
 						x.setAttribute("type", "text");
 						x.setAttribute("name", "price");
-						x.setAttribute("class", "col-sm-4");
+						x.setAttribute("class", "col-sm-6");
 						var price;
 						var url = "searchPrice?tag_name=" + box[j - 1]
 								+ "&ani_name=" + aniName[i - 1] + "&bct_code="
@@ -295,7 +308,7 @@
 						x = document.createElement("input");
 						x.setAttribute("type", "text");
 						x.setAttribute("name", "price");
-						x.setAttribute("class", "col-sm-4");
+						x.setAttribute("class", "col-sm-6");
 						var price;
 						var url = "searchPrice?tag_name=" + catBox[j - 1]
 								+ "&ani_name=" + catName[i - 1] + "&bct_code="

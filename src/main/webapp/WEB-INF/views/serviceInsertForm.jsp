@@ -15,6 +15,11 @@
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
+<!-- third party css -->
+<link
+	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
+	rel="stylesheet" type="text/css" />
+<!-- third party css end -->
 
 <!-- App css -->
 <link href="resources/dist/assets/css/icons.min.css" rel="stylesheet"
@@ -22,134 +27,293 @@
 <link href="resources/dist/assets/css/app.min.css" rel="stylesheet"
 	type="text/css" />
 <style>
+.custom-control {
+    position: relative;
+    display: inline;
+    min-height: 1.3125rem;
+    padding-left: 1.5rem;
+}
 td {
 	border: 1px solid white;
 }
-#con {
-	text-align: center;
-}
-#medical_div {
-	float: left;
-}
-#beauty_div {
-	float: left;
-}
-#hotel_div {
-	float: left;
-}
 #medical {
 	display: none;
-	width: 100%;
-	border: solid black 1px;
 }
 #beauty {
 	display: none;
-	width: 100%;
-	border: solid black 1px;
 }
 #hotel {
 	display: none;
-	width: 100%;
-	border: solid black 1px;
 }
 </style>
 
 </head>
 <body>
-	<%@ include file="left-sidebar.jsp"%>
-	<div class="content-page">
-		<%@ include file="topbar-dashboard.jsp"%>
-<br/>
-<div class="col-xl-6">
-<div class="card">
-<div class="card-body">
-	<h2 class="header-title mb-3">업종등록 신청</h2>
+	<div class="wrapper">
+		<%@ include file="left-sidebar.jsp"%>
+		<div class="content-page">
+			<div class="content">
+				<%@ include file="topbar-dashboard.jsp"%>
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<form class="form-inline"></form>
+								</div>
+								<h4 class="page-title">업종 등록 신청</h4>
+							</div>
+						</div>
+					</div>
 	 <ul class="nav nav-pills bg-light nav-justified mb-3">
 	${codeCheck} <!--업종 선택 버튼-->
 	 </ul>
 	<!-- 병 원 폼 -->
-	<div id="medical">
+	<div class="row" id="medical">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="medical" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="M" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-   	 업체명 : <input type="text" name="bus_name" value="${bus_name}" readonly /> <br /> &nbsp; 
- 	 연락처 : <input type="text" name="bus_phone" value="${bus_phone}" readonly /> <br /> &nbsp; 
-  	 영업시간 : ${time}<br /> &nbsp; 
-  	 점심시간 : ${lunch}<br /> &nbsp;
-	 고정휴무일 : ${holiday}<br /> &nbsp; 
-		${medical} &nbsp; 	
-	 서비스 가능한 동물종류 : <input type="checkbox" name="animal_code" value="소형견" class="checkbox"/> 소형견 
-					 <input type="checkbox" name="animal_code" value="중형견" class="checkbox"/> 중형견 
-					 <input type="checkbox" name="animal_code" value="대형견" class="checkbox"/> 대형견 
-					 <input type="checkbox" name="cat_code" value="고양이" class="checkbox"/> 고양이 
-					 <input type="checkbox" name="animal_code" value="소동물" class="checkbox"/> 소동물 
-					 <input type="checkbox" name="animal_code" value="파충류" class="checkbox"/> 파충류 
-				 	<input type="checkbox" name="animal_code" value="가축" class="checkbox"/> 가축 <br /> &nbsp;
-	 사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
+   	<div class="form-group mb-3">
+	<label for="simpleinput">업체명</label>
+	<input type="text" class="form-control" name="bus_name" value="${bus_name}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">연락처</label>
+	<input type="text" class="form-control" name="bus_phone" value="${bus_phone}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
+	<input type="file" name="bgl_ori" multiple />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">서비스 가능한 동물종류</label><br/>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="소형견" id="소형견" /> <label class='custom-control-label' for='소형견'>소형견</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="중형견" id="중형견"/> <label class='custom-control-label' for='중형견'>중형견</label>  
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="대형견" id="대형견"/> <label class='custom-control-label' for='대형견'>대형견 </label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="cat_code" value="고양이" id="고양이"/> <label class='custom-control-label' for='고양이'>고양이</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="소동물" id="소동물" /> <label class='custom-control-label' for='소동물'>소동물</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="파충류" id="파충류" /> <label class='custom-control-label' for='파충류'>파충류</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="가축" id="가축" /> <label class='custom-control-label' for='가축'>가축</label> 
+	</div>
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">제공 서비스</label><br/>
+	  ${medical} </div>
+	</div>
+	<div class="col-lg-6">
+	<div class="form-group mb-3">
+	<label for="simpleinput">영업 오픈시간</label>
+	<input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">영업 마감시간</label>
+	<input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">점심 시작시간</label>
+	<input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">점심 마감시간</label>
+	<input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">고정휴무일</label><br/>
+	${holiday} </div> 
+	</div>
+	<div class="col-lg-12">
 	 안내- 등록신청 시 등록완료까지 인증시간이 소요됩니다. <br /> &nbsp;
 			<button class="btn btn-outline-secondary">등록 신청</button>
 			<input type="reset" class="btn btn-outline-danger" value="취소" />
+			</div>
+			</div>
 		</form>
-		<h4>휴일등록 필쑤 ... 팀원분들 해당 페이지를 이용하실 경우 널값을 허용하지 말아주세여...</h4>
+	</div>
+	</div>
+	</div>
 	</div>
 
 	<!-- 미 용 폼 -->
-	<div id="beauty">
+	<div class="row" id="beauty">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="beauty" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="B" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-	  업체명 : <input type="text" name="bus_name" value="${bus_name}" readonly /> <br /> &nbsp; 
-	  연락처 : <input type="text" name="bus_phone" value="${bus_phone}" readonly /> <br /> &nbsp; 
-	  영업시간 : ${time}<br /> &nbsp; 
-	  점심시간 : ${lunch}<br /> &nbsp;
-	  고정휴무일 : ${holiday}<br /> &nbsp; 
-	  동물종류 : <input type="checkbox" name="animal_code" value="소형견" class="checkbox"/> 소형견 
-	  		 <input type="checkbox" name="animal_code" value="중형견" class="checkbox"/> 중형견 
-	  		 <input type="checkbox" name="animal_code" value="대형견" class="checkbox"/> 대형견 
-	  		 <input type="checkbox" name="cat_code" value="고양이" class="checkbox"/> 고양이 <br /> &nbsp; 
-	  ${beauty} &nbsp;
-	  사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
-	  안내- 등록신청 시 등록완료까지 인증시간이 소요됩니다. <br /> &nbsp; 
+	<div class="form-group mb-3">
+	<label for="simpleinput">업체명</label>
+	<input type="text" class="form-control" name="bus_name" value="${bus_name}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">연락처</label>
+	<input type="text" class="form-control" name="bus_phone" value="${bus_phone}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
+	<input type="file" name="bgl_ori" multiple />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">서비스 가능한 동물종류</label><br/>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="소형견" id="소형견" /> <label class='custom-control-label' for='소형견'>소형견</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="중형견" id="중형견"/> <label class='custom-control-label' for='중형견'>중형견</label>  
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="대형견" id="대형견"/> <label class='custom-control-label' for='대형견'>대형견 </label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="cat_code" value="고양이" id="고양이"/> <label class='custom-control-label' for='고양이'>고양이</label> 
+	</div></div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">제공 서비스</label><br/>
+	  ${beauty} </div>
+	</div>
+	
+	<div class="col-lg-6">
+										<div class="form-group mb-3">
+										<label for="simpleinput">영업 오픈시간</label>
+										<input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">영업 마감시간</label>
+										<input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">점심 시작시간</label>
+										<input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">점심 마감시간</label>
+										<input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+										</div>
+										<div class="form-group mb-3">
+										<label for="simpleinput">고정휴무일</label><br/>
+										${holiday} </div> 
+										</div>
+										
+	 <div class="col-lg-12">
 	  		<button type="button" class="btn btn-outline-secondary" name="B" onclick="priceBox(this)">가격 등록 </button>&nbsp;
 			<input type="reset" class="btn btn-outline-danger" value="취소" onclick="cancel()"/>
+			<br/><br/>
 			<div id="B"></div> <!--서비스 가격 찍히는 div-->
 			<div id="B_price"></div> <!--고양이 서비스 가격 찍히는 div-->
 			<div id="but"></div>
+			</div></div>
 		</form>
+	</div>
+	</div>
+	</div>
 	</div>
 
 	<!-- 호 텔 폼 -->
-	<div id="hotel">
+	<div class="row" id="hotel">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="hotel" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="H" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-	  업체명 : <input type="text" name="bus_name" value="${bus_name}" readonly /> <br /> &nbsp; 
-	  연락처 : <input type="text" name="bus_phone" value="${bus_phone}" readonly /> <br /> &nbsp; 
-	  영업시간 : ${time}<br /> &nbsp; 
-	  점심시간 : ${lunch}<br /> &nbsp;
-	  고정휴무일 : ${holiday}<br /> &nbsp; 
-	  동물종류 : <input type="checkbox" name="animal_code" value="소형견" class="checkbox"/> 소형견 
-	  		 <input type="checkbox" name="animal_code" value="중형견" class="checkbox"/> 중형견
-	  		 <input type="checkbox" name="animal_code" value="대형견" class="checkbox"/> 대형견
-			 <input type="checkbox" name="cat_code" value="고양이" class="checkbox"/> 고양이 
-			 <input type="checkbox" name="animal_code" value="소동물" class="checkbox"/> 소동물 <br /> &nbsp; 
-	  ${hotel} &nbsp;
-	  사업장사진 : <input type="file" name="bgl_ori" multiple /> <br /> &nbsp;
-	  		안내- 등록신청 시 등록완료까지 인증시간이 소요됩니다. <br /> &nbsp; 
+	 <div class="form-group mb-3">
+	<label for="simpleinput">업체명</label>
+	<input type="text" class="form-control" name="bus_name" value="${bus_name}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">연락처</label>
+	<input type="text" class="form-control" name="bus_phone" value="${bus_phone}" readonly />
+	</div>
+	<div class="form-group mb-3">
+	<label for="example-fileinput" style="margin-right:15px;">사업장 사진</label>
+	<input type="file" name="bgl_ori" multiple />
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">서비스 가능한 동물종류</label><br/>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="소형견" id="소형견" /> <label class='custom-control-label' for='소형견'>소형견</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="중형견" id="중형견"/> <label class='custom-control-label' for='중형견'>중형견</label>  
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="대형견" id="대형견"/> <label class='custom-control-label' for='대형견'>대형견 </label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="cat_code" value="고양이" id="고양이"/> <label class='custom-control-label' for='고양이'>고양이</label> 
+	</div>
+	<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" name="animal_code" value="소동물" id="소동물"/> <label class='custom-control-label' for="소동물">소동물 </label> 
+	</div>
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">제공 서비스</label><br/>
+	  ${hotel} 
+	</div>
+	</div>
+	<div class="col-lg-6">
+	<div class="form-group mb-3">
+	<label for="simpleinput">영업 오픈시간</label>
+	<input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">영업 마감시간</label>
+	<input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">점심 시작시간</label>
+	<input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">점심 마감시간</label>
+	<input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+	</div>
+	<div class="form-group mb-3">
+	<label for="simpleinput">고정휴무일</label><br/>
+	${holiday} </div> 
+	</div>
+	 <div class="col-lg-12">
 	  		<button type="button" class="btn btn-outline-secondary" name="H" onclick="priceBox(this)"> 가격 등록 </button>&nbsp;
 			<input type="reset" class="btn btn-outline-danger" value="취소" onclick="cancel()"/>
+			<br/><br/>
 			<div id="H"></div> <!--서비스 가격 찍히는 div  -->
 			<div id="H_price"></div> <!--고양이 서비스 가격 찍히는 div-->
 			<div id="but"></div>
+			</div>
+			</div>
 		</form>
 	</div>
-</div> <!-- end card-body-->
-</div> <!-- end card-->
-</div> <!-- end col-xl-6 -->
-<%@ include file="footer.html"%>
 	</div>
-	<!-- App js -->
-    <script src="/resources/dist/assets/js/app.min.js"></script>
+	</div>
+	</div>
+	</div>
+	<%@ include file="footer.html"%>
+	</div>
+	</div>
+	</div>
 </body>
 
 <script>
@@ -287,6 +451,7 @@ function priceBox(cnt) {
 		    		  x = document.createElement("input");
 		    		  x.setAttribute("type", "text");
 		    		  x.setAttribute("name", "price");
+		    		  x.setAttribute("class", "col-sm-6");
 		    		  var price;
 		    		  var url = "searchPrice?tag_name="+box[j-1]+"&ani_name="+aniName[i-1]+"&bct_code="+code;
 		    			Aj(url);
@@ -347,6 +512,7 @@ function priceBox(cnt) {
 		    		  x = document.createElement("input");
 		    		  x.setAttribute("type", "text");
 		    		  x.setAttribute("name", "price");
+		    		  x.setAttribute("class", "col-sm-6");
 		    		  var price;
 		    		  var url = "searchPrice?tag_name="+catBox[j-1]+"&ani_name="+catName[i-1]+"&bct_code="+code;
 		    			Aj(url);
