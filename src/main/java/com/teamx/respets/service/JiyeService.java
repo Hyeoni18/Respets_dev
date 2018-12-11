@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamx.respets.bean.BusinessBoard;
 import com.teamx.respets.dao.IJiyeDao;
 import com.teamx.respets.userClass.Paging;
 
@@ -31,7 +30,6 @@ public class JiyeService {
 	@Autowired
 	private HyunHwiService hhs;
 	
-	BusinessBoard bbo = new BusinessBoard();
 
 	// 지예 이메일 중복 확인
 	public int emailChkSignUp(String email) {

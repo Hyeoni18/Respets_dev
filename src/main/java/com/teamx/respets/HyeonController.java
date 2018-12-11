@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.service.HyeonService;
 
