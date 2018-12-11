@@ -98,7 +98,6 @@
 	<select id="blackChk" parameterType="HashMap" resultType="HashMap">
 		SELECT * FROM BLK WHERE PER_NO=#{no}
 	</select>
-	
 	<!-- 개인 최근예약리스트 -->
 	<select id="recentMyBookingList" parameterType="HashMap"
 		resultType="HashMap">
