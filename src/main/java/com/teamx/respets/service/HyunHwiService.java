@@ -572,6 +572,7 @@ public class HyunHwiService {
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+
 		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
 		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
@@ -938,6 +939,7 @@ public class HyunHwiService {
 		String lunch_o = null;
 		String lunch_c = null;
 		if (first.equals("first")) {
+
 			// work = timeSelect(); // 기업의 운영시간 선택 select tag
 			// lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
 			holiday = holidaySelect(); // 기업의 휴일 선택 select tag
@@ -1330,6 +1332,7 @@ public class HyunHwiService {
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+
 		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
 		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
@@ -1803,6 +1806,7 @@ public class HyunHwiService {
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+
 		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
 		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
