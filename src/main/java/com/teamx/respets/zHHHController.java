@@ -19,6 +19,7 @@ public class zHHHController {
 	private HyunHwiService hhs;
 	ModelAndView mav;
 	
+	//메인-주소선택 후 기업리스트 페이지 (예약)
 	@RequestMapping(value = "/searchList", method = RequestMethod.GET)
 	public ModelAndView searchList(HttpServletRequest request, Integer pageNum) {
 		System.out.println("search check");
@@ -28,6 +29,7 @@ public class zHHHController {
 		return mav;
 	} // method End
 
+	//메인-업종버튼선택 후 기업리스트 페이지 (예약)
 	@RequestMapping(value = "/businessList", method=RequestMethod.GET)
 	public ModelAndView businessList(HttpServletRequest request, Integer pageNum) {
 		mav = new ModelAndView();
@@ -35,37 +37,41 @@ public class zHHHController {
 		return mav;
 	}
 	
+	//주소 선택 후 예약 기업 리스트 페이지에서 태그 선택시 리스트 페이지 (ajax)
 	@RequestMapping(value = "/tagSelectList", method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String tagSelectList(HttpServletRequest request) {
 		String text = hhs.tagSelectList(request);
 		return text;
 	}
 	
+	//주소 선택 후 예약 기업 리스트 페이지에서 태그 선택시 페이징 (ajax)
 	@RequestMapping(value = "/tagSelectListAddr", method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String tagSelectListAddr(HttpServletRequest request) {
 		String text = hhs.tagSelectListAddr(request);
 		return text;
 	}
 
+	//버튼 선택 후 예약 기업 리스트 페이지에서 태그 선택시 페이징 (ajax)
 	@RequestMapping(value = "/butTagSelectListPaging", method=RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String butTagSelectListPaging(HttpServletRequest request, Integer pageNum) {
 		String text = hhs.butTagSelectListPaging(request, pageNum);
 		return text;
 	}
 	
+	//버튼 선택 후 예약 기업 리스트 페이지에서 태그 선택시 리스트 페이지 (ajax)
 	@RequestMapping(value = "/butTagSelectList", method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	@ResponseBody public String butTagSelectList(HttpServletRequest request, Integer pageNum) {
 		String text = hhs.butTagSelectList(request, pageNum);
 		return text;
 	}
-	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public ModelAndView test() {
-		mav = new ModelAndView();
-		mav.setViewName("test");
-		return mav;
-	}
-	
+//	
+//	@RequestMapping(value = "/test", method = RequestMethod.GET)
+//	public ModelAndView test() {
+//		mav = new ModelAndView();
+//		mav.setViewName("test");
+//		return mav;
+//	}
+//	
 	//현휘; loginForm에서 아이디찾기 버튼을 클릭하면 작동하는 url, 아이디 찾기 페이지로 이동 
 	@RequestMapping(value = "/findMyIdForm", method = RequestMethod.GET)
 	public ModelAndView findMyIdForm() {
@@ -106,7 +112,7 @@ public class zHHHController {
 		return mav;
 	}
 
-	//현휘; 기업의 업종등록 신청 페이지로 이동하기 전에 기업이 가진 서비스 검색
+	//현휘; 기업의 업종등록 신청 페이지로 이동하기 전에 기업이 가진 서비스 검색-업종등록 
 	@RequestMapping (value="/serviceInsertForm", method=RequestMethod.GET)
 	public ModelAndView serviceInsertForm() {
 		mav = new ModelAndView();
@@ -114,7 +120,7 @@ public class zHHHController {
 		return mav;
 	}
 	
-	//현휘; 추가할 업종들의 정보를 가지고 등록하러 이동
+	//현휘; 추가할 업종들의 정보를 가지고 등록하러 이동 -업종등록
 	@RequestMapping (value="/serviceInsert", method=RequestMethod.POST)
 	public ModelAndView serviceInsert(MultipartHttpServletRequest request) {
 		mav = new ModelAndView();
@@ -122,7 +128,7 @@ public class zHHHController {
 		return mav;
 	}
 	
-	//현휘; 기업의 업종의 자세한 정보를 보기위한 메소드
+	//현휘; 기업의 업종의 자세한 정보를 보기위한 메소드 -업종정보
 	@RequestMapping(value = "/serviceDetail", method=RequestMethod.GET)
 	public ModelAndView serviceDetail(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -131,7 +137,7 @@ public class zHHHController {
 		return mav;
 	}
 	
-	//현휘; 기업의 상세정보 페이지에서 수정폼으로 이동
+	//현휘; 기업의 상세정보 페이지에서 수정폼으로 이동 -업종정보 
 	@RequestMapping(value = "/serviceUpdateForm", method=RequestMethod.POST)
 	public ModelAndView serviceUpdateForm(HttpServletRequest request) {
 		mav = new ModelAndView();
@@ -216,37 +222,38 @@ public class zHHHController {
 		mav = hhs.stepDelete(request);
 		return mav;
 	}
-	
-	@RequestMapping(value = "/changeCode", method=RequestMethod.POST)
-	@ResponseBody public String changeCode(HttpServletRequest request) {
-		String text = hhs.changeCode(request);
-		return text;
-	}
-	
-	@RequestMapping(value = "/personalBlackListPage", method=RequestMethod.GET)
-	public ModelAndView personalBlackListPage() {
-		//mav = hhs.personalBlacklist();
-		mav = new ModelAndView();
-		mav.setViewName("personalBlackListPage");
-		return mav;
-	}
-	@RequestMapping(value = "/customerInfoDetail", method=RequestMethod.GET)
-	public ModelAndView customerInfoDetail() {
-		//mav = hhs.personalBlacklist();
-		mav = new ModelAndView();
-		mav.setViewName("customerInfoDetail");
-		return mav; 
-	}
+//	
+//	@RequestMapping(value = "/changeCode", method=RequestMethod.POST)
+//	@ResponseBody public String changeCode(HttpServletRequest request) {
+//		String text = hhs.changeCode(request);
+//		return text;
+//	}
+//	
+//	@RequestMapping(value = "/personalBlackListPage", method=RequestMethod.GET)
+//	public ModelAndView personalBlackListPage() {
+//		//mav = hhs.personalBlacklist();
+//		mav = new ModelAndView();
+//		mav.setViewName("personalBlackListPage");
+//		return mav;
+//	}
+//	@RequestMapping(value = "/customerInfoDetail", method=RequestMethod.GET)
+//	public ModelAndView customerInfoDetail() {
+//		//mav = hhs.personalBlacklist();
+//		mav = new ModelAndView();
+//		mav.setViewName("customerInfoDetail");
+//		return mav; 
+//	}
+//
+//	@RequestMapping(value = "/businessInfo", method=RequestMethod.GET)
+//	public ModelAndView businessInfo(HttpServletRequest request) {
+//		System.out.println(request.getParameter("bus_no"));
+//		System.out.println(request.getParameter("bct_code"));
+//		//mav = hhs.businessInfo(request);
+//		mav = new ModelAndView();
+//		return mav;
+//	}
 
-	@RequestMapping(value = "/businessInfo", method=RequestMethod.GET)
-	public ModelAndView businessInfo(HttpServletRequest request) {
-		System.out.println(request.getParameter("bus_no"));
-		System.out.println(request.getParameter("bct_code"));
-		//mav = hhs.businessInfo(request);
-		mav = new ModelAndView();
-		return mav;
-	}
-
+	//업종 수정시 가격검사 
 	@RequestMapping(value = "/searchPrice", method=RequestMethod.POST)
 	@ResponseBody public String searchPrice(HttpServletRequest request) {
 		String text = hhs.searchPrice(request);
