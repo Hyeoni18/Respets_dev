@@ -16,7 +16,13 @@
 				class="nav-link dropdown-toggle nav-user arrow-none mr-0"
 				data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 				aria-expanded="false"> <span class="account-user-avatar">
-						<img src="${loc}${photo}" alt="user-image" class="rounded-circle">
+				<c:if test="${fn:substring(no,0,1) == 'P' || fn:substring(no,0,1) == 'B'}">
+				<img src="${loc}${photo}" alt="user-image" class="rounded-circle">
+				</c:if>
+				<c:if test="${fn:substring(no,0,1) == '1'}">
+				<img src="resources/images/defaultProfile/user.png" alt="user-image" class="rounded-circle">
+				</c:if>
+						
 				</span> <span> <span class="account-user-name">${name}
 							</span> <span class="account-position"> <c:if
 										test="${fn:substring(no,0,1) == 'P'}">개인회원</c:if> <c:if

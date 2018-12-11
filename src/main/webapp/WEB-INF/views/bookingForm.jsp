@@ -47,7 +47,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+<body data-layout="topnav">
 
 	<!-- Begin page -->
 	<div class="wrapper">
@@ -58,7 +58,6 @@
 
 		<div class="content-page">
 			<div class="content">
-
 				<!-- Topbar Start -->
 				<jsp:include page="topbar-landing.jsp">
 					<jsp:param name="no" value="${no}" />
@@ -66,24 +65,23 @@
 				<!-- end Topbar -->
 
 
+
 				<!-- Start Content-->
 				<div class="container-fluid">
 					<div class="row justify-content-center">
-						<div class="col-7">
+						<div class="col-7" style="margin-top: 30px; margin-bottom: 30px;">
 							<h5 class="text-success">서비스 예약</h5>
 							<hr />
-							<br />
 							<br />
 							<form action="booking" method="post">
 								<!-- <div id="wrap"> -->
 								<div class="card d-block"
-									style='width: 40%; height: 50%; margin: 1.5px; margin: auto;'>
+									style='width: 50%; height: 50%; margin: 1.5px; margin: auto;'>
 									<br />
 									<p class='text-success' style='text-align: center'>선택한 반려동물</p>
 									<hr />
 									${petList} <br />
 								</div>
-								<br />
 								<br />
 								<%-- <div id="petDiv">${petList}</div> --%>
 								<div id="bkDiv">
@@ -132,14 +130,9 @@
 
 	<!-- App js -->
 	<script src="/resources/dist/assets/js/app.min.js"></script>
-
-	<!-- third party js -->
-	<script src="/resources/dist/assets/js/vendor/Chart.bundle.min.js"></script>
-
-	<!-- demo app -->
+	<!-- demo app 
 	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
-	<!-- demo app -->
-	<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>
+	<script src="/resources/dist/assets/js/pages/demo.widgets.js"></script>-->
 </body>
 <!-- <script>
 	function lengthCheck() {

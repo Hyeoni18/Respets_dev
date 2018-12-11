@@ -163,7 +163,7 @@ public class JinService {
 		StringBuilder pet = new StringBuilder();
 		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
 		pet.append("' style='height:300px; weight:300px;' />");
-		pet.append("<div class='card-body'><br/><br/>");
+		pet.append("<div class='card-body'>");
 		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
 		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
