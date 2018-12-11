@@ -36,18 +36,6 @@ public class SunnyService {
 
 	/*--- 개인회원 PET ---*/
 
-	/* 메뉴 나의 동물 정보 클릭 시 실행 */
-	/*
-	 * public ModelAndView petList(HttpServletRequest request) { HttpSession session
-	 * = request.getSession(); String per_no =
-	 * session.getAttribute("no").toString(); ArrayList<Pet> petList = new
-	 * ArrayList<Pet>(); mav = new ModelAndView(); String view=null; petList = null;
-	 * System.out.println("per_no="+per_no); //검색한 회원번호로 반려동물 리스트 불러오기 petList =
-	 * pDao.getPetList(per_no); mav.addObject("per_no", per_no);//회원번호 담기 if
-	 * (petList.size() > 0) {//리스트가 존재하면 mav.addObject("petList", petList);//반려동물
-	 * 리스트 담기 } else {//등록된 반려동물이 없으면 mav.addObject("petEmpty", "등록된 동물이 없습니다"); }
-	 * view = "petList"; mav.setViewName(view); return mav; }
-	 */
 
 	/* 메뉴 나의 동물 정보 클릭 시 실행 */
 	public ModelAndView petList(HttpSession session) { // userId는 이메일
@@ -70,28 +58,22 @@ public class SunnyService {
 			view = "lock-screen-bus";
 			mav.setViewName(view);
 		}
-
 		return mav;
 	}
 
 	/* 반려동물 등록 폼에서 [등록 완료] 버튼 클릭 시 실행 */
 	public ModelAndView petInsert(MultipartHttpServletRequest multi) {
 		Pet pet = new Pet();
-
 		String ptyNo = multi.getParameter("pty_no");
 		String ptyEtc = multi.getParameter("pty_etc");
 		// 종류가 기타이면
 		if (ptyNo.equals("etc")) {
-			System.out.println("if문. pet_type=" + ptyNo);
-			System.out.println("if문. pet_type_etc=" + ptyEtc);
 			// 동물종류TB에 존재하는 값인지 select한다
 			String getPtyNo = sDao.getPetTypeNo(ptyEtc);
 			if (getPtyNo == null) {// 기타값이 종류TB에 존재하지 않으면
-				System.out.println("[DAO] pet_type select value = null");
 				// 동물종류TB에 새로운 데이터를 insert한다
 				boolean typeInsertResult = sDao.petTypeInsert(ptyEtc);
 				if (typeInsertResult) {// insert성공하면
-					System.out.println("[DAO] pet_type insert success");
 					// 동물종류번호를 select한다
 					getPtyNo = sDao.getPetTypeNo(ptyEtc);
 				}
@@ -115,24 +97,6 @@ public class SunnyService {
 		pet.setPet_tot(multi.getParameter("pet_tot"));
 		pet.setPet_etc(multi.getParameter("pet_etc"));
 		int check = Integer.parseInt(multi.getParameter("fileCheck"));
-		// log
-		System.out.println("---- SunnyService log ----");
-		System.out.println("per_no=" + pet.getPer_no());
-		System.out.println("pet_name=" + pet.getPet_name());
-		System.out.println("pet_type=" + pet.getPty_no());
-		System.out.println("pet_vrt=" + pet.getPet_vrt());
-		System.out.println("pet_age=" + pet.getPet_age());
-		System.out.println("pet_sex=" + pet.getPet_sex());
-		System.out.println("pet_ntr=" + pet.getPet_ntr());
-		System.out.println("pet_wght=" + pet.getPet_wght());
-		System.out.println("pet_sick=" + pet.getPet_sick());
-		System.out.println("pet_mday=" + pet.getPet_mday());
-		System.out.println("pet_food=" + pet.getPet_food());
-		System.out.println("pet_rat=" + pet.getPet_rat());
-		System.out.println("pet_tot=" + pet.getPet_tot());
-		System.out.println("pet_etc=" + pet.getPet_etc());
-		System.out.println("check=" + check);
-		System.out.println("--------- logEnd ---------");
 
 		Map<String, String> fMap = new HashMap<String, String>();
 		boolean petInsertResult = false; // pet:PET_TB시너님
@@ -140,9 +104,7 @@ public class SunnyService {
 			FileService upload = new FileService();
 			fMap = upload.upload(multi);// 서버에 파일을 업로드, 오리지널파일명·시스템파일명·경로를 Map에 저장
 			pet.setPet_photo(fMap.get("sysFileName"));
-			System.out.println("ServiceSysFileName=" + pet.getPet_photo());
 			pet.setPet_loc(fMap.get("location"));
-			System.out.println("ServicePath=" + pet.getPet_loc());
 			petInsertResult = sDao.petAndPhotoInsert(pet);
 			if (petInsertResult)
 				System.out.println("사진 첨부 OK 인서트 성공");
@@ -238,7 +200,6 @@ public class SunnyService {
 				}
 			}
 			mav.addObject("pet", pet);// 반려동물 상세정보 담기
-			System.out.println("pet.getPet_type=" + pet.getPty_name());
 			view = "petInfoDetail";
 		} else {// 반려동물 상세정보가 없으면
 			mav.addObject("Fail", "<script>alert('petInfoDetail 실패')</script>");
@@ -250,7 +211,6 @@ public class SunnyService {
 
 	/* 반려동물 정보 수정 폼 */
 	public ModelAndView petInfoUpdateForm(String pet_no) {
-		System.out.println("pet_no=" + pet_no);
 		mav = new ModelAndView();
 		String view = null;
 		Pet pet = new Pet();
@@ -302,16 +262,12 @@ public class SunnyService {
 		String ptyEtc = multi.getParameter("pty_etc");
 		// 종류가 기타이면
 		if (ptyNo.equals("etc")) {
-			System.out.println("if문. pet_type=" + ptyNo);
-			System.out.println("if문. pet_type_etc=" + ptyEtc);
 			// 동물종류TB에 존재하는 값인지 select한다
 			String getPtyNo = sDao.getPetTypeNo(ptyEtc);
 			if (getPtyNo == null) {// 기타값이 종류TB에 존재하지 않으면
-				System.out.println("[DAO] pet_type select value = null");
 				// 동물종류TB에 새로운 데이터를 insert한다
 				boolean typeInsertResult = sDao.petTypeInsert(ptyEtc);
 				if (typeInsertResult) {// insert성공하면
-					System.out.println("[DAO] pet_type insert success");
 					// 동물종류번호를 select한다
 					getPtyNo = sDao.getPetTypeNo(ptyEtc);
 				}
@@ -343,9 +299,7 @@ public class SunnyService {
 			FileService upload = new FileService();
 			fMap = upload.upload(multi);// 서버에 파일을 업로드, 오리지널파일명·시스템파일명·경로를 Map에 저장
 			pet.setPet_photo(fMap.get("sysFileName"));
-			System.out.println("ServiceSysFileName=" + pet.getPet_photo());
 			pet.setPet_loc(fMap.get("location"));
-			System.out.println("ServicePath=" + pet.getPet_loc());
 			petUpdateResult = sDao.petAndPhotoUpdate(pet);
 			if (petUpdateResult)
 				System.out.println("사진 수정 OK 업데이트 성공");
@@ -463,7 +417,6 @@ public class SunnyService {
 	public ModelAndView petDelete(String pet_no) {
 		mav = new ModelAndView();
 		String view = null;
-		System.out.println("Delete pet_no=" + pet_no);
 		List<HashMap<String, Object>> pdt = sDao.getPdt(pet_no);
 		if (pdt.size() != 0 || pdt.size() < 0) {
 			if (sDao.pdtAllDelete(pet_no)) {
@@ -497,12 +450,10 @@ public class SunnyService {
 		String view = null;
 		List<AdminBoard> aboList = null;
 		int page_no = (pageNum == null) ? 1 : pageNum;
-		System.out.println("pageNum=" + page_no);
 		aboList = sDao.getNoticeList(page_no);
 		if (aboList != null) {
 			mav.addObject("aboList", aboList);
 			mav.addObject("paging", getPaging(page_no));
-			System.out.println("size=" + aboList.size());
 			System.out.println("getNoticeList 성공");
 			view = "noticeList";
 		} else {
@@ -525,9 +476,6 @@ public class SunnyService {
 	/* 게시글 저장 */
 	public ModelAndView noticeInsert(String abc_no, String abo_title, String abo_ctt) {
 		abo = new AdminBoard();
-		System.out.println("abc_no=" + abc_no);
-		System.out.println("abo_title=" + abo_title);
-		System.out.println("abo_ctt=" + abo_ctt);
 		abo.setAbc_no(abc_no);
 		abo.setAbo_title(abo_title);
 		abo.setAbo_ctt(abo_ctt);
@@ -536,10 +484,10 @@ public class SunnyService {
 		mav = new ModelAndView();
 		String view = null;
 		if (insertResult) {
-			System.out.println("noticeInsert 성공!!");
+			System.out.println("noticeInsert 성공");
 			view = "redirect:noticeList";
 		} else {
-			System.out.println("noticeInsert 실패 ㅠㅠ");
+			System.out.println("noticeInsert 실패");
 			view = "redirect:noticeWriteForm";
 		}
 		mav.setViewName(view);
@@ -585,7 +533,6 @@ public class SunnyService {
 
 	/* 게시글 삭제 */
 	public ModelAndView noticeDelete(String abo_no) {
-		System.out.println("abo_no=" + abo_no);
 		mav = new ModelAndView();
 		boolean deleteResult = sDao.boardDelete(abo_no); // 게시글
 		System.out.println("deleteResult=" + deleteResult);
@@ -611,8 +558,6 @@ public class SunnyService {
 		} else
 			aboList = sDao.getNoticeListCategoriSearch(abo);
 
-		System.out.println("aboList=" + aboList); // log
-
 		mav = new ModelAndView();
 		String view = null;
 
@@ -623,7 +568,6 @@ public class SunnyService {
 			mav.addObject("aboList", aboList);
 			mav.addObject("abc_name", abc_name);
 			mav.addObject("paging", getPagingSearch(abo));
-			System.out.println("size=" + aboList.size());
 			System.out.println("getNoticeListSearch 성공");
 			view = "noticeList";
 		} else {
@@ -659,10 +603,6 @@ public class SunnyService {
 		String bct_code = request.getParameter("bct_code");
 		String bsd_date = request.getParameter("bsd_date");
 
-		System.out.println("bus_no=" + bus_no);
-		System.out.println("bct_code=" + bct_code);
-		System.out.println("bsd_date=" + bsd_date);
-
 		// 해시맵에 쿼리스트링과 회원번호를 담는다
 		hmap.put("bus_no", bus_no);
 		hmap.put("bct_code", bct_code);
@@ -692,13 +632,10 @@ public class SunnyService {
 
 		// 기업명을 가져온다
 		String bus_name = sDao.getBusName(hmap);
-		System.out.println("bus_name=" + bus_name);
 		// 업종명을 가져온다
 		String bct_name = sDao.getBctName(hmap);
-		System.out.println("bct_name=" + bct_name);
 		// '기업+업종'의 총 리뷰개수를 가져온다
 		String rev_count = sDao.getReviewCount(hmap);
-		System.out.println("rev_count=" + rev_count);
 		/*
 		 * // '기업+업종'의 리뷰평점 평균값을 가져온다 String rev_avg = sDao.getReviewAvg(hmap);
 		 * System.out.println("rev_avg=" + rev_avg);
@@ -706,11 +643,9 @@ public class SunnyService {
 		// 기업대표이미지를 가져온다
 		hmap = sDao.getBusinessImage(hmap);
 		String bus_img = hmap.get("GLR_LOC").toString() + hmap.get("GLR_FILE").toString();
-		System.out.println("bus_img" + bus_img);
 
 		// 기업이 제공하는 모든 서비스를 가져온다
 		serviceList = sDao.getHaveService(bus_no);
-		System.out.println("serviceList=" + serviceList);
 		mav.addObject("bus_no", bus_no);
 		mav.addObject("bsd_date", bsd_date);
 		mav.addObject("bct_code", bct_code);
@@ -731,17 +666,10 @@ public class SunnyService {
 		hmap.put("per_no", request.getParameter("per_no"));
 		hmap.put("bus_no", request.getParameter("bus_no"));
 		String action = request.getParameter("action");
-		System.out.println("action=" + action);
 		if (action.equals("insert")) {
-			System.out.println("action=" + action);
-			System.out.println(hmap.get("per_no").toString());
-			System.out.println(hmap.get("bus_no").toString());
 			result = sDao.favoriteInsert(hmap);
 		}
 		if (action.equals("delete")) {
-			System.out.println("action=" + action);
-			System.out.println(hmap.get("per_no").toString());
-			System.out.println(hmap.get("bus_no").toString());
 			result = sDao.favoriteDelete(hmap);
 		}
 		return result;
@@ -753,27 +681,16 @@ public class SunnyService {
 		mav = new ModelAndView();
 		String view = null;
 		// 회원번호
-		// String no = "P1000001";
 		String no = session.getAttribute("no").toString();
 		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-		System.out.println("세션확인: " + no);
 
 		// 회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = sDao.getPerCalendar(no);
-		// System.out.println("serviceList=" + bookingList);
-
-		// 최종 완성될 JSONObject 선언(전체)
-		// JSONObject bookingObject = new JSONObject();
-		// person의 JSON정보를 담을 Array 선언
-		// JSONArray bookingArray = new JSONArray();
-		// person의 하나의 예약 정보가 들어갈 JSONObject 선언
-		// JSONObject bookingInfo = new JSONObject();
 
 		mav.addObject("no", no);
 		for (int i = 0; i < bookingList.size(); i++) {
 			HashMap<String, Object> hmap = new HashMap<>();
-			System.out.println("bookingList!!!!!!!!!!!!!!!" + bookingList.get(i));
 			String bk_no = bookingList.get(i).get("BK_NO").toString();
 			String petName = bookingList.get(i).get("PET_NAME").toString();
 			String busName = bookingList.get(i).get("BUS_NAME").toString();
@@ -808,14 +725,9 @@ public class SunnyService {
 			}
 			bList.add(hmap);
 		}
-		System.out.println("hmap!!!!!!!!!!!!!!: " + bList);
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(bList);
-		System.out.println("json!!!!!!!!!!!!!1" + json);
 		mav.addObject("e", json);
-		// bookingObject.put("e",bookingArray);
-		// System.out.println("bookingObject="+bookingObject.toJSONArray(bookingArray));
-		System.out.println("확인: " + mav);
 		view = "personalCalendar";
 		mav.setViewName(view);
 		return mav;
