@@ -12,12 +12,15 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.JsonAdapter;
 import com.teamx.respets.bean.AdminBoard;
 import com.teamx.respets.bean.Pet;
 import com.teamx.respets.dao.SunnyDao;
@@ -60,10 +63,6 @@ public class SunnyService {
 			mav.addObject("per_no", no);// 회원번호 담기
 			if (petList.size() > 0) {// 리스트가 존재하면
 				mav.addObject("petList", petList);// 반려동물 리스트 담기
-			} else {// 등록된 반려동물이 없으면
-				mav.addObject("petEmpty", "<div class=\"alert alert-info\" role=\"alert\" style='margin-top:2rem;margin-bottom:0;'>"
-						+ "<i class=\"dripicons-information mr-2\"></i> 반려동물을 등록하셔야 <strong>예약 서비스</strong>"
-						+ "&nbsp;이용이 가능합니다!</div>");
 			}
 			view = "petList";
 			mav.setViewName(view);
@@ -657,7 +656,7 @@ public class SunnyService {
 		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
 
 		String bus_no = request.getParameter("bus_no");
-		String bct_code = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
 		String bsd_date = request.getParameter("bsd_date");
 
 		System.out.println("bus_no=" + bus_no);
@@ -749,6 +748,7 @@ public class SunnyService {
 	}
 
 	/* 개인 캘린더 */
+	@DateTimeFormat(iso=ISO.DATE)
 	public ModelAndView personalCalendar(HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;
@@ -778,6 +778,9 @@ public class SunnyService {
 			String petName = bookingList.get(i).get("PET_NAME").toString();
 			String busName = bookingList.get(i).get("BUS_NAME").toString();
 			String bctName = bookingList.get(i).get("BCT_NAME").toString();
+			String bus_addr = bookingList.get(i).get("BUS_ADDR").toString();
+			String bus_addr2 = bookingList.get(i).get("BUS_ADDR2").toString();
+			
 			if (bctName.equals("병원")) {
 				bctName = "진료";
 			}
@@ -786,10 +789,16 @@ public class SunnyService {
 			String end = bookingList.get(i).get("VS_END").toString();
 
 			// 데이터 입력
-			hmap.put("title", petName + "-" + busName + "(" + bctName + ")");
+			hmap.put("title", petName + ": " + busName + "[" + bctName + "]");
 			hmap.put("start", start);
 			hmap.put("end", end);
 			hmap.put("bk_no", bk_no);
+			hmap.put("pet_name", petName);
+			hmap.put("bus_name", busName);
+			hmap.put("bct_name", bctName);
+			hmap.put("bus_addr", bus_addr);
+			hmap.put("bus_addr2", bus_addr2);
+			
 			if (bctName.equals("진료")) {
 				hmap.put("className", "bg-warning");
 			} else if (bctName.equals("미용")) {

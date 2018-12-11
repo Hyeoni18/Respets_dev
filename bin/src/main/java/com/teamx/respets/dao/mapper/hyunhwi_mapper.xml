@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamx.respets.dao.HyunHwiDao">
+	<!-- 현휘 -->
+	<!-- 아이디찾기; type,name, phone을 이용, 회원 view 에서 select 진행 -->
+	<select id="selectUser" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT EMAIL FROM FIND_VIEW WHERE NAME=#{name} AND PHONE=#{phone} AND NO
+		LIKE '${type}%'
+	</select>
+	<select id="searchRND" parameterType="String"
+		resultType="hashmap"> SELECT RND_CODE FROM RND WHERE RND_EMAIL=#{userId}
+	</select>
+	<!-- 랜덤값확인; -->
+	<select id="checkRcode" resultType="randomtb"
+		parameterType="randomtb">
+		SELECT * FROM RND WHERE RND_EMAIL=#{rnd_email} AND RND_CODE=#{rnd_code}
+	</select>
+	<!-- 개인회원 비밀번호 변경; -->
+	<update id="resetPerPw" parameterType="personal">
+		UPDATE PER SET PER_PW=#{per_pw} WHERE PER_EMAIL=#{per_email}
+	</update>
+	<!-- 기업회원 비밀번호 변경; -->
+	<update id="resetBusPw" parameterType="personal">
+		UPDATE BUS SET BUS_PW=#{per_pw} WHERE BUS_EMAIL=#{per_email}
+	</update>
+	<!-- 랜덤값입력; 메일을 보내기 전, 입력한 정보들을 랜덤 테이블에 넣기 -->
+	<insert id="findMyPw" parameterType="randomtb">
+		INSERT INTO RND VALUES(#{rnd_email}, #{rnd_code}, #{rnd_type}, default)
+	</insert>
+	<!-- 비밀번호 변경 후, 랜덤 값 지우기; -->
+	<delete id="deleteRcode" parameterType="String"> DELETE FROM RND WHERE
+		RND_EMAIL=#{email} </delete>
+	<!-- 기업의 업종 검색, 삭제예정 -->
+	<select id="selectBusinessService" parameterType="String"
+		resultType="hashmap"> SELECT * FROM SVC WHERE BUS_NO=#{bus_no} </select>
+	<!-- 기업이 가지고 있는 업종 검색; -->
+	<select id="serviceInsertForm" resultType="hashmap"
+		parameterType="String">
+		SELECT * FROM BUS B JOIN SVC S ON B.BUS_NO = S.BUS_NO WHERE
+		B.BUS_NO=#{bus_no}
+	</select>
+	<!-- 해당 업종의 메뉴를 검색; -->
+	<select id="selectMENU" parameterType="String"
+		resultType="hashmap"> SELECT * FROM MENU WHERE BCT_CODE=#{bct_code} </select>
+	<!-- 기업이름, 전화번호 검색; -> 기업리스트랑 같이 써서 전체로 수정 (181113) -->
+	<select id="searchBUS" parameterType="String"
+		resultType="hashmap"> SELECT * FROM BUS WHERE BUS_NO=#{bus_no} </select>
+	<select id="searchBUSmap" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT * FROM BUS WHERE BUS_NO=#{bus_no} AND BUS_ADDR LIKE '%${bus_addr}%'
+	</select>
+	<!-- 기업의 갤러리 사진 등록; -->
+	<insert id="insertFile" parameterType="hashmap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, ${number}, #{file}, #{path})
+	</insert>
+	<!-- 기업의 고정스케줄 등록; -->
+	<insert id="serviceInsertBFX" parameterType="hashmap">
+		INSERT INTO BFX VALUES(#{bus_no}, #{bct_code}, #{bfx_mon}, #{bfx_tue},
+		#{bfx_wed}, #{bfx_thu}, #{bfx_fri}, #{bfx_sat}, #{bfx_sun},
+		#{bfx_hld}, #{bfx_lch})
+	</insert>
+	<!-- 기업의 한달스케줄 등록; -->
+	<insert id="serviceInsertBSD" parameterType="hashmap">
+		INSERT INTO BSD VALUES(#{bus_no}, #{bct_code}, TO_DATE(#{date},'YYYYMMDD'),
+		#{am_open}, #{am_close}, #{pm_open}, #{pm_close})
+	</insert>
+	<!-- 서비스가 테이블에 존재하는지 검색; 한다면 tag_no 반환 -->
+	<select id="searchTAG" parameterType="String"
+		resultType="String"> SELECT TAG_NO FROM TAG WHERE TAG_NAME=#{tag} </select>
+	<!-- 서비스를 태그테이블에 등록; -->
+	<insert id="insertTAG" parameterType="String">
+		INSERT INTO TAG VALUES('T'||TAG_SEQ.nextval, #{tag})
+	</insert>
+	<!-- 기업이 제공하는 서비스들을 해시태그 테이블에 등록; -->
+	<insert id="insertBTG" parameterType="hashmap">
+		INSERT INTO BTG VALUES(#{bus_no}, #{bct_code}, #{tag_num})
+	</insert>
+	<!-- 동물의 코드를 검색; -->
+	<select id="selectAnimalCode" parameterType="String"
+		resultType="String"> SELECT PTY_NO FROM PTY WHERE PTY_NAME=#{ani_code} </select>
+	<!-- 서비스 코드를 검색; -->
+	<select id="selectMenuNo" parameterType="hashmap"
+		resultType="String">
+		SELECT MENU_NO FROM MENU WHERE MENU_NAME=#{tag} AND BCT_CODE=#{bct_code}
+	</select>
+	<!-- 해당 서비스의 가격을 등록; -->
+	<insert id="insertPrice" parameterType="hashmap">
+		INSERT INTO PRC VALUES(#{bus_no}, #{bct_code}, ${tag}, ${pet}, ${price})
+	</insert>
+	<!-- 기업이 제공하는 업종 추가 등록; -->
+	<insert id="addBusinessCode" parameterType="hashmap">
+		INSERT INTO SVC VALUES(#{bus_no}, #{bct_code}, ${cnt})
+	</insert>
+	<!-- 업종이름을 코드로 변경; -->
+	<select id="searchBCT" parameterType="String"
+		resultType="String">
+		SELECT BCT_CODE FROM BCT WHERE BCT_NAME=#{bct_code}
+	</select>
+	<!-- 업종코드를 이름으로 변경; -->
+	<select id="searchBCTname" parameterType="String"
+		resultType="String">
+		SELECT BCT_NAME FROM BCT WHERE BCT_CODE=#{bct_code}
+	</select>
+	<!-- 기업의 하루 스케줄 검색; -->
+	<select id="searchBSD" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM BSD WHERE BUS_NO=#{bus_no}
+		AND BCT_CODE=#{bct_code} AND ROWNUM=1
+	</select>
+	<!-- 기업의 고정 스케줄 검색; -->
+	<select id="searchBFX" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as "수요일", BFX_THU as
+		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as "일요일", BFX_HLD
+		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<!-- 기업의 제공 서비스를 검색; 해당 메뉴의 번호를 반환 -->
+	<select id="selectMenuTag" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT DISTINCT MENU_NO FROM PRC WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
+	</select>
+	<!-- 기업이 제공하는 메뉴의 번호를 가지고 메뉴이름 검색; -->
+	<select id="selectMenuName" parameterType="String"
+		resultType="String">
+		SELECT MENU_NAME FROM MENU WHERE MENU_NO=#{menu_no}
+	</select>
+	<!-- 기업이 제공하는 동물종류 검색; 해당 동물의 번호 반환 -->
+	<select id="selectAnimalTag" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT DISTINCT PTY_NO FROM PRC WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
+	</select>
+	<!-- 기업이 제공하는 동물번호로 동물종류 검색; -->
+	<select id="selectAnimalName" parameterType="String"
+		resultType="String"> SELECT PTY_NAME FROM PTY WHERE PTY_NO=#{animal_no}
+	</select>
+	<!-- 모든 동물 종류를 검색; -->
+	<select id="animalSelect" resultType="hashmap"> SELECT * FROM PTY </select>
+	<!-- 기업의 기본정보 수정; -->
+	<update id="updateServiceBUS" parameterType="hashmap">
+		UPDATE BUS SET BUS_NAME=#{name}, BUS_PHONE=#{phone} WHERE BUS_NO=#{bus_no}
+	</update>
+	<!-- 기업의 하루 스케줄 수정; -->
+	<update id="updateServiceBSD" parameterType="hashmap">
+		UPDATE BSD SET AM_OPEN=#{am_open}, AM_CLOSE=#{lunch_open},
+		PM_OPEN=#{lunch_close}, PM_CLOSE=#{pm_close} WHERE BUS_NO=#{bus_no}
+		AND BCT_CODE=#{bct_code}
+	</update>
+	<!-- 기업의 고정 스케줄 수정; -->
+	<update id="updateServiceBFX" parameterType="hashmap">
+		UPDATE BFX SET BFX_MON=#{bfx_mon}, BFX_TUE=#{bfx_tue}, BFX_WED=#{bfx_wed},
+		BFX_THU=#{bfx_thu} , BFX_FRI=#{bfx_fri}, BFX_SAT=#{bfx_sat},
+		BFX_SUN=#{bfx_sun}, BFX_HLD=#{bfx_hld}, BFX_LCH=#{bfx_lch} WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</update>
+	<!-- 해당 기업-업종의 직원 검색; -->
+	<select id="selectEMP" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT * FROM EMP WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="selectEMPstring" parameterType="hashmap"
+		resultType="String">
+		SELECT EMP_NO FROM EMP WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<!-- 해당 직원이 담당했던 예약 삭제; -->
+	<delete id="deleteBK" parameterType="String"> DELETE FROM BK WHERE
+		EMP_NO=#{emp_no} </delete>
+	<!-- 해당 직원의 하루 스케줄 삭제; -->
+	<delete id="deleteESD" parameterType="String"> DELETE FROM ESD WHERE
+		EMP_NO=#{emp_no} </delete>
+	<!-- 해당 직원의 고정 스케줄 삭제; -->
+	<delete id="deleteEFX" parameterType="String"> DELETE FROM EFX WHERE
+		EMP_NO=#{emp_no} </delete>
+	<!-- 해당 직원의 상세 정보 삭제; -->
+	<delete id="deleteEMP" parameterType="String"> DELETE FROM EMP WHERE
+		EMP_NO=#{emp_no} </delete>
+	<!-- 해당 기업-업종의 서비스 가격 삭제; -->
+	<delete id="deletePRC" parameterType="hashmap">
+		DELETE FROM PRC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 해당 기업-업종의 하루 스케줄 삭제; -->
+	<delete id="deleteBSD" parameterType="hashmap">
+		DELETE FROM BSD WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 해당 기업-업종의 고정 스케줄 삭제; -->
+	<delete id="deleteBFX" parameterType="hashmap">
+		DELETE FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 해당 기업-업종의 해시태그 테이블 삭제; -->
+	<delete id="deleteBTG" parameterType="hashmap">
+		DELETE FROM BTG WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 해당 기업-업종의 사진 테이블 삭제; -->
+	<delete id="deleteGLR" parameterType="hashmap">
+		DELETE FROM GLR WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 해당 기업-업종의 정보 삭제; -->
+	<delete id="deleteSVC" parameterType="hashmap">
+		DELETE FROM SVC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</delete>
+	<!-- 기업이 가진 업종 검색; -->
+	<select id="selectSVC" parameterType="String"
+		resultType="hashmap"> SELECT * FROM SVC WHERE BUS_NO=#{bus_no} </select>
+	<select id="holidaySelected" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as "수요일", BFX_THU as
+		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as "일요일", BFX_HLD
+		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="bctSelect" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT B.BCT_NAME FROM SVC S JOIN BCT B ON S.BCT_CODE=B.BCT_CODE WHERE
+		BUS_NO=#{bus_no}
+	</select>
+	<insert id="stepInsert" parameterType="hashmap">
+		INSERT INTO EMP VALUES('S'||EMP_SEQ.NEXTVAL, #{bus_no}, #{bct_code},
+		#{name}, #{pos}, #{part}, #{photo}, #{path}, #{license}, #{lcloc},
+		default, default)
+		<selectKey resultType="int" keyProperty="EMP_NO"
+			order="AFTER"> SELECT EMP_SEQ.CURRVAL FROM DUAL </selectKey>
+	</insert>
+	<insert id="empInsertEFX" parameterType="hashmap">
+		INSERT INTO EFX VALUES(#{emp_no}, #{efx_mon}, #{efx_tue}, #{efx_wed},
+		#{efx_thu}, #{efx_fri}, #{efx_sat}, #{efx_sun}, #{efx_hld},
+		#{efx_lch})
+	</insert>
+	<insert id="empInsertESD" parameterType="hashmap">
+		INSERT INTO ESD VALUES(#{emp_no}, TO_DATE(#{date}, 'YYYYMMDD'), #{am_open},
+		#{am_close}, #{pm_open}, #{pm_close})
+	</insert>
+	<select id="selectStep" parameterType="String"
+		resultType="hashmap"> SELECT * FROM EMP WHERE BUS_NO=#{bus_no} </select>
+	<select id="stepDetail" parameterType="String"
+		resultType="hashmap"> SELECT * FROM EMP WHERE EMP_NO=#{empno} </select>
+	<select id="selectGallery" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT * FROM GLR WHERE BUS_NO=#{bus_no} AND GCT_NO=#{gct_no}
+	</select>
+	<select id="searchEMP" parameterType="String"
+		resultType="hashmap"> SELECT * FROM EMP WHERE EMP_NO=#{emp_no} </select>
+	<select id="searchEFX" parameterType="String"
+		resultType="hashmap">
+		SELECT EFX_MON as "월요일", EFX_TUE as "화요일", EFX_WED as "수요일", EFX_THU as
+		"목요일", EFX_FRI as "금요일", EFX_SAT as "토요일", EFX_SUN as "일요일", EFX_HLD
+		as "공휴일" FROM EFX WHERE EMP_NO=#{emp_no}
+	</select>
+	<select id="searchLunchTime" parameterType="String"
+		resultType="String"> SELECT BFX_LCH FROM BFX WHERE BUS_NO=#{bus_no} </select>
+	<select id="searchTime" parameterType="String"
+		resultType="hashmap">
+		SELECT AM_OPEN, PM_CLOSE FROM BSD WHERE BUS_NO=#{bus_no} AND ROWNUM=1
+	</select>
+	<select id="changeCode" parameterType="String"
+		resultType="String">
+		SELECT BCT_NAME FROM BCT WHERE BCT_CODE=#{bct_code}
+	</select>
+	<select id="searchESD" parameterType="String"
+		resultType="hashmap">
+		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM ESD WHERE EMP_NO=#{emp_no}
+		AND ROWNUM=1
+	</select>
+	<select id="searchYellowBLK" resultType="hashmap">
+		SELECT * FROM BLK B JOIN PER P ON B.PER_NO=P.PER_NO WHERE OUT_NO=2
+	</select>
+	<select id="searchRedBLK" resultType="hashmap">
+		SELECT * FROM BLK B JOIN PER P ON B.PER_NO=P.PER_NO WHERE OUT_NO=4
+	</select>
+	<select id="searchPER" parameterType="String"
+		resultType="hashmap">
+		SELECT * FROM PER P JOIN PET T ON P.PER_NO = T.PER_NO JOIN PTY Y ON T.PTY_NO
+		= Y.PTY_NO WHERE P.PER_NO=#{per_no}
+	</select>
+	<update id="updateEMP" parameterType="hashmap">
+		UPDATE EMP SET EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
+		EMP_PART=#{emp_part} WHERE EMP_NO=#{emp_no}
+	</update>
+	<update id="updateEMPPhoto" parameterType="hashmap">
+		UPDATE EMP SET EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
+		EMP_PART=#{emp_part}, EMP_PHOTO=#{emp_photo}, EMP_LOC=#{emp_loc} WHERE
+		EMP_NO=#{emp_no}
+	</update>
+	<update id="updateESD" parameterType="hashmap">
+		UPDATE ESD SET AM_OPEN=#{am_open}, AM_CLOSE=#{am_close}, PM_OPEN=#{pm_open},
+		PM_CLOSE=#{pm_close} WHERE EMP_NO=#{emp_no}
+	</update>
+	<update id="updateEFX" parameterType="hashmap">
+		UPDATE EFX SET EFX_MON=#{efx_mon}, EFX_TUE=#{efx_tue}, EFX_WED=#{efx_wed},
+		EFX_THU=#{efx_thu} , EFX_FRI=#{efx_fri}, EFX_SAT=#{efx_sat},
+		EFX_SUN=#{efx_sun}, EFX_HLD=#{efx_hld}, EFX_LCH=#{efx_lch} WHERE
+		EMP_NO=#{emp_no}
+	</update>
+	<select id="searchBTG" parameterType="String"
+		resultType="hashmap">
+		SELECT DISTINCT BUS_NO FROM BTG WHERE BCT_CODE=#{bct_code}
+	</select>
+	<select id="countSVC" parameterType="String" resultType="String">
+		SELECT COUNT(*) AS COUNT FROM SVC WHERE BUS_NO=#{bus_no}
+	</select>
+	<select id="searchMENUNO" parameterType="hashmap"
+		resultType="String">
+		SELECT MENU_NO FROM MENU WHERE MENU_NAME=#{tag_name} AND
+		BCT_CODE=#{bct_code}
+	</select>
+	<select id="searchPTYNO" parameterType="String"
+		resultType="String"> SELECT PTY_NO FROM PTY WHERE PTY_NAME=#{ani_name} </select>
+	<select id="searchPRC" parameterType="hashmap"
+		resultType="String">
+		SELECT PRICE FROM PRC WHERE BUS_NO=#{bus_no} AND MENU_NO=${tag_no} AND
+		PTY_NO=${ani_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="searchSVC" parameterType="hashmap"
+		resultType="String">
+		SELECT SVC_PRI FROM SVC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="selectBSD" parameterType="String"
+		resultType="hashmap">
+		SELECT US.BUS_NO FROM BUS US JOIN BSD SD ON US.BUS_NO=SD.BUS_NO WHERE
+		SD.BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND
+		SD.BCT_CODE=#{bct_code}
+	</select>
+	<select id="selectTAG" parameterType="String"
+		resultType="hashmap">
+		SELECT DISTINCT(TAG_NO) AS TAG_NO FROM BTG WHERE BCT_CODE=#{bct_code}
+	</select>
+	<select id="changeTAG" parameterType="String"
+		resultType="String"> SELECT TAG_NAME FROM TAG WHERE TAG_NO=#{tag_no} </select>
+	<select id="searchBSDtoBUS" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT BUS_NO FROM BSD WHERE BCT_CODE=#{bct_code} AND
+		BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD')
+	</select>
+	<select id="selectBTG" parameterType="hashmap"
+		resultType="String">
+		SELECT BUS_NO FROM BTG WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code} AND
+		TAG_NO=#{tag_no}
+	</select>
+	<select id="selectSVCcode" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM SVC C JOIN BUS S ON C.BUS_NO=S.BUS_NO WHERE BCT_CODE=#{bct_code} ORDER BY C.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<select id="selectBTGbus" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT BUS_NO FROM BTG WHERE BCT_CODE=#{bct_code} AND TAG_NO=#{tag_no}
+	</select>
+	<!-- <select id="searchBUSaddr" parameterType="hashmap" resultType="hashmap"> 
+		SELECT * FROM BUS WHERE BUS_NO=#{bus_no} AND BUS_ADDR LIKE '${bus_addr}%' 
+		</select> -->
+	<select id="searchBUSaddr" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM ( SELECT ROWNUM AS RNUM, SEL.* FROM ( SELECT * FROM BSD D JOIN ( SELECT * FROM BUS WHERE BUS_ADDR like '${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code} ORDER BY D.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9)X WHERE X.RNUM >= ${pageNum} * 9-8
+]]>
+	</select>
+	<select id="countBusiList" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BSD D JOIN (SELECT * FROM BUS WHERE BUS_ADDR like
+		'${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE
+		BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code}
+	</select>
+	<select id="countBusiButList" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM SVC C JOIN BUS S ON C.BUS_NO=S.BUS_NO WHERE
+		BCT_CODE=#{bct_code}
+	</select>
+	<select id="searchBUSaddrTag" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM BTG G JOIN (SELECT A.* FROM BSD D JOIN (SELECT * FROM BUS WHERE BUS_ADDR like '${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code}) C ON G.BUS_NO=C.BUS_NO WHERE TAG_NO=#{tag_no} ORDER BY C.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<select id="countSearchBUSaddr" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BTG G JOIN (SELECT S.BUS_NO, D.BCT_CODE, D.BSD_DATE,
+		S.BUS_NAME, S.BUS_ADDR FROM BSD D JOIN BUS S ON D.BUS_NO=S.BUS_NO
+		WHERE D.BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND S.BUS_ADDR like
+		'${bus_addr}%' AND D.BCT_CODE=#{bct_code}) A ON G.BUS_NO=A.BUS_NO
+		WHERE TAG_NO=#{tag_no}
+	</select>
+	<select id="butTagSelectList" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM BUS S JOIN BTG G ON S.BUS_NO=G.BUS_NO WHERE BCT_CODE=#{bct_code} AND TAG_NO=#{tag_no} ORDER BY S.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<select id="countButTagSelectList" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BUS S JOIN BTG G ON S.BUS_NO=G.BUS_NO WHERE
+		BCT_CODE=#{bct_code} AND TAG_NO=#{tag_no}
+	</select>
+	<!-- 현휘 끝 -->
+</mapper>

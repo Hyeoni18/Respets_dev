@@ -13,20 +13,20 @@
 		<div class="container-fluid">
 
 			<!-- LOGO -->
-			<a href="./" class="topnav-logo"> <span
-				class="topnav-logo-lg"> <img
-					src="resources/images/logo-mint.png" 
-					alt="respets logo" height="30">
-			</span> <span class="topnav-logo-sm"> <img 
-			src="resources/images/logo-sm.png" 
-			alt="respets logo" height="30">
+			<a href="./" class="topnav-logo"> <span class="topnav-logo-lg">
+					<img src="resources/images/logo-mint.png" alt="respets logo"
+					height="30">
+			</span> <span class="topnav-logo-sm"> <img
+					src="resources/images/logo-sm.png" alt="respets logo" height="30">
 			</span>
 			</a>
 
 			<ul class="list-unstyled topbar-right-menu float-right mb-0">
 				<c:if test="${no == null}">
-					<li style="margin-top:17px;"><a href="loginForm" class="btn btn-outline-success">로그인</a></li>
-					<li style="margin-top:17px;margin-left:10px;"><a href="joinChoiceForm" class="btn btn-outline-success">회원가입</a></li>
+					<li style="margin-top: 17px;"><a href="loginForm"
+						class="btn btn-outline-success">로그인</a></li>
+					<li style="margin-top: 17px; margin-left: 10px;"><a
+						href="joinChoiceForm" class="btn btn-outline-success">회원가입</a></li>
 					<li></li>
 				</c:if>
 				<c:if test="${no != null}">
@@ -36,11 +36,11 @@
 						aria-haspopup="false" aria-expanded="false"> <span
 							class="account-user-avatar"> <img src="${loc}${photo}"
 								alt="user-image" class="rounded-circle">
-						</span> <span> <span class="account-user-name">${name}</span> <span
-								class="account-position"> <c:if
+						</span> <span> <span class="account-user-name"> ${name}
+							</span> <span class="account-position"> <c:if
 										test="${fn:substring(no,0,1) == 'P'}">개인회원</c:if> <c:if
 										test="${fn:substring(no,0,1) == 'B'}">기업회원</c:if> <c:if
-										test="${fn:substring(no,0,1) == '9'}">관리자</c:if>
+										test="${fn:substring(no,0,1) == '1'}">관리자</c:if>
 							</span>
 						</span>
 					</a>
@@ -52,13 +52,13 @@
 							</div>
 
 							<!-- item-->
-							<a href="recentMyBookingList" class="dropdown-item notify-item">
+							<a href="./myPage" class="dropdown-item notify-item">
 								<i class="mdi mdi-account-circle"></i> <span>마이페이지</span>
 							</a>
 
 							<c:if test="${fn:substring(no,0,1) == 'P'}">
 								<!-- item-->
-								<a href="personalCalendar" class="dropdown-item notify-item">
+								<a href="./personalCalendar" class="dropdown-item notify-item">
 									<i class="mdi mdi-calendar"></i> <span>캘린더</span>
 								</a>
 							</c:if>

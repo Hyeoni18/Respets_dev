@@ -32,10 +32,8 @@
 	type="text/css" />
 </head>
 <body>
-	<!-- Begin page -->
 	<div class="wrapper">
-
-		<!-- ========== Left Sidebar Start ========== -->
+		<%@ include file="left-sidebar.jsp"%>
 
 		<!-- Left Sidebar End -->
 
@@ -43,68 +41,77 @@
 		<!-- Start Page Content here -->
 		<!-- ============================================================== -->
 
-		<div class="container-fluid">
-			<!-- start page title -->
-			<div class="row">
-				<div class="col-12">
-					<div class="page-title-box">
-						<h4 class="page-title">게시글 작성</h4>
-					</div>
-				</div>
-			</div>
-			<!-- end page title -->
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-body">
-							<form action="noticeInsert" name="noticeWriteForm" method="get">
-								<div class="form-group mb-3">
-									<label for="example-select">카테고리</label> <select
-										class="form-control" name="abc_no">
-										<option value="">선택</option>
-										<option value="1">개인</option>
-										<option value="2">기업</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="simpleinput">제목</label> <input type="text"
-										id="simpleinput" class="form-control" name="abo_title"
-										placeholder="게시글 제목을 입력하세요">
-								</div>
-								<div class="form-group">
-									<label for="simpleinput">내용</label>
-									<textarea data-toggle="maxlength" class="form-control"
-										maxlength="1000" rows="10" name="abo_ctt"
-										placeholder="게시글 내용을 입력하세요"></textarea>
-								</div>
-								<div style="text-align: right">
-									<button id="noticeInsertSubmit"
-										class="btn btn-success btn-sm mt-2">
-										<i class="mdi mdi-content-save-outline mr-1"></i> Save
-									</button>
-								</div>
+		<div class="content-page">
+			<div class="content">
 
-							</form>
+				<!-- Topbar Start -->
+				<%@ include file="topbar-dashboard.jsp"%>
+				<!-- end Topbar -->
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<h4 class="page-title">게시글 작성</h4>
+							</div>
 						</div>
 					</div>
-					<!-- end card-->
+					<!-- end page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<form action="noticeInsert" name="noticeWriteForm" method="get">
+										<div class="form-group mb-3">
+											<label for="example-select">카테고리</label> <select
+												class="form-control" name="abc_no">
+												<option value="">선택</option>
+												<option value="1">개인</option>
+												<option value="2">기업</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="simpleinput">제목</label> <input type="text"
+												id="simpleinput" class="form-control" name="abo_title"
+												placeholder="게시글 제목을 입력하세요">
+										</div>
+										<div class="form-group">
+											<label for="simpleinput">내용</label>
+											<textarea data-toggle="maxlength" class="form-control"
+												maxlength="1000" rows="10" name="abo_ctt"
+												placeholder="게시글 내용을 입력하세요"></textarea>
+										</div>
+										<div style="text-align: right">
+											<button id="noticeInsertSubmit"
+												class="btn btn-success btn-sm mt-2">
+												<i class="mdi mdi-content-save-outline mr-1"></i> Save
+											</button>
+										</div>
+
+									</form>
+								</div>
+							</div>
+							<!-- end card-->
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+
 				</div>
-				<!-- end col -->
+				<!-- content -->
+
+				<!-- Footer Start -->
+				<%@ include file="footer.html"%>
+				<!-- end Footer -->
+
+				<!-- ============================================================== -->
+				<!-- End Page content -->
+				<!-- ============================================================== -->
+
 			</div>
-			<!-- end row -->
-
 		</div>
-		<!-- content -->
-
-		<!-- Footer Start -->
-
-		<!-- end Footer -->
-
-		<!-- ============================================================== -->
-		<!-- End Page content -->
-		<!-- ============================================================== -->
-
-
 	</div>
 	<!-- END wrapper -->
 
@@ -121,30 +128,36 @@
 	<!-- third party js ends -->
 
 	<!-- demo app -->
-	<script	src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 </body>
 <script>
-$("#noticeInsertSubmit").click(function() {
-	console.log(this.value + " 클릭함");
-	var frm = document.noticeWriteForm;
-	var length = frm.length - 1;
-	for (var i = 0; i < length; i++) {
-		if (frm[i].name == "abc_no"){
-			if (frm[i].value == "" || frm[i].value == null){
-				alert("카테고리가 입력되지 않았습니다"); frm[i].focus(); return false;
-			}					
-		}else if (frm[i].name == "abo_title"){
-			if (frm[i].value == "" || frm[i].value == null){
-				alert("제목이 입력되지 않았습니다"); frm[i].focus(); return false;
-			}					
-		}else if (frm[i].name == "abo_ctt"){
-			if (frm[i].value == "" || frm[i].value == null){
-				alert("내용이 입력되지 않았습니다"); frm[i].focus(); return false;
-			}					
+	$("#noticeInsertSubmit").click(function() {
+		console.log(this.value + " 클릭함");
+		var frm = document.noticeWriteForm;
+		var length = frm.length - 1;
+		for (var i = 0; i < length; i++) {
+			if (frm[i].name == "abc_no") {
+				if (frm[i].value == "" || frm[i].value == null) {
+					alert("카테고리가 입력되지 않았습니다");
+					frm[i].focus();
+					return false;
+				}
+			} else if (frm[i].name == "abo_title") {
+				if (frm[i].value == "" || frm[i].value == null) {
+					alert("제목이 입력되지 않았습니다");
+					frm[i].focus();
+					return false;
+				}
+			} else if (frm[i].name == "abo_ctt") {
+				if (frm[i].value == "" || frm[i].value == null) {
+					alert("내용이 입력되지 않았습니다");
+					frm[i].focus();
+					return false;
+				}
+			}
 		}
-	}
-	frm.submit();
-});
+		frm.submit();
+	});
 </script>
 </html>

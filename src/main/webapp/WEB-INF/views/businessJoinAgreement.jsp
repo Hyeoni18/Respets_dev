@@ -254,6 +254,11 @@
 
 
 
+	<!-- App js -->
+	<script src="/resources/dist/assets/js/app.min.js"></script>
+
+	<!-- demo app -->
+	<script src="/resources/dist/assets/js/pages/demo.project-detail.js"></script>
 	<!-- demo app -->
 	<script src="resources/dist/assets/js/pages/demo.widgets.js"></script>
 </body>

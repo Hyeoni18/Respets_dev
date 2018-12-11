@@ -7,6 +7,12 @@
 <title>Respets :: 전체 예약 목록</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description" />
+<meta content="Coderthemes" name="author" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
@@ -90,7 +96,10 @@
 											</tbody>
 										</table>
 									</div>
-
+									<br />
+									<div class="row mb-2" style="">
+										<div class="col-lg-8">${paging}</div>
+									</div>
 								</div>
 								<!-- end card body-->
 							</div>
@@ -99,9 +108,7 @@
 						<!-- end col -->
 					</div>
 					<!-- end row -->
-					<div class="row mb-2" style="">
-						<div class="col-lg-8">${paging}</div>
-					</div>
+
 				</div>
 				<!-- container -->
 
@@ -113,12 +120,12 @@
 			<!-- end Footer -->
 
 		</div>
-
-		<!-- ============================================================== -->
-		<!-- End Page content -->
-		<!-- ============================================================== -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Page content -->
+	<!-- ============================================================== -->
 </body>
-
+<script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$.ajax({

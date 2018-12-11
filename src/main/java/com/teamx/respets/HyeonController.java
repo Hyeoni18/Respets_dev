@@ -72,13 +72,15 @@ public class HyeonController {
 	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
 	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
 		mav = hy.myInfoUpdate(request);
+		mav.setViewName("redirect:/myInfo");
 		return mav;
 	}
 
 	/* 혜연 */
-	@RequestMapping(value = "/businessInfoUpdate")
-	public ModelAndView businessInfoUpdate(Business bi, HttpServletRequest request) {
-		mav = hy.businessInfoUpdate(bi, request);
+	@RequestMapping(value = "/businessInfoUpdate", method = RequestMethod.POST)
+	public ModelAndView businessInfoUpdate(MultipartHttpServletRequest request) {
+		System.out.println("컨트롤러 확인");
+		mav = hy.businessInfoUpdate(request);
 		return mav;
 	}
 
@@ -159,13 +161,13 @@ public class HyeonController {
 		return mav;
 	}
 
-	/* 혜연 */
-	@RequestMapping(value = "/businessInfoUpdateForm")
-	public ModelAndView businessInfoUpdateForm(HttpSession session) {
-		mav.addObject("no", session.getAttribute("no"));
-		mav.setViewName("businessInfoUpdateForm");
-		return mav;
-	}
+//	/* 혜연 */
+//	@RequestMapping(value = "/businessInfoUpdateForm")
+//	public ModelAndView businessInfoUpdateForm(HttpSession session) {
+//		mav.addObject("no", session.getAttribute("no"));
+//		mav.setViewName("businessInfoUpdateForm");
+//		return mav;
+//	}
 
 	/* 혜연 */
 	@RequestMapping(value = "/businessPartDelete")

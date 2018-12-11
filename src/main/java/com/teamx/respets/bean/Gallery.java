@@ -4,11 +4,29 @@ public class Gallery {
 	private String bus_no;
 	private String bct_code;
 	private String gct_no;
-	private String bgl_orl;
+	/*private String bgl_orl;
 	private String bgl_sys;
-	private String bgl_loc;
-	
+	private String bgl_loc;*/
 	private String gct_name;
+	private String glr_file;
+	private String glr_loc;
+	
+
+	public String getGlr_file() {
+		return glr_file;
+	}
+
+	public void setGlr_file(String glr_file) {
+		this.glr_file = glr_file;
+	}
+
+	public String getGlr_loc() {
+		return glr_loc;
+	}
+
+	public void setGlr_loc(String glr_loc) {
+		this.glr_loc = glr_loc;
+	}
 
 	public String getBus_no() {
 		return bus_no;
@@ -34,7 +52,7 @@ public class Gallery {
 		this.gct_no = gct_no;
 	}
 
-	public String getBgl_orl() {
+	/*public String getBgl_orl() {
 		return bgl_orl;
 	}
 
@@ -56,7 +74,7 @@ public class Gallery {
 
 	public void setBgl_loc(String bgl_loc) {
 		this.bgl_loc = bgl_loc;
-	}
+	}*/
 
 	public String getGct_name() {
 		return gct_name;

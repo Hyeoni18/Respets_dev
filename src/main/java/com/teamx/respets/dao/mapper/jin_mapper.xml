@@ -51,12 +51,14 @@
 
 	<!-- 서진 : 개인 즐겨찾기 기업 SELECT -->
 	<select id="likeBusinessSelect" parameterType="String" resultType="HashMap">
-		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC
-		FROM FAV INNER JOIN BUS
+		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC, SVC.BCT_CODE
+        FROM FAV INNER JOIN BUS
 		ON FAV.BUS_NO = BUS.BUS_NO
 		INNER JOIN GLR
 		ON BUS.BUS_NO = GLR.BUS_NO
-		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2
+		INNER JOIN SVC
+		ON FAV.BUS_NO = SVC.BUS_NO
+		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2 AND SVC.SVC_PRI = 1
 	</select>
 
 	<!-- 서진 : 개인 즐겨찾기 삭제 -->
@@ -141,7 +143,7 @@
 
 	<!-- 서진 : 기업 새로운 예약 -->
 	<select id="selectBooking" parameterType="String" resultType="HashMap">
-		SELECT BK.BK_NO, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME,
+		SELECT BK.BK_NO, PTY.PTY_NAME, PET.PET_NAME, PER.PER_NAME, BCT.BCT_NAME,
 		TO_CHAR(BK.VS_START, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분"') AS VS_START
 		FROM BK INNER JOIN PET
 		ON BK.PET_NO = PET.PET_NO
@@ -149,7 +151,10 @@
 		ON PET.PTY_NO = PTY.PTY_NO
 		INNER JOIN PER
 		ON BK.PER_NO = PER.PER_NO
+		INNER JOIN BCT
+		ON BK.BCT_CODE = BCT.BCT_CODE
 		WHERE BK.BUS_NO = #{bus_no} AND BK.BK_CHK = '신청'
+		ORDER BY BK.BK_NO DESC
 	</select>
 
 	<!-- 서진 : 기업 새로운 예약 수락 -->
@@ -172,6 +177,18 @@
 		ON ABO.ABC_NO = ABC.ABC_NO
 		ORDER BY ABO.ABO_NO DESC) ABO
 		WHERE ROWNUM <= 3]]>
+	</select>
+	
+	<select id="nowPwCheck" parameterType="Business" resultType="int">
+		SELECT COUNT(*) FROM BUS WHERE BUS_NO = #{bus_no} AND BUS_PW = #{bus_pw}
+	</select>
+	
+	<update id="businessPwUpdate" parameterType="Business">
+		UPDATE BUS SET BUS_PW = #{bus_pw} WHERE BUS_NO = #{bus_no}
+	</update>
+	
+	<select id="businessInfoUpdateForm" parameterType="Business" resultType="Business">
+		SELECT * FROM BUS WHERE BUS_NO = #{bus_no}
 	</select>
 
 </mapper>

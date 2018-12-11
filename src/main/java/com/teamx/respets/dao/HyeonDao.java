@@ -16,38 +16,37 @@ import com.teamx.respets.bean.Personal;
 public interface HyeonDao {
 	/* 혜연 개인 */
 	public Personal myInfo(String no);
-	public boolean myInfoUpdate(Personal mb);
-	public boolean personalPartDelete(String no);
-	public int myPwUpdate(Personal mb);
 	public int myPwCheck(Personal mb);
+	public int myPwUpdate(Personal mb);
+	public void perPhotoUpdate(Personal p);
+	public void perNoPhotoUpdate(Personal p);
+	public boolean personalPartDelete(String no);
 	public Date getBkStart(String bk_no);
 	public int cancelInsert(HashMap<String, Object> map);
 	public int bk_chkUpdate(String bk_no);
 	public ArrayList<HashMap<String, Object>> allBookingList(HashMap<String, Object> map);
 	public int contPerBkList(String no);
-	public void perPhotoUpdate(Personal p);
-	public void perNoPhotoUpdate(Personal p);
 
 	/* 혜연 기업 */
-	public ArrayList<HashMap<String, Object>> todayScheduleList(Map<String, Object> map);
+	public ArrayList<HashMap<String, Object>> getSvcPri(String no);
+	public String getBk_chk(String bk_no);
 	public HashMap<String, Object> myBookingDetail(String bk_no);
+	public ArrayList<HashMap<String, Object>> getMenu(String bk_no);
+	public ArrayList<HashMap<String, Object>> getPetList(String pet_no);
+	public int todayScheduleListCheck(String bk_no);
+	public ArrayList<HashMap<String, Object>> todayScheduleList(Map<String, Object> map);
 	public ArrayList<HashMap<String, Object>> serviceManagement(String no);
 	public ArrayList<HashMap<String, Object>> businessBookingList(Map<String, Object> map);
 	public int todayScheduleListNoShow(HashMap<String, String> map);
-	public int todayScheduleListCheck(String bk_no);
 	public ArrayList<HashMap<String, Object>> serviceList(HashMap<String, Object> map);
 	public HashMap<String, Object> businessInfo(String no);
-	public ArrayList<HashMap<String, Object>> getMenu(String bk_no);
 	public boolean businessPartDelete(String no);
 	public Gallery gallery(String no);
-	public ArrayList<HashMap<String, Object>> getPetList(String pet_no);
 	public int getListCount(String no);
 	public boolean businessInfoUpdate(Business bi);
-	public ArrayList<HashMap<String, Object>> getSvcPri(String no);
 	public ArrayList<HashMap<String, Object>> bctBookingList(Map<String, Object> map);
 	public ArrayList<HashMap<String, Object>> AllbctBookingList(Map<String, Object> map);
-	public String getBk_chk(String bk_no);
-	public void mainPhotoUpdate(Map<String, Object> map);
+	public void mainPhotoUpdate(Gallery gy);
 	public ArrayList<HashMap<String, Object>> searchAllList(Map<String, Object> map);
 	public ArrayList<HashMap<String, Object>> searchBctAllsList(Map<String, Object> map);
 	public int noshowInsert(String per_no);
@@ -63,4 +62,6 @@ public interface HyeonDao {
 	public int searchAllListPaging(Map<String, Object> map);
 	public int searchBctAllsListPaging(Map<String, Object> map);
 	public int getBctListCount(String no, String bct_name);
+	//public void PhotoUpdate(Gallery gy);
+	public HashMap<String, Object> businessGallery(String no);
 }

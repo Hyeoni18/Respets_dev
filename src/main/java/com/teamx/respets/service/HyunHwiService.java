@@ -300,6 +300,7 @@ public class HyunHwiService {
 		List<Map<String, Object>> list;
 		list = hDao.selectMENU(code); // 업종이 가지고 있는 메뉴를 검색
 		for (int i = 0; i < list.size(); i++) { // 검색된 메뉴들을 체크박스로 생성
+<<<<<<< HEAD
 			sb.append("<div class='custom-control custom-checkbox'>"); 
 			String menu_name = (String) list.get(i).get("MENU_NAME");
 			if (menu_name.equals("고양이무마취")) {
@@ -308,6 +309,22 @@ public class HyunHwiService {
 				sb.append("<input type='checkbox' name='dog_tag' class='custom-control-input' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>" + menu_name+" </label>");
 			} else {
 				sb.append("<input type='checkbox' name='tag_name' class='custom-control-input' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>" + menu_name+" </label>");
+=======
+			sb.append("<div class='custom-control custom-checkbox'>");
+			String menu_name = (String) list.get(i).get("MENU_NAME");
+			if (menu_name.equals("고양이무마취")) {
+				sb.append("<input type='checkbox' name='cat_tag' class='custom-control-input' value='" + menu_name
+						+ "' id='" + menu_name + "_" + code + "'/> <label class='custom-control-label' for='"
+						+ menu_name + "_" + code + "'>" + menu_name + " </label>");
+			} else if (menu_name.equals("가위컷")) {
+				sb.append("<input type='checkbox' name='dog_tag' class='custom-control-input' value='" + menu_name
+						+ "' id='" + menu_name + "_" + code + "'/> <label class='custom-control-label' for='"
+						+ menu_name + "_" + code + "'>" + menu_name + " </label>");
+			} else {
+				sb.append("<input type='checkbox' name='tag_name' class='custom-control-input' value='" + menu_name
+						+ "' id='" + menu_name + "_" + code + "'/> <label class='custom-control-label' for='"
+						+ menu_name + "_" + code + "'>" + menu_name + " </label>");
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 			}
 			sb.append("</div>");
 		}
@@ -320,6 +337,7 @@ public class HyunHwiService {
 		sb.append("<div class='form-group mb-3'>");
 		sb.append("<label for='simpleinput'>서비스 가능한 동물종류</label><br/>");
 		if (code.equals("M")) { // 병원에서 제공될 수 있는 동물 종류
+<<<<<<< HEAD
 			sb.append("<div class='custom-control custom-checkbox'>"); 
 			sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='소형견' id='소형견'/> <label class='custom-control-label' for='소형견'>소형견</label>");
 			sb.append("</div>");
@@ -369,6 +387,73 @@ public class HyunHwiService {
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>"); 
 			sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='소동물' id='소동물'/> <label class='custom-control-label' for='소동물'> 소동물</label>");
+=======
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='소형견' id='소형견'/> <label class='custom-control-label' for='소형견'>소형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='중형견' id='중형견'/> <label class='custom-control-label' for='중형견'> 중형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='대형견' id='대형견'/> <label class='custom-control-label' for='대형견'> 대형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='cat_code' value='고양이' id='고양이' /> <label class='custom-control-label' for='고양이'> 고양이</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='소동물' id='소동물'/> <label class='custom-control-label' for='소동물'> 소동물</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='파충류' id='파충류'/> <label class='custom-control-label' for='파충류'> 파충류</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='가축' id='가축'/> <label class='custom-control-label' for='가축'> 가축</label>");
+			sb.append("</div>");
+		} else if (code.equals("B")) { // 미용에서 제공될 수 있는 동물 종류
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='소형견' id='소형견_b'/> <label class='custom-control-label' for='소형견_b'> 소형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='중형견' id='중형견_b'/> <label class='custom-control-label' for='중형견_b'> 중형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='대형견' id='대형견_b'/> <label class='custom-control-label' for='대형견_b'> 대형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='cat_code' value='고양이' id='고양이_b'/> <label class='custom-control-label' for='고양이_b'> 고양이</label>");
+			sb.append("</div>");
+		} else if (code.equals("H")) { // 호텔에서 제공될 수 있는 동물 종류
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='소형견' id='소형견_h'/> <label class='custom-control-label' for='소형견_h'> 소형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='중형견' id='중형견_h'/> <label class='custom-control-label' for='중형견_h'> 중형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='대형견' id='대형견_h'/> <label class='custom-control-label' for='대형견_h'> 대형견</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='cat_code' value='고양이' id='고양이_h'/> <label class='custom-control-label' for='고양이_h'> 고양이</label>");
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
+			sb.append(
+					"<input type='checkbox' class='custom-control-input' name='animal_code' value='소동물' id='소동물_h'/> <label class='custom-control-label' for='소동물_h'> 소동물</label>");
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 			sb.append("</div>");
 		}
 		sb.append("</div>");
@@ -428,6 +513,7 @@ public class HyunHwiService {
 	private String holidaySelect() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class='custom-control custom-checkbox'>");
+<<<<<<< HEAD
 		sb.append("<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"월요일\" id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>");
 		sb.append("</div>");
 		sb.append("<div class='custom-control custom-checkbox'>");
@@ -450,6 +536,38 @@ public class HyunHwiService {
 		sb.append("</div>");
 		sb.append("<div class='custom-control custom-checkbox'>");
 		sb.append("<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"공휴일\" id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>");
+=======
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"월요일\" id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"화요일\" id='화요일'/> <label class='custom-control-label' for='화요일'>화요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"수요일\" id='수요일'/> <label class='custom-control-label' for='수요일'>수요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"목요일\" id='목요일'/> <label class='custom-control-label' for='목요일'>목요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"금요일\" id='금요일'/> <label class='custom-control-label' for='금요일'>금요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"토요일\" id='토요일'/> <label class='custom-control-label' for='토요일'>토요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"일요일\" id='일요일'/> <label class='custom-control-label' for='일요일'>일요일</label>");
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'>");
+		sb.append(
+				"<input type=\"checkbox\" class='custom-control-input' name=\"holiday\" value=\"공휴일\" id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>");
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		sb.append("</div>");
 		return sb.toString();
 	}
@@ -542,10 +660,17 @@ public class HyunHwiService {
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+<<<<<<< HEAD
 		String am_open = work_o.split(":")[0]+work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0]+work_c.split(":")[1];
 		String lunch_open =  lunch_o.split(":")[0]+lunch_o.split(":")[1];
 		String lunch_close = lunch_c.split(":")[0]+lunch_c.split(":")[1];
+=======
+		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
+		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
+		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
+		String lunch_close = lunch_c.split(":")[0] + lunch_c.split(":")[1];
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		int[] num = new int[holiday.length]; // BSD에 영업시간을 담을 때, 휴일로 지정한 날을 제외시키기 위해 요일을 1~7로 담아준다.
 		for (int i = 0; i < holiday.length; i++) {
 			if (holiday[i].equals("월요일")) {
@@ -908,8 +1033,13 @@ public class HyunHwiService {
 		String lunch_o = null;
 		String lunch_c = null;
 		if (first.equals("first")) {
+<<<<<<< HEAD
 			//work = timeSelect(); // 기업의 운영시간 선택 select tag
 		//	lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
+=======
+			// work = timeSelect(); // 기업의 운영시간 선택 select tag
+			// lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 			holiday = holidaySelect(); // 기업의 휴일 선택 select tag
 			menu = menuSelect(bct_code);
 			animal = animalSelect(bct_code);
@@ -931,13 +1061,15 @@ public class HyunHwiService {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='H' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='H'></div></div></div>");
-			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='H_price'></div></div></div>");
+			mav.addObject("cat_price",
+					"<div class='form-group mb-2'><div class='row'><div id='H_price'></div></div></div>");
 			bct_name = "호텔";
 		} else if (bct_code.equals("B")) {
 			mav.addObject("price",
 					"<button type='button' class='btn btn-outline-secondary' name='B' onclick='priceBox(this)'> 가격등록</button>&nbsp");
 			mav.addObject("bct_price", "<div class='form-group mb-2'><div class='row'><div id='B'></div></div></div>");
-			mav.addObject("cat_price", "<div class='form-group mb-2'><div class='row'><div id='B_price'></div></div></div>");
+			mav.addObject("cat_price",
+					"<div class='form-group mb-2'><div class='row'><div id='B_price'></div></div></div>");
 			bct_name = "미용";
 		} else if (bct_code.equals("M")) {
 			mav.addObject("medi_submit", "<button class='btn btn-outline-secondary'>수정하기</button>");
@@ -983,16 +1115,27 @@ public class HyunHwiService {
 		map = hDao.searchBSD(map); // 기업의 하루 스케줄 검색
 		String am_open = (String) map.get("AM_OPEN"); // 오픈시간
 		String pm_close = (String) map.get("PM_CLOSE"); // 마감시간
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		String am_pre = am_open.substring(0, 2); // 오픈시간 hour
 		String am_las = am_open.substring(2, 4); // 오픈시간 min
 		String pm_pre = pm_close.substring(0, 2); // 마감시간 hour
 		String pm_las = pm_close.substring(2, 4); // 마감시간 min
 
+<<<<<<< HEAD
 		am_open = am_pre+":"+am_las;
 		pm_close = pm_pre+":"+pm_las;
 	
 		return am_open+","+pm_close;
+=======
+		am_open = am_pre + ":" + am_las;
+		pm_close = pm_pre + ":" + pm_las;
+
+		return am_open + "," + pm_close;
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 	}
 
 	// 현휘; 기업의 수정페이지에서 점심시간을 보여주는 메소드
@@ -1008,9 +1151,15 @@ public class HyunHwiService {
 		String lunch_o_las = am_close.substring(2, 4);
 		String lunch_c_pre = pm_open.substring(0, 2);
 		String lunch_c_las = pm_open.substring(2, 4);
+<<<<<<< HEAD
 		
 		String lunch = lunch_o_pre+":"+lunch_o_las+","+lunch_c_pre+":"+lunch_c_las;
 		
+=======
+
+		String lunch = lunch_o_pre + ":" + lunch_o_las + "," + lunch_c_pre + ":" + lunch_c_las;
+
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		return lunch;
 	}
 
@@ -1025,58 +1174,114 @@ public class HyunHwiService {
 		if (map != null) {
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' checked /> <label class='custom-control-label' for='월요일'>월요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' checked /> <label class='custom-control-label' for='월요일'>월요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("화요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' checked /> <label class='custom-control-label' for='화요일'>화요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' checked /> <label class='custom-control-label' for='화요일'>화요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일'/> <label class='custom-control-label' for='화요일'>화요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일'/> <label class='custom-control-label' for='화요일'>화요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("수요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' checked /> <label class='custom-control-label' for='수요일'>수요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' checked /> <label class='custom-control-label' for='수요일'>수요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일'/> <label class='custom-control-label' for='수요일'>수요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일'/> <label class='custom-control-label' for='수요일'>수요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("목요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' checked /> <label class='custom-control-label' for='목요일'>목요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' checked /> <label class='custom-control-label' for='목요일'>목요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일'/> <label class='custom-control-label' for='목요일'>목요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일'/> <label class='custom-control-label' for='목요일'>목요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("금요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' checked /> <label class='custom-control-label' for='금요일'>금요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' checked /> <label class='custom-control-label' for='금요일'>금요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일'/> <label class='custom-control-label' for='금요일'>금요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일'/> <label class='custom-control-label' for='금요일'>금요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("토요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' checked /> <label class='custom-control-label' for='토요일'>토요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' checked /> <label class='custom-control-label' for='토요일'>토요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일'/> <label class='custom-control-label' for='토요일'>토요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일'/> <label class='custom-control-label' for='토요일'>토요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("일요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' checked /> <label class='custom-control-label' for='일요일'>일요일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' checked /> <label class='custom-control-label' for='일요일'>일요일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일'/> <label class='custom-control-label' for='일요일'>일요일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일'/> <label class='custom-control-label' for='일요일'>일요일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("공휴일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' checked /> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // checked 옵션을 // 준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' checked /> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // checked
+																																															// 옵션을
+																																															// //
+																																															// 준다.
 			} else {
-				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // 아니면 그냥 만들어준다.
+				sb.append(
+						"<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // 아니면
+																																												// 그냥
+																																												// 만들어준다.
 			}
 			sb.append("</div>");
 		}
@@ -1111,19 +1316,31 @@ public class HyunHwiService {
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 기업이 제공하지 않는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name
+							+ "' id='" + menu_name + "'/> <label class='custom-control-label' for='" + menu_name + "'>"
+							+ menu_name + " </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name
+							+ "' id='" + menu_name + "'/> <label class='custom-control-label' for='" + menu_name + "'>"
+							+ menu_name + " </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"'/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name
+							+ "' id='" + menu_name + "'/> <label class='custom-control-label' for='" + menu_name + "'>"
+							+ menu_name + " </label>"); // 그냥
 				}
 			} else { // 기업이 제공하는 서비스면
 				if (menu_name.equals("가위컷")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='dog_tag' value='" + menu_name
+							+ "' id='" + menu_name + "' checked/> <label class='custom-control-label' for='" + menu_name
+							+ "'>" + menu_name + " </label>"); // 그냥
 				} else if (menu_name.equals("고양이무마취")) {
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name + "' id='"+menu_name+"'checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_tag' value='" + menu_name
+							+ "' id='" + menu_name + "'checked/> <label class='custom-control-label' for='" + menu_name
+							+ "'>" + menu_name + " </label>"); // 그냥
 				} else {
-					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name + "' id='"+menu_name+"' checked/> <label class='custom-control-label' for='"+menu_name+"'>"+menu_name+" </label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='tag_name' value='" + menu_name
+							+ "' id='" + menu_name + "' checked/> <label class='custom-control-label' for='" + menu_name
+							+ "'>" + menu_name + " </label>"); // 그냥
 				} // 만들어준다.
 			}
 			sb.append("</div>");
@@ -1190,16 +1407,24 @@ public class HyunHwiService {
 			sb.append("<div class='custom-control custom-checkbox'>");
 			if (flag) { // 제공하지 않던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code를 붙여서
-																										// 그냥 가져온다.
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name
+							+ "' id='" + name + "'/> <label class='custom-control-label' for='" + name + "'>" + name
+							+ "</label>"); // cat_code를 붙여서
+					// 그냥 가져온다.
 				} else { // 둘다 아니라면 animal_code로 그냥 가져온다.
-					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"'/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>");
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name
+							+ "' id='" + name + "'/> <label class='custom-control-label' for='" + name + "'>" + name
+							+ "</label>");
 				}
 			} else { // 제공하던 동물 종류라면
 				if (name.equals("고양이")) { // 근데 그게 고양이라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // cat_code에
+					sb.append("<input type='checkbox' class='custom-control-input' name='cat_code' value='" + name
+							+ "' id='" + name + "' checked/> <label class='custom-control-label' for='" + name + "'>"
+							+ name + "</label>"); // cat_code에
 				} else { // 고양이가 아니라면
-					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name + "' id='"+name+"' checked/> <label class='custom-control-label' for='"+name+"'>"+name+"</label>"); // 그냥
+					sb.append("<input type='checkbox' class='custom-control-input' name='animal_code' value='" + name
+							+ "' id='" + name + "' checked/> <label class='custom-control-label' for='" + name + "'>"
+							+ name + "</label>"); // 그냥
 				}
 			}
 			sb.append("</div>");
@@ -1222,10 +1447,17 @@ public class HyunHwiService {
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+<<<<<<< HEAD
 		String am_open = work_o.split(":")[0]+work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0]+work_c.split(":")[1];
 		String lunch_open =  lunch_o.split(":")[0]+lunch_o.split(":")[1];
 		String lunch_close = lunch_c.split(":")[0]+lunch_c.split(":")[1];
+=======
+		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
+		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
+		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
+		String lunch_close = lunch_c.split(":")[0] + lunch_c.split(":")[1];
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		String first = request.getParameter("first");
 
 		map.put("bus_no", no);
@@ -1330,15 +1562,19 @@ public class HyunHwiService {
 		String bus_no = (String) session.getAttribute("no");
 		list = hDao.selectSVC(bus_no);
 		System.out.println(list);
-		sb.append("<ul class='nav nav-pills bg-light nav-justified mb-3'>");
+		sb.append("<ul class=\"nav nav-pills bg-light nav-justified mb-3\">");
 		for (int i = 0; i < list.size(); i++) {
 			String bct_code = (String) list.get(i).get("BCT_CODE");
 			String bct_name = hDao.searchBCTname(bct_code);
-			sb.append("<li class='nav-item'>&nbsp;<a href='javascript:void(0)' onclick='chk(\"" + bct_code
-					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>" + bct_name
-					+ "&nbsp;</a></li>");
+			sb.append("<li class='nav-item'><a href='javascript:void(0)' onclick='chk(\"" + bct_code
+					+ "\")' data-toggle='tab' aria-expanded='false' class='nav-link rounded-0'>");
+			if(bct_code=="M") {sb.append("<i class=\"mdi mdi-hospital font-18\"></i>");}
+			if(bct_code=="B") {sb.append("<i class=\"mdi mdi-content-cut font-18\"></i>");}
+			if(bct_code=="H") {sb.append("<i class=\"mdi mdi-home font-18\"></i>");}
+			sb.append("<span class=\"d-none d-lg-block\">"+bct_name+"</span>"
+					+ "</a></li>");
 		}
-		sb.append("</ul>");
+		sb.append("</div>");
 		mav.addObject("code", sb.toString());
 		mav.setViewName("stepList");
 		return mav;
@@ -1362,38 +1598,36 @@ public class HyunHwiService {
 			sb.append("<div class='col-12'>");
 			sb.append("<div class='card-deck-wrapper'>");
 			sb.append("<div class='card-deck'>");
-			
+
 			for (int i = 0; i < list.size(); i++) {
 				String emp_no = (String) list.get(i).get("EMP_NO");
 				String emp_name = (String) list.get(i).get("EMP_NAME");
 				String emp_pos = (String) list.get(i).get("EMP_POS");
-				String emp_part = (String) list.get(i).get("EMP_PART");
+				//String emp_part = (String) list.get(i).get("EMP_PART");
 				String emp_photo = (String) list.get(i).get("EMP_PHOTO");
 				String emp_loc = (String) list.get(i).get("EMP_LOC");
-				/*sb.append("<div class=\"col-lg-4\""
-						+ "<div class='card d-block'"
-						+ "style='text-align: center; margin-bottom: 20px;'>"
-						+ "<a href='stepDetail?emp_no=" + emp_no + "'> <img"
-						+ "class='rounded-circle img-thumbnail' id='petProfile'"
-						+ "src='" + emp_loc + emp_photo + "' alt='pet profile' style='width: 150px;height: 150px;margin-top: 20px;'>"
-						+ "</a>"
-						+ "<div class=\"card-body\">"
-						+ "<h5 class=\"card-title\">"+emp_name</h5>"
-						+ "<p class=\"card-text\">직급 :"+emp_pos
-						+ "</p>"
-						+ "</div>"
-						+ "</div>"
-						+ "</div>");*/
+				/*
+				 * sb.append("<div class=\"col-lg-4\"" + "<div class='card d-block'" +
+				 * "style='text-align: center; margin-bottom: 20px;'>" +
+				 * "<a href='stepDetail?emp_no=" + emp_no + "'> <img" +
+				 * "class='rounded-circle img-thumbnail' id='petProfile'" + "src='" + emp_loc +
+				 * emp_photo +
+				 * "' alt='pet profile' style='width: 150px;height: 150px;margin-top: 20px;'>" +
+				 * "</a>" + "<div class=\"card-body\">" +
+				 * "<h5 class=\"card-title\">"+emp_name</h5>" +
+				 * "<p class=\"card-text\">직급 :"+emp_pos + "</p>" + "</div>" + "</div>" +
+				 * "</div>");
+				 */
 				sb.append("<div class='col-lg-4'>");
-				sb.append("<div class='card d-block' style='text-align: center; margin-bottom: 20px;'>");
+				sb.append("<div class='card d-block' style='text-align: center; margin-bottom:20px;'>");
 				sb.append("<a href='stepDetail?emp_no=" + emp_no + "'>");
-				sb.append("<img class='rounded-circle img-thumbnail' src='" + emp_loc + emp_photo + "' style='width: 150px;height: 150px;margin-top: 20px;'/>");
+				sb.append("<img class='rounded-circle img-thumbnail' src='" + emp_loc + emp_photo
+						+ "' style='width: 150px;height: 150px;margin-top: 20px;'/>");
 				sb.append("</a>");
 				sb.append("<div class='card-body'>");
 				sb.append("<h5 class='card-title'>" + emp_name + "</h5>");
 				sb.append("<p class='card-text'> 직급: " + emp_pos + "</p>");
-				sb.append("</div>");
-				
+				sb.append("</div>");				
 				sb.append("</div>");
 				sb.append("</div>");
 			}
@@ -1401,10 +1635,13 @@ public class HyunHwiService {
 			sb.append("</div>");
 			sb.append("</div>");
 			sb.append("</div>");
-		} else {
-			sb.append("<script>alert('직원을 등록해주세요');</script>");
+		} else if(list==null) {
+			/*sb.append("<script>alert('직원을 등록해주세요');</script>");*/
+			sb.append("<div class=\"alert alert-info\" role=\"alert\" style='margin-top:2rem;margin-bottom:0;'>"
+						+ "<i class=\"dripicons-information mr-2\"></i> 직원을 등록해주셔야 <strong>예약</strong>"
+						+ "을&nbsp;받을 수 있습니다!</div>");
 		}
-		if (count % 3 < 3 && count % 3 != 0) {
+		/*if (count % 3 < 3 && count % 3 != 0) {
 			for (int i = 0; i < 3 - count % 3; i++) {
 				sb.append("<div class='card d-block'>");
 				sb.append("<div class='card-body'>");
@@ -1416,7 +1653,7 @@ public class HyunHwiService {
 			sb.append("</div>");
 			sb.append("</div>");
 			sb.append("</div>");
-		}
+		}*/
 		return sb.toString();
 	}
 
@@ -1451,13 +1688,11 @@ public class HyunHwiService {
 		return mav;
 	}
 
-	// 현휘; 해당 업종에 직원 등록하는 페이지 //점심시간 시간이 안나와ㅏ 수정필요
+	// 현휘; 해당 업종에 직원 등록하는 페이지
 	public String stepInsertForm(HttpServletRequest request) {
 		String bct_code = request.getParameter("bct_code");
 		String work = checkWorkTime(request);
 		String lunch = checkLunchTime(request);
-		// String work = Time(bct_code, "step", "work"); //영업시간을 보여주는 메소드
-		// String lunch = Time(bct_code, "step", "lunch"); //점심시간을 보여주는 메소드
 		String holiday = Holiday(bct_code, "step");
 		String hidden_code = "<input type='hidden' name='bct_code' value='" + bct_code + "'/>";
 		return work + lunch + holiday + hidden_code;
@@ -1530,14 +1765,19 @@ public class HyunHwiService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("emp_no", "S" + empNo);
 		System.out.println(empNo);
-		String open = request.getParameter("am_open");
-		String close = request.getParameter("pm_close");
-		String time = open + close;
-
-		String lunch_open = request.getParameter("lunch_open");
-		String lunch_close = request.getParameter("lunch_close");
+		
+		String work_o = request.getParameter("work_o");
+		String work_c = request.getParameter("work_c");
+		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
+		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
+		String time = am_open + pm_close;
+		
+		String lunch_o = request.getParameter("lunch_o");
+		String lunch_c = request.getParameter("lunch_c");
+		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
+		String lunch_close = lunch_c.split(":")[0] + lunch_c.split(":")[1];
 		String lunch = lunch_open + lunch_close;
-
+		
 		String[] holiday = request.getParameterValues("holiday");
 		map.put("efx_mon", time);
 		map.put("efx_tue", time);
@@ -1592,10 +1832,10 @@ public class HyunHwiService {
 				}
 				if (flag) {
 					map.put("date", date);
-					map.put("am_open", open);
+					map.put("am_open", am_open);
 					map.put("am_close", lunch_open);
 					map.put("pm_open", lunch_close);
-					map.put("pm_close", close);
+					map.put("pm_close", pm_close);
 					hDao.empInsertESD(map);
 				}
 				cal.add(Calendar.DATE, 1);
@@ -1647,11 +1887,28 @@ public class HyunHwiService {
 		String bus_no = (String) map.get("BUS_NO");
 		sb.append("<input type='hidden' name='emp_no' value='" + emp_no + "'/>");
 		sb.append("<input type='hidden' name='bus_no' value='" + bus_no + "'/>");
-		sb.append("업종 : <input type='text' name='bct_code' value='" + bct_code + "' readonly/><br/>");
-		sb.append("프로필사진: <input type='file' name='emp_photo'/><br/>");
-		sb.append("이름 : <input type='text' name='emp_name' value='" + emp_name + "'/><br/>");
-		sb.append("직급 : <input type='text' name='emp_pos' value='" + emp_pos + "'/><br/>");
-		sb.append("담당분야 : <input type='text' name='emp_part' value='" + emp_part + "'/><br/>");
+		sb.append("<div class='col-lg-6'>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>업종</label>");
+		sb.append("<input type='text' class='form-control' name='bct_code' value='" + bct_code + "' readonly/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='example-fileinput' style='margin-right:15px;'>프로필 사진</label>");
+		sb.append("<input type='file' name='emp_photo'/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>이름</label>");
+		sb.append("<input type='text' class='form-control' name='emp_name' value='" + emp_name + "'/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>직급</label>");
+		sb.append("<input type='text' class='form-control' name='emp_pos' value='" + emp_pos + "'/><br/>");
+		sb.append("</div>");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>담당분야</label>");
+		sb.append("<input type='text' class='form-control' name='emp_part' value='" + emp_part + "'/><br/>");
+		sb.append("</div>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 
@@ -1665,15 +1922,26 @@ public class HyunHwiService {
 
 		map.put("bus_no", no);
 		map.put("bct_code", code);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 		String work_o = request.getParameter("work_o");
 		String work_c = request.getParameter("work_c");
 		String lunch_o = request.getParameter("lunch_o");
 		String lunch_c = request.getParameter("lunch_c");
+<<<<<<< HEAD
 		String am_open = work_o.split(":")[0]+work_o.split(":")[1];
 		String pm_close = work_c.split(":")[0]+work_c.split(":")[1];
 		String lunch_open =  lunch_o.split(":")[0]+lunch_o.split(":")[1];
 		String lunch_close = lunch_c.split(":")[0]+lunch_c.split(":")[1];
+=======
+		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
+		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
+		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
+		String lunch_close = lunch_c.split(":")[0] + lunch_c.split(":")[1];
+>>>>>>> 62baa1973c974a82869bfe385bdd381247120278
 
 		String time = am_open + pm_close; // BFX는 8자리니까 둘을 합쳐준다.
 		String lunch = lunch_open + lunch_close;
@@ -1722,79 +1990,72 @@ public class HyunHwiService {
 	// 기업의 선택 된 휴일에 관련된 작업을 위한 메소드 (직원만사용)
 	public String Holiday(String bct_code, String type) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("-고정휴무일: ");
 		Map<String, Object> map = new HashMap<String, Object>();
 		String bus_no = (String) session.getAttribute("no");
 		map.put("bus_no", bus_no);
 		map.put("bct_code", bct_code);
 		map = hDao.searchBFX(map); // 기업의 고정 스케줄을 검색
+		sb.append("<div class=\"form-group mb-3\">");
+		sb.append("<label for=\"simpleinput\">고정휴무일</label><br />");
 		if (map != null) {
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("월요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='월요일' checked onclick='return false;'/> 월요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' checked onclick='return false;'/> <label class='custom-control-label' for='월요일'>월요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' /> <label class='custom-control-label' for='월요일'>월요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("화요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='화요일' checked onclick='return false;'/> 화요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' checked onclick='return false;'/> <label class='custom-control-label' for='화요일'>화요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' /> <label class='custom-control-label' for='화요일'>화요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("수요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='수요일' checked onclick='return false;'/> 수요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' checked onclick='return false;'/> <label class='custom-control-label' for='수요일'>수요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' /> <label class='custom-control-label' for='수요일'>수요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("목요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='목요일' checked onclick='return false;'/> 목요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' checked onclick='return false;'/> <label class='custom-control-label' for='목요일'>목요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' /> <label class='custom-control-label' for='목요일'>목요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("금요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='금요일' checked onclick='return false;'/> 금요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' checked onclick='return false;'/> <label class='custom-control-label' for='금요일'>금요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' /> <label class='custom-control-label' for='금요일'>금요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("토요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='토요일' checked onclick='return false;'/> 토요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' checked onclick='return false;'/> <label class='custom-control-label' for='토요일'>토요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' /> <label class='custom-control-label' for='토요일'>토요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("일요일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='일요일' checked onclick='return false;'/> 일요일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' checked onclick='return false;'/> <label class='custom-control-label' for='일요일'>일요일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' /> <label class='custom-control-label' for='일요일'>일요일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
+			sb.append("<div class='custom-control custom-checkbox'>");
 			if (map.get("공휴일").equals("XXXXXXXX")) { // XXXXXXXX 라는 값을 가지고 있다면
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked onclick='return false;'/> 공휴일"); // checked
-																														// 옵션을
-																														// //
-																														// 준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' checked onclick='return false;'/> <label class='custom-control-label' for='공휴일'>공휴일</label>");
 			} else {
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일"); // 아니면 그냥 만들어준다.
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' /> <label class='custom-control-label' for='공휴일'>공휴일</label>"); // 아니면 그냥 만들어준다.
 			}
+			sb.append("</div>");
 		}
-		sb.append("<br/>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 
@@ -1912,58 +2173,35 @@ public class HyunHwiService {
 		String am_close_b = (String) bmap.get("AM_CLOSE");
 		String pm_open_b = (String) bmap.get("PM_OPEN");
 
-		int lunch_open_pre_b = Integer.parseInt(am_close_b.substring(0, 2));
-		int lunch_open_las_b = Integer.parseInt(am_close_b.substring(2, 4));
-		int lunch_close_pre_b = Integer.parseInt(pm_open_b.substring(0, 2));
-		int lunch_close_las_b = Integer.parseInt(pm_open_b.substring(2, 4));
-
+		String lunch_open_pre_b = am_close_b.substring(0, 2);
+		String lunch_open_las_b = am_close_b.substring(2, 4);
+		String lunch_close_pre_b = pm_open_b.substring(0, 2);
+		String lunch_close_las_b = pm_open_b.substring(2, 4);
+		
+		am_close_b = lunch_open_pre_b+":"+lunch_open_las_b;
+		pm_open_b = lunch_close_pre_b+":"+lunch_close_las_b;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = hDao.searchESD(emp_no);
 
-		String am_close = (String) map.get("AM_CLOSE");
-		String pm_open = (String) map.get("PM_OPEN");
-		System.out.println(am_close);
-		System.out.println(pm_open);
-		int lunch_open_pre = Integer.parseInt(am_close.substring(0, 2));
-		int lunch_open_las = Integer.parseInt(am_close.substring(2, 4));
-		int lunch_close_pre = Integer.parseInt(pm_open.substring(0, 2));
-		int lunch_close_las = Integer.parseInt(pm_open.substring(2, 4));
+		String am_close_e = (String) map.get("AM_CLOSE");
+		String pm_open_e = (String) map.get("PM_OPEN");
+		String lunch_open_pre_e = am_close_e.substring(0, 2);
+		String lunch_open_las_e = am_close_e.substring(2, 4);
+		String lunch_close_pre_e = pm_open_e.substring(0, 2);
+		String lunch_close_las_e = pm_open_e.substring(2, 4);
+		
+		am_close_e = lunch_open_pre_e+":"+lunch_open_las_e;
+		pm_open_e = lunch_close_pre_e+":"+lunch_close_las_e;
 
-		int i = lunch_open_pre_b * 2;
-		if (lunch_open_las_b == 30) {
-			i += 1;
-		}
-		int j = lunch_close_pre_b * 2 + 1;
-		if (lunch_close_las_b == 30) {
-			j += 1;
-		}
-		System.out.println(i);
-		System.out.println(j);
 		StringBuilder sb = new StringBuilder();
-		sb.append("점심시간: ");
-		sb.append("<select name=\"lunch_open\" id=\"lunch_open\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
-				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + lunch_open_pre + " && min == "
-				+ lunch_open_las
-				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
-				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
-				+ "	}\n" + "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"lunch_close\" id=\"lunch_close\">\n" + "<script>\n" + "	for (var i = " + i
-				+ "; i < " + j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + lunch_close_pre + " && min == "
-				+ lunch_close_las
-				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
-				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
-				+ "	}\n" + "</script>\n" + "</select>");
-		sb.append("<br/>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>직원 점심 시작시간</label> "
+				+ "<input type='time' class='form-control' name='lunch_o' id='lunch_open' value='" + am_close_e
+				+ "' step='1800' min='"+am_close_b+"' max='"+pm_open_b+"' required></div>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>직원 점심 마감시간</label> "
+				+ "<input type='time' class='form-control' name='lunch_c' id='lunch_close' value='" + pm_open_e
+				+ "' step='1800' min='"+am_close_b+"' max='"+pm_open_b+"' required></div>");
+		sb.append("<p> 점심시간은 "+am_close_b+" ~ "+pm_open_b+" 입니다.");
 		return sb.toString();
 	}
 
@@ -1975,175 +2213,163 @@ public class HyunHwiService {
 		String am_open_b = (String) bmap.get("AM_OPEN");
 		String pm_close_b = (String) bmap.get("PM_CLOSE");
 
-		int am_pre_b = Integer.parseInt(am_open_b.substring(0, 2));
-		int am_las_b = Integer.parseInt(am_open_b.substring(2, 4));
-		int pm_pre_b = Integer.parseInt(pm_close_b.substring(0, 2));
-		int pm_las_b = Integer.parseInt(pm_close_b.substring(2, 4));
+		String am_pre_b = am_open_b.substring(0, 2);
+		String am_las_b = am_open_b.substring(2, 4);
+		String pm_pre_b = pm_close_b.substring(0, 2);
+		String pm_las_b = pm_close_b.substring(2, 4);
 
+		am_open_b = am_pre_b + ":" + am_las_b;
+		pm_close_b = pm_pre_b + ":" + pm_las_b;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(emp_no);
 		map = hDao.searchESD(emp_no);
 
-		String am_open = (String) map.get("AM_OPEN");
-		String pm_close = (String) map.get("PM_CLOSE");
+		String am_open_e = (String) map.get("AM_OPEN");
+		String pm_close_e = (String) map.get("PM_CLOSE");
 
-		int am_pre = Integer.parseInt(am_open.substring(0, 2));
-		int am_las = Integer.parseInt(am_open.substring(2, 4));
-		int pm_pre = Integer.parseInt(pm_close.substring(0, 2));
-		int pm_las = Integer.parseInt(pm_close.substring(2, 4));
+		String am_pre_e = am_open_e.substring(0, 2);
+		String am_las_e = am_open_e.substring(2, 4);
+		String pm_pre_e = pm_close_e.substring(0, 2);
+		String pm_las_e = pm_close_e.substring(2, 4);
+		
+		am_open_e = am_pre_e+":"+am_las_e;
+		pm_close_e = pm_pre_e+":"+pm_las_e;
 
-		int i = am_pre_b * 2;
-		if (am_las_b == 30) {
-			i += 1;
-		}
-		int j = pm_pre_b * 2 + 1;
-		if (pm_las_b == 30) {
-			j += 1;
-		}
-
-		System.out.println(i);
-		System.out.println(j);
 		StringBuilder sb = new StringBuilder();
-		sb.append("근무시간: ");
-		sb.append("<select name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < " + j
-				+ "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + am_pre + " && min == " + am_las
-				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
-				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
-				+ "	}\n" + "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"pm_close\" id=\"close_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
-				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 11) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n" + "  if ( hour == " + pm_pre + " && min == " + pm_las
-				+ ") { document.write('<option value=' + hour + min + ' selected>' + hour +':'+ min + '</option>'); }    "
-				+ "	else {  document.write('<option value=' + hour + min + '>' + hour +':'+ min + '</option>'); }"
-				+ "	}\n" + "</script>\n" + "</select>");
-		sb.append("<br/>");
+		sb.append("<div class='col-lg-6'>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>직원 출근시간</label> "
+				+ "<input type='time' class='form-control' name='work_o' id='am_open' value='" + am_open_e
+				+ "' step='1800' min='"+am_open_b+"' max='"+pm_close_b+"' required></div>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>직원 퇴근시간</label> "
+				+ "<input type='time' class='form-control' name='work_c' id='pm_close' value='" + pm_close_e
+				+ "' step='1800' min='"+am_open_b+"' max='"+pm_close_b+"' required></div>");
+		sb.append("<p> 영업시간은 "+am_open_b+" ~ "+pm_close_b+" 입니다.");
 		return sb.toString();
 	}
 
 	private String makeStepHoliday(Map<String, Object> busiMap, Map<String, Object> stepMap) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("고정휴무일 : ");
+		sb.append("<div class='form-group mb-3'>");
+		sb.append("<label for='simpleinput'>고정휴무일</label><br/>");
 		boolean flag = true;
-		System.out.println(stepMap.get("월요일"));
-		System.out.println(busiMap.get("월요일"));
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("월요일").equals("XXXXXXXX")) {
 			if (busiMap.get("월요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='월요일' checked onclick='return false;' /> 월요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일'checked onclick='return false;' /> <label class='custom-control-label' for='월요일'>월요일</label>");
 				System.out.println("불가능한X값이야");
 				flag = false;
 			} else {
 				System.out.println("월요일은 지나가는 값 ");
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='월요일' checked /> 월요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일' checked /> <label class='custom-control-label' for='월요일'>월요일</label>");
 				System.out.println("변화가능한X값이야 ");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='월요일' /> 월요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='월요일' id='월요일'/> <label class='custom-control-label' for='월요일'>월요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("화요일").equals("XXXXXXXX")) {
 			if (busiMap.get("화요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='화요일' checked onclick='return false;' /> 화요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일'checked onclick='return false;' /> <label class='custom-control-label' for='화요일'>화요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='화요일' checked /> 화요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일' checked /> <label class='custom-control-label' for='화요일'>화요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='화요일' /> 화요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='화요일' id='화요일'/> <label class='custom-control-label' for='화요일'>화요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("수요일").equals("XXXXXXXX")) {
 			if (busiMap.get("수요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='수요일' checked onclick='return false;' /> 수요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일'checked onclick='return false;' /> <label class='custom-control-label' for='수요일'>수요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='수요일' checked /> 수요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일' checked /> <label class='custom-control-label' for='수요일'>수요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='수요일' /> 수요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='수요일' id='수요일'/> <label class='custom-control-label' for='수요일'>수요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("목요일").equals("XXXXXXXX")) {
 			if (busiMap.get("목요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='목요일' checked onclick='return false;' /> 목요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일'checked onclick='return false;' /> <label class='custom-control-label' for='목요일'>목요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='목요일' checked /> 목요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일' checked /> <label class='custom-control-label' for='목요일'>목요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='목요일' /> 목요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='목요일' id='목요일'/> <label class='custom-control-label' for='목요일'>목요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("금요일").equals("XXXXXXXX")) {
 			if (busiMap.get("금요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='금요일' checked onclick='return false;' /> 금요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일'checked onclick='return false;' /> <label class='custom-control-label' for='금요일'>금요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='금요일' checked /> 금요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일' checked /> <label class='custom-control-label' for='금요일'>금요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='금요일' /> 금요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='금요일' id='금요일'/> <label class='custom-control-label' for='금요일'>금요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("토요일").equals("XXXXXXXX")) {
 			if (busiMap.get("토요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='토요일' checked onclick='return false;' /> 토요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일'checked onclick='return false;' /> <label class='custom-control-label' for='토요일'>토요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='토요일' checked /> 토요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일' checked /> <label class='custom-control-label' for='토요일'>토요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='토요일' /> 토요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='토요일' id='토요일'/> <label class='custom-control-label' for='토요일'>토요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("일요일").equals("XXXXXXXX")) {
 			if (busiMap.get("일요일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='일요일' checked onclick='return false;' /> 일요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일'checked onclick='return false;' /> <label class='custom-control-label' for='일요일'>일요일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='일요일' checked /> 일요일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일' checked /> <label class='custom-control-label' for='일요일'>일요일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='일요일' /> 일요일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='일요일' id='일요일'/> <label class='custom-control-label' for='일요일'>일요일</label>");
 		}
+		sb.append("</div>");
+		sb.append("<div class='custom-control custom-checkbox'> ");
 		if (stepMap.get("공휴일").equals("XXXXXXXX")) {
 			if (busiMap.get("공휴일").equals("XXXXXXXX")) {
-				sb.append("<script></script>");
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked onclick='return false;' /> 공휴일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일'checked onclick='return false;' /> <label class='custom-control-label' for='공휴일'>공휴일</label>");
 				flag = false;
 			}
 			if (flag) {
-				sb.append("<input type='checkbox' name='holiday' value='공휴일' checked /> 공휴일");
+				sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일' checked /> <label class='custom-control-label' for='공휴일'>공휴일</label>");
 			}
 			flag = true;
 		} else {
-			sb.append("<input type='checkbox' name='holiday' value='공휴일' /> 공휴일");
+			sb.append("<input type='checkbox' class='custom-control-input' name='holiday' value='공휴일' id='공휴일'/> <label class='custom-control-label' for='공휴일'>공휴일</label>");
 		}
-		sb.append("<br/>");
+		sb.append("</div>");
+		sb.append("</div>"); //col-6 마감 
 		return sb.toString();
 	}
 
@@ -2179,40 +2405,22 @@ public class HyunHwiService {
 		String am_close = (String) map.get("AM_CLOSE");
 		String pm_open = (String) map.get("PM_OPEN");
 
-		int lunch_open_pre = Integer.parseInt(am_close.substring(0, 2));
-		int lunch_open_las = Integer.parseInt(am_close.substring(2, 4));
-		int lunch_close_pre = Integer.parseInt(pm_open.substring(0, 2));
-		int lunch_close_las = Integer.parseInt(pm_open.substring(2, 4));
+		String lunch_open_pre = am_close.substring(0, 2); // 오픈시간 hour
+		String lunch_open_las = am_close.substring(2, 4); // 오픈시간 min
+		String lunch_close_pre = pm_open.substring(0, 2); // 마감시간 hour
+		String lunch_close_las = pm_open.substring(2, 4); // 마감시간 min
 
-		int i = lunch_open_pre * 2;
-		if (lunch_open_las == 30) {
-			i += 1;
-		}
-		int j = lunch_close_pre * 2 + 1;
-		if (lunch_close_las == 30) {
-			j += 1;
-		}
+		am_close = lunch_open_pre + ":" + lunch_open_las;
+		pm_open = lunch_close_pre + ":" + lunch_close_las;
+
 		StringBuilder sb = new StringBuilder();
-		sb.append("-점심시간: ");
-		sb.append("<select name=\"lunch_open\" id=\"lunch_open\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
-				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		$('#lunch_open').append($('<option>',{ value: hour+min, text: hour+':'+min }));\n" + "	}\n"
-				+ "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"lunch_close\" id=\"lunch_close\">\n" + "<script>\n" + "	for (var i = " + i
-				+ "; i < " + j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		$('#lunch_close').append($('<option>',{ value: hour+min, text: hour+':'+min }));\n" + "	}\n"
-				+ "</script>\n" + "</select>");
-		sb.append("<br/>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>점심 시작시간</label> "
+				+ "<input type='time' class='form-control' name='lunch_o' id='lunch_open' value='" + am_close
+				+ "' step='1800' min='"+am_close+"' max='"+pm_open+"' required></div>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>점심 마감시간</label> "
+				+ "<input type='time' class='form-control' name='lunch_c' id='lunch_close' value='" + pm_open
+				+ "' step='1800' min='"+am_close+"' max='"+pm_open+"' required></div>");
+
 		return sb.toString();
 	}
 
@@ -2236,39 +2444,22 @@ public class HyunHwiService {
 		String am_open = (String) map.get("AM_OPEN");
 		String pm_close = (String) map.get("PM_CLOSE");
 
-		int am_pre = Integer.parseInt(am_open.substring(0, 2));
-		int am_las = Integer.parseInt(am_open.substring(2, 4));
-		int pm_pre = Integer.parseInt(pm_close.substring(0, 2));
-		int pm_las = Integer.parseInt(pm_close.substring(2, 4));
-		int i = am_pre * 2;
-		if (am_las == 30) {
-			i += 1;
-		}
-		int j = pm_pre * 2 + 1;
-		if (pm_las == 30) {
-			j += 1;
-		}
+		String am_pre = am_open.substring(0, 2); // 오픈시간 hour
+		String am_las = am_open.substring(2, 4); // 오픈시간 min
+		String pm_pre = pm_close.substring(0, 2); // 마감시간 hour
+		String pm_las = pm_close.substring(2, 4); // 마감시간 min
+
+		am_open = am_pre + ":" + am_las;
+		pm_close = pm_pre + ":" + pm_las;
+
 		StringBuilder sb = new StringBuilder();
-		sb.append("-근무시간: ");
-		sb.append("<select name=\"am_open\" id=\"open_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < " + j
-				+ "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		$('#open_time').append($('<option>',{ value: hour+min, text: hour+':'+min }));\n" + "	}\n"
-				+ "</script>\n" + "</select> ~ ");
-		sb.append("<select name=\"pm_close\" id=\"close_time\">\n" + "<script>\n" + "	for (var i = " + i + "; i < "
-				+ j + "; i++) {\n" + "		var hour = '';\n" + "		var	min = '00'\n"
-				+ "		if ((Math.ceil(i / 2)) < 13) {\n" + "			if((Math.floor(i / 2)) < 10){\n"
-				+ "				hour = '0'+(Math.floor(i / 2));\n" + "			} else {\n"
-				+ "				hour = (Math.floor(i / 2));\n" + "			}\n" + "		} else {\n"
-				+ "			hour = (Math.floor(i / 2));\n" + "		}\n" + "		if (i % 2 != 0) {\n"
-				+ "			min = '30';\n" + "		}\n"
-				+ "		$('#close_time').append($('<option>',{ value: hour+min, text: hour+':'+min }));\n" + "	}\n"
-				+ "</script>\n" + "</select>");
-		sb.append("<br/>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>영업 오픈시간</label> "
+				+ "<input type='time' class='form-control' name='work_o' id='am_open' value='" + am_open
+				+ "' step='1800' min='"+am_open+"' max='"+pm_close+"' required></div>");
+		sb.append("<div class='form-group mb-3'><label for='simpleinput'>영업 마감시간</label> "
+				+ "<input type='time' class='form-control' name='work_c' id='pm_close' value='" + pm_close
+				+ "' step='1800' min='"+am_open+"' max='"+pm_close+"' required></div>");
+
 		return sb.toString();
 	}
 
@@ -2282,11 +2473,16 @@ public class HyunHwiService {
 		String emp_pos = request.getParameter("emp_pos");
 		String emp_part = request.getParameter("emp_part");
 		String[] holiday = request.getParameterValues("holiday");
-		String am = request.getParameter("am_open");
-		String pm = request.getParameter("pm_close");
-		String lunch_o = request.getParameter("lunch_open");
-		String lunch_c = request.getParameter("lunch_close");
-
+		
+		String work_o = request.getParameter("work_o");
+		String work_c = request.getParameter("work_c");
+		String lunch_o = request.getParameter("lunch_o");
+		String lunch_c = request.getParameter("lunch_c");
+		String am_open = work_o.split(":")[0] + work_o.split(":")[1];
+		String pm_close = work_c.split(":")[0] + work_c.split(":")[1];
+		String lunch_open = lunch_o.split(":")[0] + lunch_o.split(":")[1];
+		String lunch_close = lunch_c.split(":")[0] + lunch_c.split(":")[1];
+		
 		map = hDao.searchEMP(emp_no);
 
 		map.put("emp_no", emp_no);
@@ -2321,25 +2517,15 @@ public class HyunHwiService {
 			hDao.updateEMPPhoto(map);
 		}
 
-		System.out.println(bct_code); // 기업코드
-		System.out.println(pm); // work pm
-		System.out.println(lunch_o); // lunch o
-		System.out.println(lunch_c); // lunch c
 		map.put("emp_no", emp_no);
-		System.out.println(emp_no);
-		map.put("am_open", am);
-		System.out.println(am);
-		map.put("am_close", lunch_o);
-		System.out.println(lunch_o);
-		map.put("pm_open", lunch_c);
-		System.out.println(lunch_c);
-		map.put("pm_close", pm);
-		System.out.println(pm);
+		map.put("am_open", am_open);
+		map.put("am_close", lunch_open);
+		map.put("pm_open", lunch_close);
+		map.put("pm_close", pm_close);
 		hDao.updateESD(map);
 		System.out.println("시간입력 끝");
-		String time = am + pm;
-		String lunch = lunch_o + lunch_c;
-		System.out.println(time + ".." + lunch);
+		String time = am_open + pm_close;
+		String lunch = lunch_open + lunch_close;
 		map.put("efx_mon", time);
 		map.put("efx_tue", time);
 		map.put("efx_wed", time);
@@ -2499,7 +2685,8 @@ public class HyunHwiService {
 					String glr_file = (String) map.get("GLR_FILE");
 					String glr_loc = (String) map.get("GLR_LOC");
 					sb.append("<div class='card d-block'>");
-					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="+mapo.get("bsd_date")+"'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "&bsd_date="
+							+ mapo.get("bsd_date") + "'>");
 					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "'/>");
 					sb.append("<div class='card-body'>");
 					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
@@ -2560,7 +2747,7 @@ public class HyunHwiService {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
 			sb.append(
-					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"businessList('"
+					"<span>&nbsp;&nbsp;</span><a class='btn btn-link btn-rounded' href='javascript:void(0)' onclick=\"businessList('"
 							+ bct_code + "','" + tag_no + "','" + outputDate + "','" + city + "','" + pNo + "')\">"
 							+ tag_name + "</a>");
 		}
@@ -2658,6 +2845,10 @@ public class HyunHwiService {
 		list = hDao.selectSVCcode(map);
 		if (list.size() != 0) {
 			int count = 0;
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-12'>");
+			sb.append("<div class='card-deck-wrapper'>");
+			sb.append("<div class='card-deck'>");
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
 				String bus_name = (String) list.get(i).get("BUS_NAME");
@@ -2667,7 +2858,7 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
-					if (count == 0 || count % 3 == 0) {
+					/*if (count == 0 || count % 3 == 0) {
 						sb.append("<div class='row'>");
 						sb.append("<div class='col-12'>");
 						sb.append("<div class='card-deck-wrapper'>");
@@ -2685,6 +2876,7 @@ public class HyunHwiService {
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					
 					if (count % 3 == 2) {
 						sb.append("</div>");
 						sb.append("</div>");
@@ -2692,11 +2884,26 @@ public class HyunHwiService {
 						sb.append("</div>");
 						flag = true;
 					}
-					count++;
-				}
+					count++;*/
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					
+					sb.append("<div class='col-lg-4'>");
+					sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "' style='width:100%;height:13rem;'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					sb.append("</div>");
+					
+				}				
 
-			}
-			if (count % 3 < 3 && count % 3 != 0) {
+			}//end for
+			/*if (count % 3 < 3 && count % 3 != 0) {
 				for (int i = 0; i < 3 - count % 3; i++) {
 					sb.append("<div class='card d-block'>");
 					sb.append("<div class='card-body'>");
@@ -2708,7 +2915,11 @@ public class HyunHwiService {
 				sb.append("</div>");
 				sb.append("</div>");
 				sb.append("</div>");
-			}
+			}*/
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 			mav.addObject("busiList", sb.toString());
 		}
 		String tag = butTagList(bct_code, 1);
@@ -2739,8 +2950,10 @@ public class HyunHwiService {
 			String tag_no = (String) list.get(i).get("TAG_NO");
 			String tag_name = hDao.changeTAG(tag_no);
 			sb.append(
-					"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
-							+ bct_code + "','" + tag_no + "','" + pNo + "')\">" + tag_name + "</a>");
+					/*"<span>&nbsp;&nbsp;</span><a class='btn btn-outline-secondary' href='javascript:void(0)' onclick=\"butTagSelectList('"
+							+ bct_code + "','" + tag_no + "','" + pNo + "')\">" + tag_name + "</a>"
+					+*/"<a href='javascript:void(0)' onclick=\"butTagSelectList('" + 
+							bct_code + "','" + tag_no + "','" + pNo + "')\" class='btn btn-outline-light btn-rounded' style='margin-right:10px;'>"+tag_name+"</a>");
 		}
 		return sb.toString();
 	}
@@ -2761,9 +2974,12 @@ public class HyunHwiService {
 		if (list.size() != 0) {
 			int count = 0;
 			boolean flag = true;
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-12'>");
+			sb.append("<div class='card-deck-wrapper'>");
+			sb.append("<div class='card-deck'>");
 			for (int i = 0; i < list.size(); i++) {
 				String bus_no = (String) list.get(i).get("BUS_NO");
-				System.out.println(bus_no);
 				String bus_name = (String) list.get(i).get("BUS_NAME");
 				String bus_addr = (String) list.get(i).get("BUS_ADDR");
 				map = new HashMap<String, Object>();
@@ -2771,7 +2987,7 @@ public class HyunHwiService {
 				map.put("gct_no", "2");
 				map = hDao.selectGallery(map);
 				if (map != null) {
-					if (count == 0 || count % 3 == 0) {
+					/*if (count == 0 || count % 3 == 0) {
 						sb.append("<div class='row'>");
 						sb.append("<div class='col-12'>");
 						sb.append("<div class='card-deck-wrapper'>");
@@ -2789,6 +3005,7 @@ public class HyunHwiService {
 					sb.append("</div>");
 					sb.append("</a>");
 					sb.append("</div>");
+					
 					if (count % 3 == 2) {
 						sb.append("</div>");
 						sb.append("</div>");
@@ -2796,11 +3013,26 @@ public class HyunHwiService {
 						sb.append("</div>");
 						flag = true;
 					}
-					count++;
-				}
+					count++;*/
+					String glr_file = (String) map.get("GLR_FILE");
+					String glr_loc = (String) map.get("GLR_LOC");
+					
+					sb.append("<div class='col-lg-4'>");
+					sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
+					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file + "' style='width:100%;height:13rem;'/>");
+					sb.append("<div class='card-body'>");
+					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+					sb.append("</div>");
+					sb.append("</a>");
+					sb.append("</div>");
+					sb.append("</div>");
+					
+				}				
 
-			}
-			if (count % 3 < 3 && count % 3 != 0) {
+			}//end for
+			/*if (count % 3 < 3 && count % 3 != 0) {
 				for (int i = 0; i < 3 - count % 3; i++) {
 					sb.append("<div class='card d-block'>");
 					sb.append("<div class='card-body'>");
@@ -2812,7 +3044,11 @@ public class HyunHwiService {
 				sb.append("</div>");
 				sb.append("</div>");
 				sb.append("</div>");
-			}
+			}*/
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
 		}
 		return sb.toString();
 	}

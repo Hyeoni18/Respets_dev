@@ -72,7 +72,7 @@
 							<div class="card text-white bg-mint">
 								<div class="card-body">
 									<blockquote class="card-bodyquote">
-										<form action="searchList" method="get">
+										<form action="searchList" method="get" name="searchFrm">
 											<div class="col-lg-2" data-select2-id="276"
 												style="float: left;">
 												<h5>서비스 선택</h5>
@@ -141,7 +141,7 @@
 											</div>
 											<div class="col-lg-2"
 												style="float: left; margin-top: 26px; text-align: center;">
-												<input type="submit" class="btn btn-secondary btn-big"
+												<input type="submit" class="btn btn-secondary btn-big" id="searchBtn"
 													value="검색" />
 											</div>
 											<!-- end col -->
@@ -198,38 +198,43 @@
 												</tr>
 											</thead>
 											<tbody>
-											<c:forEach var="list" items="${list}">
-												<tr>
-													<td style="text-align: center;">${list.abc_name}</td>
-													<td><a href="#" data-toggle="modal"
-														data-target="#B${list.abo_no}">${list.abo_title}</a></td>
-													<!-- Standard modal content -->
-													<div id="B${list.abo_no}" class="modal fade" tabindex="-1"
-														role="dialog" aria-labelledby="myModalLabel"
-														aria-hidden="true">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-hidden="true">×</button>
+												<c:forEach var="list" items="${list}">
+													<tr>
+														<td style="text-align: center;">${list.abc_name}</td>
+														<td><a href="#" data-toggle="modal"
+															data-target="#B${list.abo_no}">${list.abo_title}</a></td>
+														<!-- Standard modal content -->
+														<div id="B${list.abo_no}" class="modal fade" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog modal-dialog-centered">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		
+																		<h4 class="modal-title" id="myModalLabel">${list.abo_title}</h4>
+																		<div class="badge badge-secondary" style="margin-top:5px;margin-left:10px">
+																				<c:if test="${'개인' == list.abc_name}">개인</c:if>
+																				<c:if test="${'기업' == list.abc_name}">기업</c:if>
+																			</div>
+																		<button type="button" class="close"
+																			data-dismiss="modal" aria-hidden="true">×</button>
+																	</div>
+																	<div class="modal-body">
+																		<p>${list.abo_ctt}</p>
+																	</div>
+																	<!-- <div class="modal-footer">
+																		<button type="button" class="btn btn-light"
+																			data-dismiss="modal">Close</button>
+																	</div> -->
 																</div>
-																<div class="modal-body">
-																	<p>${list.abo_ctt}</p>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-light"
-																		data-dismiss="modal">Close</button>
-																</div>
+																<!-- /.modal-content -->
 															</div>
-															<!-- /.modal-content -->
+															<!-- /.modal-dialog -->
 														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<td style="text-align: center;">${list.abo_date_string}</td>
-												</tr> 
-											</c:forEach>
+														<!-- /.modal -->
+														<td style="text-align: center;">${list.abo_date_string}</td>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -269,13 +274,35 @@
 	<script src="resources/dist/assets/js/app.min.js"></script>
 
 	<!-- demo app -->
-	<script
-		src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
+	<script src="resources/dist/assets/js/pages/demo.dashboard.js"></script>
 	<!-- end demo js-->
 
 </body>
 <!-- 서진 : 서비스 종류를 추가하는 script -->
 <script>
 	document.getElementById('bct_code').innerHTML = "${bct}";
+	
+	$("#searchBtn").click(function(){
+		var frm = document.searchFrm;
+		for(var i = 0; i<frm.length; i++){
+			if(frm[i].value=="" || frm[i].value==null){
+				if(frm[i].name=="bct_code"){
+					alert("서비스를 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+				if(frm[i].name=="city"){
+					alert("지역을 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+				if(frm[i].name=="bk_date"){
+					alert("날짜를 선택해주세요");
+					frm[i].focus();
+					return false;
+				};
+			}
+		}
+	})
 </script>
 </html>

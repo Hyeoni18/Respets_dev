@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamx.respets.dao.IJiyeDao">
+	<resultMap type="HashMap" id="noticeDetail">
+		<result property="BBO_NO" column="BBO_NO" />
+		<result property="BCT_NAME" column="BCT_NAME" />
+		<result property="BBC_NAME" column="BBC_NAME" />
+		<result property="BBO_TITLE" column="BBO_TITLE" />
+		<result property="BBO_CTT" column="BBO_CTT" jdbcType="CLOB"
+			javaType="java.lang.String" />
+		<result property="BBO_DATE" column="BBO_DATE" />
+	</resultMap>
+
+	<resultMap type="HashMap" id="noticeDetailUpdate">
+		<result property="BBO_NO" column="BBO_NO" />
+		<result property="BCT_CODE" column="BCT_CODE" />
+		<result property="BBC_NO" column="BBC_NO" />
+		<result property="BBO_TITLE" column="BBO_TITLE" />
+		<result property="BBP_DATE" column="BBO_DATE" />
+		<result property="BBO_CTT" column="BBO_CTT" jdbcType="CLOB"
+			javaType="java.lang.String" />
+		<result property="BUS_NO" column="BUS_NO" />
+	</resultMap>
+
+	<!-- 회원가입 이메일 확인 -->
+	<select id="emailChkSignUp" parameterType="String"
+		resultType="int">
+		SELECT COUNT(EMAIL) FROM FIND_VIEW WHERE EMAIL=#{email}
+	</select>
+
+	<!-- 개인회원가입 프로필 사진 포함 -->
+	<insert id="personalJoinPhoto" parameterType="HashMap">
+		INSERT
+		INTO PER
+		VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw}, #{per_name}, #{per_phone},
+		#{per_photo}, #{per_loc}, default, default, NULL)
+	</insert>
+
+	<!-- 개인회원가입 -->
+	<insert id="personalJoin" parameterType="HashMap">
+		INSERT INTO PER
+		VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
+		#{per_name},
+		#{per_phone}, default, default, default, default, NULL)
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="loginProcess" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT * FROM FIND_VIEW WHERE EMAIL=#{email} AND PW=#{pw}
+	</select>
+
+	<!-- 개인회원이메일인증여부 -->
+	<select id="chkPerEm" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT * FROM PER WHERE PER_NO=#{no}
+	</select>
+
+	<!-- 기업회원이메일인증여부 -->
+	<select id="chkBusEm" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT * FROM BUS WHERE BUS_NO=#{no}
+	</select>
+
+	<!-- 이메일인증성공 -->
+	<update id="emailConfirmSuccess" parameterType="String">
+		UPDATE PER SET
+		PER_EMCHK='O' WHERE PER_EMAIL=#{per_email}
+	</update>
+
+	<!-- 관리자 로그인 -->
+	<select id="adminLogin" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT * FROM ADM WHERE ADM_NO=#{adm_no} AND
+		ADM_PW=#{adm_pw}
+	</select>
+
+	<!-- 블랙리스트확인 -->
+	<select id="blackChk" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM BLK WHERE PER_NO=#{no}
+	</select>
+	<!-- 개인 최근예약리스트 -->
+	<select id="recentMyBookingList" parameterType="HashMap"
+		resultType="HashMap">
+		<![CDATA[SELECT X.RNUM, X.BK_NO, X.BUS_NAME, X.PTY_NAME, X.PET_NO, X.PET_NAME, X.PER_NAME, X.BK_TIME, X.VS_START, X.BK_CHK
+                    FROM (
+                    SELECT ROWNUM AS RNUM, RC.BK_NO, RC.BUS_NAME, RC.PTY_NAME, RC.PET_NO, RC.PET_NAME, RC.PER_NAME, RC.BK_TIME, RC.VS_START, RC.BK_CHK
+                        FROM (
+                        SELECT BK_NO, BUS_NAME, PTY_NAME, PET_NO, PET_NAME, PER_NAME, TO_CHAR(BK_TIME, 'yyyy-mm-dd hh24:mi')AS BK_TIME, VS_START, BK_CHK
+                        FROM RECENTMYBOOKINGLIST_VIEW
+                        WHERE PER_NO=#{no}
+                        ORDER BY BK_TIME DESC)RC
+                    WHERE ROWNUM <= ${pageNum} * 10)X
+                    WHERE X.RNUM >= ${pageNum} * 10-9 ]]>
+	</select>
+
+	<!-- 내 예약 디테일 -->
+	<select id="myBookingDetail" parameterType="String"
+		resultType="HashMap">
+		SELECT BK.BK_NO, BUS.BUS_NAME , BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2
+		,PTY.PTY_NAME,
+		PET.PET_NAME, PER.PER_NAME, PER.PER_PHONE, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi') AS VS_START, EMP.EMP_NAME, BK.BK_CMT, PET.PET_NO
+		FROM BK
+		INNER JOIN PET
+		ON BK.PET_NO = PET.PET_NO
+		INNER JOIN PTY
+		ON PET.PTY_NO =
+		PTY.PTY_NO
+		INNER JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		INNER JOIN BUS
+		ON
+		BK.BUS_NO = BUS.BUS_NO
+		INNER JOIN EMP
+		ON BK.EMP_NO = EMP.EMP_NO
+		WHERE BK.BK_NO = #{bk_no}
+	</select>
+
+	<!-- 개인 예약디테일 서비스 불러오기 -->
+	<select id="getMenu" parameterType="String" resultType="HashMap">
+		SELECT MENU.MENU_NAME FROM MENU INNER JOIN BKM
+		ON MENU.MENU_NO = BKM.MENU_NO
+		INNER JOIN BK
+		ON BKM.BK_NO = BK.BK_NO
+		WHERE BK.BK_NO = #{bk_no}
+	</select>
+
+	<select id="getPetDetail" parameterType="String"
+		resultType="HashMap">
+		SELECT PCL.PCL_NAME, PDT.PDT_CTT FROM PCL INNER JOIN PDT
+		ON
+		PCL.PCL_NO = PDT.PCL_NO
+		WHERE PDT.PET_NO=#{pet_no}
+	</select>
+
+	<!-- 기업 공지사항 페이징 -->
+	<select id="businessNotice" parameterType="HashMap"
+		resultType="HashMap">
+		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE
+				FROM BUS_NOTICE_VIEW
+				WHERE BUS_NO=#{no}
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9	
+			]]>
+	</select>
+
+	<!-- 기업 공지사항 갯수 확인 -->
+	<select id="getBusinessNoticeCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no}
+	</select>
+
+	<select id="recentMyBookingListCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM RECENTMYBOOKINGLIST_VIEW WHERE
+		PER_NO=#{no}
+	</select>
+
+	<!-- 기업공지사항 디테일 -->
+	<select id="noticeDetailPage" parameterType="HashMap"
+		resultMap="noticeDetail">
+		SELECT BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
+		BBO.BBO_TITLE, BBO.BBO_CTT,
+		TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd hh24:mi')
+		AS BBO_DATE
+		FROM BBO INNER JOIN BCT
+		ON BCT.BCT_CODE = BBO.BCT_CODE
+		INNER JOIN BBC
+		ON
+		BBC.BBC_NO = BBO.BBC_NO
+		WHERE BBO.BBO_NO=#{bbo_no}
+	</select>
+
+	<!-- 기업공지사항 검색 카운트 -->
+	<select id="getSearchBusinessAllNoticeCount"
+		parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM
+		BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND BBO_TITLE LIKE
+		'%'||#{search}||'%'
+	</select>
+
+	<!-- 기업 공지사항 검색 페이징 -->
+	<select id="searchBusinessAllNotice" parameterType="HashMap"
+		resultType="HashMap">
+		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_DATE
+				FROM BUS_NOTICE_VIEW
+				WHERE BUS_NO=#{no} AND BBO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9
+		]]>
+	</select>
+
+	<!-- 기업공지사항 검색 카운트 -->
+	<select id="getSearchBusinessNoticeCount"
+		parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM
+		BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND BBC_NAME=#{select} AND
+		BBO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+
+	<!-- 기업 공지사항 검색 페이징 -->
+	<select id="searchBusinessNotice" parameterType="HashMap"
+		resultType="HashMap">
+		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE
+				FROM BUS_NOTICE_VIEW
+				WHERE BUS_NO=#{no} AND BBC_NAME=#{select} AND BBO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9
+		]]>
+	</select>
+
+	<!-- 기업공지사항등록 -->
+	<insert id="businessNoticeInsert" parameterType="HashMap">
+		INSERT INTO BBO VALUES(BBO_SEQ.NEXTVAL, #{no}, #{bct_code}, #{bbc_no},
+		#{bbo_title}, #{bbo_ctt}, SYSDATE)
+	</insert>
+
+	<!-- 기업 공지사항 수정폼 정보 가져오기 -->
+	<select id="businessNoticeUpdateForm" parameterType="String"
+		resultMap="noticeDetailUpdate">
+		SELECT * FROM BBO WHERE BBO_NO=#{no}
+	</select>
+
+	<!-- 기업공지사항수정 -->
+	<update id="businessNoticeUpdate" parameterType="HashMap">
+		UPDATE BBO SET BCT_CODE=#{bct_code}, BBC_NO=#{bbc_no},
+		BBO_TITLE=#{bbo_title}, BBO_CTT=#{bbo_ctt} WHERE BBO_NO=#{bbo_no}
+	</update>
+
+	<!-- 기업공지사항 삭제 -->
+	<delete id="businessNoticeDelete" parameterType="Integer">
+		DELETE FROM BBO WHERE BBO_NO=#{bbo_no}
+	</delete>
+
+	<!-- 기업상세페이지 기본정보 -->
+	<select id="businessBasiceInfo" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT BUS.BUS_NAME, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		BCT.BCT_NAME, BFX.*
+		FROM BUS INNER JOIN BFX
+		ON BUS.BUS_NO = BFX.BUS_NO
+		INNER JOIN BCT
+		ON BFX.BCT_CODE = BCT.BCT_CODE
+		WHERE BFX.BUS_NO = #{bus_no} AND BFX.BCT_CODE = #{bct_code}
+	</select>
+
+	<!-- 기업상세페이지 해시태그 가져오기 -->
+	<select id="selectTag" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT TAG.TAG_NAME
+		FROM TAG INNER JOIN BTG
+		ON TAG.TAG_NO = BTG.TAG_NO
+		WHERE
+		BTG.BUS_NO=#{bus_no} AND BTG.BCT_CODE=#{bct_code}
+	</select>
+
+	<!-- 기업상세페이지 갤러리 -->
+	<select id="businessGallery" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no}
+		AND BCT_CODE=#{bct_code}
+	</select>
+
+	<select id="getBusinessList" resultType="HashMap">
+		SELECT BUS.BUS_NO,
+		BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL,
+		BUS.BUS_NAME, BUS.BUS_CEO, BUS.BUS_LCNO, BUS.BUS_PHONE,
+		BUS.BUS_ADDR, BUS.BUS_ADDR2, BUS.BUS_TIME, SVC.SVC_PRI
+		FROM BUS INNER JOIN SVC
+		ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN BCT
+		ON SVC.BCT_CODE = BCT.BCT_CODE WHERE BUS.BUS_CHK = 'X' AND SVC.SVC_PRI=1
+		ORDER BY BUS_TIME ASC
+	</select>
+
+	<select id="getBusinessInfo" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE,
+		BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE, GLR.GLR_LOC
+		FROM BUS INNER JOIN SVC
+		ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN BCT
+		ON SVC.BCT_CODE = BCT.BCT_CODE
+		INNER JOIN GLR
+		ON GLR.BUS_NO = BUS.BUS_NO
+		WHERE BUS.BUS_NO=#{bus_no} AND SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
+	</select>
+
+	<update id="confirmLicense" parameterType="String">
+		UPDATE BUS SET
+		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
+	</update>
+	
+	<select id="businessDetailNoticeList" parameterType="HashMap" resultType="HashMap">
+	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE, X.BCT_CODE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_DATE, BBV.BCT_CODE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
+				FROM BUS_DETAIL_NOTICE_VIEW
+				WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9	
+			]]>
+	</select>
+	
+	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	
+	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
+		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
+	</select>
+	
+	<select id="selectBus_name" parameterType="String" resultType="String">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
+	</select>
+</mapper>

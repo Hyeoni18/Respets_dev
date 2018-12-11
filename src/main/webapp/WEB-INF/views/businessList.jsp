@@ -32,29 +32,37 @@
 		<div class="content-page">
 			<div class="content">
 
-<jsp:include page="topbar-landing.jsp"></jsp:include>
-<div class="container-fluid">
-<br/>
-	<div id="tag">${tagList}</div>
-	<br/>
-	<div class="row">
-		<div class="col-12" id="businessList">
-					<%-- <div id="businessList">${busiList}</div> --%>
-					${busiList}
-				<!-- end card-deck-->
-			<!-- end card-deck-wrapper-->
-		</div>
-		<!-- end col-->
-	</div>
-	<br/>
-	<div id="page">${paging}</div>
-	</div>
+				<jsp:include page="topbar-landing.jsp"></jsp:include>
+				<div class="container-fluid">				
+
+					<div class="card bg-mint text-white" style="margin: 30px 0 30px 0;">
+						<div class="card-body">
+							<h5 class="card-title mb-0"><span style="margin-right:20px;">키워드로 검색</span>${tagList}</h5>
+
+							<%-- <div id="cardCollpase2" class="pt-3 collapse" style="">
+								<div id="tag">${tagList}</div>
+								
+							</div> --%>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12" id="businessList">
+							<%-- <div id="businessList">${busiList}</div> --%>
+							${busiList}
+							<!-- end card-deck-->
+							<!-- end card-deck-wrapper-->
+						</div>
+						<!-- end col-->
+					</div>
+					<br />
+					<div id="page">${paging}</div>
+				</div>
 			</div>
 			<%@ include file="footer.html"%>
 		</div>
 	</div>
-	
-	
+
+
 	<script src="resources/dist/assets/js/app.min.js"></script>
 </body>
 <script>

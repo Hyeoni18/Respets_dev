@@ -69,11 +69,15 @@
 					</a></li>
 	
 					<li class="side-nav-item"><a href="serviceManagement" class="side-nav-link">
-							<i class=" dripicons-store"></i> <span> 서비스 관리 </span>
+							<i class="dripicons-gear"></i> <span> 서비스 관리 </span>
 					</a></li>
 	
 					<li class="side-nav-item"><a href="stepListBut" class="side-nav-link">
-							<i class="dripicons-user-id"></i> <span> 직원 관리 </span>
+							<i class="dripicons-user-group"></i> <span> 직원 관리 </span>
+					</a></li>
+					
+					<li class="side-nav-item"><a href="businessInfoDetail" class="side-nav-link">
+							<i class="dripicons-user"></i> <span> 나의 회원 정보 </span>
 					</a></li>
 	
 					<li class="side-nav-item"><a href="businessNoticeList" class="side-nav-link">
@@ -82,7 +86,7 @@
 				
 				</c:if>
 
-				<c:if test="${fn:substring(no,0,1) eq '9'}">
+				<c:if test="${fn:substring(no,0,1) eq '1'}">
 					<li class="side-nav-title side-nav-item"><h5>관리자 마이페이지</h5></li>
 	
 					<li class="side-nav-item"><a href="unconfirmBusiness" class="side-nav-link">
@@ -90,17 +94,17 @@
 							1</span> --> <span> 미인증 기업 목록 </span>
 					</a></li>
 	
-					<li class="side-nav-item"><a href="#" class="side-nav-link">
+					<!-- <li class="side-nav-item"><a href="#" class="side-nav-link">
 							<i class="dripicons-view-list"></i> <span> 인증 기업 목록 </span>
 					</a></li>
-	
-					<li class="side-nav-item"><a href="#" class="side-nav-link">
+	 -->
+					<!-- <li class="side-nav-item"><a href="#" class="side-nav-link">
 							<i class="dripicons-user-id"></i> <span> 미인증 직원 목록 </span>
-					</a></li>
-	
+					</a></li> -->
+	<!-- 
 					<li class="side-nav-item"><a href="personalBlackListPage" class="side-nav-link">
 							<i class="dripicons-warning"></i> <span> 블랙리스트 </span>
-					</a></li>
+					</a></li> -->
 	
 					<li class="side-nav-item"><a href="noticeList" class="side-nav-link">
 							<i class="dripicons-clipboard"></i> <span> 공지사항 관리 </span>

@@ -40,7 +40,7 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<input type='radio' name='bct_code' class='주력 서비스' value='");
 			sb.append(list.get(i).get("BCT_CODE"));
-			sb.append("'/>" + list.get(i).get("BCT_NAME") + " ");
+			sb.append("'/>" + list.get(i).get("BCT_NAME") + "</label>");
 		} // for End
 		return sb.toString();
 	} // method End
@@ -116,12 +116,13 @@ public class JinService {
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<div class='col-lg-4' style='padding:0;'>");
 			sb.append("<div class='card d-block' style='text-align: center;margin-bottom:20px;'>");
-			sb.append("<img class='rounded-circle img-thumbnail' id='petProfile' src='" + list.get(i).get("GLR_LOC")
-					+ list.get(i).get("GLR_FILE") + "'>");
-			sb.append("<div class='card-body'>");
-			sb.append("<h5 class='card-title'>" + list.get(i).get("BUS_NAME") + "</h5><br/>");
-			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no="
-					+ list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
+			sb.append("<a href='businessDetailPage?bus_no=" + list.get(i).get("BUS_NO") + "&bct_code=");
+			sb.append(list.get(i).get("BCT_CODE") + "'><img class='rounded-circle img-thumbnail' id='petProfile' src='");
+			sb.append(list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "'>");
+			sb.append("</a><div class='card-body'><h5 class='card-title'>");
+			sb.append(list.get(i).get("BUS_NAME") + "</h5><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=");
+			sb.append(list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
 			sb.append("</div></div>");
 		} // for End
 		return sb.toString();
@@ -161,7 +162,7 @@ public class JinService {
 		} // if End
 		StringBuilder pet = new StringBuilder();
 		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
-		pet.append(" style='height:300px; weight:300px;' />");
+		pet.append("' style='height:300px; weight:300px;' />");
 		pet.append("<div class='card-body'><br/><br/>");
 		pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
 		pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
@@ -396,9 +397,11 @@ public class JinService {
 		List<HashMap<String, String>> list = jinDao.selectBooking(bus_no);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("<tr><td>" + list.get(i).get("BK_NO") + "</td><td>" + list.get(i).get("PTY_NAME") + "</td>");
+			sb.append("<tr><td><a href='myBookingDetail?" + list.get(i).get("BK_NO") + "'>" + list.get(i).get("BK_NO"));
+			sb.append("</a></td><td>" + list.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
-			sb.append("<td>" + list.get(i).get("VS_START") + "</td><td><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
+			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
 			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO")
 					+ "' />&nbsp;");
 			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO")
@@ -423,5 +426,25 @@ public class JinService {
 		mav.addObject("list", aboList);
 		return mav;
 	} // method End
+
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = jinDao.nowPwCheck(b);
+		return result;
+	}
+
+	public void businessPwUpdate(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		jinDao.businessPwUpdate(b);
+	}
+
+	public ModelAndView businessInfoUpdateForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Business b = new Business();
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		b = jinDao.businessInfoUpdateForm(b);
+		mav.addObject("b", b);
+		return mav;
+	}
 
 } // class End

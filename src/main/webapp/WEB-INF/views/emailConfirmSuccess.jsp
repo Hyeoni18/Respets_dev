@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        <div class="card">
+                        <div class="card" style="margin-top:6rem;">
                             <!-- Logo -->
                             <div class="card-header pt-4 pb-4 text-center bg-success">
                                 <a href="index.html">
