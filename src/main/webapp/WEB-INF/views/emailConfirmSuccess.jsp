@@ -55,8 +55,6 @@
                 <!-- end row -->
             </div>
             <!-- end container -->
-        </div>
-        <!-- end page -->
 
         <footer class="footer footer-alt"> Copyright Respets Corp. All rights reserved. </footer>
 
