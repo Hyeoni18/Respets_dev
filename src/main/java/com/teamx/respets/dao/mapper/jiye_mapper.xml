@@ -4,7 +4,7 @@
 
 <mapper namespace="com.teamx.respets.dao.IJiyeDao">
 	<!-- NCLOB 을 해시맵으로 가져올 땐 resultMap을 설정해주어야 스트링형으로 가져올 수 있다. -->
-	<resultMap type="HashMap" id="businessDetailNoticeList">
+<!-- 	<resultMap type="HashMap" id="businessDetailNoticeList">
 		<result property="BBO_NO" column="BUS_NO" />
 		<result property="BBO_NO" column="BBO_NO" />
 		<result property="BCT_NAME" column="BCT_NAME" />
@@ -35,14 +35,14 @@
 			javaType="java.lang.String" />
 		<result property="BUS_NO" column="BUS_NO" />
 	</resultMap>
-
-	<!-- 회원가입 이메일 확인 -->
+ -->
+<!-- 회원가입 이메일 확인
 	<select id="emailChkSignUp" parameterType="String"
 		resultType="int">
 		SELECT COUNT(EMAIL) FROM FIND_VIEW WHERE EMAIL=#{email}
 	</select>
 
-	<!-- 개인회원가입 프로필 사진 포함 -->
+	개인회원가입 프로필 사진 포함
 	<insert id="personalJoinPhoto" parameterType="HashMap">
 		INSERT
 		INTO PER
@@ -50,7 +50,7 @@
 		#{per_photo}, #{per_loc}, default, default, NULL)
 	</insert>
 
-	<!-- 개인회원가입 -->
+	개인회원가입
 	<insert id="personalJoin" parameterType="HashMap">
 		INSERT INTO PER
 		VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
@@ -58,48 +58,47 @@
 		#{per_phone}, default, default, default, default, NULL)
 	</insert>
 
-	<!-- 로그인 -->
+	로그인
 	<select id="loginProcess" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT * FROM FIND_VIEW WHERE EMAIL=#{email} AND PW=#{pw}
 	</select>
 
-	<!-- 개인회원이메일인증여부 -->
+	개인회원이메일인증여부
 	<select id="chkPerEm" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT * FROM PER WHERE PER_NO=#{no}
 	</select>
 
-	<!-- 기업회원이메일인증여부 -->
+	기업회원이메일인증여부
 	<select id="chkBusEm" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT * FROM BUS WHERE BUS_NO=#{no}
 	</select>
 	
-	<!-- 세션에 넣을 이름 가져오기 -->
+	세션에 넣을 이름 가져오기
 	<select id="selectBus_name" parameterType="String" resultType="String">
 		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no}
 	</select>
 
-	<!-- 이메일인증성공 -->
+	이메일인증성공
 	<update id="emailConfirmSuccess" parameterType="String">
 		UPDATE PER SET
 		PER_EMCHK='O' WHERE PER_EMAIL=#{per_email}
 	</update>
 
-	<!-- 관리자 로그인 -->
+	관리자 로그인
 	<select id="adminLogin" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT * FROM ADM WHERE ADM_NO=#{adm_no} AND
 		ADM_PW=#{adm_pw}
-	</select>
+	</select> -->
 
 	<!-- 블랙리스트확인 -->
-	<select id="blackChk" parameterType="HashMap" resultType="HashMap">
+<!-- 	<select id="blackChk" parameterType="HashMap" resultType="HashMap">
 		SELECT * FROM BLK WHERE PER_NO=#{no}
-	</select>
-	
-	<!-- 개인 최근예약리스트 -->
+	</select> -->
+<!-- 	개인 최근예약리스트
 	<select id="recentMyBookingList" parameterType="HashMap"
 		resultType="HashMap">
 		<![CDATA[SELECT X.RNUM, X.BK_NO, X.BUS_NAME, X.PTY_NAME, X.PET_NO, X.PET_NAME, X.PER_NAME, X.BK_TIME, X.VS_START, X.BK_CHK
@@ -114,7 +113,7 @@
                     WHERE X.RNUM >= ${pageNum} * 10-9 ]]>
 	</select>
 
-	<!-- 내 예약 디테일 -->
+	내 예약 디테일
 	<select id="myBookingDetail" parameterType="String"
 		resultType="HashMap">
 		SELECT BK.BK_NO, BUS.BUS_NAME , BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2
@@ -137,7 +136,7 @@
 		WHERE BK.BK_NO = #{bk_no}
 	</select>
 
-	<!-- 개인 예약디테일 서비스 불러오기 -->
+	개인 예약디테일 서비스 불러오기
 	<select id="getMenu" parameterType="String" resultType="HashMap">
 		SELECT MENU.MENU_NAME FROM MENU INNER JOIN BKM
 		ON MENU.MENU_NO = BKM.MENU_NO
@@ -152,9 +151,9 @@
 		ON
 		PCL.PCL_NO = PDT.PCL_NO
 		WHERE PDT.PET_NO=#{pet_no}
-	</select>
+	</select> -->
 
-	<!-- 기업 공지사항 페이징 -->
+	<!-- 기업 공지사항 페이징
 	<select id="businessNotice" parameterType="HashMap"
 		resultType="HashMap">
 		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
@@ -170,7 +169,7 @@
 			]]>
 	</select>
 
-	<!-- 기업 공지사항 갯수 확인 -->
+	기업 공지사항 갯수 확인
 	<select id="getBusinessNoticeCount" parameterType="String"
 		resultType="int">
 		SELECT COUNT(*) FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no}
@@ -182,7 +181,7 @@
 		PER_NO=#{no}
 	</select>
 
-	<!-- 기업공지사항 디테일 -->
+	기업공지사항 디테일
 	<select id="noticeDetailPage" parameterType="HashMap"
 		resultMap="noticeDetail">
 		SELECT BBO.BUS_NO, BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
@@ -197,7 +196,7 @@
 		WHERE BBO.BBO_NO=#{bbo_no}
 	</select>
 
-	<!-- 기업공지사항 검색 카운트 -->
+	기업공지사항 검색 카운트
 	<select id="getSearchBusinessAllNoticeCount"
 		parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) AS MAXNUM FROM
@@ -205,7 +204,7 @@
 		'%'||#{search}||'%'
 	</select>
 
-	<!-- 기업 공지사항 검색 페이징 -->
+	기업 공지사항 검색 페이징
 	<select id="searchBusinessAllNotice" parameterType="HashMap"
 		resultType="HashMap">
 		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
@@ -221,7 +220,7 @@
 		]]>
 	</select>
 
-	<!-- 기업공지사항 검색 카운트 -->
+	기업공지사항 검색 카운트
 	<select id="getSearchBusinessNoticeCount"
 		parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) AS MAXNUM FROM
@@ -229,7 +228,7 @@
 		BBO_TITLE LIKE '%'||#{search}||'%'
 	</select>
 
-	<!-- 기업 공지사항 검색 페이징 -->
+	기업 공지사항 검색 페이징
 	<select id="searchBusinessNotice" parameterType="HashMap"
 		resultType="HashMap">
 		<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE
@@ -245,30 +244,31 @@
 		]]>
 	</select>
 
-	<!-- 기업공지사항등록 -->
+	기업공지사항등록
 	<insert id="businessNoticeInsert" parameterType="HashMap">
 		INSERT INTO BBO VALUES(BBO_SEQ.NEXTVAL, #{no}, #{bct_code}, #{bbc_no},
 		#{bbo_title}, #{bbo_ctt}, SYSDATE)
 	</insert>
 
-	<!-- 기업 공지사항 수정폼 정보 가져오기 -->
+	기업 공지사항 수정폼 정보 가져오기
 	<select id="businessNoticeUpdateForm" parameterType="String"
 		resultMap="noticeDetailUpdate">
 		SELECT * FROM BBO WHERE BBO_NO=#{no}
 	</select>
 
-	<!-- 기업공지사항수정 -->
+	기업공지사항수정
 	<update id="businessNoticeUpdate" parameterType="HashMap">
 		UPDATE BBO SET BCT_CODE=#{bct_code}, BBC_NO=#{bbc_no},
 		BBO_TITLE=#{bbo_title}, BBO_CTT=#{bbo_ctt} WHERE BBO_NO=#{bbo_no}
 	</update>
 
-	<!-- 기업공지사항 삭제 -->
+	기업공지사항 삭제
 	<delete id="businessNoticeDelete" parameterType="Integer">
 		DELETE FROM BBO WHERE BBO_NO=#{bbo_no}
 	</delete>
-
-	<!-- 기업상세페이지 기본정보 -->
+ -->
+ 
+<!-- 	기업상세페이지 기본정보
 	<select id="businessBasiceInfo" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT BUS.BUS_NAME, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
@@ -280,7 +280,7 @@
 		WHERE BFX.BUS_NO = #{bus_no} AND BFX.BCT_CODE = #{bct_code}
 	</select>
 
-	<!-- 기업상세페이지 해시태그 가져오기 -->
+	기업상세페이지 해시태그 가져오기
 	<select id="selectTag" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT TAG.TAG_NAME
@@ -290,14 +290,14 @@
 		BTG.BUS_NO=#{bus_no} AND BTG.BCT_CODE=#{bct_code}
 	</select>
 
-	<!-- 기업상세페이지 갤러리 -->
+	기업상세페이지 갤러리
 	<select id="businessGallery" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no}
 		AND BCT_CODE=#{bct_code} AND GCT_NO=3
-	</select>
+	</select> -->
 
-	<!-- 미인증 기업리스트 -->
+<!-- 미인증 기업리스트 
 	<select id="getBusinessList" resultType="HashMap">
 		SELECT BUS.BUS_NO,
 		BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL,
@@ -310,7 +310,7 @@
 		ORDER BY BUS_TIME ASC
 	</select>
 
-	<!-- 미인증 기업리스트 정보 가져오기 -->
+	미인증 기업리스트 정보 가져오기
 	<select id="getBusinessInfo" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2,
@@ -324,13 +324,13 @@
 		WHERE BUS.BUS_NO=#{bus_no} AND SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
 	</select>
 	
-	<!-- 기업인증 -->
+	기업인증
 	<update id="confirmLicense" parameterType="String">
 		UPDATE BUS SET
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
-	</update>
+	</update> -->
 	
-	<!-- 기업상세페이지 공지사항 리스트 -->
+<!--  기업상세페이지 공지사항 리스트 
 	<select id="businessDetailNoticeList" parameterType="HashMap" resultMap="businessDetailNoticeList">
 	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE
 		FROM (
@@ -345,13 +345,13 @@
 			]]>
 	</select>
 	
-	<!-- 기업상세페이지 공지사항 리스트 갯수 -->
+	기업상세페이지 공지사항 리스트 갯수
 	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
 		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
-	</select>
+	</select> -->
 	
-	<!-- 기업 상세페이지 갤러리 -->
+<!--  로그인 기업 탑바 사진 
 	<select id="getBusinessPhoto" parameterType="String" resultType="HashMap">
 		SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2
-	</select>
+	</select> -->
 </mapper>

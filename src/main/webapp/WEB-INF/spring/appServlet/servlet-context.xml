@@ -72,6 +72,51 @@
 	</beans:bean>
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />
+	
+	<!-- 관리자 Dao -->
+	<beans:bean id="aDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.AdminDao" />
+	</beans:bean>
+	
+	<!-- business Dao -->
+	<beans:bean id="bDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.BusinessDao" />
+	</beans:bean>
+	
+	<!-- 로그인 Dao -->
+	<beans:bean id="lDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.LoginDao" />
+	</beans:bean>
+	
+	<!-- main Dao -->
+	<beans:bean id="mDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.MainDao" />
+	</beans:bean>
+	
+	<!-- Personal Dao -->
+	<beans:bean id="pDao"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<beans:property name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<beans:property name="mapperInterface"
+			value="com.teamx.respets.dao.PersonalDao" />
+	</beans:bean>
 
 	<!-- HyunHwi Dao -->
 	<beans:bean id="hDao"

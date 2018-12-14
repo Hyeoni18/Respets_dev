@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamx.respets.dao.MainDao">
+
+
+	<!-- NCLOB 을 해시맵으로 가져올 땐 resultMap을 설정해주어야 스트링형으로 가져올 수 있다. -->
+	<resultMap type="HashMap" id="businessDetailNoticeList">
+		<result property="BBO_NO" column="BUS_NO" />
+		<result property="BBO_NO" column="BBO_NO" />
+		<result property="BCT_NAME" column="BCT_NAME" />
+		<result property="BBC_NAME" column="BBC_NAME" />
+		<result property="BBO_TITLE" column="BBO_TITLE" />
+		<result property="BBO_CTT" column="BBO_CTT" jdbcType="CLOB"
+			javaType="java.lang.String" />
+		<result property="BBO_DATE" column="BBO_DATE" />
+	</resultMap>
+
+	<!-- 기업상세페이지 기본정보 -->
+	<select id="businessBasiceInfo" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT BUS.BUS_NAME, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		BCT.BCT_NAME, BFX.*
+		FROM BUS INNER JOIN BFX
+		ON BUS.BUS_NO = BFX.BUS_NO
+		INNER JOIN BCT
+		ON BFX.BCT_CODE = BCT.BCT_CODE
+		WHERE BFX.BUS_NO = #{bus_no} AND BFX.BCT_CODE = #{bct_code}
+	</select>
+
+	<!-- 기업상세페이지 해시태그 가져오기 -->
+	<select id="selectTag" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT TAG.TAG_NAME
+		FROM TAG INNER JOIN BTG
+		ON TAG.TAG_NO = BTG.TAG_NO
+		WHERE
+		BTG.BUS_NO=#{bus_no} AND BTG.BCT_CODE=#{bct_code}
+	</select>
+
+	<!-- 기업상세페이지 갤러리 -->
+	<select id="businessGallery" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no}
+		AND BCT_CODE=#{bct_code} AND GCT_NO=3
+	</select>
+	
+		<!-- 기업상세페이지 공지사항 리스트 -->
+	<select id="businessDetailNoticeList" parameterType="HashMap" resultMap="businessDetailNoticeList">
+	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE
+		FROM (
+			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_CTT, BBV.BBO_DATE, BBV.BCT_CODE
+			FROM(
+				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_CTT, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
+				FROM BUS_DETAIL_NOTICE_VIEW
+				WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+				ORDER BY BBO_DATE DESC)BBV
+			WHERE ROWNUM <= ${pageNum} * 10)X
+		WHERE X.RNUM >= ${pageNum} * 10-9	
+			]]>
+	</select>
+	
+	<!-- 기업상세페이지 공지사항 리스트 갯수 -->
+	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	</select>
+	
+</mapper>
