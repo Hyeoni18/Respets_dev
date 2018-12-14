@@ -38,7 +38,6 @@
 			value="net.sf.log4jdbc.DriverSpy" />
 		<beans:property name="url"
 			value="jdbc:log4jdbc:oracle:thin:@172.168.0.12:1521:XE" />
-
 		<beans:property name="username" value="TeamX" />
 		<beans:property name="password" value="respets" />
 	</beans:bean>
