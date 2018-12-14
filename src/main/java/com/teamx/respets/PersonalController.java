@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.teamx.respets.bean.Admin;
+import com.teamx.respets.bean.Personal;
 import com.teamx.respets.service.PersonalService;
 @Controller
 public class PersonalController {
@@ -39,6 +41,82 @@ public class PersonalController {
 	public ModelAndView recentMyBookingList(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav = ps.myBookingDetail(request);
+		return mav;
+	}
+	
+	/* 개인 회원정보 페이지 */
+	@RequestMapping(value = "/myInfo")
+	public ModelAndView myInfo(HttpSession session) {
+		mav = ps.myInfo(session);
+		return mav;
+	}
+
+	/* 개인 비밀번호 수정 페이지 */
+	@RequestMapping(value = "/myPwUpdateForm")
+	public ModelAndView myPwUpdateForm(Personal mb) {
+		mav = new ModelAndView();
+		mav.addObject("mb", mb);
+		mav.setViewName("myPwUpdateForm");
+		return mav;
+	}
+
+	/* 개인 비밀번호 수정 */
+	@RequestMapping(value = "/myPwUpdate", produces = "application/text; charset=utf8", method = RequestMethod.POST)
+	public ModelAndView myPwUpdate(String newPw, HttpSession session) {
+		mav = new ModelAndView();
+		int update = ps.myPwUpdate(newPw, session);
+		if (update == 1) {
+			mav.setViewName("redirect:/myInfo");
+		} else {
+			mav.addObject("fail", "alert('비밀번호 변경에 실패했습니다.')");
+			mav.setViewName("myPwUpdateForm");
+		}
+		return mav;
+	}
+
+	/* 개인정보 수정 페이지 */
+	@RequestMapping(value = "/myInfoUpdateForm")
+	public ModelAndView myInfoUpdateForm(Personal mb, HttpSession session) {
+		mav = ps.myInfoUpdateForm(mb, session);
+		return mav;
+	}
+
+	/* 개인 정보 수정 */
+	@RequestMapping(value = "/myInfoUpdate", method = RequestMethod.POST)
+	public ModelAndView myInfoUpdate(MultipartHttpServletRequest request) {
+		mav = ps.myInfoUpdate(request);
+		mav.setViewName("redirect:/myInfo");
+		return mav;
+	}
+
+	/* 개인 회원탈퇴 */
+	@RequestMapping(value = "/personalPartDelete")
+	public ModelAndView personalPartDelete(HttpSession session) {
+		mav = new ModelAndView();
+		mav = ps.personalPartDelete(session);
+		return mav;
+	}
+
+	/* 예약 취소안내 페이지 */
+	@RequestMapping(value = "/myBookingCancelPage")
+	public ModelAndView myBookingCancelPage(HttpServletRequest request, HttpSession session) {
+		mav = new ModelAndView();
+		mav.addObject("bk_no", request.getParameter("bk_no"));
+		mav.setViewName("myBookingCancelPage");
+		return mav;
+	}
+
+	/* 예약 취소 */
+	@RequestMapping(value = "/myBookingCancel")
+	public ModelAndView myBookingCancel(HttpServletRequest request) {
+		mav = ps.myBookingCancel(request);
+		return mav;
+	}
+
+	/* 개인 예약 전체리스트 */
+	@RequestMapping(value = "/personalAllBookingList")
+	public ModelAndView personalAllBookingList(HttpSession session, Integer pageNum) {
+		mav = ps.personalAllBookingList(session, pageNum);
 		return mav;
 	}
 
