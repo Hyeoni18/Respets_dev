@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -123,12 +124,13 @@ public class HyeonController {
 		return mav;
 	}
 
-	/* 예약 상세피이지 */
-	@RequestMapping(value = "/myBookingDetail")
-	public ModelAndView myBookingDetail(HttpServletRequest request) {
-		mav = hy.myBookingDetail(request);
-		return mav;
-	}
+
+//	/* 혜연 예약 상세내역 */
+//	@RequestMapping(value = "/myBookingDetail")
+//	public ModelAndView myBookingDetail(HttpServletRequest request) {
+//		mav = hy.myBookingDetail(request);
+//		return mav;
+//	}
 
 	/* 업종 종류 불러오기(전체예약페이지) */
 	@RequestMapping(value = "/businessBookingList")

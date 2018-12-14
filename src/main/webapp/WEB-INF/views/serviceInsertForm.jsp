@@ -15,6 +15,11 @@
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="resources/dist/assets/images/logo-sm.png">
+<!-- third party css -->
+<link
+	href="resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
+	rel="stylesheet" type="text/css" />
+<!-- third party css end -->
 
 <!-- third party css -->
 <link
@@ -34,18 +39,6 @@
     min-height: 1.3125rem;
     padding-left: 1.5rem;
 }
-#con {
-	text-align: center;
-}
-#medical_div {
-	float: left;
-}
-#beauty_div {
-	float: left;
-}
-#hotel_div {
-	float: left;
-}
 #medical {
 	display: none;
 	width: 100%;
@@ -62,11 +55,13 @@
 
 </head>
 <body>
+
 <div class="wrapper">
 		<%@ include file="left-sidebar.jsp"%>
 		<div class="content-page">
 			<div class="content">
 				<%@ include file="topbar-dashboard.jsp"%>
+
 				<div class="container-fluid"><br/>
 				
 				<div class="row">
@@ -89,10 +84,16 @@
 	${codeCheck} <!--업종 선택 버튼-->
 	 </ul>
 	<!-- 병 원 폼 -->
-	<div id="medical">
+	<div class="row" id="medical">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="medical" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="M" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
+
 			<div class="row">
 	<div class="col-lg-6">
 	<div class="form-group mb-3">
@@ -108,6 +109,7 @@
 	<input type="file" name="bgl_ori" multiple />
 	</div>
 	<div class="form-group mb-3">
+
 	<label for="simpleinput">제공서비스</label><br/>
 	${medical} </div> 
 	<div class="form-group mb-3">
@@ -138,6 +140,7 @@
 	<div class="col-lg-6">
 	<div class="form-group mb-3">
 	<label for="simpleinput">영업 오픈시간</label>
+
 	<input type="time" class="form-control" name="work_o" id="am_open" step="1800">
 	</div>
 	<div class="form-group mb-3">
@@ -164,10 +167,16 @@
 	</div>
 
 	<!-- 미 용 폼 -->
-	<div id="beauty">
+	<div class="row" id="beauty">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="beauty" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="B" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
+
 	 <div class="row">
 	 <div class="col-lg-6">
 	 <div class="form-group mb-3">
@@ -257,12 +266,21 @@
 	 </div>
 	</form>
 	</div>
+	</div>
+	</div>
+	</div>
 
 	<!-- 호 텔 폼 -->
-	<div id="hotel">
+	<div class="row" id="hotel">
+	<div class="col-12">
+	<div class="card">
+	<div class="card-body">
 		<form action="serviceInsert" name="hotel" method="post" enctype="multipart/form-data">
+		<div class="row">
+		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="H" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
+
 	  <div class="row">
 	  <div class="col-lg-6">
 	  <div class="form-group mb-3">
@@ -498,6 +516,7 @@ function priceBox(cnt) {
 		    		  x = document.createElement("input");
 		    		  x.setAttribute("type", "text");
 		    		  x.setAttribute("name", "price");
+		    		  x.setAttribute("class", "col-sm-6");
 		    		  var price;
 		    		  var url = "searchPrice?tag_name="+box[j-1]+"&ani_name="+aniName[i-1]+"&bct_code="+code;
 		    			Aj(url);
@@ -558,6 +577,7 @@ function priceBox(cnt) {
 		    		  x = document.createElement("input");
 		    		  x.setAttribute("type", "text");
 		    		  x.setAttribute("name", "price");
+		    		  x.setAttribute("class", "col-sm-6");
 		    		  var price;
 		    		  var url = "searchPrice?tag_name="+catBox[j-1]+"&ani_name="+catName[i-1]+"&bct_code="+code;
 		    			Aj(url);

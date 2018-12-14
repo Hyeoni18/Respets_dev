@@ -582,7 +582,6 @@ public class HyeonService {
 				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
-
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
 			sb.append("<td>" + bList.get(i).get("PTY_NAME") + "</td>");
 			sb.append("<td>" + bList.get(i).get("PET_NAME") + "</td>");

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Respets :: 기업 공지사항 상세</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
@@ -32,22 +32,21 @@
 <body>
 	<!-- Begin page -->
 	<div class="wrapper">
-			<%@ include file="left-sidebar.jsp"%>
-		
-				<div class="content-page">
-					<div class="content">
 
-				<!-- Topbar Start -->
-				<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
-				<%@ include file="topbar-dashboard.jsp"%>
-
+		<!-- Left Sidebar Start -->
+		<%@ include file="left-sidebar.jsp"%>
 		<!-- Left Sidebar End -->
 
 		<!-- ============================================================== -->
 		<!-- Start Page Content here -->
 		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+
+				<!-- Topbar Start -->
+				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
 				<div class="container-fluid">
@@ -134,13 +133,13 @@
 			<%@ include file="footer.html"%>
 			<!-- end Footer -->
 		</div>
-		</div>
-		<!-- content -->
+	</div>
+	<!-- content -->
 
 
-		<!-- ============================================================== -->
-		<!-- End Page content -->
-		<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- End Page content -->
+	<!-- ============================================================== -->
 
 
 	<!-- END wrapper -->

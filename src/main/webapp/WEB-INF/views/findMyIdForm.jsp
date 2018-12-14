@@ -57,8 +57,8 @@
 											<div class="col-6">
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="customCheck1" name="type" value="B"> <label
-														class="custom-control-label" for="customCheck1">기업</label>
+														id="customCheck2" name="type" value="B"> <label
+														class="custom-control-label" for="customCheck2">기업</label>
 												</div>
 											</div>
 
