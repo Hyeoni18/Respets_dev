@@ -118,21 +118,17 @@
 	<!-- end demo js-->
 </body>
 <script>
-	function butListPaging(pNo, code, wordd) { /* 전체만 들어올거야. */
+	function butListPaging(pNo, code, wordd) {
 		console.log(pNo);
 		var search = $("input[name='search']").val();
 		var select = $("select").val();
 		if(select.length == 0) {
 			select = "전체";
 		}
-		console.log(search);
-		console.log(select);
 		if (code.length != 0) {
-			console.log(code);
 			select = code;
 		}
 		if (wordd.length != 0) {
-			console.log(wordd);
 			search = wordd;
 		}
 		if (search.length != 0) {
@@ -159,7 +155,7 @@
 					}
 				});
 			} else {
-				console.log("업종상관있어");
+				console.log("업종상관있이");
 				$.ajax({
 					url : "searchBctAllsList?pageNum="+pNo+"&search="+search+"&bct_name="+select,
 					type : 'post',
@@ -181,7 +177,6 @@
 				});
 			}
 		} else {
-			console.log("검색할 문자 없이 업종으로만 ");
 			if (select == "전체") {
 				console.log("그냥 전체리스트 ");
 				$.ajax({
@@ -229,6 +224,5 @@
 			}
 		}
 	}
-
 </script>
 </html>

@@ -40,9 +40,6 @@
 			<div class="content">
 
 				<!-- Topbar Start -->
-				<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
@@ -114,7 +111,6 @@
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	function test() { /* 사용 */
-		//$('input[type="radio"]').click( function() {
 		var radio = $('input[type="radio"]:checked').val();
 		//전체리스트 불러오기
 		if (radio == '전체') {
@@ -167,7 +163,6 @@
 				}
 			});
 		}
-		//	});
 	}
 	function com(bk_no) { /* 사용 */
 		var but = $('span[class="' + bk_no + '"]');

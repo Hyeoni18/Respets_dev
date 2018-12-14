@@ -113,7 +113,6 @@ $('#same').hide();
 				if (result == 1) {
 					$('#success').html("비밀번호 확인 성공").css('color', 'blue');
 					$('#success').show();
-					$('#pwOk').removeAttr("disabled");
 				} else {
 					$("#success").html("비밀번호가 일치하지 않습니다.").css('color', 'red');
 					$('#success').show();
