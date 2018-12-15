@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamx.respets.dao.LoginDao">
+	<!-- 회원가입 이메일 확인 -->
+	<select id="emailChkSignUp" parameterType="String"
+		resultType="int">
+		SELECT COUNT(EMAIL) FROM FIND_VIEW WHERE EMAIL=#{email}
+	</select>
+	<!-- 개인회원가입 프로필 사진 포함 -->
+	<insert id="personalJoinPhoto" parameterType="HashMap">
+		INSERT INTO PER VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
+		#{per_name}, #{per_phone}, #{per_photo}, #{per_loc}, default, default,
+		NULL)
+	</insert>
+	<!-- 개인회원가입 -->
+	<insert id="personalJoin" parameterType="HashMap">
+		INSERT INTO PER VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
+		#{per_name}, #{per_phone}, default, default, default, default, NULL)
+	</insert>
+	<!-- 로그인 -->
+	<select id="loginProcess" parameterType="HashMap"
+		resultType="HashMap">
+		SELECT * FROM FIND_VIEW WHERE EMAIL=#{email} AND PW=#{pw}
+	</select>
+	<!-- 개인회원이메일인증여부 -->
+	<select id="chkPerEm" parameterType="HashMap"
+		resultType="HashMap"> SELECT * FROM PER WHERE PER_NO=#{no} </select>
+	<!-- 기업회원이메일인증여부 -->
+	<select id="chkBusEm" parameterType="HashMap"
+		resultType="HashMap"> SELECT * FROM BUS WHERE BUS_NO=#{no} </select>
+	<!-- 세션에 넣을 이름 가져오기 -->
+	<select id="selectBus_name" parameterType="String"
+		resultType="String"> SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no} </select>
+	<!-- 이메일인증성공 -->
+	<update id="emailConfirmSuccess" parameterType="String">
+		UPDATE PER SET PER_EMCHK='O' WHERE PER_EMAIL=#{per_email}
+	</update>
+	<!-- 블랙리스트 확인 -->
+	<select id="blackChk" parameterType="HashMap"
+		resultType="HashMap"> SELECT * FROM BLK WHERE PER_NO=#{no} </select>
+	<!-- 로그인 기업 탑바 사진 -->
+	<select id="getBusinessPhoto" parameterType="String"
+		resultType="HashMap"> SELECT * FROM GLR WHERE BUS_NO=#{no} AND GCT_NO=2 </select>
+	<!-- 아이디찾기; type,name, phone을 이용, 회원 view 에서 select 진행 -->
+	<select id="selectUser" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT EMAIL FROM FIND_VIEW WHERE NAME=#{name} AND PHONE=#{phone} AND NO
+		LIKE '${type}%'
+	</select>
+	<!-- 비밀번호 변경 폼 메일 보내기 전 랜덤값 유무 확인 -->
+	<select id="searchRND" parameterType="String"
+		resultType="hashmap"> SELECT RND_CODE FROM RND WHERE RND_EMAIL=#{userId}
+	</select>
+	<!-- 비밀번호 변경 후, 랜덤 값 지우기; -->
+	<delete id="deleteRcode" parameterType="String"> DELETE FROM RND WHERE
+		RND_EMAIL=#{email} </delete>
+	<!-- 랜덤값입력; 메일을 보내기 전, 입력한 정보들을 랜덤 테이블에 넣기 -->
+	<insert id="findMyPw" parameterType="randomtb">
+		INSERT INTO RND VALUES(#{rnd_email}, #{rnd_code}, #{rnd_type}, default)
+	</insert>
+	<!-- 랜덤값확인; -->
+	<select id="checkRcode" resultType="randomtb"
+		parameterType="randomtb">
+		SELECT * FROM RND WHERE RND_EMAIL=#{rnd_email} AND RND_CODE=#{rnd_code}
+	</select>
+	<!-- 개인회원 비밀번호 변경; -->
+	<update id="resetPerPw" parameterType="personal">
+		UPDATE PER SET PER_PW=#{per_pw} WHERE PER_EMAIL=#{per_email}
+	</update>
+	<!-- 기업회원 비밀번호 변경; -->
+	<update id="resetBusPw" parameterType="personal">
+		UPDATE BUS SET BUS_PW=#{per_pw} WHERE BUS_EMAIL=#{per_email}
+	</update>
+</mapper>

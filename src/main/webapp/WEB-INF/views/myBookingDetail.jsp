@@ -169,9 +169,6 @@
 					</div>
 					<!-- end row -->
 
-
-
-
 				</div>
 				<!-- end card body-->
 			</div>
@@ -180,31 +177,10 @@
 	</div>
 	<br />
 	<br />
-	<!-- <input type="button" id="cancelButton"
-						class="btn btn-success" value="예약 취소"
-						onclick="location.href='./myBookingCancelPage'" />  -->
-	<!-- App js -->
-	<%-- <script src="<c:url value="/resources/dist/assets/js/app.min.js"/>"></script> --%>
-
-	<!-- third party js -->
-	<%-- <script
-		src="<c:url value="/resources/dist/assets/js/vendor/Chart.bundle.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js"/>"></script> --%>
-	<!-- third party js ends -->
-
-	<!-- demo app -->
-	<%-- <script
-		src="<c:url value="/resources/dist/assets/js/pages/demo.dashboard.js"/>"></script> --%>
-	<!-- end demo js-->
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
 	var jsonData = ${result};
-	console.log(jsonData.BK_NO);
-	console.log(jsonData.VS_CHK);
 	$('#reviewButton').hide();
 	$('#reviewButton2').hide();
 	$('#cancelButton').hide();
@@ -238,7 +214,6 @@
 	$('#perBut').hide();
 	$('#busBut').hide();
 	if (no.indexOf('P') == 0) {
-		//$('#cencel').show();
 		$('#perBut').show();
 		if (chk == '신청' || chk == '승인') {
 			$('#cancel').show();
@@ -248,28 +223,5 @@
 	} else {
 		$('#busBut').show();
 	}
-</script>
-<script>
-	/*  Aj("reviewInsertPage", "#review");
-	 if(${page!=null}){
-	 Aj("${page}", "#review");
-	 }
-	 function reviewInsertPage(no){
-	 function Aj(url, position){
-	 $('#review').addClass('open');
-	 $.ajax({
-	 url:url,
-	 type:"get",
-	 date:{no:no},
-	 dataType:"html",
-	 success : function(page){
-	 $(position).html(page);
-	 },
-	 error:function(error){
-	 console.log(error);
-	 }
-	 });
-	 }
-	 } */
 </script>
 </html>

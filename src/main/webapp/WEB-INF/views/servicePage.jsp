@@ -40,9 +40,6 @@
 			<div class="content">
 
 				<!-- Topbar Start -->
-				<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
@@ -52,7 +49,6 @@
 					<!-- start page title -->
 					<div class="page-title-box">
 						<div class="page-title-right">
-							<!--현휘; 기업의 업종 등록 신청 페이지로 이동 (M,B,H)  -->
 							<form action="serviceInsertForm">
 								<input type="hidden" name="no" value="${no}" />
 								<button class="btn btn-outline-info">업종 등록 신청</button>
@@ -66,7 +62,6 @@
 						<div class="col-12">
 							<div class="row mb-3">
 								${servList}
-								<!--현휘; 서비스단에서 가져온 서비스 리스트 // 삭제예정 -->
 								${add}
 							</div>
 						</div>

@@ -57,6 +57,9 @@
 										<c:if test="${fn:substring(no,0,1) eq 'B'}">
 											${name} 회원님, 반갑습니다! 새로운 예약을 확인해보세요:)
 										</c:if>
+										<c:if test="${fn:substring(no,0,1) eq '1'}">
+											관리자로 로그인 했습니다.
+										</c:if>
 									</c:if>
 								</h4>
 							</div>

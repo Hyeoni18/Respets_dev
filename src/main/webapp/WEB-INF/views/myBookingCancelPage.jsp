@@ -30,9 +30,6 @@
 			<div class="content">
 
 				<!-- Topbar Start -->
-				<%-- <jsp:include page="topbar-dashboard.jsp">
-					<jsp:param name="no" value="${no}" />
-				</jsp:include> --%>
 				<%@ include file="topbar-dashboard.jsp"%>
 				<!-- end Topbar -->
 
@@ -59,14 +56,13 @@
 									<span class="text-muted font-14 mb-4">취소 및 환불 규정</span> <br />
 									<br /> - 방문일 기준 3일 전 : 100%<br> - 방문일 기준 2일 전 : 80%<br>
 									- 방문일 기준 1일 전 : 50%<br> - 방문일 당일 및 No-Show : 환불 불가<br>
-									- 취소, 환불 시 수수료가 발생할 수 있습니다. <br /> <br />
+									- 취소, 환불 시 수수료가 발생할 수 있습니다. <br />
 									<div>
 										<input type="button"
 											class='btn btn-outline-danger btn-rounded' id="cenc"
 											value="예약 취소" onclick="return check();" />
 									</div>
 									${flas}
-
 
 								</div>
 
