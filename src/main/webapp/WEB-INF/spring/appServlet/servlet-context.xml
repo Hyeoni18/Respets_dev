@@ -118,15 +118,6 @@
 			value="com.teamx.respets.dao.PersonalDao" />
 	</beans:bean>
 
-	<!-- HyunHwi Dao -->
-	<beans:bean id="hDao"
-		class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<beans:property name="sqlSessionFactory"
-			ref="sqlSessionFactory" />
-		<beans:property name="mapperInterface"
-			value="com.teamx.respets.dao.HyunHwiDao" />
-	</beans:bean>
-
 	<!-- Jinseon Dao -->
 	<beans:bean id="sDao"
 		class="org.mybatis.spring.mapper.MapperFactoryBean">

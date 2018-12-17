@@ -2,12 +2,17 @@ package com.teamx.respets.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,23 +21,24 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.teamx.respets.bean.Personal;
+import com.teamx.respets.bean.RandomTB;
 import com.teamx.respets.dao.LoginDao;
 
 @Service
 public class LoginService {
 	ModelAndView mav;
 	@Autowired
-	private HyunHwiService hhs;
-	@Autowired
 	private LoginDao lDao;
-	
-	//개인 회원가입 이메일 중복 확인
+	@Autowired
+	private JavaMailSender mailSender; // 메일보낼시 필요
+
+	// 개인 회원가입 이메일 중복 확인
 	public int emailChkSignUp(String email) {
-		int result =lDao.emailChkSignUp(email);
+		int result = lDao.emailChkSignUp(email);
 		return result;
 	} // emailChkSignUp End
-	
-	//개인회원가입
+
+	// 개인회원가입
 	public ModelAndView personalJoin(MultipartHttpServletRequest multi) {
 		mav = new ModelAndView();
 		String view = null;
@@ -74,13 +80,13 @@ public class LoginService {
 		String tomail = email;
 		String title = "[Respets] 계정 인증 메일";
 		String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email=" + email;
-		hhs.mailSending(tomail, title, content);
+		mailSending(tomail, title, content);
 		view = "emailConfirmOffer";
 		mav.setViewName(view);
 		return mav;
 	} // personalJoin End
-	
-	//로그인 (개인, 기업 통합)
+
+	// 로그인 (개인, 기업 통합)
 	public ModelAndView loginProcess(String email, String pw, HttpServletRequest request) { // loginForm에 email, pw를
 		mav = new ModelAndView();
 		HashMap<String, Object> hmap = new HashMap<String, Object>();
@@ -142,7 +148,7 @@ public class LoginService {
 								String title = "[Respets] 계정 인증 메일";
 								String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email="
 										+ sendEmail;
-								hhs.mailSending(tomail, title, content);
+								mailSending(tomail, title, content);
 								mav.addObject("email", sendEmail);
 								request.getSession().invalidate();
 								view = "emailConfirmOffer";
@@ -169,7 +175,7 @@ public class LoginService {
 								String title = "[Respets] 계정 인증 메일";
 								String content = "링크를 클릭해주세요. http://localhost/emailConfirmSuccess?per_email="
 										+ sendEmail;
-								hhs.mailSending(tomail, title, content);
+								mailSending(tomail, title, content);
 								mav.addObject("email", sendEmail);
 								request.getSession().invalidate(); // 세션 만
 								view = "emailConfirmOffer";
@@ -190,8 +196,8 @@ public class LoginService {
 		mav.setViewName(view);
 		return mav;
 	} // loginProcess End
-	
-	//이메일 인증 확인
+
+	// 이메일 인증 확인
 	public ModelAndView emailConfirmSuccess(HttpServletRequest request) {
 		mav = new ModelAndView();
 		String view = null;
@@ -202,8 +208,8 @@ public class LoginService {
 		mav.setViewName(view);
 		return mav;
 	} // emailConfirmSuccess End
-	
-	//로그아웃
+
+	// 로그아웃
 	public ModelAndView logout(HttpServletRequest request) {
 		mav = new ModelAndView();
 		mav.setViewName("redirect:/");
@@ -211,5 +217,181 @@ public class LoginService {
 		return mav;
 	} // logout End
 
+	// 아이디 찾기
+	public ModelAndView findMyId(Personal mb, HttpServletRequest request) {
+		mav = new ModelAndView();
+		String view = null;
+		char type = request.getParameter("type").charAt(0); // 개인, 기업 의 타입을 담는 변수
+		String name = mb.getPer_name(); // bean에서 이름을 빼서 변수에 담아준다.
+		String phone = mb.getPer_phone(); // 번호도 담아준다.
 
+		Map<String, Object> map = new HashMap<>();
+		// map을 이용해 한번에 3가지의 변수를 dao에 넘겨준다.
+		map.put("name", name);
+		map.put("phone", phone);
+		map.put("type", type);
+		map = lDao.selectUser(map);
+
+		if (map != null) {
+			String email = (String) map.get("EMAIL");
+			String[] word = email.split("@"); // @ 를기준으로 문자열을 잘라 배열에 넣어준다.
+			String[] perid = word[0].split(""); // 잘린 문자열 중 메일부분이 아닌 아이디 부분을 다시 잘라준다.
+			String findEmail = ""; // 잘린 문자열을 합쳐줄 변수선언.
+			for (int i = perid.length - 3; i < perid.length; i++) {
+				// 아이디 중 뒷 문자 3개를 찾기 위해 돌리는 반복문.
+				perid[i] = "*"; // 찾은 문자들을 치환.
+			}
+			for (int i = 0; i < perid.length; i++) {
+				// 잘랐던 문자들을 하나로 합치기 위해 돌리는 반복문.
+				findEmail += perid[i]; // 문자열 합체.
+			}
+			email = findEmail + "@" + word[1]; // 작업하기 위해 잘랐던 모든 문자열을 합체.
+			mav.addObject("showEmail", email); // ***로 치환된 이메일
+			mav.addObject("email", (String) map.get("EMAIL")); // 정상 이메일
+			mav.addObject("type", type); // 회원 종류
+			view = "findMyPwForm";
+		} else { // 맞는 정보가 없을 경우.
+			String text = "<script>alert('찾으시는 아이디 정보가 없습니다.');</script>";
+			mav.addObject("none", text);
+			view = "findMyIdForm";
+		}
+		mav.setViewName(view);
+		return mav;
+	}
+
+	// 이메일로 비밀번호 변경 폼 보내기
+	public ModelAndView findMyPw(HttpServletRequest request) {
+		mav = new ModelAndView();
+		String userId = request.getParameter("email");
+		String userType = request.getParameter("type");
+		List<Map<String, Object>> list;
+		list = lDao.searchRND(userId);
+		if (list.size() != 0) {
+			lDao.deleteRcode(userId);
+		}
+		String view = null;
+		String temp = "";
+		Random rnd = new Random();
+		for (int i = 0; i < 6; i++) {
+			int rIndex = rnd.nextInt(3); // 0,1,2 범위 내 랜덤하게 숫자를 부르겠다는 의미.
+											// switch 문을 통해 숫자,소문자,대문자를 무작위로 조합하기 위한 작업.
+			switch (rIndex) {
+			case 0:
+				// a-z 소문자, a의 아스키 값은 '97'
+				temp += ((char) ((int) (rnd.nextInt(26)) + 97));
+				// 알파벳 개수만큼만 숫자를 랜덤으로 뽑아냄
+				// 그리고 소문자 첫번째 자리의 아스키 값을 더해준다.
+				// 마지막으로 해당 수를 문자열로 변경.
+				break;
+			case 1:
+				// A-Z 대문자, A의 아스키 값은 '65'
+				temp += ((char) ((int) (rnd.nextInt(26)) + 65));
+				break;
+			case 2:
+				// 0-9
+				temp += ((rnd.nextInt(10)));
+				break;
+			}
+		}
+		RandomTB rtb = new RandomTB();
+		rtb.setRnd_email(userId);
+		rtb.setRnd_code(temp);
+		rtb.setRnd_type(userType.charAt(0)); // 회원 번호의 맨 앞자리를 불러옴. 회원 구분을 위해. (P,B,M)
+		int result = lDao.findMyPw(rtb); // 가지고 있는 정보를 가지고 랜덤 테이블 접근.
+		if (result != 0) { // insert에 성공 했을 경우
+			String tomail = rtb.getRnd_email(); // 메일을 받는 이메일 주소
+			String title = "비밀번호 변경 페이지"; // 메일의 제목
+			String content = "http://localhost/resetMyPwForm?per_email=" + rtb.getRnd_email() + "&code="
+					+ rtb.getRnd_code() + "&type=" + rtb.getRnd_type();
+			mailSending(tomail, title, content); // 메일 보내기 메소드로 이동
+		}
+		String findPw = "<script>alert('이메일로 비밀번호 재설정 링크를 보냈습니다.');</script>";
+		mav.addObject("findPw", findPw);
+		view = "index";
+		mav.setViewName(view);
+		return mav;
+	}
+
+	// 메일 보내는 메소드
+	// 해당 메소드를 사용하기 위해서는,
+	// 메일을 받는사람(tomail), 메일의 제목(title), 메일의 내용(content)을 가지고 넘어와야 한다.
+	public void mailSending(String tomail, String title, String content) {
+		String setfrom = "respets2018@gmail.com"; // 회원들에게 메일을 보내주는 관리자 메일주소를 적어준다.
+		try {
+			MimeMessage message = mailSender.createMimeMessage(); // 메세지 만들거야.
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, "UTF-8"); // 근데 그 메세지 인코딩을 "UTF-8"로 할거야.
+			// 인코딩이 필요 없다면, (message) 만 담아서 보내 줄 수 있다. 그리고 첨부파일도 보내고 싶을 때는 (message, true)
+			// 형식으로도 사용된다. (검색해보기)
+			// 작업을 끝낸 메세지 헬퍼에 정보들을 담아준다.
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content); // 메일 내용
+			mailSender.send(message); // 메일 전송.
+										// 위에서도 쓰였던 mailSender 는 메이븐에서 가져온 api.
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	// 신원을 확인하는 메소드, 보낸 랜덤값과 받은 사용자가 맞는지 확인한다.
+	public ModelAndView resetMyPwForm(HttpServletRequest request) {
+		String view = null;
+		mav = new ModelAndView();
+		// 메일을 보낼 때 함께 담아서 보내진 email, code, type
+		String email = request.getParameter("per_email");
+		String code = request.getParameter("code");
+		String type = request.getParameter("type");
+		RandomTB rtb = new RandomTB();
+		rtb.setRnd_email(email);
+		rtb.setRnd_code(code);
+		// 랜덤 코드가 맞는지 확인한다.
+		rtb = lDao.checkRcode(rtb);
+		if (rtb != null) { // 신원이 확인되면 유효시간을 확인한다.
+			long minute = dateCheck(rtb);
+			if (minute < 30) { // 메일이 보내진 지 30분이 되지 않았으면 비밀번호 변경 폼으로 이동.
+				mav.addObject("email", email);
+				mav.addObject("code", code);
+				mav.addObject("type", type);
+				view = "resetMyPwForm";
+			} else { // 30분이 지났으면 응답시간이 초과됬기에 다시 메일을 보내야 한다.
+				String text = "<script>alert('응답시간이 초과되었습니다.');</script>";
+				mav.addObject("alert", text);
+				view = "index";
+			}
+		} else { // 랜덤값 자체가 맞지 않으면 존재하지 않는 링크라고 알려준다.
+			String text = "<script>alert('존재하지 않는 링크입니다.');</script>";
+			mav.addObject("alert", text);
+			view = "index";
+		}
+		mav.setViewName(view);
+		return mav;
+	}
+
+	// 메일의 유효시간을 확인하는 메소드, minute 으로 계산해준다.
+	private long dateCheck(RandomTB rtb) {
+		long rand = rtb.getRnd_date().getTime();
+		Date curDate = new Date();
+		long curDateTime = curDate.getTime();
+		long minute = (curDateTime - rand) / 60000;
+		return minute;
+	}
+
+	// 변경한 비밀번호 값으로 회원정보를 변경한다.
+	public ModelAndView updateMyPw(HttpServletRequest request, Personal ps) {
+		mav = new ModelAndView();
+		String type = request.getParameter("type"); // 개인,기업 구분
+		if (type.equals("P")) { // 개인일 경우
+			lDao.resetPerPw(ps);
+		} else if (type.equals("B")) { // 기업일 경우
+			System.out.println(type);
+			lDao.resetBusPw(ps);
+		}
+		lDao.deleteRcode(ps.getPer_email()); // 변경이 완료되면 랜덤값을 지워준다.
+		String updateMyPw = "<script>alert('비밀번호가 변경되었습니다.');</script>";
+		mav.addObject("updateMyPw", updateMyPw);
+		String view = "loginForm";
+		mav.setViewName(view);
+		return mav;
+	}
 }

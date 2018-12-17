@@ -56,7 +56,7 @@
 											<span class="float-left mr-4"> <img id="perProfile"
 												src="${glr_loc}${glr_file}"
 												style="width: 150px; height: 150px; margin-top: 15px; margin-left: 20px;"
-												class="rounded-circle img-thumbnail"> <!-- ${img} --></span>
+												class="rounded-circle img-thumbnail"></span>
 											<div class="media-body">
 												<br />
 												<h3 class="mt-1 mb-1 text-white">
@@ -123,7 +123,6 @@
 										</div>
 										<!-- end col -->
 
-
 									</div>
 									<!-- end row-->
 
@@ -152,14 +151,6 @@
 	</div>
 	<!-- END wrapper -->
 
-
-	<!-- 
-	<form action="businessInfoUpdateForm">
-		<div>
-		<div>
-			<button class="btn btn-outline-secondary">수정</button>
-		</div>
-	</form> -->
 </body>
 <script src="resources/dist/assets/js/app.min.js"></script>
 <script>
@@ -168,7 +159,7 @@
 		$('#' + key).html(value);
 	});
 
-	function name() {
+	function businessDelete() {
 		var result = confirm("예약 내역을 제외한 모든 데이터가 삭제되고, 재가입 시 데이터 복구가 어렵습니다. 정말 탈퇴하시겠습니까?");
 		if (result) {
 			location.href = "businessPartDelete";

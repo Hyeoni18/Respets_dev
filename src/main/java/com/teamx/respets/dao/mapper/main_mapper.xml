@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.teamx.respets.dao.MainDao">
-
-
 	<!-- NCLOB 을 해시맵으로 가져올 땐 resultMap을 설정해주어야 스트링형으로 가져올 수 있다. -->
 	<resultMap type="HashMap" id="businessDetailNoticeList">
 		<result property="BBO_NO" column="BUS_NO" />
@@ -16,54 +13,106 @@
 			javaType="java.lang.String" />
 		<result property="BBO_DATE" column="BBO_DATE" />
 	</resultMap>
-
 	<!-- 기업상세페이지 기본정보 -->
 	<select id="businessBasiceInfo" parameterType="HashMap"
 		resultType="HashMap">
 		SELECT BUS.BUS_NAME, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
-		BCT.BCT_NAME, BFX.*
-		FROM BUS INNER JOIN BFX
-		ON BUS.BUS_NO = BFX.BUS_NO
-		INNER JOIN BCT
-		ON BFX.BCT_CODE = BCT.BCT_CODE
-		WHERE BFX.BUS_NO = #{bus_no} AND BFX.BCT_CODE = #{bct_code}
+		BCT.BCT_NAME, BFX.* FROM BUS INNER JOIN BFX ON BUS.BUS_NO = BFX.BUS_NO
+		INNER JOIN BCT ON BFX.BCT_CODE = BCT.BCT_CODE WHERE BFX.BUS_NO =
+		#{bus_no} AND BFX.BCT_CODE = #{bct_code}
 	</select>
-
 	<!-- 기업상세페이지 해시태그 가져오기 -->
 	<select id="selectTag" parameterType="HashMap"
 		resultType="HashMap">
-		SELECT TAG.TAG_NAME
-		FROM TAG INNER JOIN BTG
-		ON TAG.TAG_NO = BTG.TAG_NO
-		WHERE
+		SELECT TAG.TAG_NAME FROM TAG INNER JOIN BTG ON TAG.TAG_NO = BTG.TAG_NO WHERE
 		BTG.BUS_NO=#{bus_no} AND BTG.BCT_CODE=#{bct_code}
 	</select>
-
 	<!-- 기업상세페이지 갤러리 -->
 	<select id="businessGallery" parameterType="HashMap"
 		resultType="HashMap">
-		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no}
-		AND BCT_CODE=#{bct_code} AND GCT_NO=3
+		SELECT GLR_FILE, GLR_LOC FROM GLR WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code} AND GCT_NO=3
 	</select>
-	
-		<!-- 기업상세페이지 공지사항 리스트 -->
-	<select id="businessDetailNoticeList" parameterType="HashMap" resultMap="businessDetailNoticeList">
-	<![CDATA[SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE
-		FROM (
-			SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_CTT, BBV.BBO_DATE, BBV.BCT_CODE
-			FROM(
-				SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_CTT, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE
-				FROM BUS_DETAIL_NOTICE_VIEW
-				WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
-				ORDER BY BBO_DATE DESC)BBV
-			WHERE ROWNUM <= ${pageNum} * 10)X
-		WHERE X.RNUM >= ${pageNum} * 10-9	
-			]]>
+	<!-- 기업상세페이지 공지사항 리스트 -->
+	<select id="businessDetailNoticeList" parameterType="HashMap"
+		resultMap="businessDetailNoticeList">
+<![CDATA[
+SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_CTT, X.BBO_DATE, X.BCT_CODE FROM ( SELECT ROWNUM AS RNUM, BBV.BBO_NO, BBV.BCT_NAME, BBV.BBC_NAME, BBV.BBO_TITLE, BBV.BBO_CTT, BBV.BBO_DATE, BBV.BCT_CODE FROM( SELECT BBO_NO, BCT_NAME, BBC_NAME, BBO_TITLE, BBO_CTT, TO_CHAR(BBO_DATE, 'yyyy-mm-dd')AS BBO_DATE, BCT_CODE FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code} ORDER BY BBO_DATE DESC)BBV WHERE ROWNUM <= ${pageNum} * 10)X WHERE X.RNUM >= ${pageNum} * 10-9
+]]>
 	</select>
-	
 	<!-- 기업상세페이지 공지사항 리스트 갯수 -->
-	<select id="getBusinessNoticeDetailCount" parameterType="HashMap" resultType="int">
-		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+	<select id="getBusinessNoticeDetailCount"
+		parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM BUS_DETAIL_NOTICE_VIEW WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
 	</select>
-	
+	<!-- 주소 선택 후 기업리스트 검색 & 페이징 -->
+	<select id="searchBUSaddr" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM ( SELECT ROWNUM AS RNUM, SEL.* FROM ( SELECT * FROM BSD D JOIN ( SELECT * FROM BUS WHERE BUS_ADDR like '${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code} ORDER BY D.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9)X WHERE X.RNUM >= ${pageNum} * 9-8
+]]>
+	</select>
+	<!-- 기업의 대표이미지 검색 -->
+	<select id="selectGallery" parameterType="hashmap"
+		resultType="hashmap">
+		SELECT * FROM GLR WHERE BUS_NO=#{bus_no} AND GCT_NO=#{gct_no}
+	</select>
+	<!-- 주소 선택 후 기업리스트 페이징 카운트 -->
+	<select id="countBusiList" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BSD D JOIN (SELECT * FROM BUS WHERE BUS_ADDR like
+		'${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE
+		BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code}
+	</select>
+	<!-- 주소 선택 후 기업리스트가 가진 태그 리스트 검색 -->
+	<select id="selectTAG" parameterType="String"
+		resultType="hashmap">
+		SELECT DISTINCT(TAG_NO) AS TAG_NO FROM BTG WHERE BCT_CODE=#{bct_code}
+	</select>
+	<!-- 태그번호를 태그이름으로 변경 -->
+	<select id="changeTAG" parameterType="String"
+		resultType="String"> SELECT TAG_NAME FROM TAG WHERE TAG_NO=#{tag_no} </select>
+	<!-- 업종버튼선택 후 기업리스트 검색 & 페이징 -->
+	<select id="selectSVCcode" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM SVC C JOIN BUS S ON C.BUS_NO=S.BUS_NO WHERE BCT_CODE=#{bct_code} ORDER BY C.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<!-- 업종버튼선택 후 기업리스트 페이징 카운트 -->
+	<select id="countBusiButList" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM SVC C JOIN BUS S ON C.BUS_NO=S.BUS_NO WHERE
+		BCT_CODE=#{bct_code}
+	</select>
+	<!-- 주소선택 시 기업리스트에서 태그 선택 후 기업리스트 검색 & 페이징 -->
+	<select id="searchBUSaddrTag" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM BTG G JOIN (SELECT A.* FROM BSD D JOIN (SELECT * FROM BUS WHERE BUS_ADDR like '${bus_addr}%') A ON D.BUS_NO=A.BUS_NO WHERE BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND BCT_CODE=#{bct_code}) C ON G.BUS_NO=C.BUS_NO WHERE TAG_NO=#{tag_no} ORDER BY C.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<!-- 주소선택 시 기업리스트에서 태그 선택 후 기업리스트 페이징 카운트 -->
+	<select id="countSearchBUSaddr" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BTG G JOIN (SELECT S.BUS_NO, D.BCT_CODE, D.BSD_DATE,
+		S.BUS_NAME, S.BUS_ADDR FROM BSD D JOIN BUS S ON D.BUS_NO=S.BUS_NO
+		WHERE D.BSD_DATE=TO_DATE(#{bsd_date}, 'YY/MM/DD') AND S.BUS_ADDR like
+		'${bus_addr}%' AND D.BCT_CODE=#{bct_code}) A ON G.BUS_NO=A.BUS_NO
+		WHERE TAG_NO=#{tag_no}
+	</select>
+	<!-- 업종버튼선택 시 기업리스트에서 태그 선택 후 기업리스트 검색 & 페이징 -->
+	<select id="butTagSelectList" parameterType="hashmap"
+		resultType="hashmap">
+<![CDATA[
+SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM BUS S JOIN BTG G ON S.BUS_NO=G.BUS_NO WHERE BCT_CODE=#{bct_code} AND TAG_NO=#{tag_no} ORDER BY S.BUS_NO DESC) SEL WHERE ROWNUM <= ${pageNum} * 9) X WHERE X.RNUM >= ${pageNum}*9-8
+]]>
+	</select>
+	<!-- 업종버튼선택 시 기업리스트에서 태그 선택 후 기업리스트 페이징 카운트 -->
+	<select id="countButTagSelectList" parameterType="hashmap"
+		resultType="int">
+		SELECT COUNT(*) FROM BUS S JOIN BTG G ON S.BUS_NO=G.BUS_NO WHERE
+		BCT_CODE=#{bct_code} AND TAG_NO=#{tag_no}
+	</select>
 </mapper>
