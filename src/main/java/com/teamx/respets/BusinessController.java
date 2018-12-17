@@ -230,4 +230,12 @@ public class BusinessController {
 		mav = bs.stepDelete(request);
 		return mav;
 	}
+	
+	/* 기업리스트에서 기업 클릭 시 - 기업 상세 페이지 */
+	@RequestMapping (value="/businessDetailPage", method=RequestMethod.GET)
+	public ModelAndView businessDetailPage(HttpSession session, HttpServletRequest request) {
+		mav = new ModelAndView();
+		mav=bs.businessDetailPage(session, request);
+		return mav;
+	}
 }

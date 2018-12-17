@@ -176,4 +176,15 @@ public interface BusinessDao {
 	public String searchPTYNO(String ani_name);
 	//가격 검색
 	public String searchPRC(Map<String, Object> map);
+	//기업 상세페이지 
+	public HashMap<String, Object> getBusinessImage(HashMap<String, Object> hmap);
+	public String getBusName(HashMap<String, Object> hmap);
+	public String getBctName(HashMap<String, Object> hmap);
+	public List<HashMap<String, Object>> getHaveService(String bus_no);
+	public String getFavorite(HashMap<String, Object> hmap);
+	//기업상세페이지 - 즐겨찾기 추가
+	public int favoriteInsert(HashMap<String, Object> hmap);
+	//기업상세페이지 - 즐겨찾기 삭제
+	public int favoriteDelete(HashMap<String, Object> hmap);
+
 }

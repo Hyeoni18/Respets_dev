@@ -2864,4 +2864,79 @@ public class BusinessService {
 		System.out.println(price);
 		return price;
 	}
+	
+	/* 기업 상세페이지 - 즐겨찾기 추가 삭제 */
+	public int favoriteChange(HttpServletRequest request) {
+		int result = 0;
+		HashMap<String, Object> hmap = new HashMap<>();
+		hmap.put("per_no", request.getParameter("per_no"));
+		hmap.put("bus_no", request.getParameter("bus_no"));
+		String action = request.getParameter("action");
+		if (action.equals("insert")) {
+			result = bDao.favoriteInsert(hmap);
+		}
+		if (action.equals("delete")) {
+			result = bDao.favoriteDelete(hmap);
+		}
+		return result;
+	}
+	
+	public ModelAndView businessDetailPage(HttpSession session, HttpServletRequest request) {
+		mav = new ModelAndView();
+		String view = null;
+		HashMap<String, Object> hmap = new HashMap<>();
+		List<HashMap<String, Object>> serviceList = new ArrayList<HashMap<String, Object>>();
+
+		String bus_no = request.getParameter("bus_no");
+		String bct_code = request.getParameter("bct_code");
+		String bsd_date = request.getParameter("bsd_date");
+
+		// 해시맵에 쿼리스트링과 회원번호를 담는다
+		hmap.put("bus_no", bus_no);
+		hmap.put("bct_code", bct_code);
+
+		String no = null;
+
+		// 회원번호
+		if (session.getAttribute("no") != null) {
+			no = session.getAttribute("no").toString();
+			hmap.put("no", no);
+
+			// 즐겨찾기
+			int favorite = 0;
+			char code = no.charAt(0);
+			String favResult = null;
+			if (code == 'P') {
+				favResult = bDao.getFavorite(hmap);
+				if (favResult != null)
+					favorite = 1;
+			}
+
+			mav.addObject("no", no);
+			mav.addObject("code", code);
+			mav.addObject("favorite", favorite);
+
+		}
+
+		// 기업명을 가져온다
+		String bus_name = bDao.getBusName(hmap);
+		// 업종명을 가져온다
+		String bct_name = bDao.getBctName(hmap);
+		// 기업대표이미지를 가져온다
+		hmap = bDao.getBusinessImage(hmap);
+		String bus_img = hmap.get("GLR_LOC").toString() + hmap.get("GLR_FILE").toString();
+
+		// 기업이 제공하는 모든 서비스를 가져온다
+		serviceList = bDao.getHaveService(bus_no);
+		mav.addObject("bus_no", bus_no);
+		mav.addObject("bsd_date", bsd_date);
+		mav.addObject("bct_code", bct_code);
+		mav.addObject("bus_img", bus_img);
+		mav.addObject("bus_name", bus_name);
+		mav.addObject("bct_name", bct_name);
+		mav.addObject("serviceList", serviceList);
+		view = "businessDetailPage";
+		mav.setViewName(view);
+		return mav;
+	}
 }

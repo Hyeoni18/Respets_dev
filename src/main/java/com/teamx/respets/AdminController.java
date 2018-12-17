@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.AdminBoard;
 import com.teamx.respets.service.AdminService;
 import com.teamx.respets.service.LoginService;
 
@@ -66,4 +67,69 @@ public class AdminController {
 		mav = as.confirmLicense(request);
 		return mav;
 	}
+	
+	/* 공지사항 목록 */
+	@RequestMapping (value="/noticeList", method=RequestMethod.GET)
+	public ModelAndView noticeList(Integer pageNum) {		
+		mav = new ModelAndView();
+		mav=as.noticeList(pageNum);
+		return mav;
+	}
+	
+	/* 검색 시 공지사항 목록 */
+	@RequestMapping (value="/noticeListSearch", method=RequestMethod.GET)
+	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {		
+		mav = new ModelAndView();
+		mav=as.noticeListSearch(pageNum,abc_name,search);
+		return mav;
+	}
+	
+	/* 공지사항 등록 폼 */
+	@RequestMapping (value="/noticeWriteForm", method=RequestMethod.GET)
+	public ModelAndView noticeWriteForm() {
+		mav = new ModelAndView();
+		mav.setViewName("noticeWriteForm");
+		return mav;
+	}
+	
+	/* 공지사항 등록 */
+	@RequestMapping (value="/noticeInsert", method=RequestMethod.GET)
+	public ModelAndView noticeInsert(String abc_no, String abo_title, String abo_ctt) {
+		mav = new ModelAndView();
+		mav=as.noticeInsert(abc_no, abo_title, abo_ctt);
+		return mav;
+	}
+	
+	/* 공지사항 상세 */
+	@RequestMapping (value="/noticeDetail", method=RequestMethod.GET)
+	public ModelAndView noticeDetail(String abo_no) {
+		mav = new ModelAndView();
+		mav=as.noticeDetail(abo_no);
+		return mav;
+	}
+	
+	/* 공지사항 수정 폼 */
+	@RequestMapping (value="/noticeUpdateForm", method=RequestMethod.GET)
+	public ModelAndView noticeUpdateForm(String abo_no) {
+		mav = new ModelAndView();
+		mav=as.noticeUpdateForm(abo_no);
+		return mav;
+	}
+	
+	/* 공지사항 수정 */
+	@RequestMapping (value="/noticeUpdate", method=RequestMethod.GET)
+	public ModelAndView noticeUpdate(AdminBoard abo) {
+		mav = new ModelAndView();
+		mav=as.noticeUpdate(abo);
+		return mav;
+	}
+	
+	/* 공지사항 삭제 */
+	@RequestMapping (value="/noticeDelete", method=RequestMethod.GET)
+	public ModelAndView noticeDelete(String abo_no) {
+		mav = new ModelAndView();
+		mav=as.noticeDelete(abo_no);
+		return mav;
+	}
+	
 }

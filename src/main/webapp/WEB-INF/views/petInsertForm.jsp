@@ -383,7 +383,6 @@
 
 	$("#pty_no").change(function() {
 		var type = this.value;
-		console.log("clickType=" + type);
 		if (type == "etc") {
 			$("#pty_etc").show(); //기타 입력창 보이기
 		} else {
@@ -392,7 +391,6 @@
 	});
 
 	$("#petInsertSubmit").click(function() {
-		console.log(this.value + " 클릭함");
 		var frm = document.petInsertForm;
 		var length = frm.length - 3;
 		for (var i = 0; i < length; i++) {
@@ -439,10 +437,8 @@
 					return false;
 				}
 			} else if (frm[i].name == "pet_wght") {
-				if (frm[i].value == "" || frm[i].value == null) {
+				if (frm[i].value == "" || frm[i].value == null)
 					frm[i].value = "미입력";
-					alert("frm[i].value=" + frm[i].value);
-				}
 			} else if (frm[i].name == "pet_sick") {
 				if (frm[i].value == "" || frm[i].value == null)
 					frm[i].value = "미입력";
