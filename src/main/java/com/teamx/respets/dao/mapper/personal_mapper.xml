@@ -154,4 +154,122 @@
 		SELECT COUNT(*) FROM BK
 		WHERE PER_NO = #{no}
 	</select>
+
+	<!-- 동물 종류 번호 -->
+	<select id="getPetTypeNo" resultType="String"
+		parameterType="String">
+		SELECT PTY_NO FROM PTY WHERE PTY_NAME=#{value}
+	</select>
+	<!-- 동물 종류명 -->
+	<select id="getPetTypeName" resultType="String"
+		parameterType="String">
+		SELECT PTY_NAME FROM PTY WHERE PTY_NO=#{value}
+	</select>
+	<!-- 동물 종류 추가 -->
+	<insert id="petTypeInsert" parameterType="String">
+		INSERT INTO PTY VALUES
+		(PTY_SEQ.NEXTVAL,#{value})
+	</insert>
+
+	<!-- 반려동물 목록 -->
+	<select id="getPetList" resultType="pet" parameterType="String">
+		SELECT *
+		FROM PET WHERE PER_NO=#{value}
+	</select>
+	<!-- 반려동물 전체상세정보 -->
+	<select id="getPetInfoDetail" resultType="pet"
+		parameterType="String">
+		SELECT * FROM PET WHERE PET_NO=#{value}
+	</select>
+	<!-- 반려동물 필수정보 등록 (사진 첨부X) -->
+	<insert id="petInsert" parameterType="pet">
+		INSERT INTO PET
+		VALUES('A'||PET_SEQ.NEXTVAL,#{per_no},#{pty_no},#{pet_vrt},
+		#{pet_name},#{pet_age},#{pet_sex},#{pet_ntr},default,default)
+	</insert>
+	<!-- 반려동물 필수정보 등록 (사진 첨부O) -->
+	<insert id="petAndPhotoInsert" parameterType="pet">
+		INSERT INTO PET
+		VALUES('A'||PET_SEQ.NEXTVAL,#{per_no},#{pty_no},#{pet_vrt},
+		#{pet_name},#{pet_age},#{pet_sex},#{pet_ntr},#{pet_photo},#{pet_loc})
+	</insert>
+	<!-- 반려동물 필수정보 수정 (사진 첨부X) -->
+	<update id="petUpdate" parameterType="pet">
+		UPDATE PET SET
+		PTY_NO=#{pty_no},PET_VRT=#{pet_vrt},PET_NAME=#{pet_name},
+		PET_AGE=#{pet_age},PET_SEX=#{pet_sex},PET_NTR=#{pet_ntr} WHERE
+		PET_NO=#{pet_no}
+	</update>
+	<!-- 반려동물 필수정보 수정 (사진 첨부O) -->
+	<update id="petAndPhotoUpdate" parameterType="pet">
+		UPDATE PET SET
+		PTY_NO=#{pty_no},PET_VRT=#{pet_vrt},PET_NAME=#{pet_name},
+		PET_AGE=#{pet_age},PET_SEX=#{pet_sex},PET_NTR=#{pet_ntr},
+		PET_PHOTO=#{pet_photo},PET_LOC=#{pet_loc} WHERE PET_NO=#{pet_no}
+	</update>
+	<!-- 반려동물 삭제 -->
+	<delete id="petDelete" parameterType="String">
+		DELETE PET WHERE
+		PET_NO=#{value}
+	</delete>
+
+	<!-- 반려동물 선택정보 등록 -->
+	<insert id="pdtInsert" parameterType="pet"
+		useGeneratedKeys="true" keyProperty="pet_no">
+		INSERT INTO PDT VALUES(#{pet_no},#{pcl_no},#{pdt_ctt})
+		<selectKey keyProperty="pet_no" resultType="String"
+			order="BEFORE">
+			SELECT PET_NO FROM PET WHERE PER_NO=#{per_no} and
+			PET_NAME=#{pet_name}
+		</selectKey>
+	</insert>
+	<!-- 반려동물 선택정보 수정 -->
+	<update id="pdtUpdate" parameterType="pet">
+		UPDATE PDT SET
+		PDT_CTT=#{pdt_ctt} WHERE PET_NO=#{pet_no} AND
+		PCL_NO=#{pcl_no}
+	</update>
+	<!-- 반려동물 선택정보 -->
+	<select id="getPdtCtt" resultType="String" parameterType="pet">
+		SELECT
+		PDT_CTT FROM PDT WHERE PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
+	</select>
+	<!-- 반려동물 선택정보 삭제 -->
+	<delete id="pdtDelete" parameterType="pet">
+		DELETE FROM PDT WHERE
+		PET_NO=#{pet_no} AND PCL_NO=#{pcl_no}
+	</delete>
+	<!-- 반려동물 선택정보 전체삭제 -->
+	<delete id="pdtAllDelete" parameterType="String">
+		DELETE FROM PDT WHERE
+		PET_NO=#{value}
+	</delete>
+	<!-- 반려동물 선택정보 목록 -->
+	<select id="getPdt" resultType="HashMap" parameterType="String">
+		SELECT *
+		FROM PDT WHERE PET_NO=#{value}
+	</select>
+	
+	<!-- 개인 캘린더 -->
+	<select id="getPerCalendar" resultType="HashMap"
+		parameterType="String">
+		SELECT PER_NAME, BK_NO, PET_NAME, BUS_NAME, BCT_NAME,
+		EMP_NAME,
+		TO_CHAR(VS_START, 'yyyy-mm-dd hh24:mi') VS_START, BUS_ADDR,
+		BUS_ADDR2,
+		TO_CHAR(VS_END, 'yyyy-mm-dd hh24:mi') VS_END
+		FROM BK JOIN PER
+		ON BK.PER_NO = PER.PER_NO
+		JOIN PET
+		ON BK.PET_NO = PET.PET_NO
+		JOIN BUS
+		ON
+		BK.BUS_NO = BUS.BUS_NO
+		JOIN BCT
+		ON BK.BCT_CODE = BCT.BCT_CODE
+		JOIN EMP
+		ON
+		BK.EMP_NO = EMP.EMP_NO
+		WHERE BK.PER_NO=#{no}
+	</select>
 </mapper>

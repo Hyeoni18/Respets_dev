@@ -14,12 +14,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.teamx.respets.bean.Admin;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.service.PersonalService;
+
 @Controller
 public class PersonalController {
 	ModelAndView mav;
 	@Autowired
 	private PersonalService ps;
-	
+
 	// 개인마이페이지
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public ModelAndView myPage(Admin adm) {
@@ -27,7 +28,7 @@ public class PersonalController {
 		mav.setViewName("dashboard");
 		return mav;
 	}
-	
+
 	// 최근 예약 목록
 	@RequestMapping(value = "/recentMyBookingList", method = RequestMethod.GET)
 	public ModelAndView recentMyBookingList(HttpSession session, Integer pageNum) {
@@ -35,7 +36,7 @@ public class PersonalController {
 		mav = ps.recentMyBookingList(session, pageNum);
 		return mav;
 	}
-	
+
 	// 개인예약디테일
 	@RequestMapping(value = "/myBookingDetail", method = RequestMethod.GET)
 	public ModelAndView recentMyBookingList(HttpServletRequest request) {
@@ -43,7 +44,7 @@ public class PersonalController {
 		mav = ps.myBookingDetail(request);
 		return mav;
 	}
-	
+
 	/* 개인 회원정보 페이지 */
 	@RequestMapping(value = "/myInfo")
 	public ModelAndView myInfo(HttpSession session) {
@@ -117,6 +118,71 @@ public class PersonalController {
 	@RequestMapping(value = "/personalAllBookingList")
 	public ModelAndView personalAllBookingList(HttpSession session, Integer pageNum) {
 		mav = ps.personalAllBookingList(session, pageNum);
+		return mav;
+	}
+
+	/* 나의 반려동물 정보(목록) */
+	@RequestMapping(value = "/petList", method = RequestMethod.GET)
+	public ModelAndView petList(HttpSession session) {
+		mav = new ModelAndView();
+		mav = ps.petList(session);
+		return mav;
+	}
+
+	/* 반려동물 등록 폼 */
+	@RequestMapping(value = "/petInsertForm", method = RequestMethod.GET)
+	public ModelAndView petInsertForm(String per_no) {
+		mav = new ModelAndView();
+		mav.setViewName("petInsertForm");
+		return mav;
+	}
+
+	/* 반려동물 등록 */
+	@RequestMapping(value = "/petInsert", method = RequestMethod.POST)
+	public ModelAndView petInsert(MultipartHttpServletRequest multi) {
+		mav = new ModelAndView();
+		mav = ps.petInsert(multi);
+		return mav;
+	}
+
+	/* 반려동물 상세 정보 */
+	@RequestMapping(value = "/petInfoDetail", method = RequestMethod.GET)
+	public ModelAndView petInfoDetail(String pet_no) {
+		mav = new ModelAndView();
+		mav = ps.petInfoDetail(pet_no);
+		return mav;
+	}
+
+	/* 반려동물 정보 수정 폼 */
+	@RequestMapping(value = "/petInfoUpdateForm", method = RequestMethod.GET)
+	public ModelAndView petInfoUpdateForm(String pet_no) {
+		System.out.println(pet_no);
+		mav = new ModelAndView();
+		mav = ps.petInfoUpdateForm(pet_no);
+		return mav;
+	}
+
+	/* 반려동물 정보 수정 */
+	@RequestMapping(value = "/petInfoUpdate", method = RequestMethod.POST)
+	public ModelAndView petInfoUpdate(MultipartHttpServletRequest multi) {
+		mav = new ModelAndView();
+		mav = ps.petInfoUpdate(multi);
+		return mav;
+	}
+
+	/* 반려동물 삭제 */
+	@RequestMapping(value = "/petDelete", method = RequestMethod.GET)
+	public ModelAndView petDelete(String pet_no) {
+		mav = new ModelAndView();
+		mav = ps.petDelete(pet_no);
+		return mav;
+	}
+	
+	/* 개인 캘린더 */
+	@RequestMapping (value="/personalCalendar", method=RequestMethod.GET)
+	public ModelAndView personalCalendar(HttpSession session) {
+		mav = new ModelAndView();
+		mav=ps.personalCalendar(session);
 		return mav;
 	}
 

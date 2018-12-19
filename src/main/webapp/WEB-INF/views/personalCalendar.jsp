@@ -176,6 +176,10 @@
 	<!-- third party js ends -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	var jsonData = ${e};
+	console.log(jsonData);
+	</script>
 <script>
 ! function (e) {
     "use strict";
@@ -269,7 +273,7 @@
                     new Date(e.now())),
                 a = data,
                 l = this;
-            l.$calendarObj = l.$calendar.fullCalendar({
+           l.$calendarObj = l.$calendar.fullCalendar({
                     slotDuration: "00:15:00",
                     minTime: "08:00:00",
                     maxTime: "19:00:00",

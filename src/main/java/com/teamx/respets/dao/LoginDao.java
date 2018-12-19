@@ -1,9 +1,13 @@
 package com.teamx.respets.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+
+import com.teamx.respets.bean.Personal;
+import com.teamx.respets.bean.RandomTB;
 
 public interface LoginDao {
 	
@@ -40,4 +44,18 @@ public interface LoginDao {
 	//기업 로그인시 기업명 가져오기
 	public String selectBus_name(String no);
 
+	//아이디 찾기
+	public Map<String,Object> selectUser (Map<String,Object> map); 
+	//비밀번호 변경폼 메일 보내기 전 랜덤값 유무 확인
+	public List<Map<String, Object>> searchRND(String userId);
+	//메일보내기 전 랜덤값 존재시 삭제 , 비밀번호 변경 후 랜덤값 삭제
+	public void deleteRcode(String email); 
+	//메일을 보내기 전, 랜덤 테이블에 가지고 온 정보 입력
+	public int findMyPw(RandomTB rtb);	
+	//신원확인을 위한 랜덤값 비교
+	public RandomTB checkRcode(RandomTB rtb); 
+	//개인일 경우 비밀번호 변경
+	public void resetPerPw(Personal ps); 
+	//기업일 경우 비밀번호 변경
+	public void resetBusPw(Personal ps); 
 }

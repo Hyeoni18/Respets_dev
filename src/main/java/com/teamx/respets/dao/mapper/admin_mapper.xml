@@ -9,38 +9,130 @@
 		SELECT * FROM ADM WHERE ADM_NO=#{adm_no} AND
 		ADM_PW=#{adm_pw}
 	</select>
-	
-		<!-- 미인증 기업리스트 -->
+
+	<!-- 미인증 기업리스트 -->
 	<select id="getBusinessList" resultType="HashMap">
 		SELECT BUS.BUS_NO,
 		BCT.BCT_NAME, SVC.BCT_CODE, BUS.BUS_EMAIL,
-		BUS.BUS_NAME, BUS.BUS_CEO, BUS.BUS_LCNO, BUS.BUS_PHONE,
-		BUS.BUS_ADDR, BUS.BUS_ADDR2, TO_CHAR(BUS.BUS_TIME, 'YYYY-MM-DD HH24:MI') AS BUS_TIME, SVC.SVC_PRI
+		BUS.BUS_NAME, BUS.BUS_CEO,
+		BUS.BUS_LCNO, BUS.BUS_PHONE,
+		BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		TO_CHAR(BUS.BUS_TIME, 'YYYY-MM-DD HH24:MI') AS BUS_TIME, SVC.SVC_PRI
 		FROM BUS INNER JOIN SVC
 		ON SVC.BUS_NO = BUS.BUS_NO
 		INNER JOIN BCT
-		ON SVC.BCT_CODE = BCT.BCT_CODE WHERE BUS.BUS_CHK = 'X' AND SVC.SVC_PRI=1
+		ON
+		SVC.BCT_CODE = BCT.BCT_CODE WHERE BUS.BUS_CHK = 'X' AND SVC.SVC_PRI=1
 		ORDER BY BUS_TIME ASC
 	</select>
 
 	<!-- 미인증 기업리스트 정보 가져오기 -->
 	<select id="getBusinessInfo" parameterType="HashMap"
 		resultType="HashMap">
-		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_ADDR, BUS.BUS_ADDR2,
-		BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE, GLR.GLR_LOC, BUS.BUS_LCNO, BUS.BUS_CEO
+		SELECT BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_PHONE,
+		BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		BUS.BUS_EMAIL, GLR.GCT_NO, GLR.GLR_FILE,
+		GLR.GLR_LOC, BUS.BUS_LCNO, BUS.BUS_CEO
 		FROM BUS INNER JOIN SVC
-		ON SVC.BUS_NO = BUS.BUS_NO
+		ON
+		SVC.BUS_NO = BUS.BUS_NO
 		INNER JOIN BCT
 		ON SVC.BCT_CODE = BCT.BCT_CODE
 		INNER JOIN GLR
 		ON GLR.BUS_NO = BUS.BUS_NO
-		WHERE BUS.BUS_NO=#{bus_no} AND SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
+		WHERE BUS.BUS_NO=#{bus_no} AND
+		SVC.BCT_CODE=#{bct_code} AND GLR.GCT_NO=1
 	</select>
-	
+
 	<!-- 기업인증 -->
 	<update id="confirmLicense" parameterType="String">
 		UPDATE BUS SET
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
+
+	<!-- 공지사항 목록 -->
+	<select id="getNoticeList" resultType="abo"
+		parameterType="Integer">
+		<![CDATA[
+		SELECT * FROM ABOLIST_PAGING WHERE RONUM>=#{pageNum}*10-9
+		AND RONUM<=#{pageNum}*10
+		]]>
+	</select>
 	
+	<!-- 공지사항 개수 -->
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*) FROM
+		ABOLIST_PAGING
+	</select>
+	<select id="getBoardCountAllSearch" parameterType="abo"
+		resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE
+		ABO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	<select id="getBoardCountCategoriSearch" parameterType="abo"
+		resultType="int">
+		SELECT COUNT(*) AS MAXNUM FROM ABOLIST_PAGING WHERE
+		ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'
+	</select>
+	
+	<!-- 공지사항 검색 목록 (입력내용없이 검색 시) -->
+	<select id="getNoticeListAllSearch" parameterType="abo"
+		resultType="abo">
+		<![CDATA[
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				WHERE ABO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
+		]]>
+	</select>
+	
+	<!-- 공지사항 검색 목록 -->
+	<select id="getNoticeListCategoriSearch" parameterType="abo"
+		resultType="abo">
+		<![CDATA[
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				WHERE ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
+		]]>
+	</select>
+	
+	<!-- 공지사항 상세정보 -->
+	<select id="getBoardDetail" resultType="abo"
+		parameterType="String">
+		SELECT * FROM ABO WHERE ABO_NO=#{value}
+	</select>
+	
+	<!-- 공지사항 등록 -->
+	<insert id="boardInsert" parameterType="abo">
+		INSERT INTO ABO
+		VALUES(ABO_SEQ.NEXTVAL,#{abc_no},#{abo_title},#{abo_ctt},default)
+	</insert>
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="boardDelete" parameterType="String">
+		DELETE FROM ABO WHERE
+		ABO_NO=#{value}
+	</delete>
+	
+	<!-- 공지사항 수정 -->
+	<update id="boardUpdate" parameterType="abo">
+		UPDATE ABO SET
+		ABC_NO=#{abc_no},ABO_TITLE=#{abo_title},ABO_CTT=#{abo_ctt}
+		WHERE
+		ABO_NO=#{abo_no}
+	</update>
+
 </mapper>
