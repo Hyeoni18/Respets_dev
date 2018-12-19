@@ -175,4 +175,12 @@ public class AjaxController {
 		String text = bs.searchPrice(request, session);
 		return text;
 	}
+	
+	/* 기업 상세 페이지 '즐겨찾기' 클릭 */
+	@RequestMapping(value = "/favoriteChange", method=RequestMethod.POST)
+	@ResponseBody public int favoriteChange(HttpServletRequest request) {
+		System.out.println("Controller favoriteChange");
+		int data = bs.favoriteChange(request);
+		return data;
+	}
 }

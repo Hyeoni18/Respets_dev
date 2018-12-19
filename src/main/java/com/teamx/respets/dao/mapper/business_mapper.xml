@@ -35,21 +35,27 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 	</select>
 	<select id="recentMyBookingListCount" parameterType="String"
 		resultType="int">
-		SELECT COUNT(*) FROM RECENTMYBOOKINGLIST_VIEW WHERE PER_NO=#{no}
+		SELECT COUNT(*) FROM RECENTMYBOOKINGLIST_VIEW WHERE
+		PER_NO=#{no}
 	</select>
 	<!-- 기업공지사항 디테일 -->
 	<select id="noticeDetailPage" parameterType="HashMap"
 		resultMap="noticeDetail">
-		SELECT BBO.BUS_NO, BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME, BBO.BBO_TITLE,
-		BBO.BBO_CTT, TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd hh24:mi') AS BBO_DATE
-		FROM BBO INNER JOIN BCT ON BCT.BCT_CODE = BBO.BCT_CODE INNER JOIN BBC
+		SELECT BBO.BUS_NO, BBO.BBO_NO, BCT.BCT_NAME, BBC.BBC_NAME,
+		BBO.BBO_TITLE,
+		BBO.BBO_CTT, TO_CHAR(BBO.BBO_DATE, 'yyyy-mm-dd hh24:mi')
+		AS BBO_DATE
+		FROM BBO INNER JOIN BCT ON BCT.BCT_CODE = BBO.BCT_CODE
+		INNER JOIN BBC
 		ON BBC.BBC_NO = BBO.BBC_NO WHERE BBO.BBO_NO=#{bbo_no}
 	</select>
 	<!-- 기업공지사항 검색 카운트 -->
 	<select id="getSearchBusinessAllNoticeCount"
 		parameterType="HashMap" resultType="int">
-		SELECT COUNT(*) AS MAXNUM FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND
-		BBO_TITLE LIKE '%'||#{search}||'%'
+		SELECT COUNT(*) AS MAXNUM FROM
+		BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND
+		BBO_TITLE LIKE
+		'%'||#{search}||'%'
 	</select>
 	<!-- 기업 공지사항 검색 페이징 -->
 	<select id="searchBusinessAllNotice" parameterType="HashMap"
@@ -61,8 +67,10 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 	<!-- 기업공지사항 검색 카운트 -->
 	<select id="getSearchBusinessNoticeCount"
 		parameterType="HashMap" resultType="int">
-		SELECT COUNT(*) AS MAXNUM FROM BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND
-		BBC_NAME=#{select} AND BBO_TITLE LIKE '%'||#{search}||'%'
+		SELECT COUNT(*) AS MAXNUM FROM
+		BUS_NOTICE_VIEW WHERE BUS_NO=#{no} AND
+		BBC_NAME=#{select} AND BBO_TITLE
+		LIKE '%'||#{search}||'%'
 	</select>
 	<!-- 기업 공지사항 검색 페이징 -->
 	<select id="searchBusinessNotice" parameterType="HashMap"
@@ -73,25 +81,32 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 	</select>
 	<!-- 기업공지사항등록 -->
 	<insert id="businessNoticeInsert" parameterType="HashMap">
-		INSERT INTO BBO VALUES(BBO_SEQ.NEXTVAL, #{no}, #{bct_code}, #{bbc_no},
-		#{bbo_title}, #{bbo_ctt}, SYSDATE)
+		INSERT INTO BBO
+		VALUES(BBO_SEQ.NEXTVAL, #{no}, #{bct_code}, #{bbc_no},
+		#{bbo_title},
+		#{bbo_ctt}, SYSDATE)
 	</insert>
 	<!-- 기업 공지사항 수정폼 정보 가져오기 -->
 	<select id="businessNoticeUpdateForm" parameterType="String"
 		resultMap="noticeDetailUpdate"> SELECT * FROM BBO WHERE BBO_NO=#{no} </select>
 	<!-- 기업공지사항수정 -->
 	<update id="businessNoticeUpdate" parameterType="HashMap">
-		UPDATE BBO SET BCT_CODE=#{bct_code}, BBC_NO=#{bbc_no},
-		BBO_TITLE=#{bbo_title}, BBO_CTT=#{bbo_ctt} WHERE BBO_NO=#{bbo_no}
+		UPDATE BBO SET
+		BCT_CODE=#{bct_code}, BBC_NO=#{bbc_no},
+		BBO_TITLE=#{bbo_title},
+		BBO_CTT=#{bbo_ctt} WHERE BBO_NO=#{bbo_no}
 	</update>
 	<!-- 기업공지사항 삭제 -->
 	<delete id="businessNoticeDelete" parameterType="Integer"> DELETE FROM BBO
-		WHERE BBO_NO=#{bbo_no} </delete>
+		WHERE BBO_NO=#{bbo_no}
+	</delete>
 	<!-- 업종 종류 불러오기(전체예약페이지) -->
 	<select id="getSvcPri" resultType="Hashmap"
 		parameterType="String">
-		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM BCT INNER JOIN SVC ON
-		BCT.BCT_CODE = SVC.BCT_CODE WHERE BUS_NO = #{no} ORDER BY SVC_PRI
+		SELECT BCT.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM BCT
+		INNER JOIN SVC ON
+		BCT.BCT_CODE = SVC.BCT_CODE WHERE BUS_NO = #{no}
+		ORDER BY SVC_PRI
 	</select>
 	<!-- 예약 상세피이지 -->
 	<select id="getBk_chk" resultType="String"
@@ -99,50 +114,72 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 	<!-- 예약 리스트 가져오기 -->
 	<select id="myBookingDetail" resultType="Hashmap"
 		parameterType="String">
-		SELECT BK.BK_NO, BK.VS_CHK, BUS.BUS_NAME, BUS.BUS_PHONE, BUS.BUS_POST,
-		BUS.BUS_ADDR, BUS.BUS_ADDR2, TO_CHAR(BK.VS_START, 'YYYY-MM-DD
-		HH24:MI') AS VS_START, EMP.EMP_NAME, PET.PET_NAME, PTY.PTY_NAME,
-		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT, PET.PET_NO FROM BUS INNER JOIN
-		BK ON BUS.BUS_NO = BK.BUS_NO INNER JOIN EMP ON EMP.EMP_NO = BK.EMP_NO
-		INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PET ON BK.PET_NO =
-		PET.PET_NO INNER JOIN PTY ON PTY.PTY_NO = PET.PTY_NO WHERE BK.BK_NO =
+		SELECT BK.BK_NO, BK.VS_CHK, BUS.BUS_NAME, BUS.BUS_PHONE,
+		BUS.BUS_POST,
+		BUS.BUS_ADDR, BUS.BUS_ADDR2, TO_CHAR(BK.VS_START,
+		'YYYY-MM-DD
+		HH24:MI') AS VS_START, EMP.EMP_NAME, PET.PET_NAME,
+		PTY.PTY_NAME,
+		PER.PER_NAME, PER.PER_PHONE, BK.BK_CMT, PET.PET_NO FROM
+		BUS INNER JOIN
+		BK ON BUS.BUS_NO = BK.BUS_NO INNER JOIN EMP ON
+		EMP.EMP_NO = BK.EMP_NO
+		INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER
+		JOIN PET ON BK.PET_NO =
+		PET.PET_NO INNER JOIN PTY ON PTY.PTY_NO =
+		PET.PTY_NO WHERE BK.BK_NO =
 		#{bk_no}
 	</select>
 	<!-- 서비스 메뉴 불러오기 -->
 	<select id="getMenu" parameterType="String" resultType="HashMap">
-		SELECT MENU.MENU_NAME FROM MENU INNER JOIN BKM ON MENU.MENU_NO = BKM.MENU_NO
+		SELECT
+		MENU.MENU_NAME FROM MENU INNER JOIN BKM ON MENU.MENU_NO = BKM.MENU_NO
 		INNER JOIN BK ON BKM.BK_NO = BK.BK_NO WHERE BK.BK_NO = #{bk_no}
 	</select>
 	<!-- 펫 디테일 리스트 -->
 	<select id="getPetList" parameterType="String"
 		resultType="HashMap">
-		SELECT PCL.PCL_NAME, PDT.PDT_CTT FROM PCL INNER JOIN PDT ON PCL.PCL_NO =
+		SELECT PCL.PCL_NAME, PDT.PDT_CTT FROM PCL INNER JOIN PDT ON
+		PCL.PCL_NO =
 		PDT.PCL_NO WHERE PDT.PET_NO = #{pet_no}
 	</select>
 	<!-- 오늘 예약 방문 확인 ajax -->
 	<update id="todayScheduleListCheck" parameterType="String">
-		UPDATE BK SET VS_CHK = 'O' WHERE BK_NO = #{bk_no}
+		UPDATE BK SET
+		VS_CHK = 'O' WHERE BK_NO = #{bk_no}
 	</update>
 	<!-- 오늘 예약 일정 전체 ajax -->
 	<select id="todayScheduleList" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi') AS
-		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi') AS VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON
-		BK.PET_NO = PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER
-		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE =
-		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND VS_START LIKE
+		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
+		'yyyy-mm-dd hh24:mi') AS
+		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi') AS VS_START,
+		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME
+		FROM BK INNER JOIN BUS ON BK.BUS_NO =
+		BUS.BUS_NO INNER JOIN PET ON
+		BK.PET_NO = PET.PET_NO INNER JOIN PER ON
+		BK.PER_NO = PER.PER_NO INNER
+		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
+		JOIN BCT ON BK.BCT_CODE =
+		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
+		VS_START LIKE
 		TO_DATE(#{timeS}, 'yy/MM/dd') AND BK.VS_CHK = 'X'
 	</select>
 	<!-- 서비스 종류 불러오기(서비스페이지) -->
 	<select id="serviceManagement" resultType="Hashmap"
 		parameterType="String">
-		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_CODE, BCT.BCT_NAME, BUS.BUS_NAME,
-		GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC FROM SVC INNER JOIN BCT ON
-		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS ON SVC.BUS_NO = BUS.BUS_NO
-		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO INNER JOIN GCT ON GCT.GCT_NO
-		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND GLR.GCT_NO = 2 ORDER BY
+		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_CODE,
+		BCT.BCT_NAME, BUS.BUS_NAME,
+		GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC
+		FROM SVC INNER JOIN BCT ON
+		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS
+		ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO
+		INNER JOIN GCT ON GCT.GCT_NO
+		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND
+		GLR.GCT_NO = 2 ORDER BY
 		SVC.SVC_PRI
 	</select>
 	<!-- 기업 전체예약 리스트 ajax -->
@@ -155,41 +192,59 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 기업 정보 페이지 -->
 	<select id="businessInfo" resultType="HashMap"
 		parameterType="String">
-		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME, BUS.BUS_NAME, BUS.BUS_LCNO,
-		BUS.BUS_CEO, BUS.BUS_PHONE, BUS.BUS_POST, BUS.BUS_ADDR, BUS.BUS_ADDR2,
-		GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC FROM SVC INNER JOIN BCT ON
-		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS ON SVC.BUS_NO = BUS.BUS_NO
-		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO INNER JOIN GCT ON GCT.GCT_NO
-		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND GLR.GCT_NO = 2 AND
+		SELECT SVC.BUS_NO, SVC.SVC_PRI, BCT.BCT_NAME,
+		BUS.BUS_NAME, BUS.BUS_LCNO,
+		BUS.BUS_CEO, BUS.BUS_PHONE, BUS.BUS_POST,
+		BUS.BUS_ADDR, BUS.BUS_ADDR2,
+		GCT.GCT_NAME, GLR.GLR_FILE, GLR.GLR_LOC
+		FROM SVC INNER JOIN BCT ON
+		SVC.BCT_CODE = BCT.BCT_CODE INNER JOIN BUS
+		ON SVC.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR ON GLR.BUS_NO = BUS.BUS_NO
+		INNER JOIN GCT ON GCT.GCT_NO
+		= GLR.GCT_NO WHERE BUS.BUS_NO = #{no} AND
+		GLR.GCT_NO = 2 AND
 		SVC.SVC_PRI = 1
 	</select>
 	<!-- 기업 회원탈퇴 -->
 	<update id="businessPartDelete" parameterType="String">
-		UPDATE BUS SET BUS_LEAVE = 'O', BUS_LTIME = SYSDATE WHERE BUS_NO = #{no}
+		UPDATE BUS SET
+		BUS_LEAVE = 'O', BUS_LTIME = SYSDATE WHERE BUS_NO = #{no}
 	</update>
 	<!-- 전체예약 페이징 ajax -->
 	<select id="getListCount" resultType="int"> SELECT COUNT(*) FROM BK
-		WHERE BUS_NO = #{no} </select>
+		WHERE BUS_NO = #{no}
+	</select>
 	<!-- 기업정보 수정 -->
 	<update id="businessInfoUpdate" parameterType="Business">
-		UPDATE BUS SET BUS_PHONE = #{bus_phone}, BUS_POST = #{bus_post}, BUS_ADDR =
+		UPDATE BUS SET
+		BUS_PHONE = #{bus_phone}, BUS_POST = #{bus_post}, BUS_ADDR =
 		#{bus_addr}, BUS_ADDR2 = #{bus_addr2} WHERE BUS_NO = #{bus_no}
 	</update>
 	<!-- 기업정보 사진 수정 -->
 	<update id="mainPhotoUpdate" parameterType="Gallery">
-		UPDATE GLR SET GLR_FILE = #{glr_file}, GLR_LOC = #{glr_loc} WHERE BUS_NO =
-		#{bus_no} AND GCT_NO = 2
+		UPDATE GLR SET
+		GLR_FILE = #{glr_file}, GLR_LOC = #{glr_loc} WHERE BUS_NO =
+		#{bus_no}
+		AND GCT_NO = 2
 	</update>
 	<!-- 서비스별 전체예약 리스트 ajax -->
 	<select id="bctBookingList" resultType="HashMap"
 		parameterType="HashMap">
-		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
-		hh24:mi')AS VS_START, PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
-		PER.PER_NAME, BCT.BCT_NAME FROM BK INNER JOIN BUS ON BK.BUS_NO =
-		BUS.BUS_NO INNER JOIN PET ON BK.PET_NO = PET.PET_NO INNER JOIN PER ON
-		BK.PER_NO = PER.PER_NO INNER JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
-		JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
-		BCT.BCT_NAME = #{bct_name} AND BK.VS_START LIKE TO_DATE(#{timeS},
+		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME,
+		TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi')AS VS_START, PET.PET_NAME,
+		PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME FROM BK INNER JOIN
+		BUS ON BK.BUS_NO =
+		BUS.BUS_NO INNER JOIN PET ON BK.PET_NO = PET.PET_NO
+		INNER JOIN PER ON
+		BK.PER_NO = PER.PER_NO INNER JOIN PTY ON PET.PTY_NO =
+		PTY.PTY_NO INNER
+		JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BK.BUS_NO
+		= #{no} AND
+		BCT.BCT_NAME = #{bct_name} AND BK.VS_START LIKE
+		TO_DATE(#{timeS},
 		'yy/MM/dd') AND BK.VS_CHK = 'X'
 	</select>
 	<!-- 서비스별 전체 예약 리스트 ajax -->
@@ -216,9 +271,12 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 방문완료 예약리스트 ajax -->
 	<select id="vs_chkOkList" parameterType="HashMap"
 		resultType="HashMap">
-		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START, PET.PET_NAME,
-		PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME FROM BK INNER
-		JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON BK.PET_NO =
+		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, BK.VS_START,
+		PET.PET_NAME,
+		PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME FROM
+		BK INNER
+		JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON BK.PET_NO
+		=
 		PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN PTY ON
 		PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE
 		WHERE BK.BUS_NO = #{bus_no} AND BK.VS_START = TO_DATE(#{timeS},
@@ -227,46 +285,66 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 오늘 방문 확인된 예약 리스트 ajax -->
 	<select id="todayScheduleListOk" resultType="Hashmap"
 		parameterType="Hashmap">
-		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME, 'yyyy-mm-dd hh24:mi') AS
-		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd hh24:mi')AS VS_START,
-		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO, PER.PER_NAME, BCT.BCT_NAME
-		FROM BK INNER JOIN BUS ON BK.BUS_NO = BUS.BUS_NO INNER JOIN PET ON
-		BK.PET_NO = PET.PET_NO INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER
-		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER JOIN BCT ON BK.BCT_CODE =
-		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND BK.VS_START LIKE
+		SELECT BK.BUS_NO, BK.BK_NO, TO_CHAR(BK.BK_TIME,
+		'yyyy-mm-dd hh24:mi') AS
+		BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi')AS VS_START,
+		PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME
+		FROM BK INNER JOIN BUS ON BK.BUS_NO =
+		BUS.BUS_NO INNER JOIN PET ON
+		BK.PET_NO = PET.PET_NO INNER JOIN PER ON
+		BK.PER_NO = PER.PER_NO INNER
+		JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
+		JOIN BCT ON BK.BCT_CODE =
+		BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
+		BK.VS_START LIKE
 		TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK = 'O'
 	</select>
 	<!-- 오늘 예약 방문취소 ajax -->
 	<update id="todayScheduleListCancel" parameterType="String">
-		UPDATE BK SET VS_CHK = 'X' WHERE BK_NO = #{bk_no}
+		UPDATE BK SET
+		VS_CHK = 'X' WHERE BK_NO = #{bk_no}
 	</update>
 	<!-- 서비스별 방문확인 된 전체예약 리스트 ajax -->
 	<select id="bctBookingListOk" resultType="HashMap"
 		parameterType="HashMap">
-		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME, TO_CHAR(BK.VS_START, 'yyyy-mm-dd
-		hh24:mi')AS VS_START, PET.PET_NAME, PTY.PTY_NAME, PER.PER_NO,
-		PER.PER_NAME, BCT.BCT_NAME FROM BK INNER JOIN BUS ON BK.BUS_NO =
-		BUS.BUS_NO INNER JOIN PET ON BK.PET_NO = PET.PET_NO INNER JOIN PER ON
-		BK.PER_NO = PER.PER_NO INNER JOIN PTY ON PET.PTY_NO = PTY.PTY_NO INNER
-		JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BK.BUS_NO = #{no} AND
-		BCT.BCT_NAME = #{bct_name} AND BK.VS_START LIKE TO_DATE(#{timeS},
+		SELECT BK.BUS_NO, BK.BK_NO, BK.BK_TIME,
+		TO_CHAR(BK.VS_START, 'yyyy-mm-dd
+		hh24:mi')AS VS_START, PET.PET_NAME,
+		PTY.PTY_NAME, PER.PER_NO,
+		PER.PER_NAME, BCT.BCT_NAME FROM BK INNER JOIN
+		BUS ON BK.BUS_NO =
+		BUS.BUS_NO INNER JOIN PET ON BK.PET_NO = PET.PET_NO
+		INNER JOIN PER ON
+		BK.PER_NO = PER.PER_NO INNER JOIN PTY ON PET.PTY_NO =
+		PTY.PTY_NO INNER
+		JOIN BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BK.BUS_NO
+		= #{no} AND
+		BCT.BCT_NAME = #{bct_name} AND BK.VS_START LIKE
+		TO_DATE(#{timeS},
 		'yy/MM/dd') AND BK.VS_CHK = 'O'
 	</select>
 	<!-- 전체 예약에서의 검색 페이징 ajax -->
 	<select id="searchAllListPaging" resultType="int">
-		SELECT COUNT(*) FROM BK JOIN PER ON BK.PER_NO = PER.PER_NO WHERE BUS_NO =
-		#{no} AND PER_NAME = #{per_name}
+		SELECT COUNT(*) FROM
+		BK JOIN PER ON BK.PER_NO = PER.PER_NO WHERE BUS_NO =
+		#{no} AND PER_NAME
+		= #{per_name}
 	</select>
 	<!-- 서비스별 예약에서의 검색 페이징 ajax -->
 	<select id="searchBctAllsListPaging" resultType="int">
-		SELECT COUNT(*) FROM BK INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN
-		BCT ON BK.BCT_CODE = BCT.BCT_CODE WHERE BUS_NO = #{no} AND PER_NAME =
+		SELECT COUNT(*)
+		FROM BK INNER JOIN PER ON BK.PER_NO = PER.PER_NO INNER JOIN
+		BCT ON
+		BK.BCT_CODE = BCT.BCT_CODE WHERE BUS_NO = #{no} AND PER_NAME =
 		#{per_name} AND BCT_NAME = #{bct_name}
 	</select>
 	<!-- 기업이 가지고 있는 업종 검색; -->
 	<select id="serviceInsertForm" resultType="hashmap"
 		parameterType="String">
-		SELECT * FROM BUS B JOIN SVC S ON B.BUS_NO = S.BUS_NO WHERE
+		SELECT * FROM BUS B JOIN SVC S ON B.BUS_NO = S.BUS_NO
+		WHERE
 		B.BUS_NO=#{bus_no}
 	</select>
 	<!-- 해당 업종의 메뉴를 검색; -->
@@ -277,17 +355,21 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		resultType="hashmap"> SELECT * FROM BUS WHERE BUS_NO=#{bus_no} </select>
 	<!-- 기업의 갤러리 사진 등록; -->
 	<insert id="insertFile" parameterType="hashmap">
-		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, ${number}, #{file}, #{path})
+		INSERT INTO GLR
+		VALUES(#{bus_no}, #{bct_code}, ${number}, #{file}, #{path})
 	</insert>
 	<!-- 기업의 고정스케줄 등록; -->
 	<insert id="serviceInsertBFX" parameterType="hashmap">
-		INSERT INTO BFX VALUES(#{bus_no}, #{bct_code}, #{bfx_mon}, #{bfx_tue},
-		#{bfx_wed}, #{bfx_thu}, #{bfx_fri}, #{bfx_sat}, #{bfx_sun},
+		INSERT INTO BFX
+		VALUES(#{bus_no}, #{bct_code}, #{bfx_mon}, #{bfx_tue},
+		#{bfx_wed},
+		#{bfx_thu}, #{bfx_fri}, #{bfx_sat}, #{bfx_sun},
 		#{bfx_hld}, #{bfx_lch})
 	</insert>
 	<!-- 기업의 한달스케줄 등록; -->
 	<insert id="serviceInsertBSD" parameterType="hashmap">
-		INSERT INTO BSD VALUES(#{bus_no}, #{bct_code}, TO_DATE(#{date},'YYYYMMDD'),
+		INSERT INTO BSD
+		VALUES(#{bus_no}, #{bct_code}, TO_DATE(#{date},'YYYYMMDD'),
 		#{am_open}, #{am_close}, #{pm_open}, #{pm_close})
 	</insert>
 	<!-- 서비스가 테이블에 존재하는지 검색; 한다면 tag_no 반환 -->
@@ -295,11 +377,13 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		resultType="String"> SELECT TAG_NO FROM TAG WHERE TAG_NAME=#{tag} </select>
 	<!-- 서비스를 태그테이블에 등록; -->
 	<insert id="insertTAG" parameterType="String">
-		INSERT INTO TAG VALUES('T'||TAG_SEQ.nextval, #{tag})
+		INSERT INTO TAG
+		VALUES('T'||TAG_SEQ.nextval, #{tag})
 	</insert>
 	<!-- 기업이 제공하는 서비스들을 해시태그 테이블에 등록; -->
 	<insert id="insertBTG" parameterType="hashmap">
-		INSERT INTO BTG VALUES(#{bus_no}, #{bct_code}, #{tag_num})
+		INSERT INTO BTG
+		VALUES(#{bus_no}, #{bct_code}, #{tag_num})
 	</insert>
 	<!-- 동물의 코드를 검색; -->
 	<select id="selectAnimalCode" parameterType="String"
@@ -307,19 +391,23 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 서비스 코드를 검색; -->
 	<select id="selectMenuNo" parameterType="hashmap"
 		resultType="String">
-		SELECT MENU_NO FROM MENU WHERE MENU_NAME=#{tag} AND BCT_CODE=#{bct_code}
+		SELECT MENU_NO FROM MENU WHERE MENU_NAME=#{tag} AND
+		BCT_CODE=#{bct_code}
 	</select>
 	<!-- 해당 서비스의 가격을 등록; -->
 	<insert id="insertPrice" parameterType="hashmap">
-		INSERT INTO PRC VALUES(#{bus_no}, #{bct_code}, ${tag}, ${pet}, ${price})
+		INSERT INTO PRC
+		VALUES(#{bus_no}, #{bct_code}, ${tag}, ${pet}, ${price})
 	</insert>
 	<!-- 기업의 업종 순서 검색; -->
 	<select id="countSVC" parameterType="String" resultType="String">
-		SELECT COUNT(*) AS COUNT FROM SVC WHERE BUS_NO=#{bus_no}
+		SELECT
+		COUNT(*) AS COUNT FROM SVC WHERE BUS_NO=#{bus_no}
 	</select>
 	<!-- 기업이 제공하는 업종 추가 등록; -->
 	<insert id="addBusinessCode" parameterType="hashmap">
-		INSERT INTO SVC VALUES(#{bus_no}, #{bct_code}, ${cnt})
+		INSERT INTO SVC
+		VALUES(#{bus_no}, #{bct_code}, ${cnt})
 	</insert>
 	<!-- 업종이름을 코드로 변경; -->
 	<select id="searchBCT" parameterType="String"
@@ -334,15 +422,19 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 기업의 하루 스케줄 검색; -->
 	<select id="searchBSD" parameterType="hashmap"
 		resultType="hashmap">
-		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM BSD WHERE BUS_NO=#{bus_no}
+		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM BSD WHERE
+		BUS_NO=#{bus_no}
 		AND BCT_CODE=#{bct_code} AND ROWNUM=1
 	</select>
 	<!-- 기업의 고정 스케줄 검색; -->
 	<select id="searchBFX" parameterType="hashmap"
 		resultType="hashmap">
-		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as "수요일", BFX_THU as
-		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as "일요일", BFX_HLD
-		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as
+		"수요일", BFX_THU as
+		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as
+		"일요일", BFX_HLD
+		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
 	</select>
 	<!-- 기업의 제공 서비스를 검색; 해당 메뉴의 번호를 반환 -->
 	<select id="selectMenuTag" parameterType="hashmap"
@@ -369,66 +461,82 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<select id="animalSelect" resultType="hashmap"> SELECT * FROM PTY </select>
 	<!-- 기업의 기본정보 수정; -->
 	<update id="updateServiceBUS" parameterType="hashmap">
-		UPDATE BUS SET BUS_NAME=#{name}, BUS_PHONE=#{phone} WHERE BUS_NO=#{bus_no}
+		UPDATE BUS SET
+		BUS_NAME=#{name}, BUS_PHONE=#{phone} WHERE BUS_NO=#{bus_no}
 	</update>
 	<!-- 기업의 하루 스케줄 수정; -->
 	<update id="updateServiceBSD" parameterType="hashmap">
-		UPDATE BSD SET AM_OPEN=#{am_open}, AM_CLOSE=#{lunch_open},
-		PM_OPEN=#{lunch_close}, PM_CLOSE=#{pm_close} WHERE BUS_NO=#{bus_no}
+		UPDATE BSD SET
+		AM_OPEN=#{am_open}, AM_CLOSE=#{lunch_open},
+		PM_OPEN=#{lunch_close},
+		PM_CLOSE=#{pm_close} WHERE BUS_NO=#{bus_no}
 		AND BCT_CODE=#{bct_code}
 	</update>
 	<!-- 기업의 고정 스케줄 수정; -->
 	<update id="updateServiceBFX" parameterType="hashmap">
-		UPDATE BFX SET BFX_MON=#{bfx_mon}, BFX_TUE=#{bfx_tue}, BFX_WED=#{bfx_wed},
+		UPDATE BFX SET
+		BFX_MON=#{bfx_mon}, BFX_TUE=#{bfx_tue}, BFX_WED=#{bfx_wed},
 		BFX_THU=#{bfx_thu} , BFX_FRI=#{bfx_fri}, BFX_SAT=#{bfx_sat},
 		BFX_SUN=#{bfx_sun}, BFX_HLD=#{bfx_hld}, BFX_LCH=#{bfx_lch} WHERE
 		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</update>
 	<!-- 해당 기업-업종의 서비스 가격 삭제; -->
 	<delete id="deletePRC" parameterType="hashmap">
-		DELETE FROM PRC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM PRC WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 해당 기업-업종의 해시태그 테이블 삭제; -->
 	<delete id="deleteBTG" parameterType="hashmap">
-		DELETE FROM BTG WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM BTG WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 업종 삭제 전 주업종인지 확인; -->
 	<select id="searchSVC" parameterType="hashmap"
 		resultType="String">
-		SELECT SVC_PRI FROM SVC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		SELECT SVC_PRI FROM SVC WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
 	</select>
 	<!-- 해당 기업-업종의 직원 검색; -->
 	<select id="selectEMP" parameterType="hashmap"
 		resultType="hashmap">
-		SELECT * FROM EMP WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		SELECT * FROM EMP WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
 	</select>
 	<!-- 해당 직원이 담당했던 예약 삭제; -->
 	<delete id="deleteBK" parameterType="String"> DELETE FROM BK WHERE
-		EMP_NO=#{emp_no} </delete>
+		EMP_NO=#{emp_no}
+	</delete>
 	<!-- 해당 직원의 하루 스케줄 삭제; -->
 	<delete id="deleteESD" parameterType="String"> DELETE FROM ESD WHERE
-		EMP_NO=#{emp_no} </delete>
+		EMP_NO=#{emp_no}
+	</delete>
 	<!-- 해당 직원의 고정 스케줄 삭제; -->
 	<delete id="deleteEFX" parameterType="String"> DELETE FROM EFX WHERE
-		EMP_NO=#{emp_no} </delete>
+		EMP_NO=#{emp_no}
+	</delete>
 	<!-- 해당 직원의 상세 정보 삭제; -->
 	<delete id="deleteEMP" parameterType="String"> DELETE FROM EMP WHERE
-		EMP_NO=#{emp_no} </delete>
+		EMP_NO=#{emp_no}
+	</delete>
 	<!-- 해당 기업-업종의 하루 스케줄 삭제; -->
 	<delete id="deleteBSD" parameterType="hashmap">
-		DELETE FROM BSD WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM BSD WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 해당 기업-업종의 고정 스케줄 삭제; -->
 	<delete id="deleteBFX" parameterType="hashmap">
-		DELETE FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM BFX WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 해당 기업-업종의 사진 테이블 삭제; -->
 	<delete id="deleteGLR" parameterType="hashmap">
-		DELETE FROM GLR WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM GLR WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 해당 기업-업종의 정보 삭제; -->
 	<delete id="deleteSVC" parameterType="hashmap">
-		DELETE FROM SVC WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		DELETE FROM SVC WHERE
+		BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
 	</delete>
 	<!-- 기업이 가진 업종 검색; -->
 	<select id="selectSVC" parameterType="String"
@@ -443,13 +551,16 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	</insert>
 	<!-- 직원 고정스케줄 등록 -->
 	<insert id="empInsertEFX" parameterType="hashmap">
-		INSERT INTO EFX VALUES(#{emp_no}, #{efx_mon}, #{efx_tue}, #{efx_wed},
-		#{efx_thu}, #{efx_fri}, #{efx_sat}, #{efx_sun}, #{efx_hld},
+		INSERT INTO EFX
+		VALUES(#{emp_no}, #{efx_mon}, #{efx_tue}, #{efx_wed},
+		#{efx_thu},
+		#{efx_fri}, #{efx_sat}, #{efx_sun}, #{efx_hld},
 		#{efx_lch})
 	</insert>
 	<!-- 직원 하루스케줄 등록 -->
 	<insert id="empInsertESD" parameterType="hashmap">
-		INSERT INTO ESD VALUES(#{emp_no}, TO_DATE(#{date}, 'YYYYMMDD'), #{am_open},
+		INSERT INTO ESD
+		VALUES(#{emp_no}, TO_DATE(#{date}, 'YYYYMMDD'), #{am_open},
 		#{am_close}, #{pm_open}, #{pm_close})
 	</insert>
 	<!-- 직원 정보 검색 -->
@@ -458,42 +569,54 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 기업의 고정휴무일 검색 -->
 	<select id="holidaySelected" parameterType="hashmap"
 		resultType="hashmap">
-		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as "수요일", BFX_THU as
-		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as "일요일", BFX_HLD
-		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
+		SELECT BFX_MON as "월요일", BFX_TUE as "화요일", BFX_WED as
+		"수요일", BFX_THU as
+		"목요일", BFX_FRI as "금요일", BFX_SAT as "토요일", BFX_SUN as
+		"일요일", BFX_HLD
+		as "공휴일" FROM BFX WHERE BUS_NO=#{bus_no} AND
+		BCT_CODE=#{bct_code}
 	</select>
 	<!-- 직원의 고정휴무일 검색 -->
 	<select id="searchEFX" parameterType="String"
 		resultType="hashmap">
-		SELECT EFX_MON as "월요일", EFX_TUE as "화요일", EFX_WED as "수요일", EFX_THU as
-		"목요일", EFX_FRI as "금요일", EFX_SAT as "토요일", EFX_SUN as "일요일", EFX_HLD
+		SELECT EFX_MON as "월요일", EFX_TUE as "화요일", EFX_WED as
+		"수요일", EFX_THU as
+		"목요일", EFX_FRI as "금요일", EFX_SAT as "토요일", EFX_SUN as
+		"일요일", EFX_HLD
 		as "공휴일" FROM EFX WHERE EMP_NO=#{emp_no}
 	</select>
 	<!-- 직원의 하루스케줄 검색 -->
 	<select id="searchESD" parameterType="String"
 		resultType="hashmap">
-		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM ESD WHERE EMP_NO=#{emp_no}
+		SELECT AM_OPEN, AM_CLOSE, PM_OPEN, PM_CLOSE FROM ESD WHERE
+		EMP_NO=#{emp_no}
 		AND ROWNUM=1
 	</select>
 	<!-- 직원 정보 수정 -->
 	<update id="updateEMP" parameterType="hashmap">
-		UPDATE EMP SET EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
-		EMP_PART=#{emp_part} WHERE EMP_NO=#{emp_no}
+		UPDATE EMP SET
+		EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
+		EMP_PART=#{emp_part} WHERE
+		EMP_NO=#{emp_no}
 	</update>
 	<!-- 직원 프로필 사진 수정 -->
 	<update id="updateEMPPhoto" parameterType="hashmap">
-		UPDATE EMP SET EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
-		EMP_PART=#{emp_part}, EMP_PHOTO=#{emp_photo}, EMP_LOC=#{emp_loc} WHERE
+		UPDATE EMP SET
+		EMP_NAME=#{emp_name}, EMP_POS=#{emp_pos},
+		EMP_PART=#{emp_part},
+		EMP_PHOTO=#{emp_photo}, EMP_LOC=#{emp_loc} WHERE
 		EMP_NO=#{emp_no}
 	</update>
 	<!-- 직원 하루스케줄 수정 -->
 	<update id="updateESD" parameterType="hashmap">
-		UPDATE ESD SET AM_OPEN=#{am_open}, AM_CLOSE=#{am_close}, PM_OPEN=#{pm_open},
+		UPDATE ESD SET
+		AM_OPEN=#{am_open}, AM_CLOSE=#{am_close}, PM_OPEN=#{pm_open},
 		PM_CLOSE=#{pm_close} WHERE EMP_NO=#{emp_no}
 	</update>
 	<!-- 직운 고정휴무일 수정 -->
 	<update id="updateEFX" parameterType="hashmap">
-		UPDATE EFX SET EFX_MON=#{efx_mon}, EFX_TUE=#{efx_tue}, EFX_WED=#{efx_wed},
+		UPDATE EFX SET
+		EFX_MON=#{efx_mon}, EFX_TUE=#{efx_tue}, EFX_WED=#{efx_wed},
 		EFX_THU=#{efx_thu} , EFX_FRI=#{efx_fri}, EFX_SAT=#{efx_sat},
 		EFX_SUN=#{efx_sun}, EFX_HLD=#{efx_hld}, EFX_LCH=#{efx_lch} WHERE
 		EMP_NO=#{emp_no}
@@ -510,7 +633,50 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 	<!-- 가격 검색 -->
 	<select id="searchPRC" parameterType="hashmap"
 		resultType="String">
-		SELECT PRICE FROM PRC WHERE BUS_NO=#{bus_no} AND MENU_NO=${tag_no} AND
+		SELECT PRICE FROM PRC WHERE BUS_NO=#{bus_no} AND
+		MENU_NO=${tag_no} AND
 		PTY_NO=${ani_no} AND BCT_CODE=#{bct_code}
 	</select>
+	<!-- 기업 이미지 -->
+	<select id="getBusinessImage" resultType="HashMap"
+		parameterType="HashMap">
+		SELECT * FROM GLR WHERE BUS_NO=#{bus_no}
+		AND GCT_NO=2
+	</select>
+	<!-- 기업 이름  -->
+	<select id="getBusName" resultType="String"
+		parameterType="HashMap">
+		SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{bus_no}
+	</select>
+	<!-- 기업 업종 -->
+	<select id="getBctName" resultType="String"
+		parameterType="HashMap">
+		SELECT BCT_NAME FROM BCT WHERE BCT_CODE=#{bct_code}
+	</select>
+	<!-- 기업이 제공하는 모든 업종 -->
+	<select id="getHaveService" resultType="HashMap"
+		parameterType="String">
+		SELECT SVC.BCT_CODE, BCT.BCT_NAME, SVC.SVC_PRI FROM SVC
+		INNER JOIN BCT
+		on SVC.BCT_CODE=BCT.BCT_CODE
+		WHERE BUS_NO=#{value}
+		order
+		by SVC_PRI
+	</select>
+	<!-- 즐겨찾기 여부 -->
+	<select id="getFavorite" resultType="String"
+		parameterType="String">
+		SELECT BUS_NO FROM FAV WHERE PER_NO=#{no} AND
+		BUS_NO=#{bus_no}
+	</select>	
+	<!-- 기업 상세페이지 - 즐겨찾기 추가 -->
+	<insert id="favoriteInsert" parameterType="HashMap">
+		INSERT INTO FAV VALUES
+		(#{per_no},#{bus_no})
+	</insert>
+	<!-- 기업 상세페이지 - 즐겨찾기 삭제 -->
+	<delete id="favoriteDelete" parameterType="HashMap">
+		DELETE FROM FAV WHERE
+		PER_NO=#{per_no} AND BUS_NO=#{bus_no}
+	</delete>
 </mapper>
