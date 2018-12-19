@@ -860,18 +860,18 @@ public class BusinessService {
 		String bus_name = (String) map.get("BUS_NAME");
 		String bus_phone = (String) map.get("BUS_PHONE");
 
-		// String time = timeSelect(); // 기업의 운영시간 선택 select tag
-		// String lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
-		// String holiday = holidaySelect(); // 기업의 휴일 선택 select tag
-
+	//	String time = timeSelect(); // 기업의 운영시간 선택 select tag
+	//	String lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
+		String holiday = holidaySelect(); // 기업의 휴일 선택 select tag
+		System.out.println(code);
 		mav.addObject("cnt", list.size()); // 서비스의 우선순위를 정해주기 위한 카운트
 		mav.addObject("bct_code", code);
 		mav.addObject("bus_name", bus_name);
 		mav.addObject("bus_phone", bus_phone);
 		mav.addObject("codeCheck", codeSelectBut);
-		// mav.addObject("time", time);
-		// mav.addObject("lunch", lunch);
-		// mav.addObject("holiday", holiday);
+	//	mav.addObject("time", time);
+	//	mav.addObject("lunch", lunch);
+		mav.addObject("holiday", holiday);
 		mav.addObject("medical", medical);
 		mav.addObject("beauty", beauty);
 		mav.addObject("hotel", hotel);
@@ -948,13 +948,10 @@ public class BusinessService {
 	// 기업이 등록한 사진을 등록
 	private void fileWriter(MultipartHttpServletRequest multi, HttpSession session) {
 		String no = (String) session.getAttribute("no");
-		System.out.println("upload Start");
 		// 1.이클립스의 물리적 저장경로 찾기
 		String root = multi.getSession().getServletContext().getRealPath("/");
-		System.out.println("root=" + root);
 		String location = "resources/upload/";
 		String path = root + location;/* resource는 webapp/resources에 저장 */
-		System.out.println("path=" + path);
 		// 2.폴더 생성을 꼭 할것(clean했을 때 폴더 지워짐 방지)
 		File dir = new File(path);
 		if (!dir.isDirectory()) { // upload폴더 없다면
@@ -962,19 +959,14 @@ public class BusinessService {
 		}
 		// 3.파일을 가져오기-일태그 이름들 반환
 		List<MultipartFile> name = multi.getFiles("bgl_ori");
-		System.out.println(name);
 		for (int i = 0; i < name.size(); i++) {
-			String fileTagName = name.get(i).getName();
-			System.out.println("fileTagNext=" + fileTagName);
 			// 파일 메모리에 저장
 			MultipartFile mf = name.get(i); // 실제파일
 			String oriFileName = mf.getOriginalFilename(); // a.txt
-			System.out.println("oriFileName=" + oriFileName);
 			// 4.시스템파일이름 생성 a.txt-->112323242424.txt
 			String sysFileName = System.currentTimeMillis() + "."
 					+ oriFileName.substring(oriFileName.lastIndexOf(".") + 1);
 			/* 인덱스(점)을 기준으로 앞에 있는 문자열을 현재 시간을 기준으로한 밀리세컨드로 대체한다 */
-			System.out.println("sysFileName=" + sysFileName);
 			// 5.메모리->실제 파일 업로드
 			try {
 				/* 실제로 파일을 업로드하는 메소드 */
@@ -984,10 +976,6 @@ public class BusinessService {
 			}
 
 			String bct_code = multi.getParameter("bct_code");
-			System.out.println(bct_code);
-			System.out.println(sysFileName);
-			System.out.println(location);
-			System.out.println(no);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("bus_no", no);
 			map.put("bct_code", bct_code);
@@ -2841,18 +2829,11 @@ public class BusinessService {
 		String ani_name = request.getParameter("ani_name");
 		String bus_no = (String) session.getAttribute("no");
 		String bct_code = request.getParameter("bct_code");
-		System.out.println(bus_no);
-		System.out.println(tag_name);
-		System.out.println(ani_name);
-		System.out.println(bct_code);
-		System.out.println("왜 코드 안나와 ");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("tag_name", tag_name);
 		map.put("bct_code", bct_code);
 		String tag_no = bDao.searchMENUNO(map);
-		System.out.println(tag_no);
 		String ani_no = bDao.searchPTYNO(ani_name);
-		System.out.println(ani_no);
 		map.put("tag_no", tag_no);
 		map.put("ani_no", ani_no);
 		map.put("bus_no", bus_no);
@@ -2861,7 +2842,6 @@ public class BusinessService {
 		if (price == null) {
 			price = "0";
 		}
-		System.out.println(price);
 		return price;
 	}
 }
