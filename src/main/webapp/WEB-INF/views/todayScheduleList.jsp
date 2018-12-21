@@ -108,9 +108,11 @@
 	<!-- End Page content -->
 	<!-- ============================================================== -->
 </body>
+
 <script src="/resources/dist/assets/js/app.min.js"></script>
+
 <script>
-	function test() { /* 사용 */
+	function test() {
 		var radio = $('input[type="radio"]:checked').val();
 		//전체리스트 불러오기
 		if (radio == '전체') {
@@ -138,7 +140,9 @@
 				}
 			});
 		}
-		if (radio == '병원' || radio == '미용' || radio == '호텔') { /* 수정 */
+		
+		//서비스별 리스트 불러오기
+		if (radio == '병원' || radio == '미용' || radio == '호텔') {
 			$.ajax({
 				url : 'bctBookingList?no=${no}&bct_name=' + radio,
 				type : 'post',
@@ -164,11 +168,11 @@
 			});
 		}
 	}
-	function com(bk_no) { /* 사용 */
+	
+	//방문 예약 확인
+	function com(bk_no) {
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');
-		console.log(but);
-		console.log(bk_no);
 		var no = "${no}";
 		$.ajax({
 			url : "todayScheduleListCheck?bk_no=" + bk_no + "&no=" + no,
@@ -196,11 +200,10 @@
 		});
 	}
 
-	function comCode(bk_no, bct_name) { /* 사용 */
+	//서비스별 방문 예약 확인
+	function comCode(bk_no, bct_name) {
 		var but = $('span[class="' + bk_no + '"]');
 		var div = $('div[id="' + bk_no + '"]');
-		console.log(but);
-		console.log(bk_no);
 		var no = "${no}";
 		$.ajax({
 			url : "bctBookingListCheck?bk_no=" + bk_no + "&no=" + no
