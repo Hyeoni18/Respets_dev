@@ -232,10 +232,9 @@
 		});
 	}
 
-	function cancelCheck(bk_no) { /* 사용 */
-		console.log("${no}");
+	//예약 방문 취소
+	function cancelCheck(bk_no) {
 		var no = "${no}";
-		console.log(bk_no);
 		$.ajax({
 			url : "todayScheduleListCancel?no=" + no + "&bk_no=" + bk_no,
 			type : "post",
@@ -243,7 +242,6 @@
 			success : function(data) {
 				$('#No').html(data);
 				$('.unNoshow').hide();
-
 				$.ajax({
 					url : "todayAllScheduleListOk?no=${no}",
 					type : "post",
@@ -255,17 +253,16 @@
 						console.log(error);
 					}
 				});
-
 			},
 			error : function(error) {
 				console.log(error);
 			}
 		});
 	}
-	function cancelCodeCheck(bk_no, bct_name) { /* 사용 */
+	
+	//서비스별 예약 방문 취소
+	function cancelCodeCheck(bk_no, bct_name) {
 		var radio = $('input[type="radio"]:checked').val();
-		console.log(radio);
-
 		$.ajax({
 			url : "bctBookingListCancel?no=${no}&bct_name=" + radio + "&bk_no="
 					+ bk_no,
