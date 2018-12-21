@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.bean.RandomTB;
 
@@ -58,4 +59,29 @@ public interface LoginDao {
 	public void resetPerPw(Personal ps); 
 	//기업일 경우 비밀번호 변경
 	public void resetBusPw(Personal ps); 
+	
+	//기업 회원 가입 폼의 업종 라디오 버튼 목록
+	public List<HashMap<String, String>> selectBusCategory();
+
+	// 기업 회원 가입 시 이메일 확인
+	public int emailCheck(String email);
+
+	// 기업 회원 가입 시 사업자 등록 번호 확인
+	public int taxIdCheck(String taxId);
+
+	// 기업 회원 가입 BUSINESS_TB INSERT
+	public void businessInsert(Business b);
+
+	// 기업 회원 가입 SERVICE_TB INSERT
+	public void busJoinSvcInsert(Business b);
+
+	// 기업 회원 가입 사업자등록증 GALLERY_TB INSERT
+	public void licenseInsert(Map<String, Object> hMap);
+
+	// 기업 회원 가입 기업대표사진 GALLERY_TB INSERT
+	public void mainPhotoInsert(Map<String, Object> hMap);
+
+	// 기업 회원 가입 기업대표사진 없을 때 GALLERY_TB INSERT DEFAULT
+	public void mainPhotoDefault(Map<String, Object> hMap);
+	
 }

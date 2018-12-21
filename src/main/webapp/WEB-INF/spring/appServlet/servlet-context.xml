@@ -37,7 +37,7 @@
 		<beans:property name="driverClassName"
 			value="net.sf.log4jdbc.DriverSpy" />
 		<beans:property name="url"
-			value="jdbc:log4jdbc:oracle:thin:@172.30.1.37:1521:XE" />
+			value="jdbc:log4jdbc:oracle:thin:@172.168.0.115:1521:XE" />
 		<beans:property name="username" value="TeamX" />
 		<beans:property name="password" value="respets" />
 	</beans:bean>
@@ -118,15 +118,6 @@
 			value="com.teamx.respets.dao.PersonalDao" />
 	</beans:bean>
 
-	<!-- Jin Dao -->
-	<beans:bean id="jinDao"
-		class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<beans:property name="sqlSessionFactory"
-			ref="sqlSessionFactory" />
-		<beans:property name="mapperInterface"
-			value="com.teamx.respets.dao.JinDao" />
-	</beans:bean>
-
 	<!-- MultipartResolver 설정 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -154,25 +145,8 @@
 			<exclude-mapping path="/businessGallery" />
 			<exclude-mapping path="/businessDetailNoticeList" />
 			<exclude-mapping path="/businessNoticeDetail"/>
-
 			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
-			<!--
-			<exclude-mapping path="/petList" />
-			<exclude-mapping path="/petInsertForm" />
-			<exclude-mapping path="/petInfoDetail" />
-			<exclude-mapping path="/petInsert" />
-			<exclude-mapping path="/petDelete" />
-			<exclude-mapping path="/petInfoUpdateForm" />
-			<exclude-mapping path="/petInfoUpdate" />
-			<exclude-mapping path="/noticeList" />
-			<exclude-mapping path="/noticeListSearch" />
-			<exclude-mapping path="/noticeWriteForm" />
-			<exclude-mapping path="/noticeInsert" />
-			<exclude-mapping path="/noticeDetail" />
-			<exclude-mapping path="/noticeUpdateForm" />
-			<exclude-mapping path="/noticeUpdate" />
-			<exclude-mapping path="/noticeDelete" /> -->
 			<!-- business Detail -->
 			<exclude-mapping path="/businessDetailPage" />
 			<exclude-mapping path="/favoriteChange" />
@@ -194,22 +168,6 @@
 			<exclude-mapping path="/butTagSelectList" /> 
 			<exclude-mapping path="/tagSelectListAddr" />
 			<exclude-mapping path="/butTagSelectListPaging" />
-			<!-- 혜연 -->
-			<!--<exclude-mapping path="/myPwCheck" /> 
-			<exclude-mapping path="/myInfo" />
-			<exclude-mapping path="/myPwUpdateForm" />
-			<exclude-mapping path="/myInfoUpdateForm" />
-			<exclude-mapping path="/myInfoUpdate" />
-			<exclude-mapping path="/allBookingList" />
-			<exclude-mapping path="/todayScheduleList" />
-			<exclude-mapping path="/myBookingDetail" />
-			<exclude-mapping path="/myBookingCancelPage" />
-			<exclude-mapping path="/servicePage" />
-			<exclude-mapping path="/businessInfoDetail" />
-			<exclude-mapping path="/businessInfoUpdateForm"/>
-			<exclude-mapping path="/businessBookingListPage"/>
-			<exclude-mapping path="/businessButtonPage"/>
-			<exclude-mapping path="/todayScheduleListCancel"/>-->
 			<!-- Intercepter에 의해 가로챈 요청을 체크하는 클래스 -->
 			<beans:bean
 				class="com.teamx.respets.userClass.SessionInterceptor"></beans:bean>

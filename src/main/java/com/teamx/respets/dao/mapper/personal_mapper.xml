@@ -272,4 +272,21 @@
 		BK.EMP_NO = EMP.EMP_NO
 		WHERE BK.PER_NO=#{no}
 	</select>
+	
+	<!-- 개인 즐겨찾기 기업 SELECT -->
+	<select id="likeBusinessSelect" parameterType="String" resultType="HashMap">
+		SELECT FAV.PER_NO, BUS.BUS_NO, BUS.BUS_NAME, GLR.GLR_FILE, GLR.GLR_LOC, SVC.BCT_CODE
+        FROM FAV INNER JOIN BUS
+		ON FAV.BUS_NO = BUS.BUS_NO
+		INNER JOIN GLR
+		ON BUS.BUS_NO = GLR.BUS_NO
+		INNER JOIN SVC
+		ON FAV.BUS_NO = SVC.BUS_NO
+		WHERE FAV.PER_NO = #{per_no} AND GLR.GCT_NO = 2 AND SVC.SVC_PRI = 1
+	</select>
+
+	<!-- 개인 즐겨찾기 삭제 -->
+	<delete id="likeBusinessDelete" parameterType="HashMap">
+		DELETE FROM FAV WHERE PER_NO = #{per_no} AND BUS_NO = #{bus_no}
+	</delete>
 </mapper>

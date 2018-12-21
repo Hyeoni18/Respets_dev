@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.service.LoginService;
 import com.teamx.respets.service.PersonalService;
@@ -139,4 +140,31 @@ public class LoginController {
 		mav = ls.updateMyPw(request, ps);
 		return mav;
 	}
+	
+	// 기업 회원 가입 동의 폼
+	@RequestMapping(value = "/businessJoinAgreement", method = RequestMethod.GET)
+	public ModelAndView businessJoinAgreement() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("businessJoinAgreement");
+		return mav;
+	} // method End
+
+	// 기업 회원 가입 폼
+	@RequestMapping(value = "/businessJoinForm", method = RequestMethod.GET)
+	public ModelAndView businessJoinForm() {
+		ModelAndView mav = new ModelAndView();
+		String sb = ls.selectBusCategory();
+		mav.addObject("input", sb);
+		mav.setViewName("businessJoinForm");
+		return mav;
+	} // method End
+
+	// 기업 회원 가입
+	@RequestMapping(value = "/businessJoin", method = RequestMethod.POST)
+	public ModelAndView businessJoin(Business b, MultipartHttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		ls.businessJoin(b, request);
+		mav.setViewName("index");
+		return mav;
+	} // method End
 }

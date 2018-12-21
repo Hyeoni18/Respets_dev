@@ -2939,4 +2939,46 @@ public class BusinessService {
 		mav.setViewName(view);
 		return mav;
 	}
+	
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = bDao.nowPwCheck(b);
+		return result;
+	}
+
+	public void businessPwUpdate(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		bDao.businessPwUpdate(b);
+	}
+
+	public ModelAndView businessInfoUpdateForm(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Business b = new Business();
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		b = bDao.businessInfoUpdateForm(b);
+		mav.addObject("b", b);
+		return mav;
+	}
+	
+	// 새로운 예약 목록
+	public ModelAndView newScheduleList(HttpServletRequest request) {
+		String bus_no = request.getSession().getAttribute("no").toString();
+		List<HashMap<String, String>> list = bDao.selectBooking(bus_no);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<tr><td><a href='myBookingDetail?" + list.get(i).get("BK_NO") + "'>" + list.get(i).get("BK_NO"));
+			sb.append("</a></td><td>" + list.get(i).get("PTY_NAME") + "</td>");
+			sb.append("<td>" + list.get(i).get("PET_NAME") + "</td><td>" + list.get(i).get("PER_NAME") + "</td>");
+			sb.append("<td>" + list.get(i).get("BCT_NAME") + "</td><td>" + list.get(i).get("VS_START") + "</td>");
+			sb.append("<td><span id='" + list.get(i).get("BK_NO") + "'>");
+			sb.append("<input type='button' class='btn-outline-success' value='확정' name='" + list.get(i).get("BK_NO")
+					+ "' />&nbsp;");
+			sb.append("<input type='button' class='btn-outline-danger' value='거절' name='" + list.get(i).get("BK_NO")
+					+ "' /></span></td></tr>");
+		} // for End
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", sb.toString());
+		return mav;
+	} // method End
+	
 }

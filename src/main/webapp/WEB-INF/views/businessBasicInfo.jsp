@@ -77,8 +77,7 @@
 </body>
 
 <!--다음 지도 api 불러오기 -->
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01f5de4fda83eccb6c481552ba87be63&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01f5de4fda83eccb6c481552ba87be63&libraries=services"></script>
 <script>
 	var mon = '${mon}';
 	var tue = '${tue}';
