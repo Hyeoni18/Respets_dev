@@ -183,15 +183,16 @@ public class AjaxController {
 		String text = bs.searchPrice(request, session);
 		return text;
 	}
-	
+
 	/* 기업 상세 페이지 '즐겨찾기' 클릭 */
-	@RequestMapping(value = "/favoriteChange", method=RequestMethod.POST)
-	@ResponseBody public int favoriteChange(HttpServletRequest request) {
+	@RequestMapping(value = "/favoriteChange", method = RequestMethod.POST)
+	@ResponseBody
+	public int favoriteChange(HttpServletRequest request) {
 		System.out.println("Controller favoriteChange");
 		int data = bs.favoriteChange(request);
 		return data;
 	}
-	
+
 	// 회원 가입 이메일 확인
 	@RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
 	public int emailCheck(String email) {
@@ -205,27 +206,26 @@ public class AjaxController {
 		int result = ls.taxIdCheck(taxId);
 		return result;
 	} // method End
-	
-	
+
 	// 예약 페이지 직원 시간 확인
 	@RequestMapping(value = "/timeSelect", method = RequestMethod.POST, produces = "application/text;charset=utf8")
 	public String timeSelect(HttpServletRequest request) {
 		String timeList = ms.timeSelect(request);
 		return timeList;
 	} // method End
-	
+
 	// 예약 확정
 	@RequestMapping(value = "/bookingAccept", method = RequestMethod.POST)
 	public void bookingAccept(String bk_no) {
 		bDao.bookingAccept(bk_no);
 	} // method End
-	
+
 	// 예약 거절
 	@RequestMapping(value = "/bookingReject", method = RequestMethod.POST)
 	public void bookingReject(String bk_no) {
 		bDao.bookingReject(bk_no);
 	} // method End
-	
+
 	@RequestMapping(value = "/nowPwCheck", method = RequestMethod.POST)
 	public int nowPwCheck(Business b, HttpServletRequest request) {
 		int result = ms.nowPwCheck(b, request);

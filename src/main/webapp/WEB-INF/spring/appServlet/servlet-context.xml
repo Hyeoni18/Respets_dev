@@ -145,20 +145,17 @@
 			<exclude-mapping path="/businessGallery" />
 			<exclude-mapping path="/businessDetailNoticeList" />
 			<exclude-mapping path="/businessNoticeDetail"/>
-			<!-- Sunny start -->
 			<exclude-mapping path="/dashboard" />
-			<!-- business Detail -->
 			<exclude-mapping path="/businessDetailPage" />
 			<exclude-mapping path="/favoriteChange" />
 			<exclude-mapping path="/personalCalendar" />
-			<!-- Sunny end -->
-			<exclude-mapping path="/businessJoinAgreement" /> <!-- 서진 : 기업 회원 가입 동의 폼 -->
-			<exclude-mapping path="/businessJoinForm" /> <!-- 서진 : 기업 회원 가입 폼 -->
-			<exclude-mapping path="/emailCheck" /> <!-- 서진 : 기업 회원 가입 이메일 확인 -->
-			<exclude-mapping path="/taxIdCheck" /> <!-- 서진 : 기업 회원 가입 사업자 등록 번호 확인 -->
-			<exclude-mapping path="/businessJoin" /> <!-- 서진 : 기업 회원 가입 -->
+			<exclude-mapping path="/businessJoinAgreement" /> 
+			<exclude-mapping path="/businessJoinForm" /> 
+			<exclude-mapping path="/emailCheck" /> 
+			<exclude-mapping path="/taxIdCheck" />
+			<exclude-mapping path="/businessJoin" />
 			<exclude-mapping path="/businessList" /> 
-			<exclude-mapping path="/searchList" /> <!-- 서진 : index에서 검색 버튼 눌렀을 때 -->
+			<exclude-mapping path="/searchList" />
 			<exclude-mapping path="/findMyIdForm" />
 			<exclude-mapping path="/findMyId" /> 
 			<exclude-mapping path="/findMyPw" /> 
