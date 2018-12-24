@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -79,5 +80,11 @@ public interface PersonalDao {
 	
 	/* 개인 캘린더 */
 	public List<HashMap<String, Object>> getPerCalendar(String no);
+	
+	// 개인 즐겨찾기 기업 SELECT
+	public List<HashMap<String, String>> likeBusinessSelect(String per_no);
+
+	// 개인 즐겨찾기 삭제
+	public void likeBusinessDelete(Map<String, String> hMap);
 
 }

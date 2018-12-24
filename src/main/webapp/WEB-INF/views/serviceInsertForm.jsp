@@ -93,7 +93,7 @@
 		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="M" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-
+		</div></div>
 			<div class="row">
 	<div class="col-lg-6">
 	<div class="form-group mb-3">
@@ -109,7 +109,6 @@
 	<input type="file" name="bgl_ori" multiple />
 	</div>
 	<div class="form-group mb-3">
-
 	<label for="simpleinput">제공서비스</label><br/>
 	${medical} </div> 
 	<div class="form-group mb-3">
@@ -140,7 +139,6 @@
 	<div class="col-lg-6">
 	<div class="form-group mb-3">
 	<label for="simpleinput">영업 오픈시간</label>
-
 	<input type="time" class="form-control" name="work_o" id="am_open" step="1800">
 	</div>
 	<div class="form-group mb-3">
@@ -165,6 +163,9 @@
 	</div></div>
 	</form>
 	</div>
+	</div>
+	</div>
+	</div>
 
 	<!-- 미 용 폼 -->
 	<div class="row" id="beauty">
@@ -176,7 +177,7 @@
 		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="B" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-
+		</div></div>
 	 <div class="row">
 	 <div class="col-lg-6">
 	 <div class="form-group mb-3">
@@ -213,19 +214,19 @@
 	 <div class="col-lg-6">
 	 <div class="form-group mb-3">
 	 <label for="simpleinput">영업 오픈시간</label>
-	 <input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+	 <input type="time" class="form-control" name="work_o" id="am_open" step="1800">
 	 </div>
 	 <div class="form-group mb-3">
 	 <label for="simpleinput">영업 마감시간</label>
-	 <input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+	 <input type="time" class="form-control" name="work_c" id="pm_close" step="1800">
 	 </div>
 	 <div class="form-group mb-3">
 	 <label for="simpleinput">점심 시작시간</label>
-	 <input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+	 <input type="time" class="form-control" name=lunch_o id="lunch_open" step="1800">
 	 </div>
 	 <div class="form-group mb-3">
 	 <label for="simpleinput">점심 마감시간</label>
-	 <input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+	 <input type="time" class="form-control" name="lunch_c" id="lunch_close" step="1800">
 	 </div>
 	 <div class="form-group mb-3">
      <label for="simpleinput">고정휴무일</label><br/>
@@ -280,7 +281,7 @@
 		<div class="col-lg-6">
 			<input type="hidden" name="bct_code" value="H" /> 
 			<input type="hidden" name="cnt" value="${cnt}" /> &nbsp; 
-
+		</div></div>
 	  <div class="row">
 	  <div class="col-lg-6">
 	  <div class="form-group mb-3">
@@ -320,19 +321,19 @@
 	  <div class="col-lg-6">
 	  <div class="form-group mb-3">
 	  <label for="simpleinput">영업 오픈시간</label>
-	  <input type="time" class="form-control" name="work_o" id="am_open" value="${work_o}" step="1800">
+	  <input type="time" class="form-control" name="work_o" id="am_open" step="1800">
  	  </div>
 	  <div class="form-group mb-3">
 	  <label for="simpleinput">영업 마감시간</label>
-	  <input type="time" class="form-control" name="work_c" id="pm_close" value="${work_c}" step="1800">
+	  <input type="time" class="form-control" name="work_c" id="pm_close" step="1800">
 	  </div>
 	  <div class="form-group mb-3">
 	  <label for="simpleinput">점심 시작시간</label>
-	  <input type="time" class="form-control" name=lunch_o id="lunch_open" value="${lunch_o}" step="1800">
+	  <input type="time" class="form-control" name=lunch_o id="lunch_open" step="1800">
 	  </div>
 	  <div class="form-group mb-3">
 	  <label for="simpleinput">점심 마감시간</label>
-	  <input type="time" class="form-control" name="lunch_c" id="lunch_close" value="${lunch_c}" step="1800">
+	  <input type="time" class="form-control" name="lunch_c" id="lunch_close" step="1800">
 	  </div>
 	  <div class="form-group mb-3">
       <label for="simpleinput">고정휴무일</label><br/>
@@ -368,15 +369,15 @@
 	  <br/><br/>
 	  <div id="H"></div> <!--서비스 가격 찍히는 div  -->
 	  <div id="H_price"></div> <!--고양이 서비스 가격 찍히는 div-->
-	  <div id="but"></div></div>
+	  <div id="but"></div></div></div>
 		</form>
 	</div>
-</div> <!-- end card-body-->
-</div> <!-- end card-->
-</div> <!-- end col-xl-6 -->
-</div>
+	</div> <!-- end card-body-->
+	</div> <!-- end card-->
+	</div> <!-- end col-xl-6 -->
+</div></div></div></div></div>
 <%@ include file="footer.html"%>
-	</div></div></div></div>
+	</div></div></div>
 	<!-- App js -->
     <script src="/resources/dist/assets/js/app.min.js"></script>
 </body>
@@ -413,111 +414,105 @@ function checkCode(code) {
 
 function priceBox(cnt) {
 	var code = $(cnt).attr('name');
-	console.log(code); //네임
-	console.log("뭐야ㅑ");
-	console.log("나와랏");
-	var tagName = new Array(); //태그 값 담기는 배열 
-	var aniName = new Array(); //동물 종류 담기는 배열 
-	var catName = new Array();
-	var cat_tag = new Array();
-	var dog_tag = new Array();
-	var tag_cnt=0; //태그 개수 
-	var ani_cnt=0; //동물 개수 
-	var cat_cnt=0;
-	var cat_tag_cnt=0;
-	var dog_tag_cnt=0;
-	var values = document.getElementsByName("tag_name"); //태그네임으로 된 값 가져오기 
-	var animal = document.getElementsByName("animal_code"); //애니멀코드로 된 값 가져오기
+	var values = document.getElementsByName("tag_name");
+	var animal = document.getElementsByName("animal_code");
 	var cat_code = document.getElementsByName("cat_code"); 
-	console.log(cat_code);
 	var cat_tag_ck = document.getElementsByName("cat_tag");
 	var dog_tag_ck = document.getElementsByName("dog_tag");
+	var tagName = new Array(); //태그 값 담기는 배열 
+	var aniName = new Array(); //동물 종류 담기는 배열 
+	var catName; //고양이가 담기는 변수
+	var cat_tag; //고양이만 해당하는 무마취 서비스 태그
+	var dog_tag; //강아지만 해당하는 가위컷 서비스 태그
+	//catName, cat_tag, dog_tag를 나눠준 이유는 제공되는 서비스가 다르기 때문에 구분을 지어줘야한다.
+	var tag_cnt=0; //태그 개수 
+	var ani_cnt=0; //동물 개수 
+	var cat_cnt=0; //고양이 유무 
+	var cat_tag_cnt=0; //무마취 태그의 유무 
+	var dog_tag_cnt=0; //가위컷 태그의 유무
+	//values, animal은 2개 이상일 수 있기에, 반복문을 통해 위에서 만들어놓은 배열에 값을 담아준다.
 	for(var i=0; i<values.length; i++) { //태그네임 들어온 값 만큼 돌기 
 		if(values[i].checked) { //체크된 값 확인 
-			tagName[tag_cnt] = values[i].value; //체크된 값은 새로만든 태그네임 배열에 넣어주기 
-			tag_cnt++; //태그 개수 카운트 올려주
+			tagName[tag_cnt] = values[i].value; //체크된 값은 배열에 넣어주기 
+			tag_cnt++; //태그 개수 카운트 올려주기
 		} //체크된 박스 확인 if End
 	} //태그네임 새로 담는 for End 
 	for(var i=0; i<animal.length; i++) { //애니멀코드 들어온 값 만큼 돌기 
 		if(animal[i].checked) { //체크된 값 확인 
-			aniName[ani_cnt] = animal[i].value; //체크된 값은 새로만든 애니멀 배열에 넣어주기 
+			aniName[ani_cnt] = animal[i].value; //체크된 값은 배열에 넣어주기 
 			ani_cnt++; //애니멀 개수 카운트 올려주기 
 		} //체크된 박스 확인 if End 
 	} //애니멀코드 새로 담는 for End 
 	for(var i=0; i<cat_code.length; i++) { 
 		if(cat_code[i].checked) { 
 			catName[cat_cnt] = cat_code[i].value;
-			console.log(cat_code[i].value);
-			console.log("------");
-			console.log(cat_code[i]);
-			console.log("------");
-			console.log(catName[cat_cnt]);
-			cat_cnt++; 
+			cat_cnt++; //동물종류 중 고양이가 들어왔을 경우 cnt를 증가시켜 유무를 표시한다.
 		} 
 	} 
 	for(var i=0; i<cat_tag_ck.length; i++) {
 		if(cat_tag_ck[i].checked) {
 			cat_tag[cat_tag_cnt] = cat_tag_ck[i].value;
-			cat_tag_cnt++;
+			cat_tag_cnt++; //고양이무마취 태그가 들어왔을 경우 cnt를 증가시켜 유무를 표시한다.
 		}
 	}
 	for(var i=0; i<dog_tag_ck.length; i++) {
 		if(dog_tag_ck[i].checked) {
 			dog_tag[dog_tag_cnt] = dog_tag_ck[i].value;
-			dog_tag_cnt++;
+			dog_tag_cnt++; //가위컷 태그가 들어왔을 경우 cnt를 증가시켜 유무를 표시한다.
 		}
 	}
 	
-	var trObj; //tr태그 생성 
-    var div; //div네임 담는 변수 
- 		div = $("#"+code); //div네임에 호텔이름 넣어주고 
-		$("#"+code+" *").remove(); //만약 append 된 것이 있다면 지워줘.
+	var trObj; //tr태그 생성에 쓰일 변수
+    var div; 
+ 		div = $("#"+code); //id가 넘어온 업종코드로 이루어진 div를 찾는다.
+		$("#"+code+" *").remove(); //만약 해당 div에 append 된 것이 있다면 지워줘.
 		var cat_div = $("#"+code+"_price");
 		$("#"+code+"_price *").remove();
 		var but = $("#but");
 		$("#but *").remove();
-		var num1=aniName.length;         //num1에 애니멀 개수를 넣어줘.
-		var num2=tagName.length;         //서비스 개수를 넣어줘. 
+		var num1=aniName.length; //num1에 애니멀 개수를 넣어줘.
+		var num2=tagName.length; //num2에 서비스 개수를 넣어줘. 
 		
-		var x;
+		var inputTag; //input태그 생성에 쓰일 변수 
 		
-		var box = new Array();
-		var m=0;
+		var box = new Array(); //선택된 서비스를 한곳에 저장하는 배열
+		var m=0; //배열의 위치를 잡아주기 위한 cnt 변수 
 		
-		if(aniName.length != 0) {
-			if(dog_tag[0] != null){
-				box[m]=dog_tag[0];
-				m++;
-				console.log("개태그");
+		if(aniName.length != 0) { //동물태그가 존재하는지 확인 후 
+			if(dog_tag[0] != null){ //가위컷 태그가 있을시 
+				box[m]=dog_tag[0]; //배열에 넣어주고 
+				m++; //box의 배열순서를 증가시켜 다음 값을 받을 수 있도록 준비해준다.
 			} 
-			for(var i=0; i<num2; i++) {
+			//그 외 서비스 태그가 있을시 반복문을 통해 box배열에 전부 넣어준다.
+			for(var i=0; i<num2; i++) { 
 				box[m]=tagName[i];
 				m++;
 			}
 		}
-		var num3=box.length;  
+		var num3=box.length; //넘어온 서비스의 개수를 담아준다.
 		
-		for(var i=0; i<num1+1; i++){ // 애니멀 개수만큼 돌거야.
+		for(var i=0; i<num1+1; i++){ // 애니멀 개수만큼 돈다.
 		     trObj=document.createElement("tr");     // tr 생성      
-		     for(var j=0; j<num3+1; j++){ //서비스 개수만큼 돌거야. 
+		     for(var j=0; j<num3+1; j++){ //서비스 개수만큼 돈다.
 			      var tdObj=document.createElement("td");  //td 생성 
-			      trObj.appendChild(tdObj); //td를 tr에 붙여줘. 
+			      trObj.appendChild(tdObj); //td를 tr에 붙여준다.
 			      if(i==0) { 
-			    	  if(j==0) { //(0,0) 은 빈칸이여야해. 
+			    	  if(j==0) { //(0,0) 은 빈칸이여야 한다.
 			    		  tdObj.innerHTML = " ";	    		  
-			    	  } else {
+			    	  } else { //그게 0이 아니라면 차례대로 서비스를 넣어준다. (테이블의 맨 윗 줄)
 			    		  tdObj.innerHTML = box[j-1];
 			    	  }
 			      } //if(i==0) End 
 		  	   else {
-		    	  if(j==0) {
+		    	  if(j==0) { //테이블의 가장 왼쪽 줄은 동물들의 이름이 들어간다.
 		    		  tdObj.innerHTML = aniName[i-1];
-		    	  } else {
-		    		  x = document.createElement("input");
-		    		  x.setAttribute("type", "text");
-		    		  x.setAttribute("name", "price");
-		    		  x.setAttribute("class", "col-sm-6");
+		    	  } else { //그 외에는 가격 창이 만들어진다.
+		    		  inputTag = document.createElement("input");
+		    		  inputTag.setAttribute("type", "text");
+		    		  inputTag.setAttribute("name", "price");
+		    		  inputTag.setAttribute("class", "col-sm-6");
 		    		  var price;
+		    		  //가격을 수정하는 경우, 이전의 가격을 불러와야 하기 때문에 ajax를 통해 DB를 검색해온다.
 		    		  var url = "searchPrice?tag_name="+box[j-1]+"&ani_name="+aniName[i-1]+"&bct_code="+code;
 		    			Aj(url);
 		    			function Aj(url) { 
@@ -525,17 +520,19 @@ function priceBox(cnt) {
 		    					url: url,
 		    					type: "post",
 		    					dataType: "text", 
-		    					async: false,
+		    					async: false, 
+		    					//비동기 ajax를 동기화 시킨 이유는, 비동기시 값을 가지러 서버에 다녀올 동안 input태그가 먼저 만들어진다.
+		    					//그럴 경우, 값이 존재하지 않는 price를 가지고 value 값을 취한 태그는 오류가 나고 원하는 정보를 보여주지 못한다.
 		    					success: function(data) {
-		    						price = data;
+		    						price = data; //service 단에서 가져온 값을 price에 담아준다.
 		    					},
 		    					error: function(error) {
 		    						console.log("error");
 		    					}
 		    				}); //ajax End
 		    			} 
-		    		 x.setAttribute("value", price);
-		    		  tdObj.appendChild(x);
+		    		  inputTag.setAttribute("value", price); 
+		    		  tdObj.appendChild(inputTag);
 		    	  }
 		      } //if (i!=0) End 	      	          
 		    } //for End (td)    
@@ -574,10 +571,10 @@ function priceBox(cnt) {
 		    	  if(j==0) {
 		    		  tdObj.innerHTML = catName[i-1];
 		    	  } else {
-		    		  x = document.createElement("input");
-		    		  x.setAttribute("type", "text");
-		    		  x.setAttribute("name", "price");
-		    		  x.setAttribute("class", "col-sm-6");
+		    		  inputTag = document.createElement("input");
+		    		  inputTag.setAttribute("type", "text");
+		    		  inputTag.setAttribute("name", "price");
+		    		  inputTag.setAttribute("class", "col-sm-6");
 		    		  var price;
 		    		  var url = "searchPrice?tag_name="+catBox[j-1]+"&ani_name="+catName[i-1]+"&bct_code="+code;
 		    			Aj(url);
@@ -595,8 +592,8 @@ function priceBox(cnt) {
 		    					}
 		    				}); //ajax End
 		    			} 
-		    		 x.setAttribute("value", price);
-		    		  tdObj.appendChild(x);
+		    		  inputTag.setAttribute("value", price);
+		    		  tdObj.appendChild(inputTag);
 		    	  }
 		      } //if (i!=0) End 	      	          
 		    } //for End (td)    

@@ -1,10 +1,15 @@
 package com.teamx.respets.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -14,12 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.Business;
 import com.teamx.respets.bean.Personal;
 import com.teamx.respets.bean.RandomTB;
 import com.teamx.respets.dao.LoginDao;
@@ -394,4 +401,73 @@ public class LoginService {
 		mav.setViewName(view);
 		return mav;
 	}
+
+	// 기업 회원 가입 시 업종 라디오 버튼 생성
+	public String selectBusCategory() {
+		List<HashMap<String, String>> list = lDao.selectBusCategory();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<input type='radio' name='bct_code' class='주력 서비스' value='");
+			sb.append(list.get(i).get("BCT_CODE"));
+			sb.append("'/>" + list.get(i).get("BCT_NAME") + "</label>");
+		} // for End
+		return sb.toString();
+	} // method End
+
+	// 기업 회원 가입 시 이메일 확인
+	public int emailCheck(String email) {
+		int result = lDao.emailCheck(email);
+		return result;
+	} // method End
+
+	// 기업 회원 가입 시 사업자 등록 번호 확인
+	public int taxIdCheck(String taxId) {
+		int result = lDao.taxIdCheck(taxId);
+		return result;
+	} // method End
+
+	// 서진 : 기업 회원 가입
+	@Transactional
+	public void businessJoin(Business b, MultipartHttpServletRequest request) {
+		// 비밀번호 암호화 구현
+		lDao.businessInsert(b);
+		b.setBus_no("B" + String.valueOf(b.getBus_seq()));
+		lDao.busJoinSvcInsert(b);
+		MultipartFile busLicense = request.getFile("busLicense");
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap = saveFile(request, busLicense, hMap);
+		hMap.put("bus_no", b.getBus_no());
+		hMap.put("bct_code", b.getBct_code());
+		lDao.licenseInsert(hMap);
+		if (request.getParameter("fileCheck").equals("1")) {
+			MultipartFile mainPhoto = request.getFile("mainPhoto");
+			hMap = saveFile(request, mainPhoto, hMap);
+			lDao.mainPhotoInsert(hMap);
+		} else {
+			lDao.mainPhotoDefault(hMap);
+		} // else End
+	} // method End
+
+	// 파일 업로드
+	private Map<String, Object> saveFile(MultipartHttpServletRequest request, MultipartFile file,
+			Map<String, Object> hMap) {
+		String root = request.getSession().getServletContext().getRealPath("/");
+		String location = "resources/upload/";
+		String path = root + location;
+		File dir = new File(path);
+		if (!dir.isDirectory()) {
+			dir.mkdir();
+		} // if End
+		String date = new SimpleDateFormat("yyMMdd").format(Calendar.getInstance().getTime());
+		String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+		String saveName = "Respets_" + date + "_" + UUID.randomUUID() + "." + extension;
+		try {
+			file.transferTo(new File(path, saveName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		} // catch End
+		hMap.put("location", location);
+		hMap.put("file", saveName);
+		return hMap;
+	} // method End
 }
