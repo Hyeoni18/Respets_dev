@@ -669,12 +669,12 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		SELECT BUS_NO FROM FAV WHERE PER_NO=#{no} AND
 		BUS_NO=#{bus_no}
 	</select>	
-	<!-- 기업 상세페이지 - 즐겨찾기 추가 -->
+	<!-- 즐겨찾기 추가 -->
 	<insert id="favoriteInsert" parameterType="HashMap">
 		INSERT INTO FAV VALUES
 		(#{per_no},#{bus_no})
 	</insert>
-	<!-- 기업 상세페이지 - 즐겨찾기 삭제 -->
+	<!-- 즐겨찾기 삭제 -->
 	<delete id="favoriteDelete" parameterType="HashMap">
 		DELETE FROM FAV WHERE
 		PER_NO=#{per_no} AND BUS_NO=#{bus_no}

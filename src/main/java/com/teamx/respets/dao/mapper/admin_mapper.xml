@@ -54,8 +54,15 @@
 	<select id="getNoticeList" resultType="abo"
 		parameterType="Integer">
 		<![CDATA[
-		SELECT * FROM ABOLIST_PAGING WHERE RONUM>=#{pageNum}*10-9
-		AND RONUM<=#{pageNum}*10
+		SELECT X.RNUM, X.ABO_NO, X.ABC_NAME, X.ABO_TITLE, X.ABO_DATE
+		FROM (
+			SELECT ROWNUM AS RNUM, ALP.ABO_NO, ALP.ABC_NAME, ALP.ABO_TITLE, ALP.ABO_DATE
+			FROM(
+				SELECT ABO_NO, ABC_NAME, ABO_TITLE, ABO_DATE
+				FROM ABOLIST_PAGING
+				ORDER BY ABO_DATE DESC)ALP
+			WHERE ROWNUM <= #{page_no} * 10)X
+		WHERE X.RNUM >= #{page_no} * 10-9
 		]]>
 	</select>
 	
@@ -75,7 +82,7 @@
 		ABC_NAME=#{abc_name} AND ABO_TITLE LIKE '%'||#{search}||'%'
 	</select>
 	
-	<!-- 공지사항 검색 목록 (입력내용없이 검색 시) -->
+	<!-- 공지사항 검색 목록 (전체 검색 시) -->
 	<select id="getNoticeListAllSearch" parameterType="abo"
 		resultType="abo">
 		<![CDATA[
@@ -92,7 +99,7 @@
 		]]>
 	</select>
 	
-	<!-- 공지사항 검색 목록 -->
+	<!-- 공지사항 검색 목록 (기업/개인 선택 검색 시) -->
 	<select id="getNoticeListCategoriSearch" parameterType="abo"
 		resultType="abo">
 		<![CDATA[
