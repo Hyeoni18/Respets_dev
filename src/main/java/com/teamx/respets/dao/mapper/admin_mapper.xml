@@ -49,15 +49,15 @@
 		UPDATE BUS SET
 		BUS_CHK='O' WHERE BUS_NO=#{bus_no}
 	</update>
-
-	<!-- 공지사항 목록 -->
-	<select id="getNoticeList" resultType="abo"
-		parameterType="Integer">
-		<![CDATA[
-		SELECT * FROM ABOLIST_PAGING WHERE RONUM>=#{pageNum}*10-9
-		AND RONUM<=#{pageNum}*10
-		]]>
-	</select>
+	
+		    <!-- 공지사항 목록 -->
+    <select id="getNoticeList" resultType="abo"
+        parameterType="Integer">
+        <![CDATA[
+        SELECT * FROM ABOLIST_PAGING WHERE ROWNUM>=#{pageNum}*10-9
+        AND ROWNUM<=#{pageNum}*10 ORDER BY ABO_NO DESC
+        ]]>
+    </select>
 	
 	<!-- 공지사항 개수 -->
 	<select id="getBoardCount" resultType="int">

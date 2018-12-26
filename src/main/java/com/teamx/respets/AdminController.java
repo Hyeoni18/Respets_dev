@@ -70,7 +70,8 @@ public class AdminController {
 	
 	/* 공지사항 목록 */
 	@RequestMapping (value="/noticeList", method=RequestMethod.GET)
-	public ModelAndView noticeList(Integer pageNum) {		
+	public ModelAndView noticeList(Integer pageNum) {
+		//페이징을 위한 페이지번호(pageNum)를 매개변수로 가져온다
 		mav = new ModelAndView();
 		mav=as.noticeList(pageNum);
 		return mav;
@@ -78,31 +79,34 @@ public class AdminController {
 	
 	/* 검색 시 공지사항 목록 */
 	@RequestMapping (value="/noticeListSearch", method=RequestMethod.GET)
-	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {		
+	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {	
+		//페이징을 위한 페이지번호(pageNum)와 검색을 위한 카테고리명(abc_name),검색내용(search)를 매개변수로 가져온다
 		mav = new ModelAndView();
-		mav=as.noticeListSearch(pageNum,abc_name,search);
+		mav=as.noticeListSearch(pageNum, abc_name, search);
 		return mav;
 	}
 	
 	/* 공지사항 등록 폼 */
 	@RequestMapping (value="/noticeWriteForm", method=RequestMethod.GET)
 	public ModelAndView noticeWriteForm() {
-		mav = new ModelAndView();
-		mav.setViewName("noticeWriteForm");
+		mav = new ModelAndView();		
+		mav.setViewName("noticeWriteForm");//noticeWriteForm.jsp로 이동
 		return mav;
 	}
 	
 	/* 공지사항 등록 */
 	@RequestMapping (value="/noticeInsert", method=RequestMethod.GET)
-	public ModelAndView noticeInsert(String abc_no, String abo_title, String abo_ctt) {
+	public ModelAndView noticeInsert(HttpServletRequest request) {
+		//insert할 내용이 모두 담긴 request를 매개변수로 가져온다
 		mav = new ModelAndView();
-		mav=as.noticeInsert(abc_no, abo_title, abo_ctt);
+		mav=as.noticeInsert(request);
 		return mav;
 	}
 	
 	/* 공지사항 상세 */
 	@RequestMapping (value="/noticeDetail", method=RequestMethod.GET)
 	public ModelAndView noticeDetail(String abo_no) {
+		//선택한 게시물의 상세내용을 출력하기 위해 글번호(abo_no)를 매개변수로 가져온다
 		mav = new ModelAndView();
 		mav=as.noticeDetail(abo_no);
 		return mav;
@@ -111,6 +115,7 @@ public class AdminController {
 	/* 공지사항 수정 폼 */
 	@RequestMapping (value="/noticeUpdateForm", method=RequestMethod.GET)
 	public ModelAndView noticeUpdateForm(String abo_no) {
+		//수정 폼에 선택한 게시물의 상세내용을 출력하기 위해 글번호(abo_no)를 매개변수로 가져온다
 		mav = new ModelAndView();
 		mav=as.noticeUpdateForm(abo_no);
 		return mav;
@@ -118,15 +123,17 @@ public class AdminController {
 	
 	/* 공지사항 수정 */
 	@RequestMapping (value="/noticeUpdate", method=RequestMethod.GET)
-	public ModelAndView noticeUpdate(AdminBoard abo) {
+	public ModelAndView noticeUpdate(HttpServletRequest request) {
+		//update할 내용이 모두 담긴 request를 매개변수로 가져온다
 		mav = new ModelAndView();
-		mav=as.noticeUpdate(abo);
+		mav=as.noticeUpdate(request);
 		return mav;
 	}
 	
 	/* 공지사항 삭제 */
 	@RequestMapping (value="/noticeDelete", method=RequestMethod.GET)
 	public ModelAndView noticeDelete(String abo_no) {
+		//선택한 게시물을 삭제하기 위해 글번호(abo_no)를 매개변수로 가져온다
 		mav = new ModelAndView();
 		mav=as.noticeDelete(abo_no);
 		return mav;

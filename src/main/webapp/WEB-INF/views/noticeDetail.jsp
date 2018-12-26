@@ -106,7 +106,7 @@
 										<input type="hidden" value="${abo.abo_no}" name="abo_no" />
 										<div style="text-align: right">
 											<input type="button" class="btn btn-warning"
-												onclick="javascript:history.back();" value="목록" />
+												onclick="location.href='noticeList'" value="목록" />
 										</div>
 
 
