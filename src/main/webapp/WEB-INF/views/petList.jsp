@@ -86,42 +86,6 @@
 								<div class="card-deck">
 									
 									<c:forEach var="petList" items="${petList}" varStatus="status">
-										<%-- <div class="col-lg-4">
-											<div class="card">
-												<div class="card-body">
-													<span class="float-left m-2 mr-4"> <a
-														href="petInfoDetail?pet_no=${petList.pet_no}"> <img
-															src="${petList.pet_loc}${petList.pet_photo}"
-															style="height: 100px;" id="petProfile" alt="pet profile"
-															class="rounded-circle img-thumbnail">
-													</a>
-
-													</span>
-													<div class="media-body">
-
-														<h4 class="mt-1 mb-1">${petList.pet_name}</h4>
-														<p class="font-13">${petList.pet_vrt}</p>
-
-														<ul class="mb-0 list-inline">
-															<li class="list-inline-item mr-3">
-																<h5 class="mb-1"> 성별 :
-													<c:if test="${'F' eq petList.pet_sex}">암컷</c:if>
-													<c:if test="${'M' eq petList.pet_sex}">수컷</c:if></h5>
-															</li>
-															<li class="list-inline-item">
-																<h5 class="mb-1"><c:set var="now" value="<%=new java.util.Date()%>" />
-													<c:set var="sysYear">
-														<fmt:formatDate value="${now}" pattern="yyyy" />
-													</c:set>
-													나이 : ${sysYear-petList.pet_age+1}살</h5>
-															</li>
-														</ul>
-													</div>
-													<!-- end media-body-->
-												</div>
-												<!-- end card-body-->
-											</div>
-										</div> --%>
 										<div class="col-lg-4" style="padding: 0;">
 											<div class="card d-block"
 												style="text-align: center; margin-bottom: 20px;">

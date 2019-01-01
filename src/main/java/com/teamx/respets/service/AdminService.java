@@ -1,5 +1,7 @@
 package com.teamx.respets.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,49 +125,50 @@ public class AdminService {
 		return mav;
 	} // confirmLicense end
 
-	/* 공지 리스트 */
+	/* 공지사항 목록 */
 	public ModelAndView noticeList(Integer pageNum) {
 		mav = new ModelAndView();
-		String view = null;
 		List<AdminBoard> aboList = null;
+		//페이지번호가 없으면 1 대입
 		int page_no = (pageNum == null) ? 1 : pageNum;
+		//DB에서 select한 데이터를 변수 aboList에 대입
 		aboList = aDao.getNoticeList(page_no);
-		if (aboList != null) {
+		if (aboList != null) {//데이터값이 존재하면
+			//ModelAndView에 데이터값을 추가한다 (JSP에서 EL로 출력)
 			mav.addObject("aboList", aboList);
 			mav.addObject("paging", getPaging(page_no));
-			System.out.println("getNoticeList 성공");
-			view = "noticeList";
-		} else {
-			System.out.println("getNoticeList 실패");
-			view = "noticeList";
+		} else {//데이터값이 존재하지 않으면 콘솔에 null 알림 표시
+			System.out.println("aboList null");
 		}
-		mav.setViewName(view);
+		mav.setViewName("noticeList");//noticeList.jsp로 이동
 		return mav;
 	}
-
+	
+	/* 페이징을 위한 HTML을 만드는 paging클래스와 연결하는 메소드 */
 	private Object getPaging(int pageNum) {
-		int maxNum = aDao.getBoardCount(); // 전체 글의 개수
-		int listCount = 10; // 페이지당 글의 수
-		int pageCount = 5; // 그룹당 페이지 수
-		String boardName = "noticeList"; // 게시판이 여러개일 때
+		int maxNum = aDao.getBoardCount(); //전체 글의 개수
+		int listCount = 10; //페이지당 글의 수
+		int pageCount = 5; //그룹당 페이지 수
+		String boardName = "noticeList"; //게시판이 여러개일 때 구분하기 위한 게시판명
 		Paging paging = new Paging(maxNum, pageNum, listCount, pageCount, boardName);
 		return paging.makeHtmlPaging();
 	}
 
 	/* 게시글 저장 */
-	public ModelAndView noticeInsert(String abc_no, String abo_title, String abo_ctt) {
-		abo = new AdminBoard();
-		abo.setAbc_no(abc_no);
-		abo.setAbo_title(abo_title);
-		abo.setAbo_ctt(abo_ctt);
-		boolean insertResult = aDao.boardInsert(abo);
-		System.out.println("what's the insertResult? " + insertResult);
+	public ModelAndView noticeInsert(HttpServletRequest request) {
 		mav = new ModelAndView();
-		String view = null;
-		if (insertResult) {
+		String view = null;		
+		abo = new AdminBoard();
+		//request에 담겨있는 매개변수들을 Bean에 담는다
+		abo.setAbc_no(request.getParameter("abc_no"));
+		abo.setAbo_title(request.getParameter("abo_title"));
+		abo.setAbo_ctt(request.getParameter("abo_ctt"));
+		//DB에 insert하고 그 결과를 변수 insertResult에 대입
+		boolean insertResult = aDao.boardInsert(abo);
+		if (insertResult) {//결과값이 true이면 noticeList.jsp로 이동
 			System.out.println("noticeInsert 성공");
 			view = "redirect:noticeList";
-		} else {
+		} else {//결과값이 false면 noticeWriteForm.jsp로 이동
 			System.out.println("noticeInsert 실패");
 			view = "redirect:noticeWriteForm";
 		}
@@ -176,12 +179,15 @@ public class AdminService {
 	/* 게시글 내용 */
 	public ModelAndView noticeDetail(String abo_no) {
 		mav = new ModelAndView();
-		String view = null;
-		AdminBoard abo = null;
+		abo = new AdminBoard();
 		abo = aDao.getBoardDetail(abo_no);
-		mav.addObject("abo", abo);
-		view = "noticeDetail";// jsp
-		mav.setViewName(view);
+		if(abo!=null) {//데이터값이 존재하면
+			//ModelAndView에 데이터값을 추가한다 (JSP에서 EL로 출력)
+			mav.addObject("abo", abo);
+		} else {//데이터값이 존재하지 않으면 콘솔에 null 알림 표시
+			System.out.println("abo null");
+		}
+		mav.setViewName("noticeDetail");
 		return mav;
 	}
 
@@ -198,14 +204,20 @@ public class AdminService {
 	}
 
 	/* 게시글 수정 */
-	public ModelAndView noticeUpdate(AdminBoard abo) {
+	public ModelAndView noticeUpdate(HttpServletRequest request) {
 		abo = new AdminBoard();
+		abo.setAbo_no(request.getParameter("abo_no"));
+		abo.setAbc_no(request.getParameter("abc_no"));
+		abo.setAbo_title(request.getParameter("abo_title"));
+		abo.setAbo_ctt(request.getParameter("abo_ctt"));
 		boolean updateResult = false;
 		updateResult = aDao.boardUpdate(abo);
 		System.out.println("updateResult=" + updateResult);
 		mav = new ModelAndView();
 		String view = null;
-		view = "redirect:noticeDetail";
+		abo = aDao.getBoardDetail(abo.getAbo_no());
+		mav.addObject("abo", abo);
+		view = "noticeDetail";
 		mav.setViewName(view);
 		return mav;
 	}
@@ -221,9 +233,10 @@ public class AdminService {
 
 	/* 검색한 게시글 리스트 */
 	public ModelAndView noticeListSearch(Integer pageNum, String abc_name, String search) {
+		
 		// pageNum이 null이면 1
 		int page_no = (pageNum == null) ? 1 : pageNum;
-
+		
 		abo = new AdminBoard();
 		abo.setPage_no(page_no);
 		abo.setAbc_name(abc_name);

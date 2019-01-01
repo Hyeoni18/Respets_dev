@@ -186,5 +186,22 @@ public interface BusinessDao {
 	public int favoriteInsert(HashMap<String, Object> hmap);
 	//기업상세페이지 - 즐겨찾기 삭제
 	public int favoriteDelete(HashMap<String, Object> hmap);
+	
+	public int nowPwCheck(Business b);
+
+	public void businessPwUpdate(Business b);
+
+	public Business businessInfoUpdateForm(Business b);
+	
+	
+	// 기업 새로운 예약
+	public List<HashMap<String, String>> selectBooking(String bus_no);
+
+	// 예약 수락
+	public void bookingAccept(String bk_no);
+
+	// 예약 거절
+	public void bookingReject(String bk_no);
+
 
 }

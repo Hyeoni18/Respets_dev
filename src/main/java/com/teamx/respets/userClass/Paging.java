@@ -82,19 +82,7 @@ public class Paging {
 		}
 		sb.append("</ul></div>");
 
-		/*
-		 * if (start != 1) { sb.append("<li><a href='" + boardName + "?pageNum=" +
-		 * (start - 1) + "'>"); sb.append("이전</a></li>"); } // method End
-		 * 
-		 * for (int i = start; i <= end; i++) { if (pageNum != i) { // 현재 페이지가 아닌 경우 링크
-		 * 처리 sb.append("<li><a href='" + boardName + "?pageNum=" + i + "'>");
-		 * sb.append("  "+ i +"</a></li>"); } else { // 현재 페이지인 경우 링크 해제
-		 * sb.append("<font style='color: red;'> " + i + "  </font>"); } // else End }
-		 * // for End
-		 * 
-		 * if (end != totalPage) { sb.append("<li><a href='" + boardName + "?pageNum=" +
-		 * (end + 1) + "'>"); sb.append("다음</a></li>"); } // if End
-		 */ return sb.toString();
+		return sb.toString();
 	} // method End
 
 	@SuppressWarnings("unused")
@@ -164,25 +152,13 @@ public class Paging {
 					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
 		}
 		sb.append("</ul></div>");
-
-		/*
-		 * if (start != 1) { sb.append("<li><a href='" + boardName + "?pageNum=" +
-		 * (start - 1) + "&select="+ select + "$search=" + search +"'>");
-		 * sb.append("이전</a></li>"); } // method End
-		 * 
-		 * for (int i = start; i <= end; i++) { if (pageNum != i) { // 현재 페이지가 아닌 경우 링크
-		 * 처리 sb.append("<li><a href='" + boardName + "?pageNum=" + i + "&select="+
-		 * select + "&search="+ search +"'>"); sb.append("  "+ i +"</a><li>"); } else {
-		 * // 현재 페이지인 경우 링크 해제 sb.append("<font style='color: red;'> " + i +
-		 * "  </font>"); } // else End } // for End
-		 * 
-		 * if (end != totalPage) { sb.append("<li><a href='" + boardName + "?pageNum=" +
-		 * (end + 1) + "&select="+ select + "&search="+ search + "'>");
-		 * sb.append("다음</a></li>"); } // if End
-		 */ return sb.toString();
+		
+		return sb.toString();
 	} // method End
 
-	public String makeHtmlSearchPaging(AdminBoard abo) {
+	
+	//게시판
+	public String makeHtmlPaging(AdminBoard abo) {
 		System.out.println("paging makeHtmlSearchPaging hmap=" + abo);
 		// 전체 페이지 갯수
 		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
@@ -190,16 +166,11 @@ public class Paging {
 		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
 		// 현재 페이지가 속해 있는 그룹 번호
 		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
-		return makeHtmlSearch(currentGroup, totalPage, boardName, abo);
+		return makeHtml(currentGroup, totalPage, boardName, abo);
 	}
-
-	private String makeHtmlSearch(int currentGroup, int totalPage, String boardName, AdminBoard abo) {
+	
+	private String makeHtml(int currentGroup, int totalPage, String boardName, AdminBoard abo) {
 		StringBuffer sb = new StringBuffer();
-		System.out.println("paging makeHtmlSearch hmap=" + abo);
-		String abc_name = abo.getAbc_name();
-		String search = abo.getSearch();
-		System.out.println("꺼내오니 select? " + abc_name);
-		System.out.println("꺼내오니 search? " + search);
 		// 현재 그룹의 시작 페이지 번호
 		int start = (currentGroup * pageCount) - (pageCount - 1);
 		// 현재 그룹의 끝 페이지 번호
@@ -248,24 +219,77 @@ public class Paging {
 					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
 		}
 		sb.append("</ul></div>");
-
-		/*
-		 * if (start != 1) { sb.append("<a href='" + boardName + "?pageNum=" + (start -
-		 * 1) + "&select="+ abc_name + "$search=" + search +"'>"); sb.append("이전</a>");
-		 * } // method End
-		 * 
-		 * for (int i = start; i <= end; i++) { if (pageNum != i) { // 현재 페이지가 아닌 경우 링크
-		 * 처리 sb.append("<a href='" + boardName + "?pageNum=" + i + "&select="+ abc_name
-		 * + "&search="+ search +"'>"); sb.append("  "+ i +"</a>"); } else { // 현재 페이지인
-		 * 경우 링크 해제 sb.append("<font style='color: red;'> " + i + "  </font>"); } //
-		 * else End } // for End
-		 * 
-		 * if (end != totalPage) { sb.append("<a href='" + boardName + "?pageNum=" +
-		 * (end + 1) + "&select="+ abc_name + "&search="+ search + "'>");
-		 * sb.append("다음</a>"); } // if End
-		 */
 		return sb.toString();
 	}
+	
+	//게시판 검색
+	public String makeHtmlSearchPaging(AdminBoard abo) {
+		System.out.println("paging makeHtmlSearchPaging hmap=" + abo);
+		// 전체 페이지 갯수
+		int totalPage = (maxNum % listCount > 0) ? maxNum / listCount + 1 : maxNum / listCount;
+		// 전체 페이지 그룹 갯수
+		int totalGroup = (totalPage % pageCount > 0) ? totalPage / pageCount + 1 : totalPage / pageCount;
+		// 현재 페이지가 속해 있는 그룹 번호
+		int currentGroup = (pageNum % pageCount > 0) ? pageNum / pageCount + 1 : pageNum / pageCount;
+		return makeHtmlSearch(currentGroup, totalPage, boardName, abo);
+	}
+
+	private String makeHtmlSearch(int currentGroup, int totalPage, String boardName, AdminBoard abo) {
+		StringBuffer sb = new StringBuffer();
+		// 현재 그룹의 시작 페이지 번호
+		int start = (currentGroup * pageCount) - (pageCount - 1);
+		// 현재 그룹의 끝 페이지 번호
+		int end = (currentGroup * pageCount >= totalPage) ? totalPage : currentGroup * pageCount;
+
+		sb.append("<div class='dataTables_paginate paging_simple_numbers'" + "id='selection-datatable_paginate'>"
+				+ "<ul class='pagination pagination-rounded'>");
+
+		if (pageNum <= 1) {
+			sb.append("<li class='paginate_button page-item previous disabled'"
+					+ "id='selection-datatable_previous'><a href='#'"
+					+ "aria-controls='selection-datatable' data-dt-idx='0' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-left'></i></a></li>");
+		} else {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (pageNum - 1) + "&abc_name="+ abo.getAbc_name() +""
+					+ "&search="+ abo.getSearch() +"' "
+					+ "aria-controls='selection-datatable' data-dt-idx='0' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-left'></i></a></li>");
+		}
+
+		for (int i = start; i <= end; i++) {
+			if (pageNum != i) { // 현재 페이지가 아닌 경우 링크 처리
+				sb.append("<li class='paginate_button page-item'>" + "<a href='" + boardName + "?pageNum=" + i
+						+ "&abc_name="+ abo.getAbc_name() +"&search="+ abo.getSearch()
+						+ "' aria-controls='basic-datatable' " + "data-dt-idx='" + i
+						+ "' tabindex='0' class='page-link'>" + i + "</a></li>");
+			} else { // 현재 페이지인 경우 링크 해제
+				sb.append("<li class='paginate_button page-item active'>" + "<a href='" + boardName + "?pageNum=" + i
+						+ "&abc_name="+ abo.getAbc_name() +"&search="+ abo.getSearch()
+						+ "' aria-controls='basic-datatable' " + "data-dt-idx='" + i
+						+ "' tabindex='0' class='page-link'>" + i + "</a></li>");
+			} // else End
+		} // for End
+		if (pageNum == totalPage) {
+			sb.append("<li class='paginate_button page-item previous disabled'"
+					+ "id='selection-datatable_previous'><a href='#'"
+					+ "aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		} else if (pageNum == end) {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (end + 1) + "&abc_name="+ abo.getAbc_name() +"&search="+ abo.getSearch()
+					+ "' aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		} else {
+			sb.append("<li class='paginate_button page-item previous'" + "id='selection-datatable_previous'><a href='"
+					+ boardName + "?pageNum=" + (pageNum + 1) + "&abc_name="+ abo.getAbc_name() +"&search="+ abo.getSearch()
+					+ "' aria-controls='selection-datatable' data-dt-idx='6' tabindex='0'"
+					+ "class='page-link'><i class='mdi mdi-chevron-right'></i></a></li>");
+		}
+		sb.append("</ul></div>");
+		return sb.toString();
+	}
+	
 ///////////////////////////////////////현휘 
 	@SuppressWarnings("unused")
 	public String businessListPaging(Map<String, Object> map) {

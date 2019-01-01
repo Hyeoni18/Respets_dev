@@ -185,5 +185,24 @@ public class PersonalController {
 		mav=ps.personalCalendar(session);
 		return mav;
 	}
+	
+	// 개인 즐겨찾기 페이지
+	@RequestMapping(value = "/likeBusinessList", method = RequestMethod.GET)
+	public ModelAndView likeBusinessList(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String list = ps.likeBusinessList(request);
+		mav.addObject("list", list);
+		mav.setViewName("likeBusinessList");
+		return mav;
+	} // method End
+
+	// 개인 즐겨찾기 삭제
+	@RequestMapping(value = "/likeBusinessCancel", method = RequestMethod.GET)
+	public ModelAndView likeBusinessCancel(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		ps.likeBusinessCancel(request);
+		mav.setViewName("redirect:likeBusinessList");
+		return mav;
+	} // method End
 
 }

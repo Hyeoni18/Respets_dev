@@ -72,4 +72,49 @@
 	<update id="resetBusPw" parameterType="personal">
 		UPDATE BUS SET BUS_PW=#{per_pw} WHERE BUS_EMAIL=#{per_email}
 	</update>
+	
+		<!-- 서진 : 기업 회원 가입 시 업종 라디오 버튼 -->
+	<select id="selectBusCategory" resultType="HashMap">
+		SELECT * FROM BCT
+	</select>
+
+	<!-- 기업 회원 가입 시 이메일 확인 -->
+	<select id="emailCheck" parameterType="String" resultType="int">
+		SELECT COUNT(EMAIL) FROM FIND_VIEW WHERE EMAIL = #{email}
+	</select>
+
+	<!-- 기업 회원 가입 시 사업자 등록 번호 확인 -->
+	<select id="taxIdCheck" parameterType="String" resultType="int">
+		SELECT COUNT(BUS_LCNO) FROM BUS WHERE BUS_LCNO = #{taxId}
+	</select>
+
+	<!-- 기업 회원 가입 BUSINESS_TB INSERT -->
+	<insert id="businessInsert" parameterType="Business">
+		<selectKey keyProperty="bus_seq" resultType="int" order="BEFORE">
+			SELECT BUS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO BUS VALUES('B'||#{bus_seq}, #{bus_email}, #{bus_pw},
+		#{bus_name}, #{bus_ceo}, #{bus_lcno}, #{bus_phone}, #{bus_post},
+		#{bus_addr}, #{bus_addr2}, 'O', DEFAULT, DEFAULT, DEFAULT, NULL)
+	</insert>
+
+	<!-- 기업 회원 가입 SERVICE_TB INSERT -->
+	<insert id="busJoinSvcInsert" parameterType="Business">
+		INSERT INTO SVC VALUES(#{bus_no}, #{bct_code}, 1)
+	</insert>
+
+	<!-- 기업 회원 가입 사업자등록증 GALLERY_TB INSERT -->
+	<insert id="licenseInsert" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 1, #{file}, #{location})
+	</insert>
+
+	<!-- 기업 회원 가입 기업대표사진 GALLERY_TB INSERT -->
+	<insert id="mainPhotoInsert" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, #{file}, #{location})
+	</insert>
+
+	<!-- 기업 회원 가입 기업대표사진 없을 때 -->
+	<insert id="mainPhotoDefault" parameterType="HashMap">
+		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, DEFAULT, DEFAULT)
+	</insert>
 </mapper>

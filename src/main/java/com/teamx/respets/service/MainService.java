@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -14,8 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.AdminBoard;
+import com.teamx.respets.bean.Booking;
+import com.teamx.respets.bean.Business;
 import com.teamx.respets.dao.MainDao;
 import com.teamx.respets.userClass.Paging;
 
@@ -24,6 +30,21 @@ public class MainService {
 	ModelAndView mav;
 	@Autowired
 	private MainDao mDao;
+	
+	// index
+	public ModelAndView index() {
+		ModelAndView mav = new ModelAndView();
+		List<HashMap<String, String>> list = mDao.selectBusCategory();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
+			sb.append(list.get(i).get("BCT_NAME") + "</option>");
+		} // for End
+		mav.addObject("bct", sb);
+		List<AdminBoard> aboList = mDao.selectBoardList();
+		mav.addObject("list", aboList);
+		return mav;
+	} // method End
 
 	// 기업상세페이지 하단 업체 기본 정보
 	public ModelAndView businessBasicInfo(HttpServletRequest request) {
@@ -594,4 +615,266 @@ public class MainService {
 		Paging paging = new Paging(maxNum, pNo, listCount, pageCount, boardName);
 		return paging.butTagSelectListPaging(map);
 	}
+	
+	public int nowPwCheck(Business b, HttpServletRequest request) {
+		b.setBus_no(request.getSession().getAttribute("no").toString());
+		int result = mDao.nowPwCheck(b);
+		return result;
+	}
+	
+	// 예약 페이지
+		public ModelAndView bookingForm(HttpServletRequest request) {
+			ModelAndView mav = new ModelAndView();
+			HashMap<String, String> hMap = new HashMap<String, String>();
+			if (request.getQueryString() != null) {
+				String queryString = request.getQueryString();
+				String[] parameters = queryString.split("&");
+				for (String parameter : parameters) {
+					String name = parameter.split("=")[0];
+					String value = parameter.split("=")[1];
+					hMap.put(name, value);
+				} // for End
+			} // if End
+			hMap.put("per_no", request.getSession().getAttribute("no").toString());
+			Map<String, String> petMap = new HashMap<String, String>();
+			if (hMap.get("pet_no") == null) {
+				petMap = mDao.selectFirstPet(hMap);
+			} else {
+				petMap = mDao.firstPet(hMap);
+			} // if End
+			hMap.put("pet_no", petMap.get("PET_NO"));
+			if (hMap.get("date") == null) {
+				hMap.put("date", "noDate");
+			} // if End
+			StringBuilder pet = new StringBuilder();
+			pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
+			pet.append("' style='height:300px; weight:300px;' />");
+			pet.append("<div class='card-body'>");
+			pet.append("<p style='text-align:center;'>이름: " + petMap.get("PET_NAME") + "</p>");
+			pet.append("<input type='hidden' name='bus_no' value='" + hMap.get("bus_no") + "' />");
+			pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
+			pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
+			pet.append("</div>");
+			List<HashMap<String, String>> petList = mDao.selectPetList(petMap);
+			pet.append(
+					"<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
+			for (int i = 0; i < petList.size(); i++) {
+				pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no="
+						+ hMap.get("bus_no"));
+				pet.append("&bct_code=" + hMap.get("bct_code"));
+				pet.append("&date=" + hMap.get("date") + "&pet_no=" + petList.get(i).get("PET_NO"));
+				pet.append("'> " + petList.get(i).get("PET_NAME") + "</a><br/>");
+			} // for End
+			mav.addObject("petList", pet);
+			List<HashMap<String, String>> svcList = mDao.selectSvcList(hMap);
+			StringBuilder svc = new StringBuilder();
+			svc.append("<hr/><h5 class='text-success'>서비스 선택</h5>");
+			for (int i = 0; i < svcList.size(); i++) {
+				svc.append("<input type='checkbox' name='menu_no' value='");
+				svc.append(String.valueOf(svcList.get(i).get("MENU_NO")) + "' />");
+				svc.append(svcList.get(i).get("MENU_NAME"));
+				if (!svcList.get(i).get("PRICE").equals("0")) {
+					svc.append(" (" + svcList.get(i).get("PRICE") + " 원)");
+				} // if End
+				svc.append("<br/>");
+				svc.append("<input type='hidden' name='" + String.valueOf(svcList.get(i).get("MENU_NO")));
+				svc.append("' value='" + svcList.get(i).get("PRICE") + "' />");
+			} // for End
+			mav.addObject("svcList", svc);
+			List<HashMap<String, String>> empList = mDao.selectEmpList(hMap);
+			StringBuilder emp = new StringBuilder();
+			emp.append("<br/><br/<br/><hr/><h5 class='text-success'>직원 선택</h5>");
+			for (int i = 0; i < empList.size(); i++) {
+				emp.append("<input type='radio' name='emp_no' value='");
+				emp.append(empList.get(i).get("EMP_NO") + "' /> ");
+				emp.append(empList.get(i).get("EMP_NAME") + " " + empList.get(i).get("EMP_POS"));
+				emp.append(" (" + empList.get(i).get("EMP_PART") + ")<br/>");
+			} // for End
+			mav.addObject("empList", emp);
+			Date date = null;
+			if (hMap.get("date") != null && !hMap.get("date").equals("noDate")) {
+				try {
+					date = new SimpleDateFormat("yy/MM/dd").parse(hMap.get("date"));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				} // catch End
+			} else {
+				date = new Date();
+			} // else End
+			Calendar cal = new GregorianCalendar(Locale.KOREA);
+			cal.setTime(date);
+			StringBuilder dayList = new StringBuilder();
+			dayList.append("<tr>");
+			for (int i = 0; i < 7; i++) {
+				int day = cal.get(Calendar.DAY_OF_WEEK);
+				SimpleDateFormat valSdf = new SimpleDateFormat("yyMMdd");
+				SimpleDateFormat sdf = null;
+				if (day == 1) {
+					sdf = new SimpleDateFormat("MM월 dd일 일요일");
+				} else if (day == 2) {
+					sdf = new SimpleDateFormat("MM월 dd일 월요일");
+				} else if (day == 3) {
+					sdf = new SimpleDateFormat("MM월 dd일 화요일");
+				} else if (day == 4) {
+					sdf = new SimpleDateFormat("MM월 dd일 수요일");
+				} else if (day == 5) {
+					sdf = new SimpleDateFormat("MM월 dd일 목요일");
+				} else if (day == 6) {
+					sdf = new SimpleDateFormat("MM월 dd일 금요일");
+				} else if (day == 7) {
+					sdf = new SimpleDateFormat("MM월 dd일 토요일");
+				} // else if End
+				String strDate = sdf.format(cal.getTime());
+				String valDate = valSdf.format(cal.getTime());
+				dayList.append("<td><input type='radio' name='day' value='" + valDate + "' />");
+				dayList.append(strDate + "</td>");
+				cal.add(Calendar.DAY_OF_YEAR, 1);
+			} // for End
+			dayList.append("</tr>");
+			mav.addObject("dayList", dayList);
+			return mav;
+		} // method End
+
+		// 예약 페이지 시간
+		public String timeSelect(HttpServletRequest request) {
+			HashMap<String, String> hMap = new HashMap<String, String>();
+			hMap.put("date", request.getParameter("date"));
+			hMap.put("emp_no", request.getParameter("emp"));
+			HashMap<String, String> timeMap = mDao.selectEmpTime(hMap);
+			String timeList = "";
+			List<HashMap<String, String>> noTimeList = mDao.selectNoTime(hMap);
+			if (timeMap == null) { // DB에 시간 없을 때
+				timeList = "직원 휴무일입니다.";
+			} else { // DB에 시간 있을 때
+				int amOpenHour = Integer.parseInt(timeMap.get("AM_OPEN").substring(0, 2));
+				int amOpenMin = Integer.parseInt(timeMap.get("AM_OPEN").substring(2, 4));
+				int amCloseHour = Integer.parseInt(timeMap.get("AM_CLOSE").substring(0, 2));
+				int amCloseMin = Integer.parseInt(timeMap.get("AM_CLOSE").substring(2, 4));
+				int pmOpenHour = Integer.parseInt(timeMap.get("PM_OPEN").substring(0, 2));
+				int pmOpenMin = Integer.parseInt(timeMap.get("PM_OPEN").substring(2, 4));
+				int pmCloseHour = Integer.parseInt(timeMap.get("PM_CLOSE").substring(0, 2));
+				int pmCloseMin = Integer.parseInt(timeMap.get("PM_CLOSE").substring(2, 4));
+				if (hMap.get("date").equals(new SimpleDateFormat("yyMMdd").format(new Date()))) { // 오늘일 때
+					String todayTime = new SimpleDateFormat("HHmm").format(new Date());
+					int todayHour = Integer.parseInt(todayTime.substring(0, 2));
+					int todayMin = Integer.parseInt(todayTime.substring(2, 4));
+					String strHour = "";
+					String strMin = "";
+					if (todayMin < 30) {
+						strMin = "30";
+					} else {
+						strMin = "00";
+						todayHour++;
+					} // else End
+					todayHour++;
+					if (todayHour < 10) {
+						strHour = "0" + todayHour;
+					} else {
+						strHour = String.valueOf(todayHour);
+					} // else End
+					todayTime = strHour + strMin;
+					// 비교를 위한 변수
+					if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_OPEN"))) {
+						String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+						String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+						timeList = amTimeList + pmTimeList;
+					} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_CLOSE"))) {
+						amOpenHour = Integer.parseInt(todayTime.substring(0, 2));
+						amOpenMin = Integer.parseInt(todayTime.substring(2, 4));
+						String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+						String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+						timeList = amTimeList + pmTimeList;
+					} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_OPEN"))) {
+						timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_CLOSE"))) {
+						pmOpenHour = Integer.parseInt(todayTime.substring(0, 2));
+						pmOpenMin = Integer.parseInt(todayTime.substring(2, 4));
+						timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					} else {
+						timeList = "예약 가능한 시간이 없습니다.";
+					} // else End
+				} else { // 오늘 아닐 때
+					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
+					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					timeList = amTimeList + pmTimeList;
+				} // else End
+			} // else End
+			return timeList;
+		} // method End
+
+		// 시간 만드는 메소드
+		private String timeHtml(int openHour, int openMin, int closeHour, int closeMin,
+				List<HashMap<String, String>> noTimeList) {
+			int length = 0;
+			if (openMin == closeMin) {
+				length = (closeHour - openHour) * 2;
+			} else if (openMin > closeMin) {
+				length = (closeHour - openHour) * 2 - 1;
+			} else if (openMin < closeMin) {
+				length = (closeHour - openHour) * 2 + 1;
+			} // if End
+			StringBuilder timeList = new StringBuilder();
+			timeList.append("<tr>");
+			String time = "";
+			for (int i = 1; i <= length; i++) {
+				if (openHour == 0) {
+					time += "00";
+				} else if (openHour < 10) {
+					time = "0" + openHour;
+				} else {
+					time += openHour;
+				} // else End
+				if (openMin == 0) {
+					time += "00";
+				} else {
+					time += openMin;
+				} // else End
+				System.out.println("time" + time);
+				timeList.append("<td><input type='radio' name='time' value='" + time);
+				for (int j = 0; j < noTimeList.size(); j++) {
+					if (noTimeList.get(j).get("VS_START").equals(time)) {
+						timeList.append("' disabled='disabled");
+					} // if End
+				} // for End
+				timeList.append("' />" + time.substring(0, 2) + ":" + time.substring(2, 4) + "</td>");
+				if (i % 5 == 0) {
+					timeList.append("</tr><tr>");
+				} // if End
+				if (openMin == 30) {
+					openHour += 1;
+					openMin = 0;
+				} else {
+					openMin += 30;
+				} // else End
+				time = "";
+			} // for End
+			timeList.append("</tr>");
+			return timeList.toString();
+		} // method End
+
+		// 예약 메소드
+		@Transactional
+		public ModelAndView insertBooking(Booking bk, HttpServletRequest request) {
+			bk.setPer_no(request.getSession().getAttribute("no").toString());
+			bk.setVs_start(request.getParameter("day") + request.getParameter("time"));
+			String[] menu_no = request.getParameterValues("menu_no");
+			int sum = 0;
+			for (int i = 0; i < menu_no.length; i++) {
+				sum += Integer.parseInt(request.getParameter(menu_no[i]));
+			} // for End
+			bk.setBk_pay(sum);
+			mDao.insertBooking(bk);
+			bk.setBk_no("K" + String.valueOf(bk.getBk_seq()));
+			for (int i = 0; i < menu_no.length; i++) {
+				bk.setMenu_no(Integer.parseInt(menu_no[i]));
+				mDao.insertBkMenu(bk);
+			} // for End
+			HashMap<String, String> hMap = mDao.bookingSuccess(bk);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("bus_name", hMap.get("BUS_NAME"));
+			mav.addObject("vs_start", hMap.get("VS_START"));
+			mav.addObject("bct_name", hMap.get("BCT_NAME"));
+			return mav;
+		} // method End
+
 }

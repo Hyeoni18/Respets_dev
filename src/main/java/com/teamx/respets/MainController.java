@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.teamx.respets.bean.Booking;
 import com.teamx.respets.service.MainService;
 
 @Controller
@@ -58,5 +59,30 @@ public class MainController {
 		mav = ms.businessList(request, pageNum); // 업종코드
 		return mav;
 	}
+	
+	// 메인 페이지
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView index() {
+			ModelAndView mav = ms.index();
+			mav.setViewName("index");
+			return mav;
+	} // method End
+		
+	// 예약 페이지
+	@RequestMapping(value = "/bookingForm", method = RequestMethod.GET)
+	public ModelAndView bookingForm(HttpServletRequest request) {
+		ModelAndView mav = ms.bookingForm(request);
+		mav.setViewName("bookingForm");
+			return mav;
+	} // method End
+
+	// 예약
+	@RequestMapping(value = "/booking", method = RequestMethod.POST)
+	public ModelAndView booking(Booking bk, HttpServletRequest request) {
+		ModelAndView mav = ms.insertBooking(bk, request);
+		mav.setViewName("bookingSuccess");
+		return mav;
+	} // method End
+
 
 }

@@ -750,7 +750,6 @@ public class PersonalService {
 		String no = session.getAttribute("no").toString();
 		List<HashMap<String, Object>> bookingList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>();
-
 		// 회원의 간략한 예약일정을 검색 (예약번호,펫이름,기업명,업종명,방문시간)
 		bookingList = pDao.getPerCalendar(no);
 
@@ -767,10 +766,9 @@ public class PersonalService {
 			if (bctName.equals("병원")) {
 				bctName = "진료";
 			}
-
+			
 			String start = bookingList.get(i).get("VS_START").toString();
 			String end = bookingList.get(i).get("VS_END").toString();
-
 			// 데이터 입력
 			hmap.put("title", petName + ": " + busName + "[" + bctName + "]");
 			hmap.put("start", start);
@@ -791,6 +789,7 @@ public class PersonalService {
 			}
 			bList.add(hmap);
 		}
+		//json		
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(bList);
 		mav.addObject("e", json);
@@ -798,4 +797,38 @@ public class PersonalService {
 		mav.setViewName(view);
 		return mav;
 	}
+	
+	// 개인 즐겨찾기 페이지
+	public String likeBusinessList(HttpServletRequest request) {
+		String per_no = request.getSession().getAttribute("no").toString();
+		List<HashMap<String, String>> list = pDao.likeBusinessSelect(per_no);
+		String sb = makeLikeBusListHtml(list);
+		return sb;
+	} // method End
+
+	// 개인 즐겨찾기 페이지 Html 생성
+	private String makeLikeBusListHtml(List<HashMap<String, String>> list) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append("<div class='col-lg-4' style='padding:0;'>");
+			sb.append("<div class='card d-block' style='text-align: center;margin-bottom:20px;'>");
+			sb.append("<a href='businessDetailPage?bus_no=" + list.get(i).get("BUS_NO") + "&bct_code=");
+			sb.append(list.get(i).get("BCT_CODE") + "'><img class='rounded-circle img-thumbnail' id='petProfile' src='");
+			sb.append(list.get(i).get("GLR_LOC") + list.get(i).get("GLR_FILE") + "'>");
+			sb.append("</a><div class='card-body'><h5 class='card-title'>");
+			sb.append(list.get(i).get("BUS_NAME") + "</h5><br/>");
+			sb.append("<a class='btn btn-outline-danger btn-rounded' href='./likeBusinessCancel?bus_no=");
+			sb.append(list.get(i).get("BUS_NO") + "' onclick='return check();'>삭제</a></div>");
+			sb.append("</div></div>");
+		} // for End
+		return sb.toString();
+	} // method End
+
+	// 개인 즐겨찾기 삭제
+	public void likeBusinessCancel(HttpServletRequest request) {
+		Map<String, String> hMap = new HashMap<String, String>();
+		hMap.put("per_no", request.getSession().getAttribute("no").toString());
+		hMap.put("bus_no", request.getParameter("bus_no"));
+		pDao.likeBusinessDelete(hMap);
+	} // method End
 }
