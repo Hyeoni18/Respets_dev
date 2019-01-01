@@ -44,6 +44,8 @@ public interface MainDao {
 	//주소선택 후 기업리스트에서 태그 선택시 기업리스트 페이징 카운트
 	public int countSearchBUSaddr(Map<String, Object> map);
 
+	//업종버튼선택 후 스케줄을 등록한 기업인지 확인
+	public String searchBFX(String bus_no);
 	//업종버튼선택 후 기업리스트에서 태그 선택시 기업리스트 검색
 	public List<Map<String, Object>> butTagSelectList(Map<String, Object> map);
 	//업종버튼선택 후 기업리스트에서 태그 선택시 기업리스트 페이징 카운트
