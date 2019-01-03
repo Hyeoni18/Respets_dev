@@ -360,64 +360,66 @@ public class MainService {
 	}
 
 	// 업종버튼선택 후 기업리스트 첫번째 메소드 (페이지 구성)
-	public ModelAndView businessList(HttpServletRequest request, Integer pageNum) {
-		System.out.println("버튼누르면 첫 메소드 첫번째,");
-		System.out.println("들어오는ㄴ지?");
-		int pNo = (pageNum == null) ? 1 : pageNum;
-		mav = new ModelAndView();
-		List<Map<String, Object>> list;
-		Map<String, Object> map = new HashMap<String, Object>();
-		StringBuilder sb = new StringBuilder();
-		String bct_code = request.getParameter("bct_code");
-		map.put("bct_code", bct_code);
-		map.put("pageNum", pNo);
-		list = mDao.selectSVCcode(map);
-		if (list.size() != 0) {
-			sb.append("<div class='row'>");
-			sb.append("<div class='col-12'>");
-			sb.append("<div class='card-deck-wrapper'>");
-			sb.append("<div class='card-deck'>");
-			for (int i = 0; i < list.size(); i++) {
-				String bus_no = (String) list.get(i).get("BUS_NO");
-				String bus_name = (String) list.get(i).get("BUS_NAME");
-				String bus_addr = (String) list.get(i).get("BUS_ADDR");
-				map = new HashMap<String, Object>();
-				map.put("bus_no", bus_no);
-				map.put("gct_no", "2");
-				map = mDao.selectGallery(map);
-				if (map != null) {
-					String glr_file = (String) map.get("GLR_FILE");
-					String glr_loc = (String) map.get("GLR_LOC");
+	   public ModelAndView businessList(HttpServletRequest request, Integer pageNum) {
+	      System.out.println("버튼누르면 첫 메소드 첫번째,");
+	      System.out.println("들어오는ㄴ지?");
+	      int pNo = (pageNum == null) ? 1 : pageNum;
+	      mav = new ModelAndView();
+	      List<Map<String, Object>> list;
+	      Map<String, Object> map = new HashMap<String, Object>();
+	      StringBuilder sb = new StringBuilder();
+	      String bct_code = request.getParameter("bct_code");
+	      map.put("bct_code", bct_code);
+	      map.put("pageNum", pNo);
+	      list = mDao.selectSVCcode(map);
+	      if (list.size() != 0) {
+	         sb.append("<div class='row'>");
+	         sb.append("<div class='col-12'>");
+	         sb.append("<div class='card-deck-wrapper'>");
+	         sb.append("<div class='card-deck'>");
+	         for (int i = 0; i < list.size(); i++) {
+	            String bfx = mDao.searchBFX((String) list.get(i).get("BUS_NO"));
+	            if (bfx != null) {
+	               String bus_no = (String) list.get(i).get("BUS_NO");
+	               String bus_name = (String) list.get(i).get("BUS_NAME");
+	               String bus_addr = (String) list.get(i).get("BUS_ADDR");
+	               map = new HashMap<String, Object>();
+	               map.put("bus_no", bus_no);
+	               map.put("gct_no", "2");
+	               map = mDao.selectGallery(map);
+	               if (map != null) {
+	                  String glr_file = (String) map.get("GLR_FILE");
+	                  String glr_loc = (String) map.get("GLR_LOC");
 
-					sb.append("<div class='col-lg-4'>");
-					sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
-					sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
-					sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file
-							+ "' style='width:100%;height:13rem;'/>");
-					sb.append("<div class='card-body'>");
-					sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
-					sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
-					sb.append("</div>");
-					sb.append("</a>");
-					sb.append("</div>");
-					sb.append("</div>");
+	                  sb.append("<div class='col-lg-4'>");
+	                  sb.append("<div class='card d-block' style='margin: 0 0 20px 0;'>");
+	                  sb.append("<a href='businessDetailPage?bus_no=" + bus_no + "&bct_code=" + bct_code + "'>");
+	                  sb.append("<img class='card-img-top img-fluid' src='" + glr_loc + glr_file
+	                        + "' style='width:100%;height:13rem;'/>");
+	                  sb.append("<div class='card-body'>");
+	                  sb.append("<h5 class='card-title'> " + bus_name + "</h1>");
+	                  sb.append("<h5 class='card-text'> 주소: " + bus_addr + "</h2>");
+	                  sb.append("</div>");
+	                  sb.append("</a>");
+	                  sb.append("</div>");
+	                  sb.append("</div>");
 
-				}
-
-			}
-			sb.append("</div>");
-			sb.append("</div>");
-			sb.append("</div>");
-			sb.append("</div>");
-			mav.addObject("busiList", sb.toString());
-		}
-		String tag = butTagList(bct_code, 1);
-		mav.addObject("tagList", tag);
-		String paging = busiListCodePaging(pNo, bct_code);
-		mav.addObject("paging", paging);
-		mav.setViewName("businessList");
-		return mav;
-	}
+	               }
+	            }
+	         }
+	         sb.append("</div>");
+	         sb.append("</div>");
+	         sb.append("</div>");
+	         sb.append("</div>");
+	         mav.addObject("busiList", sb.toString());
+	      }
+	      String tag = butTagList(bct_code, 1);
+	      mav.addObject("tagList", tag);
+	      String paging = busiListCodePaging(pNo, bct_code);
+	      mav.addObject("paging", paging);
+	      mav.setViewName("businessList");
+	      return mav;
+	   }
 
 	// 업종버튼선택 후 기업리스트 두번째 메소드 (태그 불러오기)
 	private String butTagList(String bct_code, int pNo) {

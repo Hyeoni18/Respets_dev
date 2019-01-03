@@ -421,9 +421,9 @@ function priceBox(cnt) {
 	var dog_tag_ck = document.getElementsByName("dog_tag");
 	var tagName = new Array(); //태그 값 담기는 배열 
 	var aniName = new Array(); //동물 종류 담기는 배열 
-	var catName; //고양이가 담기는 변수
-	var cat_tag; //고양이만 해당하는 무마취 서비스 태그
-	var dog_tag; //강아지만 해당하는 가위컷 서비스 태그
+	var catName = new Array(); //고양이가 담기는 변수
+	var cat_tag = new Array(); //고양이만 해당하는 무마취 서비스 태그
+	var dog_tag = new Array(); //강아지만 해당하는 가위컷 서비스 태그
 	//catName, cat_tag, dog_tag를 나눠준 이유는 제공되는 서비스가 다르기 때문에 구분을 지어줘야한다.
 	var tag_cnt=0; //태그 개수 
 	var ani_cnt=0; //동물 개수 
