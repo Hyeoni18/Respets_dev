@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: jiyecha
-=======
-Built-By: hahyunhwi
->>>>>>> check
+Built-By: jin
 Build-Jdk: 1.8.0_191
 Created-By: Maven Integration for Eclipse
 
