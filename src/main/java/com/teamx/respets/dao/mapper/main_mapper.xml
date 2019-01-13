@@ -103,8 +103,8 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT * FROM BTG G JOIN (SE
 		WHERE TAG_NO=#{tag_no}
 	</select>
 	<!--업종버튼선택 후 스케줄을 등록한 기업인지 확인 -->
-   <select id="searchBFX" parameterType="String" resultType="String">
-   SELECT BUS_NO FROM BFX WHERE BUS_NO=#{bus_no}
+   <select id="searchBFX" parameterType="hashmap" resultType="String">
+   SELECT BUS_NO FROM BFX WHERE BUS_NO=#{bus_no} AND BCT_CODE=#{bct_code}
    </select>
 	<!-- 업종버튼선택 시 기업리스트에서 태그 선택 후 기업리스트 검색 & 페이징 -->
 	<select id="butTagSelectList" parameterType="hashmap"
