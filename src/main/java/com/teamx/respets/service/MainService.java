@@ -27,11 +27,12 @@ import com.teamx.respets.userClass.Paging;
 
 @Service
 public class MainService {
-	ModelAndView mav;
+
 	@Autowired
 	private MainDao mDao;
+	ModelAndView mav;
 
-	// index
+	// 메인 페이지 검색에서 서비스 종류 갖고 오기
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
 		List<HashMap<String, String>> list = mDao.selectBusCategory();
