@@ -250,7 +250,7 @@
 			},
 			success : function(data) {
 				if (data == 0) {
-					$('#taxIdChkMsg').html("사용 가능한 사업자등록번호입니다.");
+					$('#taxIdChkMsg').html("<p style='color: blue'>사용 가능한 사업자등록번호입니다.</p>");
 					$('#submit').attr('disabled', false);
 				} else {
 					$('#taxIdChkMsg').html("<p style='color: red'>사용 중인 사업자등록번호입니다.</p>");
@@ -276,7 +276,7 @@
 			},
 			success : function(data) {
 				if (data == 0) {
-					$('#emailChkMsg').html("사용 가능한 이메일입니다.");
+					$('#emailChkMsg').html("<p style='color: blue'>사용 가능한 이메일입니다.</p>");
 					$('#submit').attr('disabled', false);
 				} else {
 					$('#emailChkMsg').html("<p style='color: red'>사용 중인 이메일입니다.</p>");
