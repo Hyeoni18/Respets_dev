@@ -9,14 +9,18 @@
 	</select>
 	<!-- 개인회원가입 프로필 사진 포함 -->
 	<insert id="personalJoinPhoto" parameterType="HashMap">
-		INSERT INTO PER VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
-		#{per_name}, #{per_phone}, #{per_photo}, #{per_loc}, default, default,
+		INSERT INTO PER
+		VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
+		#{per_name},
+		#{per_phone}, #{per_photo}, #{per_loc}, default, default,
 		NULL)
 	</insert>
 	<!-- 개인회원가입 -->
 	<insert id="personalJoin" parameterType="HashMap">
-		INSERT INTO PER VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
-		#{per_name}, #{per_phone}, default, default, default, default, NULL)
+		INSERT INTO PER
+		VALUES('P'||PER_SEQ.NEXTVAL, #{per_email}, #{per_pw},
+		#{per_name},
+		#{per_phone}, default, default, default, default, NULL)
 	</insert>
 	<!-- 로그인 -->
 	<select id="loginProcess" parameterType="HashMap"
@@ -34,7 +38,8 @@
 		resultType="String"> SELECT BUS_NAME FROM BUS WHERE BUS_NO=#{no} </select>
 	<!-- 이메일인증성공 -->
 	<update id="emailConfirmSuccess" parameterType="String">
-		UPDATE PER SET PER_EMCHK='O' WHERE PER_EMAIL=#{per_email}
+		UPDATE PER SET
+		PER_EMCHK='O' WHERE PER_EMAIL=#{per_email}
 	</update>
 	<!-- 블랙리스트 확인 -->
 	<select id="blackChk" parameterType="HashMap"
@@ -45,7 +50,8 @@
 	<!-- 아이디찾기; type,name, phone을 이용, 회원 view 에서 select 진행 -->
 	<select id="selectUser" parameterType="hashmap"
 		resultType="hashmap">
-		SELECT EMAIL FROM FIND_VIEW WHERE NAME=#{name} AND PHONE=#{phone} AND NO
+		SELECT EMAIL FROM FIND_VIEW WHERE NAME=#{name} AND
+		PHONE=#{phone} AND NO
 		LIKE '${type}%'
 	</select>
 	<!-- 비밀번호 변경 폼 메일 보내기 전 랜덤값 유무 확인 -->
@@ -54,26 +60,31 @@
 	</select>
 	<!-- 비밀번호 변경 후, 랜덤 값 지우기; -->
 	<delete id="deleteRcode" parameterType="String"> DELETE FROM RND WHERE
-		RND_EMAIL=#{email} </delete>
+		RND_EMAIL=#{email}
+	</delete>
 	<!-- 랜덤값입력; 메일을 보내기 전, 입력한 정보들을 랜덤 테이블에 넣기 -->
 	<insert id="findMyPw" parameterType="randomtb">
-		INSERT INTO RND VALUES(#{rnd_email}, #{rnd_code}, #{rnd_type}, default)
+		INSERT INTO RND
+		VALUES(#{rnd_email}, #{rnd_code}, #{rnd_type}, default)
 	</insert>
 	<!-- 랜덤값확인; -->
 	<select id="checkRcode" resultType="randomtb"
 		parameterType="randomtb">
-		SELECT * FROM RND WHERE RND_EMAIL=#{rnd_email} AND RND_CODE=#{rnd_code}
+		SELECT * FROM RND WHERE RND_EMAIL=#{rnd_email} AND
+		RND_CODE=#{rnd_code}
 	</select>
 	<!-- 개인회원 비밀번호 변경; -->
 	<update id="resetPerPw" parameterType="personal">
-		UPDATE PER SET PER_PW=#{per_pw} WHERE PER_EMAIL=#{per_email}
+		UPDATE PER SET
+		PER_PW=#{per_pw} WHERE PER_EMAIL=#{per_email}
 	</update>
 	<!-- 기업회원 비밀번호 변경; -->
 	<update id="resetBusPw" parameterType="personal">
-		UPDATE BUS SET BUS_PW=#{per_pw} WHERE BUS_EMAIL=#{per_email}
+		UPDATE BUS SET
+		BUS_PW=#{per_pw} WHERE BUS_EMAIL=#{per_email}
 	</update>
-	
-		<!-- 서진 : 기업 회원 가입 시 업종 라디오 버튼 -->
+
+	<!-- 서진 : 기업 회원 가입 시 업종 라디오 버튼 -->
 	<select id="selectBusCategory" resultType="HashMap">
 		SELECT * FROM BCT
 	</select>
@@ -90,7 +101,8 @@
 
 	<!-- 기업 회원 가입 BUSINESS_TB INSERT -->
 	<insert id="businessInsert" parameterType="Business">
-		<selectKey keyProperty="bus_seq" resultType="int" order="BEFORE">
+		<selectKey keyProperty="bus_seq" resultType="int"
+			order="BEFORE">
 			SELECT BUS_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO BUS VALUES('B'||#{bus_seq}, #{bus_email}, #{bus_pw},
@@ -100,21 +112,25 @@
 
 	<!-- 기업 회원 가입 SERVICE_TB INSERT -->
 	<insert id="busJoinSvcInsert" parameterType="Business">
-		INSERT INTO SVC VALUES(#{bus_no}, #{bct_code}, 1)
+		INSERT INTO SVC
+		VALUES(#{bus_no}, #{bct_code}, 1)
 	</insert>
 
 	<!-- 기업 회원 가입 사업자등록증 GALLERY_TB INSERT -->
 	<insert id="licenseInsert" parameterType="HashMap">
-		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 1, #{file}, #{location})
+		INSERT INTO GLR
+		VALUES(#{bus_no}, #{bct_code}, 1, #{file}, #{location})
 	</insert>
 
 	<!-- 기업 회원 가입 기업대표사진 GALLERY_TB INSERT -->
 	<insert id="mainPhotoInsert" parameterType="HashMap">
-		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, #{file}, #{location})
+		INSERT INTO GLR
+		VALUES(#{bus_no}, #{bct_code}, 2, #{file}, #{location})
 	</insert>
 
 	<!-- 기업 회원 가입 기업대표사진 없을 때 -->
 	<insert id="mainPhotoDefault" parameterType="HashMap">
-		INSERT INTO GLR VALUES(#{bus_no}, #{bct_code}, 2, DEFAULT, DEFAULT)
+		INSERT INTO GLR
+		VALUES(#{bus_no}, #{bct_code}, 2, 'shop.png', 'resources/images/defaultProfile/')
 	</insert>
 </mapper>

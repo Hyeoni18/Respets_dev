@@ -148,6 +148,13 @@
 	  } 
 </script> -->
 <script>
+	var noPet = "${noPet}";
+	if(noPet != null) {
+		alert("반려동물을 등록해주세요.");
+		document.location.href = "./petList";
+	}
+</script>
+<script>
 	$('#dayTable').html("${dayList}");
 	$('#day').hide();
 	$('#time').hide();

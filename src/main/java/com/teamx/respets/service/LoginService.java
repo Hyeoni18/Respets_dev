@@ -426,10 +426,10 @@ public class LoginService {
 		return result;
 	} // method End
 
-	// 서진 : 기업 회원 가입
+	// 기업 회원 가입
 	@Transactional
 	public void businessJoin(Business b, MultipartHttpServletRequest request) {
-		// 비밀번호 암호화 구현
+		// 비밀번호 암호화 구현할 것
 		lDao.businessInsert(b);
 		b.setBus_no("B" + String.valueOf(b.getBus_seq()));
 		lDao.busJoinSvcInsert(b);
@@ -470,4 +470,5 @@ public class LoginService {
 		hMap.put("file", saveName);
 		return hMap;
 	} // method End
+	
 }

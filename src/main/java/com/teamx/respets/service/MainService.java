@@ -32,16 +32,19 @@ public class MainService {
 	private MainDao mDao;
 	ModelAndView mav;
 
-	// 메인 페이지 검색에서 서비스 종류 갖고 오기
+	// 메인 페이지 서비스 종류, 공지사항 갖고 오기
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
+		// 서비스 종류 갖고 오기
 		List<HashMap<String, String>> list = mDao.selectBusCategory();
 		StringBuilder sb = new StringBuilder();
+		// option 태그 생성
 		for (int i = 0; i < list.size(); i++) {
 			sb.append("<option value='" + list.get(i).get("BCT_CODE") + "'>");
 			sb.append(list.get(i).get("BCT_NAME") + "</option>");
 		} // for End
 		mav.addObject("bct", sb);
+		// 공지사항 갖고 오기
 		List<AdminBoard> aboList = mDao.selectBoardList();
 		mav.addObject("list", aboList);
 		return mav;
@@ -632,26 +635,47 @@ public class MainService {
 	public ModelAndView bookingForm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, String> hMap = new HashMap<String, String>();
+
+		// 쿼리스트링을 HashMap에 저장
 		if (request.getQueryString() != null) {
 			String queryString = request.getQueryString();
+			// &을 기준으로 나눠줌
 			String[] parameters = queryString.split("&");
+			// =을 기준으로 앞에 있는 건 key, 뒤에 있는 건 value
 			for (String parameter : parameters) {
 				String name = parameter.split("=")[0];
 				String value = parameter.split("=")[1];
 				hMap.put(name, value);
 			} // for End
 		} // if End
+
+		// 세션에서 예약하는 개인 회원 번호 갖고 오기
 		hMap.put("per_no", request.getSession().getAttribute("no").toString());
 		Map<String, String> petMap = new HashMap<String, String>();
+
+		// 쿼리스트링에 반려동물 정보가 없을 경우
 		if (hMap.get("pet_no") == null) {
+			// Dao에서 제일 첫 번째 반려동물을 기본 정보로 보여준다.
 			petMap = mDao.selectFirstPet(hMap);
+			// 개인 회원이 등록한 반려동물이 없을 경우
+			if (petMap == null) {
+				mav.addObject("noPet", "noPet");
+				return mav;
+			} // if End
 		} else {
+			// 아닐 경우 쿼리스트링에 있는 반려동물(선택한 반려동물)을 기본 정보로 보여준다.
 			petMap = mDao.firstPet(hMap);
 		} // if End
+
+		// 현재 예약하는 반려동물 번호를 다른 HashMap에 저장
 		hMap.put("pet_no", petMap.get("PET_NO"));
+
+		// 메인 페이지에서 검색으로 왔을 경우 date가 있지만, 없을 경우 null 오류가 뜨지 않게 noDate를 넣어준다.
 		if (hMap.get("date") == null) {
 			hMap.put("date", "noDate");
 		} // if End
+
+		// 예약 선택한(사진이 뜨는) 반려동물 정보 html 만들기
 		StringBuilder pet = new StringBuilder();
 		pet.append("<img class='card-img-top' src='" + petMap.get("PET_LOC") + petMap.get("PET_PHOTO"));
 		pet.append("' style='height:300px; weight:300px;' />");
@@ -661,9 +685,12 @@ public class MainService {
 		pet.append("<input type='hidden' name='bct_code' value='" + hMap.get("bct_code") + "' />");
 		pet.append("<input type='hidden' name='pet_no' value='" + petMap.get("PET_NO") + "' />");
 		pet.append("</div>");
+
+		// 선택한 반려동물을 제외한 나머지 반려동물 리스트 html 만들기 (클릭 시 해당 반려동물로 예약 페이지 전환)
 		List<HashMap<String, String>> petList = mDao.selectPetList(petMap);
 		pet.append(
 				"<hr/><div style='text-align: center'><p class='text-success' style='text-align: center' >다른 반려동물 선택</p><hr/></div>");
+		// 여러 마리일 경우를 위해 for문
 		for (int i = 0; i < petList.size(); i++) {
 			pet.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='./bookingForm?bus_no="
 					+ hMap.get("bus_no"));
@@ -672,13 +699,18 @@ public class MainService {
 			pet.append("'> " + petList.get(i).get("PET_NAME") + "</a><br/>");
 		} // for End
 		mav.addObject("petList", pet);
+
+		// DB에서 해당 기업의 서비스 선택 갖고 오기
 		List<HashMap<String, String>> svcList = mDao.selectSvcList(hMap);
+
+		// 서비스 선택 체크박스 html 만들기
 		StringBuilder svc = new StringBuilder();
 		svc.append("<hr/><h5 class='text-success'>서비스 선택</h5>");
 		for (int i = 0; i < svcList.size(); i++) {
 			svc.append("<input type='checkbox' name='menu_no' value='");
 			svc.append(String.valueOf(svcList.get(i).get("MENU_NO")) + "' />");
 			svc.append(svcList.get(i).get("MENU_NAME"));
+			// 가격이 있는 서비스의 경우 가격을 붙이기 위해 if문
 			if (!svcList.get(i).get("PRICE").equals("0")) {
 				svc.append(" (" + svcList.get(i).get("PRICE") + " 원)");
 			} // if End
@@ -687,7 +719,11 @@ public class MainService {
 			svc.append("' value='" + svcList.get(i).get("PRICE") + "' />");
 		} // for End
 		mav.addObject("svcList", svc);
+
+		// 해당 기업의 직원 리스트를 갖고 오기
 		List<HashMap<String, String>> empList = mDao.selectEmpList(hMap);
+
+		// 직원 선택 radio 버튼 html 만들기
 		StringBuilder emp = new StringBuilder();
 		emp.append("<br/><br/<br/><hr/><h5 class='text-success'>직원 선택</h5>");
 		for (int i = 0; i < empList.size(); i++) {
@@ -697,24 +733,30 @@ public class MainService {
 			emp.append(" (" + empList.get(i).get("EMP_PART") + ")<br/>");
 		} // for End
 		mav.addObject("empList", emp);
+
 		Date date = null;
+		// 만약 hMap(쿼리스트링을 담은 HashMap)에 date가 null이 아니거나, "noDate"가 아닐 경우 = 검색을 통해 정해진 날짜가 있을 경우
 		if (hMap.get("date") != null && !hMap.get("date").equals("noDate")) {
 			try {
 				date = new SimpleDateFormat("yy/MM/dd").parse(hMap.get("date"));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			} // catch End
-		} else {
+		} else { // 날짜 값이 없을 경우 오늘로
 			date = new Date();
 		} // else End
 		Calendar cal = new GregorianCalendar(Locale.KOREA);
-		cal.setTime(date);
+		cal.setTime(date); // 위에서 정한 날짜로 set
 		StringBuilder dayList = new StringBuilder();
 		dayList.append("<tr>");
-		for (int i = 0; i < 7; i++) {
+		
+		// 정해진 날짜에서 일주일 선택지를 만들기 위한 for문
+		for (int i = 0; i < 7; i++) { // 일주일이라서 7번 돈다
+			// 요일 갖고 오기 (해당 날짜의 요일을 int로 반환한다)
 			int day = cal.get(Calendar.DAY_OF_WEEK);
-			SimpleDateFormat valSdf = new SimpleDateFormat("yyMMdd");
-			SimpleDateFormat sdf = null;
+			// radio value 값을 위한 yyMMdd 포맷
+			SimpleDateFormat valSdf = new SimpleDateFormat("yyMMdd"); 
+			SimpleDateFormat sdf = null; // 사용자에게 보여주기 위한 포맷
 			if (day == 1) {
 				sdf = new SimpleDateFormat("MM월 dd일 일요일");
 			} else if (day == 2) {
@@ -730,11 +772,11 @@ public class MainService {
 			} else if (day == 7) {
 				sdf = new SimpleDateFormat("MM월 dd일 토요일");
 			} // else if End
-			String strDate = sdf.format(cal.getTime());
-			String valDate = valSdf.format(cal.getTime());
+			String strDate = sdf.format(cal.getTime()); //yyMMdd 포맷
+			String valDate = valSdf.format(cal.getTime()); // MM월 dd일 x요일 포맷
 			dayList.append("<td><input type='radio' name='day' value='" + valDate + "' />");
 			dayList.append(strDate + "</td>");
-			cal.add(Calendar.DAY_OF_YEAR, 1);
+			cal.add(Calendar.DAY_OF_YEAR, 1); // 하루 추가
 		} // for End
 		dayList.append("</tr>");
 		mav.addObject("dayList", dayList);
@@ -743,15 +785,24 @@ public class MainService {
 
 	// 예약 페이지 시간
 	public String timeSelect(HttpServletRequest request) {
+		
 		HashMap<String, String> hMap = new HashMap<String, String>();
+		
+		// 선택된 날짜와 직원 번호
 		hMap.put("date", request.getParameter("date"));
 		hMap.put("emp_no", request.getParameter("emp"));
+		
+		// 선택된 직원의 선택된 날짜 스케줄 갖고 오기
 		HashMap<String, String> timeMap = mDao.selectEmpTime(hMap);
 		String timeList = "";
+		
+		// 다른 예약이 된 시간 DB에서 갖고 오기
 		List<HashMap<String, String>> noTimeList = mDao.selectNoTime(hMap);
-		if (timeMap == null) { // DB에 시간 없을 때
+		
+		if (timeMap == null) { // DB에 해당 날짜의 스케줄이 없을 때
 			timeList = "직원 휴무일입니다.";
 		} else { // DB에 시간 있을 때
+			
 			int amOpenHour = Integer.parseInt(timeMap.get("AM_OPEN").substring(0, 2));
 			int amOpenMin = Integer.parseInt(timeMap.get("AM_OPEN").substring(2, 4));
 			int amCloseHour = Integer.parseInt(timeMap.get("AM_CLOSE").substring(0, 2));
@@ -760,50 +811,73 @@ public class MainService {
 			int pmOpenMin = Integer.parseInt(timeMap.get("PM_OPEN").substring(2, 4));
 			int pmCloseHour = Integer.parseInt(timeMap.get("PM_CLOSE").substring(0, 2));
 			int pmCloseMin = Integer.parseInt(timeMap.get("PM_CLOSE").substring(2, 4));
-			if (hMap.get("date").equals(new SimpleDateFormat("yyMMdd").format(new Date()))) { // 오늘일 때
+			
+			// 오늘일 때
+			if (hMap.get("date").equals(new SimpleDateFormat("yyMMdd").format(new Date()))) {
+				
+				// 오늘 현재 시각
 				String todayTime = new SimpleDateFormat("HHmm").format(new Date());
 				int todayHour = Integer.parseInt(todayTime.substring(0, 2));
 				int todayMin = Integer.parseInt(todayTime.substring(2, 4));
 				String strHour = "";
 				String strMin = "";
+				
+				/* 현재 시각보다 1시간 30분 이후부터 예약이 가능하도록 구현 */
+				
+				// 현재 시각 '분'이 30분보다 미만일 때
 				if (todayMin < 30) {
-					strMin = "30";
-				} else {
-					strMin = "00";
-					todayHour++;
+					strMin = "30"; // 30분으로
+				} else { // 30분보다 이상일 때
+					strMin = "00"; // 00분으로 반올림 후
+					todayHour++; // 시간에 1 추가
 				} // else End
-				todayHour++;
+				todayHour++; // 1시간 추가
+				
+				// 현재 시각이 10시 미만일 때
 				if (todayHour < 10) {
-					strHour = "0" + todayHour;
-				} else {
+					strHour = "0" + todayHour; // 앞에 0을 붙인다
+				} else { // 10시 이상일 때는 그냥 숫자 그대로
 					strHour = String.valueOf(todayHour);
 				} // else End
+				
+				// 현재 시각에서 1시간 30분을 반올림 한 시각
 				todayTime = strHour + strMin;
-				// 비교를 위한 변수
+				
+				// 현재 시각이 업체 영업 시작 시간보다 전일 때
 				if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_OPEN"))) {
 					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
 					timeList = amTimeList + pmTimeList;
+					
+				// 현재 시각이 업체 영업 시작 시간보단 지났지만, 점심 시간 시작 전일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_CLOSE"))) {
 					amOpenHour = Integer.parseInt(todayTime.substring(0, 2));
 					amOpenMin = Integer.parseInt(todayTime.substring(2, 4));
 					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
 					timeList = amTimeList + pmTimeList;
+				
+				// 현재 시각이 업체 점심 시간일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_OPEN"))) {
 					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					
+				// 현재 시각이 업체 점심 시간 이후지만, 영업 종료 시간 전일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_CLOSE"))) {
 					pmOpenHour = Integer.parseInt(todayTime.substring(0, 2));
 					pmOpenMin = Integer.parseInt(todayTime.substring(2, 4));
 					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
+					
+				// 현재 시각이 영업 종류 시간 후일 때
 				} else {
 					timeList = "예약 가능한 시간이 없습니다.";
 				} // else End
+				
 			} else { // 오늘 아닐 때
 				String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 				String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
 				timeList = amTimeList + pmTimeList;
 			} // else End
+			
 		} // else End
 		return timeList;
 	} // method End
