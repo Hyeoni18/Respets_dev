@@ -127,22 +127,18 @@
 	});
 
 	function accept(bk_no) {
-		$
-				.ajax({
-					url : 'bookingAccept',
-					type : 'post',
-					data : {
-						'bk_no' : bk_no
-					},
-					success : function() {
-						alert("예약이 확정되었습니다.");
-						$('#' + bk_no).html(
-								"<span class='text-success'>확정된 예약</span>");
-					},
-					error : function(error) {
-						console.log(error);
-					}
-				});
+		$.ajax({
+			url : 'bookingAccept',
+			type : 'post',
+			data : {'bk_no' : bk_no},
+			success : function() {
+				alert("예약이 확정되었습니다.");
+				$('#' + bk_no).html("<span class='text-success'>확정된 예약</span>");
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
 	}
 
 	function reject(bk_no) {

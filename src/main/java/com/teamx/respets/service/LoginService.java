@@ -430,20 +430,21 @@ public class LoginService {
 	@Transactional
 	public void businessJoin(Business b, MultipartHttpServletRequest request) {
 		// 비밀번호 암호화 구현할 것
-		lDao.businessInsert(b);
+		lDao.businessInsert(b); // 기업 회원 테이블
 		b.setBus_no("B" + String.valueOf(b.getBus_seq()));
-		lDao.busJoinSvcInsert(b);
+		lDao.busJoinSvcInsert(b); // 서비스 테이블
 		MultipartFile busLicense = request.getFile("busLicense");
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap = saveFile(request, busLicense, hMap);
 		hMap.put("bus_no", b.getBus_no());
 		hMap.put("bct_code", b.getBct_code());
-		lDao.licenseInsert(hMap);
+		lDao.licenseInsert(hMap); // 사진 테이블에 사업자등록증 사진 넣기
+		// 대표 사진 이미지가 있을 경우 대표 사진 넣기
 		if (request.getParameter("fileCheck").equals("1")) {
 			MultipartFile mainPhoto = request.getFile("mainPhoto");
 			hMap = saveFile(request, mainPhoto, hMap);
 			lDao.mainPhotoInsert(hMap);
-		} else {
+		} else { // 없을 경우 디폴트 이미지로 넣기
 			lDao.mainPhotoDefault(hMap);
 		} // else End
 	} // method End
@@ -453,21 +454,22 @@ public class LoginService {
 			Map<String, Object> hMap) {
 		String root = request.getSession().getServletContext().getRealPath("/");
 		String location = "resources/upload/";
-		String path = root + location;
-		File dir = new File(path);
-		if (!dir.isDirectory()) {
+		String path = root + location; // 이미지 저장하는 위치
+		File dir = new File(path); 
+		if (!dir.isDirectory()) { // 해당 폴더가 없을 때 생성
 			dir.mkdir();
 		} // if End
 		String date = new SimpleDateFormat("yyMMdd").format(Calendar.getInstance().getTime());
 		String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+		// 파일 이름 중복을 없애기 위해 날짜와 UUID 이용
 		String saveName = "Respets_" + date + "_" + UUID.randomUUID() + "." + extension;
 		try {
 			file.transferTo(new File(path, saveName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		} // catch End
-		hMap.put("location", location);
-		hMap.put("file", saveName);
+		hMap.put("location", location); // 주소
+		hMap.put("file", saveName); // 파일 이름
 		return hMap;
 	} // method End
 	

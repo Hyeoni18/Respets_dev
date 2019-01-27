@@ -848,7 +848,6 @@ public class MainService {
 					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
 					timeList = amTimeList + pmTimeList;
-					
 				// 현재 시각이 업체 영업 시작 시간보단 지났지만, 점심 시간 시작 전일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("AM_CLOSE"))) {
 					amOpenHour = Integer.parseInt(todayTime.substring(0, 2));
@@ -856,17 +855,14 @@ public class MainService {
 					String amTimeList = timeHtml(amOpenHour, amOpenMin, amCloseHour, amCloseMin, noTimeList);
 					String pmTimeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
 					timeList = amTimeList + pmTimeList;
-				
 				// 현재 시각이 업체 점심 시간일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_OPEN"))) {
 					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
-					
 				// 현재 시각이 업체 점심 시간 이후지만, 영업 종료 시간 전일 때
 				} else if (Integer.parseInt(todayTime) < Integer.parseInt(timeMap.get("PM_CLOSE"))) {
 					pmOpenHour = Integer.parseInt(todayTime.substring(0, 2));
 					pmOpenMin = Integer.parseInt(todayTime.substring(2, 4));
 					timeList = timeHtml(pmOpenHour, pmOpenMin, pmCloseHour, pmCloseMin, noTimeList);
-					
 				// 현재 시각이 영업 종류 시간 후일 때
 				} else {
 					timeList = "예약 가능한 시간이 없습니다.";
@@ -885,48 +881,60 @@ public class MainService {
 	// 시간 만드는 메소드
 	private String timeHtml(int openHour, int openMin, int closeHour, int closeMin,
 			List<HashMap<String, String>> noTimeList) {
+		
+		// for문 돌려야 하는 횟수 정하기
 		int length = 0;
-		if (openMin == closeMin) {
-			length = (closeHour - openHour) * 2;
-		} else if (openMin > closeMin) {
-			length = (closeHour - openHour) * 2 - 1;
-		} else if (openMin < closeMin) {
-			length = (closeHour - openHour) * 2 + 1;
+		if (openMin == closeMin) { // 시작 시각 '분'과 끝 시각 '분'이 같을 때 (00분=00분, 30분=30분)
+			length = (closeHour - openHour) * 2; // 30분 단위기 때문에 '시' 차이의 2배
+		} else if (openMin > closeMin) { // 시작 시각 분이 더 클 때 (30분 > 00분) 
+			length = (closeHour - openHour) * 2 - 1; // 2배를 해준 후 -1 해준다. (30분 뺀다)
+		} else if (openMin < closeMin) { // 끝 시각 분이 더 클 때 (00분 < 30분)
+			length = (closeHour - openHour) * 2 + 1; // 2배를 해준 후 +1 해준다. (30분 더한다)
 		} // if End
+		
 		StringBuilder timeList = new StringBuilder();
 		timeList.append("<tr>");
 		String time = "";
+		
 		for (int i = 1; i <= length; i++) {
-			if (openHour == 0) {
+			
+			
+			if (openHour == 0) { // 00시일 때
 				time += "00";
-			} else if (openHour < 10) {
+			} else if (openHour < 10) { // 10시 미만일 때
 				time = "0" + openHour;
-			} else {
+			} else { // 10시 이상일 때
 				time += openHour;
 			} // else End
-			if (openMin == 0) {
+			
+			if (openMin == 0) { // 00분일 때
 				time += "00";
-			} else {
+			} else { // 30분일 때
 				time += openMin;
 			} // else End
-			System.out.println("time" + time);
+			
 			timeList.append("<td><input type='radio' name='time' value='" + time);
+			
+			// 이미 예약된 시간과 동일하면 disabled 속성
 			for (int j = 0; j < noTimeList.size(); j++) {
 				if (noTimeList.get(j).get("VS_START").equals(time)) {
 					timeList.append("' disabled='disabled");
 				} // if End
 			} // for End
+			
 			timeList.append("' />" + time.substring(0, 2) + ":" + time.substring(2, 4) + "</td>");
-			if (i % 5 == 0) {
+			if (i % 5 == 0) { // 시간 5개마다 줄내림
 				timeList.append("</tr><tr>");
 			} // if End
+			
+			// 반복문 위해 30분 증가
 			if (openMin == 30) {
 				openHour += 1;
 				openMin = 0;
 			} else {
 				openMin += 30;
 			} // else End
-			time = "";
+			time = ""; // 초기화
 		} // for End
 		timeList.append("</tr>");
 		return timeList.toString();

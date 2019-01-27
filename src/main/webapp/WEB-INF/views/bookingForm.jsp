@@ -149,7 +149,7 @@
 </script> -->
 <script>
 	var noPet = "${noPet}";
-	if(noPet != null) {
+	if(noPet != null && noPet != "") {
 		alert("반려동물을 등록해주세요.");
 		document.location.href = "./petList";
 	}
