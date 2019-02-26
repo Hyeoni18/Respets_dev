@@ -572,8 +572,9 @@ public class BusinessService {
 		map.put("timeS", timeS);
 		map.put("bct_name", bct_name);
 		bList = bDao.bctBookingList(map);
-		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
+		sb.append("<table class='table table-centered mb-0' style='text-align:center;'><thead>"
+				+ "<tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th>"
+				+ "<th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -602,7 +603,9 @@ public class BusinessService {
 		map.put("bct_name", bct_name);
 		okList = bDao.bctBookingListOk(map);
 		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
+				"<table class='table table-centered mb-0' style='text-align:center;'><thead>"
+				+ "<tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th>"
+				+ "<th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -628,8 +631,9 @@ public class BusinessService {
 		map.put("no", no);
 		map.put("timeS", timeS);
 		bList = bDao.todayScheduleList(map);
-		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
+		sb.append("<table class='table table-centered mb-0' style='text-align:center;'><thead>"
+				+ "<tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th>"
+				+ "<th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < bList.size(); i++) {
 			String bk_no = (String) bList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -655,8 +659,9 @@ public class BusinessService {
 		map.put("no", no);
 		map.put("timeS", timeS);
 		okList = bDao.todayScheduleListOk(map);
-		sb.append(
-				"<table class='table table-centered mb-0' style='text-align:center;'><thead><tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th><th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
+		sb.append("<table class='table table-centered mb-0' style='text-align:center;'><thead>"
+				+ "<tr><th width='13%'>예약 번호</th><th width='13%'>동물 종류</th><th width='13%'>동물 이름</th>"
+				+ "<th width='13%'>예약자명</th><th width='13%'>서비스 종류</th><th>방문 일시</th><th width='13%'>방문 상태</th></tr></thead>");
 		for (int i = 0; i < okList.size(); i++) {
 			String bk_no = (String) okList.get(i).get("BK_NO");
 			sb.append("<tr><td><a href='myBookingDetail?" + bk_no + "'>" + bk_no + "</a></td>");
@@ -860,8 +865,8 @@ public class BusinessService {
 		String bus_name = (String) map.get("BUS_NAME");
 		String bus_phone = (String) map.get("BUS_PHONE");
 
-	//	String time = timeSelect(); // 기업의 운영시간 선택 select tag
-	//	String lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
+		// String time = timeSelect(); // 기업의 운영시간 선택 select tag
+		// String lunch = lunchSelect(); // 기업의 점심시간 선택 select tag
 		String holiday = holidaySelect(); // 기업의 휴일 선택 select tag
 		System.out.println(code);
 		mav.addObject("cnt", list.size()); // 서비스의 우선순위를 정해주기 위한 카운트
@@ -869,8 +874,8 @@ public class BusinessService {
 		mav.addObject("bus_name", bus_name);
 		mav.addObject("bus_phone", bus_phone);
 		mav.addObject("codeCheck", codeSelectBut);
-	//	mav.addObject("time", time);
-	//	mav.addObject("lunch", lunch);
+		// mav.addObject("time", time);
+		// mav.addObject("lunch", lunch);
 		mav.addObject("holiday", holiday);
 		mav.addObject("medical", medical);
 		mav.addObject("beauty", beauty);
@@ -2844,7 +2849,7 @@ public class BusinessService {
 		}
 		return price;
 	}
-	
+
 	/* 기업 상세페이지 - 즐겨찾기 추가 삭제 */
 	public int favoriteChange(HttpServletRequest request) {
 		int result = 0;
@@ -2860,7 +2865,7 @@ public class BusinessService {
 		}
 		return result;
 	}
-	
+
 	public ModelAndView businessDetailPage(HttpSession session, HttpServletRequest request) {
 		mav = new ModelAndView();
 		String view = null;
@@ -2919,7 +2924,7 @@ public class BusinessService {
 		mav.setViewName(view);
 		return mav;
 	}
-	
+
 	public int nowPwCheck(Business b, HttpServletRequest request) {
 		b.setBus_no(request.getSession().getAttribute("no").toString());
 		int result = bDao.nowPwCheck(b);
@@ -2939,7 +2944,7 @@ public class BusinessService {
 		mav.addObject("b", b);
 		return mav;
 	}
-	
+
 	// 새로운 예약 목록
 	public ModelAndView newScheduleList(HttpServletRequest request) {
 		String bus_no = request.getSession().getAttribute("no").toString();
@@ -2960,5 +2965,5 @@ public class BusinessService {
 		mav.addObject("list", sb.toString());
 		return mav;
 	} // method End
-	
+
 }

@@ -143,11 +143,13 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 		PCL.PCL_NO =
 		PDT.PCL_NO WHERE PDT.PET_NO = #{pet_no}
 	</select>
+	
 	<!-- 오늘 예약 방문 확인 ajax -->
 	<update id="todayScheduleListCheck" parameterType="String">
 		UPDATE BK SET
 		VS_CHK = 'O' WHERE BK_NO = #{bk_no}
 	</update>
+	
 	<!-- 오늘 예약 일정 전체 ajax -->
 	<select id="todayScheduleList" resultType="Hashmap"
 		parameterType="Hashmap">
@@ -167,6 +169,7 @@ SELECT X.RNUM, X.BBO_NO, X.BCT_NAME, X.BBC_NAME, X.BBO_TITLE, X.BBO_DATE FROM ( 
 		VS_START LIKE
 		TO_DATE(#{timeS}, 'yy/MM/dd') AND BK.VS_CHK = 'X'
 	</select>
+	
 	<!-- 서비스 종류 불러오기(서비스페이지) -->
 	<select id="serviceManagement" resultType="Hashmap"
 		parameterType="String">
@@ -228,6 +231,7 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		#{bus_no}
 		AND GCT_NO = 2
 	</update>
+	
 	<!-- 서비스별 전체예약 리스트 ajax -->
 	<select id="bctBookingList" resultType="HashMap"
 		parameterType="HashMap">
@@ -247,6 +251,7 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		TO_DATE(#{timeS},
 		'yy/MM/dd') AND BK.VS_CHK = 'X'
 	</select>
+	
 	<!-- 서비스별 전체 예약 리스트 ajax -->
 	<select id="AllbctBookingList" resultType="HashMap"
 		parameterType="HashMap">
@@ -282,6 +287,7 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		WHERE BK.BUS_NO = #{bus_no} AND BK.VS_START = TO_DATE(#{timeS},
 		'yy/MM/dd') AND BK.VS_CHK='O' AND BK.BK_NO = #{bk_no}
 	</select>
+	
 	<!-- 오늘 방문 확인된 예약 리스트 ajax -->
 	<select id="todayScheduleListOk" resultType="Hashmap"
 		parameterType="Hashmap">
@@ -301,11 +307,13 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		BK.VS_START LIKE
 		TO_DATE(#{timeS},'yy/MM/dd') AND BK.VS_CHK = 'O'
 	</select>
+	
 	<!-- 오늘 예약 방문취소 ajax -->
 	<update id="todayScheduleListCancel" parameterType="String">
 		UPDATE BK SET
 		VS_CHK = 'X' WHERE BK_NO = #{bk_no}
 	</update>
+	
 	<!-- 서비스별 방문확인 된 전체예약 리스트 ajax -->
 	<select id="bctBookingListOk" resultType="HashMap"
 		parameterType="HashMap">
@@ -325,6 +333,7 @@ SELECT X.* FROM (SELECT ROWNUM AS RNUM, SEL.* FROM (SELECT BK.BUS_NO, BK.BK_NO, 
 		TO_DATE(#{timeS},
 		'yy/MM/dd') AND BK.VS_CHK = 'O'
 	</select>
+	
 	<!-- 전체 예약에서의 검색 페이징 ajax -->
 	<select id="searchAllListPaging" resultType="int">
 		SELECT COUNT(*) FROM
