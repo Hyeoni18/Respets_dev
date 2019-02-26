@@ -12,20 +12,20 @@
 <meta content="Coderthemes" name="author" />
 <!-- App favicon -->
 <link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/resources/images/logo-sm.png">
+	href="/resources/images/logo-sm.png">
 
 <!-- third party css -->
 <link
-	href="${pageContext.request.contextPath}/resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
+	href="/resources/dist/assets/css/vendor/jquery-jvectormap-1.2.2.css"
 	rel="stylesheet" type="text/css" />
 <!-- third party css end -->
 
 <!-- App css -->
 <link
-	href="${pageContext.request.contextPath}/resources/dist/assets/css/icons.min.css"
+	href="/resources/dist/assets/css/icons.min.css"
 	rel="stylesheet" type="text/css" />
 <link
-	href="${pageContext.request.contextPath}/resources/dist/assets/css/app.min.css"
+	href="/resources/dist/assets/css/app.min.css"
 	rel="stylesheet" type="text/css" />
 <style>
 .star-rating {
@@ -202,7 +202,10 @@
 </body>
 <script src="/resources/dist/assets/js/app.min.js"></script>
 <script>
-	var jsonData = ${result};
+	var jsonData = $
+	{
+		result
+	};
 	console.log(jsonData.BK_NO);
 	console.log(jsonData.VS_CHK);
 	$('#reviewButton').hide();
